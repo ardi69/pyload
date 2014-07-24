@@ -23,7 +23,7 @@ class Setup:
 
 
     def start(self):
-        langs = self.config.getMetaData("general", "language")["type"].split(";")
+        langs = self.config.getMetaData("general", "language")['type'].split(";")
         lang = self.ask(u"Choose setup language", "en", langs)
         gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
         translation = gettext.translation("setup", join(self.path, "locale"), languages=[lang, "en"], fallback=True)
@@ -298,32 +298,32 @@ class Setup:
         print
         print _("External clients (GUI, CLI or other) need remote access to work over the network.")
         print _("However, if you only want to use the webinterface you may disable it to save ram.")
-        self.config["remote"]["activated"] = self.ask(_("Enable remote access"), self.no, bool=True)
+        self.config['remote']['activated'] = self.ask(_("Enable remote access"), self.no, bool=True)
 
         print
         langs = self.config.getMetaData("general", "language")
-        self.config["general"]["language"] = self.ask(_("Choose pyLoad language"), "en", langs["type"].split(";"))
+        self.config['general']['language'] = self.ask(_("Choose pyLoad language"), "en", langs['type'].split(";"))
 
         print
-        self.config["general"]["download_folder"] = self.ask(_("Download folder"), "Downloads")
+        self.config['general']['download_folder'] = self.ask(_("Download folder"), "Downloads")
         print
-        self.config["download"]["max_downloads"] = self.ask(_("Max parallel downloads"), "3")
+        self.config['download']['max_downloads'] = self.ask(_("Max parallel downloads"), "3")
         print
         reconnect = self.ask(_("Use Reconnect?"), self.no, bool=True)
-        self.config["reconnect"]["activated"] = reconnect
+        self.config['reconnect']['activated'] = reconnect
         if reconnect:
-            self.config["reconnect"]["method"] = self.ask(_("Reconnect script location"), "./reconnect.sh")
+            self.config['reconnect']['method'] = self.ask(_("Reconnect script location"), "./reconnect.sh")
 
 
     def conf_web(self):
         print _("## Webinterface Setup ##")
 
         print
-        self.config["webinterface"]["activated"] = self.ask(_("Activate webinterface?"), self.yes, bool=True)
+        self.config['webinterface']['activated'] = self.ask(_("Activate webinterface?"), self.yes, bool=True)
         print
         print _("Listen address, if you use 127.0.0.1 or localhost, the webinterface will only accessible locally.")
-        self.config["webinterface"]["host"] = self.ask(_("Address"), "0.0.0.0")
-        self.config["webinterface"]["port"] = self.ask(_("Port"), "8000")
+        self.config['webinterface']['host'] = self.ask(_("Address"), "0.0.0.0")
+        self.config['webinterface']['port'] = self.ask(_("Port"), "8000")
         print
         print _("pyLoad offers several server backends, now following a short explanation.")
         print "- builtin:", _("Default server; best choice if you plan to use pyLoad just for you.")
@@ -344,7 +344,7 @@ class Setup:
             servers = ["builtin", "threaded", "fastcgi", "lightweight"]
             default = "lightweight" if self.check_module("bjoern") else "builtin"
 
-        self.config["webinterface"]["server"] = self.ask(_("Server"), default, servers)
+        self.config['webinterface']['server'] = self.ask(_("Server"), default, servers)
 
 
     def conf_ssl(self):
@@ -358,13 +358,13 @@ class Setup:
         print
         print _("If you're done and everything went fine, you can activate ssl now.")
 
-        self.config["ssl"]["activated"] = self.ask(_("Activate SSL?"), self.yes, bool=True)
+        self.config['ssl']['activated'] = self.ask(_("Activate SSL?"), self.yes, bool=True)
 
 
     def set_user(self):
         gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
         translation = gettext.translation("setup", join(self.path, "locale"),
-            languages=[self.config["general"]["language"], "en"], fallback=True)
+            languages=[self.config['general']['language'], "en"], fallback=True)
         translation.install(True)
 
         from module.database import DatabaseBackend
@@ -416,7 +416,7 @@ class Setup:
         if trans:
             gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
             translation = gettext.translation("setup", join(self.path, "locale"),
-                languages=[self.config["general"]["language"], "en"], fallback=True)
+                languages=[self.config['general']['language'], "en"], fallback=True)
             translation.install(True)
 
         print _("Setting new config path, current configuration will not be transfered!")

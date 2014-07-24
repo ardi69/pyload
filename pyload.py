@@ -302,25 +302,25 @@ class Core(object):
             print _("pyLoad already running with pid %s") % pid
             exit()
 
-        if os.name != "nt" and self.config["general"]["renice"]:
-            os.system("renice %d %d" % (self.config["general"]["renice"], os.getpid()))
+        if os.name != "nt" and self.config['general']['renice']:
+            os.system("renice %d %d" % (self.config['general']['renice'], os.getpid()))
 
-        if self.config["permission"]["change_group"]:
+        if self.config['permission']['change_group']:
             if os.name != "nt":
                 try:
                     from grp import getgrnam
 
-                    group = getgrnam(self.config["permission"]["group"])
+                    group = getgrnam(self.config['permission']['group'])
                     os.setgid(group[2])
                 except Exception, e:
                     print _("Failed changing group: %s") % e
 
-        if self.config["permission"]["change_user"]:
+        if self.config['permission']['change_user']:
             if os.name != "nt":
                 try:
                     from pwd import getpwnam
 
-                    user = getpwnam(self.config["permission"]["user"])
+                    user = getpwnam(self.config['permission']['user'])
                     os.setuid(user[2])
                 except Exception, e:
                     print _("Failed changing user: %s") % e
@@ -362,7 +362,7 @@ class Core(object):
         self.setupDB()
         if self.config.oldRemoteData:
             self.log.info(_("Moving old user config to DB"))
-            self.db.addUser(self.config.oldRemoteData["username"], self.config.oldRemoteData["password"])
+            self.db.addUser(self.config.oldRemoteData['username'], self.config.oldRemoteData['password'])
 
             self.log.info(_("Please check your logindata with ./pyload.py -u"))
 
@@ -406,7 +406,7 @@ class Core(object):
         if web:
             self.init_webserver()
 
-        spaceLeft = freeSpace(self.config["general"]["download_folder"])
+        spaceLeft = freeSpace(self.config['general']['download_folder'])
 
         self.log.info(_("Free space: %s") % formatSize(spaceLeft))
 

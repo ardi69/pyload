@@ -18,8 +18,8 @@ class WebServer(threading.Thread):
         self.running = True
         self.server = pycore.config['webinterface']['server']
         self.https = pycore.config['webinterface']['https']
-        self.cert = pycore.config["ssl"]["cert"]
-        self.key = pycore.config["ssl"]["key"]
+        self.cert = pycore.config['ssl']['cert']
+        self.key = pycore.config['ssl']['key']
         self.host = pycore.config['webinterface']['host']
         self.port = pycore.config['webinterface']['port']
 

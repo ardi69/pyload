@@ -35,7 +35,7 @@ class RequestFactory:
         self.cookiejars = {}
 
     def iface(self):
-        return self.core.config["download"]["interface"]
+        return self.core.config['download']['interface']
 
     def getRequest(self, pluginName, account=None, type="HTTP"):
         self.lock.acquire()
@@ -80,26 +80,26 @@ class RequestFactory:
 
     def getProxies(self):
         """ returns a proxy list for the request classes """
-        if not self.core.config["proxy"]["proxy"]:
+        if not self.core.config['proxy']['proxy']:
             return {}
         else:
             type = "http"
-            setting = self.core.config["proxy"]["type"].lower()
+            setting = self.core.config['proxy']['type'].lower()
             if setting == "socks4": type = "socks4"
             elif setting == "socks5": type = "socks5"
 
             username = None
-            if self.core.config["proxy"]["username"] and self.core.config["proxy"]["username"].lower() != "none":
-                username = self.core.config["proxy"]["username"]
+            if self.core.config['proxy']['username'] and self.core.config['proxy']['username'].lower() != "none":
+                username = self.core.config['proxy']['username']
 
             pw = None
-            if self.core.config["proxy"]["password"] and self.core.config["proxy"]["password"].lower() != "none":
-                pw = self.core.config["proxy"]["password"]
+            if self.core.config['proxy']['password'] and self.core.config['proxy']['password'].lower() != "none":
+                pw = self.core.config['proxy']['password']
 
             return {
                 "type": type,
-                "address": self.core.config["proxy"]["address"],
-                "port": self.core.config["proxy"]["port"],
+                "address": self.core.config['proxy']['address'],
+                "port": self.core.config['proxy']['port'],
                 "username": username,
                 "password": pw,
                 }
@@ -108,14 +108,14 @@ class RequestFactory:
         """returns options needed for pycurl"""
         return {"interface": self.iface(),
                 "proxies": self.getProxies(),
-                "ipv6": self.core.config["download"]["ipv6"]}
+                "ipv6": self.core.config['download']['ipv6']}
 
     def updateBucket(self):
         """ set values in the bucket according to settings"""
-        if not self.core.config["download"]["limit_speed"]:
+        if not self.core.config['download']['limit_speed']:
             self.bucket.setRate(-1)
         else:
-            self.bucket.setRate(self.core.config["download"]["max_speed"] * 1024)
+            self.bucket.setRate(self.core.config['download']['max_speed'] * 1024)
 
 # needs pyreq in global namespace
 def getURL(*args, **kwargs):

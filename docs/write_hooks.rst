@@ -143,7 +143,7 @@ Just store everything in ``self.info``. ::
             self.info = {"running": False}
 
         def coreReady(self):
-            self.info["running"] = True
+            self.info['running'] = True
 
 Usable with: ::
 

@@ -159,7 +159,7 @@ class ThreadManager:
     def tryReconnect(self):
         """checks if reconnect needed"""
 
-        if not (self.core.config["reconnect"]["activated"] and self.core.api.isTimeReconnect()):
+        if not (self.core.config['reconnect']['activated'] and self.core.api.isTimeReconnect()):
             return False
 
         active = [x.active.plugin.wantReconnect and x.active.plugin.waiting for x in self.threads if x.active]
@@ -171,7 +171,7 @@ class ThreadManager:
             if exists(join(pypath, self.core.config['reconnect']['method'])):
                 self.core.config['reconnect']['method'] = join(pypath, self.core.config['reconnect']['method'])
             else:
-                self.core.config["reconnect"]["activated"] = False
+                self.core.config['reconnect']['activated'] = False
                 self.log.warning(_("Reconnect script not found!"))
                 return
 
@@ -193,7 +193,7 @@ class ThreadManager:
             reconn = Popen(self.core.config['reconnect']['method'], bufsize=-1, shell=True)#, stdout=subprocess.PIPE)
         except:
             self.log.warning(_("Failed executing reconnect script!"))
-            self.core.config["reconnect"]["activated"] = False
+            self.core.config['reconnect']['activated'] = False
             self.reconnecting.clear()
             if self.core.debug:
                 print_exc()
@@ -282,8 +282,8 @@ class ThreadManager:
                 return
 
             if job.plugin.__type__ == "hoster":
-                spaceLeft = freeSpace(self.core.config["general"]["download_folder"]) / 1024 / 1024
-                if spaceLeft < self.core.config["general"]["min_free_space"]:
+                spaceLeft = freeSpace(self.core.config['general']['download_folder']) / 1024 / 1024
+                if spaceLeft < self.core.config['general']['min_free_space']:
                     self.log.warning(_("Not enough space left on device"))
                     self.pause = True
 
@@ -309,7 +309,7 @@ class ThreadManager:
                 thread = PluginThread.DecrypterThread(self, job)
 
     def getLimit(self, thread):
-        limit = thread.active.plugin.account.getAccountData(thread.active.plugin.user)["options"].get("limitDL", ["0"])[0]
+        limit = thread.active.plugin.account.getAccountData(thread.active.plugin.user)['options'].get("limitDL", ["0"])[0]
         return int(limit)
 
     def cleanup(self):

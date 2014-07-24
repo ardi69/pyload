@@ -60,7 +60,7 @@ class PyPackage:
 
     def getChildren(self):
         """get information about contained links"""
-        return self.m.getPackageData(self.id)["links"]
+        return self.m.getPackageData(self.id)['links']
 
     def sync(self):
         """sync with db"""

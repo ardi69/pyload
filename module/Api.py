@@ -95,29 +95,29 @@ class Api(Iface):
         self.core = core
 
     def _convertPyFile(self, p):
-        f = FileData(p["id"], p["url"], p["name"], p["plugin"], p["size"],
-                     p["format_size"], p["status"], p["statusmsg"],
-                     p["package"], p["error"], p["order"])
+        f = FileData(p['id'], p['url'], p['name'], p['plugin'], p['size'],
+                     p['format_size'], p['status'], p['statusmsg'],
+                     p['package'], p['error'], p['order'])
         return f
 
     def _convertConfigFormat(self, c):
         sections = {}
         for sectionName, sub in c.iteritems():
-            section = ConfigSection(sectionName, sub["desc"])
+            section = ConfigSection(sectionName, sub['desc'])
             items = []
             for key, data in sub.iteritems():
                 if key in ("desc", "outline"):
                     continue
                 item = ConfigItem()
                 item.name = key
-                item.description = data["desc"]
-                item.value = str(data["value"]) if not isinstance(data["value"], basestring) else data["value"]
-                item.type = data["type"]
+                item.description = data['desc']
+                item.value = str(data['value']) if not isinstance(data['value'], basestring) else data['value']
+                item.type = data['type']
                 items.append(item)
             section.items = items
             sections[sectionName] = section
             if "outline" in sub:
-                section.outline = sub["outline"]
+                section.outline = sub['outline']
         return sections
 
     @permission(PERMS.SETTINGS)
@@ -212,8 +212,8 @@ class Api(Iface):
 
         :return: new reconnect state
         """
-        self.core.config["reconnect"]["activated"] ^= True
-        return self.core.config["reconnect"]["activated"]
+        self.core.config['reconnect']['activated'] ^= True
+        return self.core.config['reconnect']['activated']
 
     @permission(PERMS.LIST)
     def statusServer(self):
@@ -234,7 +234,7 @@ class Api(Iface):
     @permission(PERMS.STATUS)
     def freeSpace(self):
         """Available free space at download directory in bytes"""
-        return freeSpace(self.core.config["general"]["download_folder"])
+        return freeSpace(self.core.config['general']['download_folder'])
 
     @permission(PERMS.ALL)
     def getServerVersion(self):
@@ -285,7 +285,7 @@ class Api(Iface):
         """
         start = self.core.config['reconnect']['startTime'].split(":")
         end = self.core.config['reconnect']['endTime'].split(":")
-        return compare_time(start, end) and self.core.config["reconnect"]["activated"]
+        return compare_time(start, end) and self.core.config['reconnect']['activated']
 
     @permission(PERMS.LIST)
     def statusDownloads(self):
@@ -401,7 +401,7 @@ class Api(Iface):
         :param data: file content
         :return: online check
         """
-        th = open(join(self.core.config["general"]["download_folder"], "tmp_" + container), "wb")
+        th = open(join(self.core.config['general']['download_folder'], "tmp_" + container), "wb")
         th.write(str(data))
         th.close()
 
@@ -417,7 +417,7 @@ class Api(Iface):
         result = self.core.threadManager.getInfoResult(rid)
 
         if "ALL_INFO_FETCHED" in result:
-            del result["ALL_INFO_FETCHED"]
+            del result['ALL_INFO_FETCHED']
             return OnlineCheck(-1, result)
         else:
             return OnlineCheck(rid, result)
@@ -469,9 +469,9 @@ class Api(Iface):
         if not data:
             raise PackageDoesNotExists(pid)
 
-        pdata = PackageData(data["id"], data["name"], data["folder"], data["site"], data["password"],
-                            data["queue"], data["order"],
-                            links=[self._convertPyFile(x) for x in data["links"].itervalues()])
+        pdata = PackageData(data['id'], data['name'], data['folder'], data['site'], data['password'],
+                            data['queue'], data['order'],
+                            links=[self._convertPyFile(x) for x in data['links'].itervalues()])
 
         return pdata
 
@@ -487,9 +487,9 @@ class Api(Iface):
         if not data:
             raise PackageDoesNotExists(pid)
 
-        pdata = PackageData(data["id"], data["name"], data["folder"], data["site"], data["password"],
-                            data["queue"], data["order"],
-                            fids=[int(x) for x in data["links"]])
+        pdata = PackageData(data['id'], data['name'], data['folder'], data['site'], data['password'],
+                            data['queue'], data['order'],
+                            fids=[int(x) for x in data['links']])
 
         return pdata
 
@@ -536,10 +536,10 @@ class Api(Iface):
 
         :return: list of `PackageInfo`
         """
-        return [PackageData(pack["id"], pack["name"], pack["folder"], pack["site"],
-                            pack["password"], pack["queue"], pack["order"],
-                            pack["linksdone"], pack["sizedone"], pack["sizetotal"],
-                            pack["linkstotal"])
+        return [PackageData(pack['id'], pack['name'], pack['folder'], pack['site'],
+                            pack['password'], pack['queue'], pack['order'],
+                            pack['linksdone'], pack['sizedone'], pack['sizetotal'],
+                            pack['linkstotal'])
                 for pack in self.core.files.getInfoData(Destination.Queue).itervalues()]
 
     @permission(PERMS.LIST)
@@ -549,10 +549,10 @@ class Api(Iface):
 
         :return: list of `PackageData`
         """
-        return [PackageData(pack["id"], pack["name"], pack["folder"], pack["site"],
-                            pack["password"], pack["queue"], pack["order"],
-                            pack["linksdone"], pack["sizedone"], pack["sizetotal"],
-                            links=[self._convertPyFile(x) for x in pack["links"].itervalues()])
+        return [PackageData(pack['id'], pack['name'], pack['folder'], pack['site'],
+                            pack['password'], pack['queue'], pack['order'],
+                            pack['linksdone'], pack['sizedone'], pack['sizetotal'],
+                            links=[self._convertPyFile(x) for x in pack['links'].itervalues()])
                 for pack in self.core.files.getCompleteData(Destination.Queue).itervalues()]
 
     @permission(PERMS.LIST)
@@ -561,10 +561,10 @@ class Api(Iface):
 
         :return: list of `PackageInfo`
         """
-        return [PackageData(pack["id"], pack["name"], pack["folder"], pack["site"],
-                            pack["password"], pack["queue"], pack["order"],
-                            pack["linksdone"], pack["sizedone"], pack["sizetotal"],
-                            pack["linkstotal"])
+        return [PackageData(pack['id'], pack['name'], pack['folder'], pack['site'],
+                            pack['password'], pack['queue'], pack['order'],
+                            pack['linksdone'], pack['sizedone'], pack['sizetotal'],
+                            pack['linkstotal'])
                 for pack in self.core.files.getInfoData(Destination.Collector).itervalues()]
 
     @permission(PERMS.LIST)
@@ -573,10 +573,10 @@ class Api(Iface):
 
         :return: list of `PackageInfo`
         """
-        return [PackageData(pack["id"], pack["name"], pack["folder"], pack["site"],
-                            pack["password"], pack["queue"], pack["order"],
-                            pack["linksdone"], pack["sizedone"], pack["sizetotal"],
-                            links=[self._convertPyFile(x) for x in pack["links"].itervalues()])
+        return [PackageData(pack['id'], pack['name'], pack['folder'], pack['site'],
+                            pack['password'], pack['queue'], pack['order'],
+                            pack['linksdone'], pack['sizedone'], pack['sizetotal'],
+                            links=[self._convertPyFile(x) for x in pack['links'].itervalues()])
                 for pack in self.core.files.getCompleteData(Destination.Collector).itervalues()]
 
 
@@ -694,7 +694,7 @@ class Api(Iface):
         :param filename: filename, extension is important so it can correctly decrypted
         :param data: file content
         """
-        th = open(join(self.core.config["general"]["download_folder"], "tmp_" + filename), "wb")
+        th = open(join(self.core.config['general']['download_folder'], "tmp_" + filename), "wb")
         th.write(str(data))
         th.close()
 
@@ -761,9 +761,9 @@ class Api(Iface):
 
         for pid in packs:
             pack = self.core.files.getPackageData(int(pid))
-            while pack["order"] in order.keys(): #just in case
-                pack["order"] += 1
-            order[pack["order"]] = pack["id"]
+            while pack['order'] in order.keys(): #just in case
+                pack['order'] += 1
+            order[pack['order']] = pack['id']
         return order
 
     @permission(PERMS.LIST)
@@ -775,10 +775,10 @@ class Api(Iface):
         """
         rawData = self.core.files.getPackageData(int(pid))
         order = {}
-        for id, pyfile in rawData["links"].iteritems():
-            while pyfile["order"] in order.keys(): #just in case
-                pyfile["order"] += 1
-            order[pyfile["order"]] = pyfile["id"]
+        for id, pyfile in rawData['links'].iteritems():
+            while pyfile['order'] in order.keys(): #just in case
+                pyfile['order'] += 1
+            order[pyfile['order']] = pyfile['id']
         return order
 
 
@@ -874,8 +874,8 @@ class Api(Iface):
         accs = self.core.accountManager.getAccountInfos(False, refresh)
         accounts = []
         for group in accs.values():
-            accounts.extend([AccountInfo(acc["validuntil"], acc["login"], acc["options"], acc["valid"],
-                                         acc["trafficleft"], acc["maxtraffic"], acc["premium"], acc["type"])
+            accounts.extend([AccountInfo(acc['validuntil'], acc['login'], acc['options'], acc['valid'],
+                                         acc['trafficleft'], acc['maxtraffic'], acc['premium'], acc['type'])
                              for acc in group])
         return accounts
 
@@ -920,7 +920,7 @@ class Api(Iface):
         :param remoteip:
         :return: dict with info, empty when login is incorrect
         """
-        if self.core.config["remote"]["nolocalauth"] and remoteip == "127.0.0.1":
+        if self.core.config['remote']['nolocalauth'] and remoteip == "127.0.0.1":
             return "local"
         else:
             return self.core.db.checkAuth(username, password)
@@ -932,9 +932,9 @@ class Api(Iface):
         :param userdata: dictionary of user data
         :return: boolean
         """
-        if userdata == "local" or userdata["role"] == ROLE.ADMIN:
+        if userdata == "local" or userdata['role'] == ROLE.ADMIN:
             return True
-        elif func in permMap and has_permission(userdata["permission"], permMap[func]):
+        elif func in permMap and has_permission(userdata['permission'], permMap[func]):
             return True
         else:
             return False
@@ -945,7 +945,7 @@ class Api(Iface):
         """similar to `checkAuth` but returns UserData thrift type """
         user =  self.checkAuth(username, password)
         if user:
-            return UserData(user["name"], user["email"], user["role"], user["permission"], user["template"])
+            return UserData(user['name'], user['email'], user['role'], user['permission'], user['template'])
         else:
             return UserData()
 
@@ -954,7 +954,7 @@ class Api(Iface):
         """returns all known user and info"""
         res = {}
         for user, data in self.core.db.getAllUserData().iteritems():
-            res[user] = UserData(user, data["email"], data["role"], data["permission"], data["template"])
+            res[user] = UserData(user, data['email'], data['role'], data['permission'], data['template'])
 
         return res
 

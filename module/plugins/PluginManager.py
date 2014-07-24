@@ -66,14 +66,14 @@ class PluginManager:
             f = open(join("userplugins", "__init__.py"), "wb")
             f.close()
 
-        self.plugins["crypter"] = self.crypterPlugins = self.parse("crypter", pattern=True)
-        self.plugins["container"] = self.containerPlugins = self.parse("container", pattern=True)
-        self.plugins["hoster"] = self.hosterPlugins = self.parse("hoster", pattern=True)
+        self.plugins['crypter'] = self.crypterPlugins = self.parse("crypter", pattern=True)
+        self.plugins['container'] = self.containerPlugins = self.parse("container", pattern=True)
+        self.plugins['hoster'] = self.hosterPlugins = self.parse("hoster", pattern=True)
 
-        self.plugins["ocr"] = self.captchaPlugins = self.parse("ocr")
-        self.plugins["accounts"] = self.accountPlugins = self.parse("accounts")
-        self.plugins["hooks"] = self.hookPlugins = self.parse("hooks")
-        self.plugins["internal"] = self.internalPlugins = self.parse("internal")
+        self.plugins['ocr'] = self.captchaPlugins = self.parse("ocr")
+        self.plugins['accounts'] = self.accountPlugins = self.parse("accounts")
+        self.plugins['hooks'] = self.hookPlugins = self.parse("hooks")
+        self.plugins['internal'] = self.internalPlugins = self.parse("internal")
 
         self.log.debug("created index of plugins")
 
@@ -124,20 +124,20 @@ class PluginManager:
 
                 # home contains plugins from pyload root
                 if home and name in home:
-                    if home[name]["v"] >= version:
+                    if home[name]['v'] >= version:
                         continue
 
                 if name in IGNORE or (folder, name) in IGNORE:
                      continue
 
                 plugins[name] = {}
-                plugins[name]["v"] = version
+                plugins[name]['v'] = version
 
                 module = f.replace(".pyc", "").replace(".py", "")
 
                 # the plugin is loaded from user directory
-                plugins[name]["user"] = True if home else False
-                plugins[name]["name"] = module
+                plugins[name]['user'] = True if home else False
+                plugins[name]['name'] = module
 
                 if pattern:
                     pattern = self.PATTERN.findall(content)
@@ -147,10 +147,10 @@ class PluginManager:
                     else:
                         pattern = "^unmachtable$"
 
-                    plugins[name]["pattern"] = pattern
+                    plugins[name]['pattern'] = pattern
 
                     try:
-                        plugins[name]["re"] = re.compile(pattern)
+                        plugins[name]['re'] = re.compile(pattern)
                     except:
                         self.log.error(_("%s has a invalid pattern.") % name)
 
@@ -211,13 +211,13 @@ class PluginManager:
             if type(url) not in (str, unicode, buffer): continue
             found = False
 
-            if last and last[1]["re"].match(url):
+            if last and last[1]['re'].match(url):
                 res.append((url, last[0]))
                 continue
 
             for name, value in chain(self.crypterPlugins.iteritems(), self.hosterPlugins.iteritems(),
                 self.containerPlugins.iteritems()):
-                if value["re"].match(url):
+                if value['re'].match(url):
                     res.append((url, name))
                     last = (name, value)
                     found = True
@@ -240,10 +240,10 @@ class PluginManager:
 
         if not plugin:
             self.log.warning("Plugin %s not found." % name)
-            plugin = self.hosterPlugins["BasePlugin"]
+            plugin = self.hosterPlugins['BasePlugin']
 
         if "new_module" in plugin and not original:
-            return plugin["new_module"]
+            return plugin['new_module']
 
         return self.loadModule(type, name)
 
@@ -252,7 +252,7 @@ class PluginManager:
         plugin, type = self.findPlugin(name)
 
         if "new_name" in plugin:
-            return plugin["new_name"]
+            return plugin['new_name']
 
         return name
 
@@ -264,11 +264,11 @@ class PluginManager:
         """
         plugins = self.plugins[type]
         if name in plugins:
-            if "module" in plugins[name]: return plugins[name]["module"]
+            if "module" in plugins[name]: return plugins[name]['module']
             try:
-                module = __import__(self.ROOT + "%s.%s" % (type, plugins[name]["name"]), globals(), locals(),
-                    plugins[name]["name"])
-                plugins[name]["module"] = module  #cache import, maybe unneeded
+                module = __import__(self.ROOT + "%s.%s" % (type, plugins[name]['name']), globals(), locals(),
+                    plugins[name]['name'])
+                plugins[name]['module'] = module  #cache import, maybe unneeded
                 return module
             except Exception, e:
                 self.log.error(_("Error importing %(name)s: %(msg)s") % {"name": name, "msg": str(e)})
@@ -296,10 +296,10 @@ class PluginManager:
 
             if type in self.plugins and name in self.plugins[type]:
                 #userplugin is a newer version
-                if not user and self.plugins[type][name]["user"]:
+                if not user and self.plugins[type][name]['user']:
                     return self
                 #imported from userdir, but pyloads is newer
-                if user and not self.plugins[type][name]["user"]:
+                if user and not self.plugins[type][name]['user']:
                     return self
 
 
@@ -348,7 +348,7 @@ class PluginManager:
                     self.log.debug("Reloading %s" % plugin)
                     id = (type, plugin)
                     try:
-                        reload(self.plugins[type][plugin]["module"])
+                        reload(self.plugins[type][plugin]['module'])
                     except Exception, e:
                         self.log.error("Error when reloading %s" % id, str(e))
                         continue
@@ -356,11 +356,11 @@ class PluginManager:
                         reloaded.append(id)
 
         #index creation
-        self.plugins["crypter"] = self.crypterPlugins = self.parse("crypter", pattern=True)
-        self.plugins["container"] = self.containerPlugins = self.parse("container", pattern=True)
-        self.plugins["hoster"] = self.hosterPlugins = self.parse("hoster", pattern=True)
-        self.plugins["ocr"] = self.captchaPlugins = self.parse("ocr")
-        self.plugins["accounts"] = self.accountPlugins = self.parse("accounts")
+        self.plugins['crypter'] = self.crypterPlugins = self.parse("crypter", pattern=True)
+        self.plugins['container'] = self.containerPlugins = self.parse("container", pattern=True)
+        self.plugins['hoster'] = self.hosterPlugins = self.parse("hoster", pattern=True)
+        self.plugins['ocr'] = self.captchaPlugins = self.parse("ocr")
+        self.plugins['accounts'] = self.accountPlugins = self.parse("accounts")
 
         if "accounts" in as_dict:  #: accounts needs to be reloaded
             self.core.accountManager.initPlugins()
