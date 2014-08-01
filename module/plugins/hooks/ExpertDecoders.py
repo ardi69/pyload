@@ -64,7 +64,7 @@ class ExpertDecoders(Hook):
         self.logDebug("result %s : %s" % (ticket, result))
         task.setResult(result)
 
-    def newCaptchaTask(self, task):
+    def captchaTask(self, task):
         if not task.isTextual():
             return False
 

@@ -99,7 +99,7 @@ class Captcha9kw(Hook):
             self.logError("Bad upload: %s" % response)
             return False
 
-    def newCaptchaTask(self, task):
+    def captchaTask(self, task):
         if not task.isTextual() and not task.isPositional():
             return False
 

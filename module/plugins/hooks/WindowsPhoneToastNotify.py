@@ -46,7 +46,7 @@ class WindowsPhoneToastNotify(Hook):
         webservice.close()
         self.setStorage("LAST_NOTIFY", time.time())
 
-    def newCaptchaTask(self, task):
+    def captchaTask(self, task):
         if not self.getConfig("pushId") or not self.getConfig("pushUrl"):
             return False
 
