@@ -1,44 +1,17 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN, spoob, mkaay
-"""
-
-from time import time, sleep
-from random import randint
-
 import os
-from os import remove, makedirs, chmod, stat
-from os.path import exists, join
 
+from random import randint
+from time import time, sleep
+from os import chmod, makedirs, remove, stat
+from os.path import exists, join
 if os.name != "nt":
+    from grp import getgrnam
     from os import chown
     from pwd import getpwnam
-    from grp import getgrnam
 
-from itertools import islice
-
-from module.utils import safe_join, safe_path, fs_encode, fs_decode
-
-def chunks(iterable, size):
-    it = iter(iterable)
-    item = list(islice(it, size))
-    while item:
-        yield item
-        item = list(islice(it, size))
+from module.utils import chuncks, safe_join, safe_filename, fs_encode, fs_decode
 
 
 class Abort(Exception):
@@ -229,7 +202,8 @@ class Plugin(Base):
     def getChunkCount(self):
         if self.chunkLimit <= 0:
             return self.config["download"]["chunks"]
-        return min(self.config["download"]["chunks"], self.chunkLimit)
+        else:
+            return min(self.config["download"]["chunks"], self.chunkLimit)
 
     def __call__(self):
         return self.__name__
@@ -337,7 +311,8 @@ class Plugin(Base):
         :param reason: reason for retrying, will be passed to fail if max_tries reached
         """
         if 0 < max_tries <= self.retries:
-            if not reason: reason = "Max retries reached"
+            if not reason:
+                reason = "Max retries reached"
             raise Fail(reason)
 
         self.wantReconnect = False
@@ -388,8 +363,8 @@ class Plugin(Base):
 
         if Ocr and not forceUser:
             sleep(randint(3000, 5000) / 1000.0)
-            if self.pyfile.abort: raise Abort
-
+            if self.pyfile.abort:
+                raise Abort
             ocr = Ocr()
             result = ocr.get_captcha(temp_file.name)
         else:
@@ -406,7 +381,7 @@ class Plugin(Base):
 
             captchaManager.removeTask(task)
 
-            if task.error and has_plugin: #ignore default error message since the user could use OCR
+            if task.error and has_plugin:  #: ignore default error message since the user could use OCR
                 self.fail(_("Pil and tesseract not installed and no Client connected for captcha decrypting"))
             elif task.error:
                 self.fail(task.error)
@@ -437,9 +412,11 @@ class Plugin(Base):
         :param decode: Wether to decode the output according to http header, should be True in most cases
         :return: Loaded content
         """
-        if self.pyfile.abort: raise Abort
+        if self.pyfile.abort:
+            raise Abort
         #utf8 vs decode -> please use decode attribute in all future plugins
-        if type(url) == unicode: url = str(url)
+        if type(url) == unicode:
+            url = str(url)
 
         res = self.req.load(url, get, post, ref, cookies, just_header, decode=decode)
 
@@ -453,7 +430,7 @@ class Plugin(Base):
             f = open(
                 join("tmp", self.__name__, "%s_line%s.dump.html" % (frame.f_back.f_code.co_name, frame.f_back.f_lineno))
                 , "wb")
-            del frame # delete the frame or it wont be cleaned
+            del frame  #: delete the frame or it wont be cleaned
 
             try:
                 tmp = res.encode("utf8")
@@ -464,11 +441,12 @@ class Plugin(Base):
             f.close()
 
         if just_header:
-            #parse header
+            # Parse header
             header = {"code": self.req.code}
             for line in res.splitlines():
                 line = line.strip()
-                if not line or ":" not in line: continue
+                if not line or ":" not in line:
+                    continue
 
                 key, none, value = line.partition(":")
                 key = key.lower().strip()
@@ -520,7 +498,7 @@ class Plugin(Base):
 
         # convert back to unicode
         location = fs_decode(location)
-        name = safe_path(self.pyfile.name)
+        name = safe_filename(self.pyfile.name)
 
         filename = join(location, name)
 
@@ -533,7 +511,7 @@ class Plugin(Base):
         finally:
             self.pyfile.size = self.req.size
 
-        if disposition and newname and newname != name: #triple check, just to be sure
+        if disposition and newname and newname != name:  #: triple check, just to be sure
             self.logInfo("%(name)s saved as %(newname)s" % {"name": name, "newname": newname})
             self.pyfile.name = newname
             filename = join(location, newname)
@@ -577,8 +555,8 @@ class Plugin(Base):
         f = open(lastDownload, "rb")
         content = f.read(read_size if read_size else -1)
         f.close()
-        #produces encoding errors, better log to other file in the future?
-        #self.logDebug("Content: %s" % content)
+        # Produces encoding errors, better log to other file in the future?
+        # self.logDebug("Content: %s" % content)
         for name, rule in rules.iteritems():
             if type(rule) in (str, unicode):
                 if rule in content:
@@ -597,8 +575,7 @@ class Plugin(Base):
     def getPassword(self):
         """ get the password the user provided in the package"""
         password = self.pyfile.package().password
-        if not password: return ""
-        return password
+        return password if password else ""
 
 
     def checkForSameFiles(self, starting=False):

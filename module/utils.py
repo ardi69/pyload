@@ -1,14 +1,23 @@
 # -*- coding: utf-8 -*-
-
-""" Store all usefull functions here """
+### Store all usefull functions here ###
 
 import os
+import re
 import sys
 import time
-import re
+
+from htmlentitydefs import name2codepoint
+from itertools import islice
 from os.path import join
 from string import maketrans
-from htmlentitydefs import name2codepoint
+
+
+def chunks(iterable, size):
+    it = iter(iterable)
+    item = list(islice(it, size))
+    while item:
+        yield item
+        item = list(islice(it, size))
 
 
 def chmod(*args):
@@ -39,7 +48,7 @@ def remove_chars(string, repl):
             return string.translate(dict([(ord(s), None) for s in repl]))
 
 
-def safe_path(name):
+def safe_filename(name):
     """ remove bad chars """
     name = name.encode('ascii', 'replace')  # Non-ASCII chars usually breaks file saving. Replacing.
     if os.name == 'nt':
@@ -50,7 +59,7 @@ def safe_path(name):
 
 #: Deprecated method
 def save_path(name):
-    return safe_path(name)
+    return safe_filename(name)
 
 
 def safe_join(*args):
