@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from module.plugins.Crypter import Crypter
-
-from os.path import join, exists, basename
-from os import remove
 import re
+
+from os import remove
+from os.path import basename, exists
+
+from module.plugins.Crypter import Crypter
+from module.utils import save_join
+
 
 class Container(Crypter):
     __name__ = "Container"
@@ -39,7 +42,7 @@ class Container(Crypter):
         if self.pyfile.url.startswith("http"):
             self.pyfile.name = re.findall("([^\/=]+)", self.pyfile.url)[-1]
             content = self.load(self.pyfile.url)
-            self.pyfile.url = join(self.config['general']['download_folder'], self.pyfile.name)
+            self.pyfile.url = save_join(self.config['general']['download_folder'], self.pyfile.name)
             f = open(self.pyfile.url, "wb" )
             f.write(content)
             f.close()
@@ -47,8 +50,8 @@ class Container(Crypter):
         else:
             self.pyfile.name = basename(self.pyfile.url)
             if not exists(self.pyfile.url):
-                if exists(join(pypath, self.pyfile.url)):
-                    self.pyfile.url = join(pypath, self.pyfile.url)
+                if exists(save_join(pypath, self.pyfile.url)):
+                    self.pyfile.url = save_join(pypath, self.pyfile.url)
                 else:
                     self.fail(_("File not exists."))
 

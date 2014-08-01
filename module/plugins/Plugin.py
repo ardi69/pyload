@@ -2,16 +2,17 @@
 
 import os
 
-from random import randint
-from time import time, sleep
 from os import chmod, makedirs, remove, stat
 from os.path import exists, join
+from random import randint
+from time import time, sleep
+
 if os.name != "nt":
     from grp import getgrnam
     from os import chown
     from pwd import getpwnam
 
-from module.utils import chuncks, safe_join, safe_filename, fs_encode, fs_decode
+from module.utils import chunks, safe_join, safe_filename, fs_encode, fs_decode
 
 
 class Abort(Exception):

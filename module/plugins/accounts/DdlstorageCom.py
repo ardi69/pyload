@@ -13,13 +13,15 @@ from module.utils import parseFileSize
 
 class DdlstorageCom(XFSPAccount):
     __name__ = "DdlstorageCom"
-    __version__ = "1.00"
     __type__ = "account"
+    __version__ = "1.00"
+
     __description__ = """DDLStorage.com account plugin"""
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
     MAIN_PAGE = "http://ddlstorage.com/"
+
 
     def loadAccountInfo(self, user, req):
         password = self.accounts[user]['password']

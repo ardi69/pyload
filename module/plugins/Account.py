@@ -5,7 +5,7 @@ from time import time
 from traceback import print_exc
 from threading import RLock
 
-from Plugin import Base
+from module.plugins.Plugin import Base
 from module.utils import compare_time, parseFileSize, lock
 
 
