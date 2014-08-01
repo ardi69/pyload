@@ -38,5 +38,5 @@ class RestartFailed(Hook):
         self.api = self.core.api
         self.interval = self.MIN_INTERVAL
 
-    def coreReady(self):
+    def activated(self):
         self.pluginConfigChanged(self.__name__, "interval", self.getConfig("interval"))

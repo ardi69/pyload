@@ -78,7 +78,7 @@ class MultiHoster(Hook):
         """
         raise NotImplementedError
 
-    def coreReady(self):
+    def activated(self):
         if self.cb:
             self.core.scheduler.removeJob(self.cb)
 
@@ -170,7 +170,7 @@ class MultiHoster(Hook):
             del dict['new_module']
             del dict['new_name']
 
-    def unload(self):
+    def deactivated(self):
         """Remove override for all hosters. Scheduler job is removed by hookmanager"""
         for hoster in self.supported:
             self.unloadHoster(hoster)

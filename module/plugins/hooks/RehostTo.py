@@ -24,7 +24,7 @@ class RehostTo(MultiHoster):
         page = getURL("http://rehost.to/api.php?cmd=get_supported_och_dl&long_ses=%s" % self.long_ses)
         return [x.strip() for x in page.replace("\"", "").split(",")]
 
-    def coreReady(self):
+    def activated(self):
         self.account = self.core.accountManager.getAccountPlugin("RehostTo")
 
         user = self.account.selectAccount()[0]
@@ -37,4 +37,4 @@ class RehostTo(MultiHoster):
         self.ses = data['ses']
         self.long_ses = data['long_ses']
 
-        return MultiHoster.coreReady(self)
+        return MultiHoster.activated(self)

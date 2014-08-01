@@ -49,11 +49,11 @@ class UpdateManager(Hook):
             if value is True and self.core.debug:
                 self.periodical2()
 
-    def coreReady(self):
+    def activated(self):
         self.pluginConfigChanged(self.__name__, "interval", self.getConfig("interval"))
         self.pluginConfigChanged(self.__name__, "reloadplugins", self.getConfig("reloadplugins"))
 
-    def unload(self):
+    def deactivated(self):
         self.pluginConfigChanged(self.__name__, "reloadplugins", False)
 
     def setup(self):

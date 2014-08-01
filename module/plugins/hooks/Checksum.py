@@ -59,7 +59,7 @@ class Checksum(Hook):
                'default': r'^(?P<hash>[0-9A-Fa-f]+)\s+\*?(?P<name>.+)$'}
 
 
-    def coreReady(self):
+    def activated(self):
         if not self.config['general']['checksum']:
             self.logInfo("Checksum validation is disabled in general configuration")
 

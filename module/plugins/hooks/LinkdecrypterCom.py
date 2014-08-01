@@ -19,7 +19,7 @@ class LinkdecrypterCom(Hook):
     __author_mail__ = "zoidberg@mujmail.cz"
 
 
-    def coreReady(self):
+    def activated(self):
         try:
             self.loadPatterns()
         except Exception, e:
