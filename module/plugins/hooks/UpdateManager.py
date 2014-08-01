@@ -10,7 +10,7 @@ from time import time
 
 from module.network.RequestFactory import getURL
 from module.plugins.Hook import Expose, Hook, threaded
-from module.utils import save_join
+from module.utils import safe_join
 
 
 class UpdateManager(Hook):
@@ -201,7 +201,7 @@ class UpdateManager(Hook):
                 content = getURL(url % plugin)
                 m = vre.search(content)
                 if m and m.group(2) == version:
-                    f = open(save_join("userplugins", prefix, filename), "wb")
+                    f = open(safe_join("userplugins", prefix, filename), "wb")
                     f.write(content)
                     f.close()
                     updated.append((prefix, name))
@@ -258,8 +258,8 @@ class UpdateManager(Hook):
             pyc_file = name + ".pyc"
 
             for root in ("userplugins", join(pypath, "module", "plugins")):
-                py_filename = save_join(root, type, py_file)
-                pyc_filename = save_join(root, type, pyc_file)
+                py_filename = safe_join(root, type, py_file)
+                pyc_filename = safe_join(root, type, pyc_file)
 
                 if isfile(py_filename):
                     try:
