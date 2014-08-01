@@ -284,9 +284,3 @@ class SimpleHoster(Hoster):
         size = self.pyfile.size / 1024
         self.logInfo("Filesize: %i KiB, Traffic left for user %s: %i KiB" % (size, self.user, traffic))
         return size <= traffic
-
-    # TODO: Remove in 0.5
-    def wait(self, seconds=False, reconnect=False):
-        if seconds:
-            self.setWait(seconds, reconnect)
-        super(SimpleHoster, self).wait()
