@@ -7,7 +7,7 @@ import module.common.pylgettext as gettext
 
 from getpass import getpass
 from os import makedirs
-from os.path import abspath, dirname, exists, join
+from os.path import exists, join
 from subprocess import PIPE, call
 
 from module.utils import get_console_encoding, versiontuple
@@ -141,7 +141,7 @@ class Setup:
 
         print
         print
-        print _("CURRENT CONFIG PATH: %s") % abspath("")
+        print _("CURRENT CONFIG PATH: %s") % owd
         print
         print _("NOTE: If you use pyLoad on a server or the home partition lives on an iternal flash it may be a good idea to change it.")
         path = self.ask(_("Do you want to change the config path?"), self.no, bool=True)
@@ -420,7 +420,7 @@ class Setup:
             translation.install(True)
 
         print _("Setting new config path, current configuration will not be transfered!")
-        path = self.ask(_("CONFIG PATH"), abspath(""))
+        path = self.ask(_("CONFIG PATH"), owd)
         try:
             path = join(pypath, path)
             if not exists(path):

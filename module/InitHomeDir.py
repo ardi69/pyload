@@ -18,22 +18,22 @@
     This modules inits working directories and global variables, pydir and homedir
 """
 
-from os import makedirs, path, chdir
-from os.path import join
+import __builtin__
 import sys
+
+from os import chdir, makedirs, path
+from os.path import abspath, exists, expanduser, join
 from sys import argv, platform
 
-import __builtin__
 
-__builtin__.owd = path.abspath("")  # original working directory
-__builtin__.pypath = path.abspath(path.join(__file__, "..", ".."))
+__builtin__.owd = abspath("")  # original working directory
+__builtin__.pypath = abspath(join(__file__, "..", ".."))
 
 sys.path.append(join(pypath, "module", "lib"))
 
-homedir = ""
+homedir = expanduser("~")
 
 if platform == 'nt':
-    homedir = path.expanduser("~")
     if homedir == "~":
         import ctypes
 
@@ -47,8 +47,6 @@ if platform == 'nt':
         path_buf = ctypes.wintypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
         result = _SHGetFolderPath(0, CSIDL_APPDATA, 0, 0, path_buf)
         homedir = path_buf.value
-else:
-    homedir = path.expanduser("~")
 
 __builtin__.homedir = homedir
 
@@ -59,18 +57,18 @@ if "--configdir=" in args:
     for aa in argv:
         if aa.startswith("--configdir="):
             configdir = aa.replace("--configdir=", "", 1).strip()
-elif path.exists(path.join(pypath, "module", "config", "configdir")):
-    f = open(path.join(pypath, "module", "config", "configdir"), "rb")
+elif exists(join(pypath, "module", "config", "configdir")):
+    f = open(join(pypath, "module", "config", "configdir"), "rb")
     c = f.read().strip()
     f.close()
-    configdir = path.join(pypath, c)
+    configdir = join(pypath, c)
 else:
     if platform in ("posix", "linux2"):
-        configdir = path.join(homedir, ".pyload")
+        configdir = join(homedir, ".pyload")
     else:
-        configdir = path.join(homedir, "pyload")
+        configdir = join(homedir, "pyload")
 
-if not path.exists(configdir):
+if not exists(configdir):
     makedirs(configdir, 0700)
 
 __builtin__.configdir = configdir

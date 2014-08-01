@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from os.path import join, abspath, dirname
+from os.path import join
 
-path = join((abspath(dirname(__file__))), "..", "..", "lib")
-sys.path.append(path)
+sys.path.append(join(pypath, "module", "lib"))
 
 from thriftgen.pyload import Pyload
 from thriftgen.pyload.ttypes import *

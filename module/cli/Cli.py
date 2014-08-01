@@ -1,54 +1,36 @@
 # -*- coding: utf-8 -*-
-#
-#Copyright (C) 2008-2014 RaNaN
-#
-#This program is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 3 of the License,
-#or (at your option) any later version.
-#
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#See the GNU General Public License for more details.
-#
-#You should have received a copy of the GNU General Public License
-# along with this program; if not, see <http://www.gnu.org/licenses/>.
-#
-###
-from __future__ import with_statement
-from getopt import GetoptError, getopt
 
-import module.common.pylgettext as gettext
+from __future__ import with_statement
+
 import os
-from os import _exit
-from os.path import join, exists, abspath, basename
 import sys
+
+from codecs import getwriter
+from getopt import GetoptError, getopt
+from os import _exit
+from os.path import join, exists, basename
 from sys import exit
 from threading import Thread, Lock
 from time import sleep
 from traceback import print_exc
 
-import ConfigParser
-
-from codecs import getwriter
-
-if os.name == "nt":
-    enc = "cp850"
-else:
-    enc = "utf8"
-
-sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
-
-from module import InitHomeDir
-from module.cli.printer import *
-from module.cli import AddPackage, ManageFiles
-
-from module.Api import Destination
-from module.utils import formatSize, decode
-from module.remote.thriftbackend.ThriftClient import ThriftClient, NoConnection, NoSSL, WrongLogin, ConnectionClosed
 from module.lib.Getch import Getch
 from module.lib.rename_process import renameProcess
+
+import ConfigParser
+import module.common.pylgettext as gettext
+
+from module import InitHomeDir
+from module.Api import Destination
+from module.cli import AddPackage, ManageFiles
+from module.cli.printer import *
+from module.remote.thriftbackend.ThriftClient import ThriftClient, NoConnection, NoSSL, WrongLogin, ConnectionClosed
+from module.utils import formatSize, decode
+
+
+enc = "cp850" if os.name == "nt" else "utf8"
+sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
+
 
 class Cli:
     def __init__(self, client, command):

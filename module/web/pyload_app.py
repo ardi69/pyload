@@ -21,14 +21,15 @@ from operator import itemgetter, attrgetter
 import time
 import os
 import sys
+
 from os import listdir
-from os.path import isdir, isfile, join, abspath
+from os.path import abspath, dirname, isdir, isfile, join, normpath
 from sys import getfilesystemencoding
 from urllib import unquote
 
 from bottle import route, static_file, request, response, redirect, HTTPError, error
 
-from webinterface import PYLOAD, PYLOAD_DIR, THEME, THEME_DIR, SETUP, env
+from webinterface import PYLOAD, THEME, THEME_DIR, SETUP, env
 
 from utils import render_to_response, parse_permissions, parse_userdata, \
     login_required, get_permission, set_permission, permlist, toDict, set_session
@@ -110,7 +111,7 @@ def server_static(tml, type, file):
 
 @route('/favicon.ico')
 def favicon():
-    return static_file("icon.ico", root=join(PYLOAD_DIR, "docs", "resources"))
+    return static_file("icon.ico", root=join(pypath, "docs", "resources"))
 
 
 @route('/login', method="GET")
@@ -298,19 +299,19 @@ def path(file="", path=""):
     else:
         type = "folder"
 
-    path = os.path.normpath(unquotepath(path))
+    path = normpath(unquotepath(path))
 
-    if os.path.isfile(path):
+    if isfile(path):
         oldfile = path
-        path = os.path.dirname(path)
+        path = dirname(path)
     else:
         oldfile = ''
 
     abs = False
 
-    if os.path.isdir(path):
+    if isdir(path):
         if os.path.isabs(path):
-            cwd = os.path.abspath(path)
+            cwd = abspath(path)
             abs = True
         else:
             cwd = relpath(path)
@@ -322,16 +323,16 @@ def path(file="", path=""):
     except:
         pass
 
-    cwd = os.path.normpath(os.path.abspath(cwd))
-    parentdir = os.path.dirname(cwd)
+    cwd = normpath(abspath(cwd))
+    parentdir = dirname(cwd)
     if not abs:
-        if os.path.abspath(cwd) == "/":
+        if abspath(cwd) == "/":
             cwd = relpath(cwd)
         else:
             cwd = relpath(cwd) + os.path.sep
         parentdir = relpath(parentdir) + os.path.sep
 
-    if os.path.abspath(cwd) == "/":
+    if abspath(cwd) == "/":
         parentdir = ""
 
     try:
@@ -351,12 +352,12 @@ def path(file="", path=""):
         except:
             continue
 
-        if os.path.isdir(join(cwd, f)):
+        if isdir(join(cwd, f)):
             data['type'] = 'dir'
         else:
             data['type'] = 'file'
 
-        if os.path.isfile(join(cwd, f)):
+        if isfile(join(cwd, f)):
             data['size'] = os.path.getsize(join(cwd, f))
 
             power = 0
@@ -522,7 +523,7 @@ def info():
     data = {"python": sys.version,
             "os": " ".join((os.name, sys.platform) + extra),
             "version": PYLOAD.getServerVersion(),
-            "folder": abspath(PYLOAD_DIR), "config": abspath(""),
+            "folder": pypath, "config": owd,
             "download": abspath(conf["general"]["download_folder"]["value"]),
             "freespace": formatSize(PYLOAD.freeSpace()),
             "remote": conf["remote"]["port"]["value"],

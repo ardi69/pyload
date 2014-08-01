@@ -39,7 +39,7 @@ def unquotepath(path):
         return ""
 
 def path_make_absolute(path):
-    p = os.path.abspath(path)
+    p = abspath(path)
     if p[-1] == os.path.sep:
         return p
     else:

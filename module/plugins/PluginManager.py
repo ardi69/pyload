@@ -20,14 +20,16 @@
 import re
 import sys
 
-from os import listdir, makedirs
-from os.path import isfile, join, exists, abspath
-from sys import version_info
 from itertools import chain
+from os import listdir, makedirs
+from os.path import isfile, join, exists
+from sys import version_info
 from traceback import print_exc
 
 from module.lib.SafeEval import const_eval as literal_eval
+
 from module.ConfigParser import IGNORE
+
 
 class PluginManager:
     ROOT = "module.plugins."
@@ -56,7 +58,7 @@ class PluginManager:
     def createIndex(self):
         """create information for all plugins available"""
 
-        sys.path.append(abspath(""))
+        sys.path.append(pypath)
 
         if not exists("userplugins"):
             makedirs("userplugins")

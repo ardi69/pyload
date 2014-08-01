@@ -31,7 +31,7 @@ import logging
 import logging.handlers
 import os
 from os import _exit, execl, getcwd, makedirs, remove, sep, walk, chdir, close
-from os.path import exists, join
+from os.path import exists, isfile, join
 import signal
 import subprocess
 import sys
@@ -195,7 +195,7 @@ class Core(object):
 
     def checkPidFile(self):
         """ return pid as int or 0"""
-        if os.path.isfile(self.pidfile):
+        if isfile(self.pidfile):
             f = open(self.pidfile, "rb")
             pid = f.read().strip()
             f.close()

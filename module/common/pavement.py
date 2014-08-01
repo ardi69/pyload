@@ -8,14 +8,15 @@ import os
 import sys
 import shutil
 import re
+
 from glob import glob
+from os.path import isfile, join
 from tempfile import mkdtemp
 from urllib import urlretrieve
 from subprocess import call, Popen, PIPE
 from zipfile import ZipFile
 
-PROJECT_DIR = path(__file__).dirname()
-sys.path.append(PROJECT_DIR)
+sys.path.append(pypath)
 
 options = environment.options
 path('pyload').mkdir()
@@ -28,7 +29,7 @@ setup(
     name="pyload",
     version="0.4.10",
     description='Fast, lightweight and full featured download manager.',
-    long_description=open(PROJECT_DIR / "README.md").read(),
+    long_description=open(join(pypath, "README.md")).read(),
     keywords = ('pyload', 'download-manager', 'one-click-hoster', 'download'),
     url="http://pyload.org",
     download_url='http://pyload.org/download',
@@ -254,7 +255,7 @@ def upload_translations(options):
     shutil.copy('locale/crowdin.yaml', tmp)
     os.mkdir(tmp / 'pyLoad')
     for f in glob('locale/*.pot'):
-        if os.path.isfile(f):
+        if isfile(f):
             shutil.copy(f, tmp / 'pyLoad')
 
     config = tmp / 'crowdin.yaml'
@@ -282,7 +283,7 @@ def download_translations(options):
     shutil.copy('locale/crowdin.yaml', tmp)
     os.mkdir(tmp / 'pyLoad')
     for f in glob('locale/*.pot'):
-        if os.path.isfile(f):
+        if isfile(f):
             shutil.copy(f, tmp / 'pyLoad')
 
     config = tmp / 'crowdin.yaml'

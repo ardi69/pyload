@@ -20,13 +20,12 @@ import sys
 import module.common.pylgettext as gettext
 
 import os
-from os.path import join, abspath, dirname, exists
+from os.path import join, abspath, exists
 from os import makedirs
 
-THEME_DIR = abspath(join(dirname(__file__), "themes"))
-PYLOAD_DIR = abspath(join(THEME_DIR, "..", "..", ".."))
+THEME_DIR = abspath(join(__file__, "themes"))
 
-sys.path.append(PYLOAD_DIR)
+sys.path.append(pypath)
 
 from module import InitHomeDir
 from module.utils import decode, formatSize
@@ -97,7 +96,7 @@ else:
     env.filters["url"] = lambda x: PREFIX + x if x.startswith("/") else x
 
 gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-translation = gettext.translation("django", join(PYLOAD_DIR, "locale"),
+translation = gettext.translation("django", join(pypath, "locale"),
     languages=[config.get("general", "language"), "en"],fallback=True)
 translation.install(True)
 env.install_gettext_translations(translation)
