@@ -161,32 +161,35 @@ class HookManager:
 
         pluginClass = self.core.pluginManager.loadClass("hooks", plugin)
 
-        if not pluginClass: return
+        if not pluginClass:
+            return
 
-        self.log.debug("Plugin loaded: %s" % plugin)
+        self.log.debug("Activate addon: " + plugin)
 
-        plugin = pluginClass(self.core, self)
-        self.plugins.append(plugin)
-        self.pluginMap[pluginClass.__name__] = plugin
+        hook = pluginClass(self.core, self)
+        self.plugins.append(hook)
+        self.pluginMap[pluginClass.__name__] = hook
 
         # call core Ready
-        start_new_thread(plugin.coreReady, tuple())
+        hook.coreReady()  # Deprecated
+        hook.activated()
 
     def deactivateHook(self, plugin):
 
-        hook = None
         for inst in self.plugins:
             if inst.__name__ == plugin:
                 hook = inst
+                break
+        else:
+            return
 
-        if not hook: return
+        self.log.debug("De-activate addon: " + plugin)
 
-        self.log.debug("Plugin unloaded: %s" % plugin)
-
-        hook.unload()
+        hook.unload()  # Deprecated
+        hook.deactivated()
 
         #remove periodic call
-        self.log.debug("Removed callback %s" % self.core.scheduler.removeJob(hook.cb))
+        self.log.debug("Remove peridical callback %s" % self.core.scheduler.removeJob(hook.cb))
         self.plugins.remove(hook)
         del self.pluginMap[hook.__name__]
 
@@ -195,17 +198,19 @@ class HookManager:
     def coreReady(self):
         for plugin in self.plugins:
             if plugin.isActivated():
-                plugin.coreReady()
+                plugin.coreReady()  # Deprecated
+                plugin.activated()
 
-        self.dispatchEvent("coreReady")
+        self.dispatchEvent("activated")
 
     @try_catch
     def coreExiting(self):
         for plugin in self.plugins:
             if plugin.isActivated():
-                plugin.coreExiting()
+                plugin.coreExiting()  # Deprecated
+                plugin.exiting()
 
-        self.dispatchEvent("coreExiting")
+        self.dispatchEvent("exiting")
 
     @lock
     def downloadPreparing(self, pyfile):

@@ -97,7 +97,11 @@ class Hook(Base):
         """ more init stuff if needed """
         pass
 
-    def unload(self):
+    def deactivated(self):
+        """ called when hook was deactivated """
+        pass
+
+    def unload(self):  # Deprecated, use "deactivated" method instead
         """ called when hook was deactivated """
         pass
 
@@ -106,12 +110,21 @@ class Hook(Base):
         return self.config.getPlugin(self.__name__, "activated")
 
 
-    #event methods - overwrite these if needed
-    def coreReady(self):
+    # Event methods - overwrite these if needed
+
+    def activated(self):
         pass
 
-    def coreExiting(self):
+    def coreReady(self):  # Deprecated, use "activated" method instead
         pass
+
+    def exiting(self):
+        """ called by core.shutdown just before exiting """
+        pass
+
+    def coreExiting(self):  # Deprecated, use "exiting" method instead
+        pass
+
 
     def downloadPreparing(self, pyfile):
         pass
@@ -125,17 +138,20 @@ class Hook(Base):
     def packageFinished(self, pypack):
         pass
 
+
     def beforeReconnecting(self, ip):
         pass
 
     def afterReconnecting(self, ip):
         pass
 
+
     def periodical(self):
         pass
 
-    def newCaptchaTask(self, task):
-        """ new captcha task for the plugin, it MUST set the handler and timeout or will be ignored """
+
+    def captchaTask(self, task):
+        """ captcha task for the plugin, it MUST set the handler and timeout or will be ignored """
         pass
 
     def captchaCorrect(self, task):
