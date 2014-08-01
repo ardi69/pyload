@@ -3,7 +3,7 @@
 import re
 
 from module.plugins.Hoster import Hoster
-from module.unescape import unescape
+from module.utils import html_unescape
 
 
 class RedtubeCom(Hoster):

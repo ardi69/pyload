@@ -2,7 +2,7 @@
 
 import re
 
-from module.unescape import unescape
+from module.utils import html_unescape
 from module.plugins.Crypter import Crypter
 
 

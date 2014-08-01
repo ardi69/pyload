@@ -9,7 +9,7 @@ import re
 
 from Crypto.Cipher import AES
 from module.plugins.Crypter import Crypter
-from module.unescape import unescape
+from module.utils import html_unescape
 
 
 class LinkSaveIn(Crypter):
