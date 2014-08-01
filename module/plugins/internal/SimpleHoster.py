@@ -139,16 +139,6 @@ def timestamp():
     return int(time() * 1000)
 
 
-class PluginParseError(Exception):
-
-    def __init__(self, msg):
-        Exception.__init__(self)
-        self.value = 'Parse error (%s) - plugin may be out of date' % msg
-
-    def __str__(self):
-        return repr(self.value)
-
-
 class SimpleHoster(Hoster):
     __name__ = "SimpleHoster"
     __type__ = "hoster"
@@ -256,9 +246,6 @@ class SimpleHoster(Hoster):
 
     def handlePremium(self):
         self.fail("Premium download not implemented")
-
-    def parseError(self, msg):
-        raise PluginParseError(msg)
 
     def longWait(self, wait_time=None, max_tries=3):
         if wait_time and isinstance(wait_time, (int, long, float)):

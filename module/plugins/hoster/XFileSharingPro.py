@@ -9,7 +9,7 @@ from urlparse import urlparse
 
 from module.network.RequestFactory import getURL
 from module.plugins.internal.CaptchaService import ReCaptcha, SolveMedia
-from module.plugins.internal.SimpleHoster import SimpleHoster, create_getInfo, PluginParseError, replace_patterns
+from module.plugins.internal.SimpleHoster import SimpleHoster, create_getInfo, replace_patterns
 from module.utils import html_unescape
 
 
@@ -72,7 +72,7 @@ class XFileSharingPro(SimpleHoster):
                 # Can be reverted in 0.5 as the cookies bug has been fixed.
                 self.html = getURL(pyfile.url, decode=True)
                 self.file_info = self.getFileInfo()
-            except PluginParseError:
+            except ParseError:
                 self.file_info = None
 
             self.location = self.getDirectDownloadLink()

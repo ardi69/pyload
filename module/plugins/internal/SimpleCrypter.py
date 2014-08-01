@@ -3,7 +3,7 @@
 import re
 
 from module.plugins.Crypter import Crypter
-from module.plugins.internal.SimpleHoster import PluginParseError, replace_patterns, set_cookies
+from module.plugins.internal.SimpleHoster import replace_patterns, set_cookies
 from module.utils import html_unescape
 
 
@@ -111,6 +111,3 @@ class SimpleCrypter(Crypter):
         for p in xrange(2, pages + 1):
             self.html = self.loadPage(p)
             self.package_links += self.getLinks()
-
-    def parseError(self, msg):
-        raise PluginParseError(msg)

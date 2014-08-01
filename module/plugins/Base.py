@@ -35,6 +35,17 @@ class SkipDownload(Exception):
     """ raised when download should be skipped """
 
 
+class ParseError(Exception):
+    """ raised when url parsing failed """
+
+    def __init__(self, msg):
+        Exception.__init__(self)
+        self.value = 'Parse error (%s) - plugin may be out of date' % msg
+
+    def __str__(self):
+        return repr(self.value)
+
+
 class Base:
     """
     A Base class with log/config/db methods *all* plugin types can use
@@ -291,6 +302,10 @@ class Plugin(Base):
 
         self.waiting = False
         self.pyfile.setStatus("starting")
+
+    def parseError(self, reason):
+        """ report bad url parsing reason, not fail """
+        raise ParseError(reason)
 
     def fail(self, reason):
         """ fail and give reason """
