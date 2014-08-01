@@ -832,15 +832,15 @@ msgstr "Dodaj najpierw ważne konto premiumize.me i zrestartuj pyLoad."
 msgid "%d credits left"
 msgstr "Pozostało %s punktów"
 
-#: module/plugins/Plugin.py:389
+#: module/plugins/Base.py:389
 msgid "Pil and tesseract not installed and no Client connected for captcha decrypting"
 msgstr "Nie zainstalowano modułów pil i tesseract oraz brak połączenia z serwisem dekodującym captcha"
 
-#: module/plugins/Plugin.py:393
+#: module/plugins/Base.py:393
 msgid "No captcha result obtained in appropiate time by any of the plugins."
 msgstr "Żaden z serwisów nie odkodowal captcha w dopuszczalnym czasie. "
 
-#: module/plugins/Plugin.py:498 module/plugins/Plugin.py:532
+#: module/plugins/Base.py:498 module/plugins/Base.py:532
 #, python-format
 msgid "Setting User and Group failed: %s"
 msgstr "Ustawienia użytkowników i grup nie powiodło się: %s"

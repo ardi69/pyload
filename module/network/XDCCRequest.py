@@ -28,7 +28,7 @@ from time import time
 import struct
 from select import select
 
-from module.plugins.Plugin import Abort
+from module.plugins.Base import Abort
 
 
 class XDCCRequest:

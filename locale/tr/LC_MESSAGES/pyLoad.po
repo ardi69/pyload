@@ -832,15 +832,15 @@ msgstr "Lütfen önce bir geçerli premiumize.me hesabı ekleyin ve pyLoad yenid
 msgid "%d credits left"
 msgstr "%d kredi kaldı"
 
-#: module/plugins/Plugin.py:389
+#: module/plugins/Base.py:389
 msgid "Pil and tesseract not installed and no Client connected for captcha decrypting"
 msgstr "Captcha şifresini çözmek için pil ve tesseract yüklenmemiş ve hiçbir istemci bağlı değil"
 
-#: module/plugins/Plugin.py:393
+#: module/plugins/Base.py:393
 msgid "No captcha result obtained in appropiate time by any of the plugins."
 msgstr ""
 
-#: module/plugins/Plugin.py:498 module/plugins/Plugin.py:532
+#: module/plugins/Base.py:498 module/plugins/Base.py:532
 #, python-format
 msgid "Setting User and Group failed: %s"
 msgstr "Kullanıcı ve grup kurma başarısız oldu: %s"

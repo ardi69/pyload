@@ -10,7 +10,7 @@ from time import sleep
 
 from module.network.RequestFactory import getURL
 from module.plugins.Hoster import Hoster
-from module.plugins.Plugin import chunks
+from module.plugins.Base import chunks
 from module.plugins.internal.CaptchaService import ReCaptcha
 from module.utils import html_unescape, parseFileSize
 

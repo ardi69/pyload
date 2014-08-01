@@ -31,7 +31,7 @@ from types import MethodType
 from pycurl import error
 
 from module.datatype.PyFile import PyFile
-from module.plugins.Plugin import Abort, Fail, Reconnect, Retry, SkipDownload
+from module.plugins.Base import Abort, Fail, Reconnect, Retry, SkipDownload
 from module.utils.packagetools import parseNames
 from module.utils import safe_join
 from Api import OnlineStatus

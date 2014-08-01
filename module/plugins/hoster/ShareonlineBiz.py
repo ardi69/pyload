@@ -6,7 +6,7 @@ from time import time
 
 from module.network.RequestFactory import getURL
 from module.plugins.Hoster import Hoster
-from module.plugins.Plugin import chunks
+from module.plugins.Base import chunks
 from module.plugins.internal.CaptchaService import ReCaptcha
 
 

@@ -5,7 +5,7 @@ import re
 from module.utils import json_loads
 from module.network.RequestFactory import getURL
 from module.plugins.Hoster import Hoster
-from module.plugins.Plugin import chunks
+from module.plugins.Base import chunks
 from module.plugins.hoster.UnrestrictLi import secondsToMidnight
 from module.plugins.internal.CaptchaService import ReCaptcha
 from module.utils import parseFileSize

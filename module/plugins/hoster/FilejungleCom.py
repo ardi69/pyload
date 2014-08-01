@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from module.plugins.hoster.FileserveCom import FileserveCom, checkFile
-from module.plugins.Plugin import chunks
+from module.plugins.Base import chunks
 
 
 class FilejungleCom(FileserveCom):

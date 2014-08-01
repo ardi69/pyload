@@ -28,7 +28,7 @@ import pycurl
 from HTTPChunk import ChunkInfo, HTTPChunk
 from HTTPRequest import BadHeader
 
-from module.plugins.Plugin import Abort
+from module.plugins.Base import Abort
 from module.utils import safe_join, fs_encode
 
 class HTTPDownload:

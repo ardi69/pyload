@@ -6,7 +6,7 @@ from hashlib import md5
 
 from module.utils import json_loads
 from module.network.RequestFactory import getURL
-from module.plugins.Plugin import chunks
+from module.plugins.Base import chunks
 from module.plugins.hoster.XFileSharingPro import XFileSharingPro
 
 

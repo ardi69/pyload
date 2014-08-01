@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from module.plugins.Plugin import Plugin
+from module.plugins.Base import Plugin
 from module.utils import decode
 
 

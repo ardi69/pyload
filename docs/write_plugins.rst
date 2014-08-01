@@ -7,7 +7,7 @@ A Plugin is a python file located at one of the subfolders in :file:`module/plug
 or :file:`container`, depending of it's type.
 
 There are three kinds of different plugins: **Hoster**, **Crypter**, **Container**.
-All kind of plugins inherit from the base :class:`Plugin <module.plugins.Plugin.Plugin>`. You should know its
+All kind of plugins inherit from the base :class:`Plugin <module.plugins.Base.Plugin>`. You should know its
 convenient methods, they make your work easier ;-)
 
 Every plugin defines a ``__pattern__`` and when the user adds urls, every url is matched against the pattern defined in
@@ -93,7 +93,7 @@ Example: ::
 
             self.packages.append(("pyLoad packages", urls, "pyLoad packages")) # urls list of urls
 
-They can access all the methods from :class:`Plugin <module.plugins.Plugin.Plugin>`, but the important thing is they
+They can access all the methods from :class:`Plugin <module.plugins.Base.Plugin>`, but the important thing is they
 have to append all packages they parsed to the `self.packages` list. Simply append tuples with `(name, urls, folder)`,
 where urls is the list of urls contained in the packages. Thats all of your work, pyLoad will know what to do with them.
 

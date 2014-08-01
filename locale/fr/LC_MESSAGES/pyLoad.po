@@ -832,15 +832,15 @@ msgstr "Veuillez d'abord ajouter un compte valide premiumize.me et redémarrez p
 msgid "%d credits left"
 msgstr "%d crédits restants"
 
-#: module/plugins/Plugin.py:389
+#: module/plugins/Base.py:389
 msgid "Pil and tesseract not installed and no Client connected for captcha decrypting"
 msgstr "Pil et tesseract ne sont pas installés et il n'y a pas de client connecté pour le déchiffrement des captcha"
 
-#: module/plugins/Plugin.py:393
+#: module/plugins/Base.py:393
 msgid "No captcha result obtained in appropiate time by any of the plugins."
 msgstr "Pas de résultats pour le captcha obtenu dans le temps impartis par aucun des plugins."
 
-#: module/plugins/Plugin.py:498 module/plugins/Plugin.py:532
+#: module/plugins/Base.py:498 module/plugins/Base.py:532
 #, python-format
 msgid "Setting User and Group failed: %s"
 msgstr "La définition de l'utilisateur et du groupe a échoué :: %s"

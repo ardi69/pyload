@@ -832,15 +832,15 @@ msgstr ""
 msgid "%d credits left"
 msgstr "Преостало је %d кредита"
 
-#: module/plugins/Plugin.py:389
+#: module/plugins/Base.py:389
 msgid "Pil and tesseract not installed and no Client connected for captcha decrypting"
 msgstr "Pil и Tesseract нису инсталирани, нити је повезан клијент ради дешифровања потврдних кодова."
 
-#: module/plugins/Plugin.py:393
+#: module/plugins/Base.py:393
 msgid "No captcha result obtained in appropiate time by any of the plugins."
 msgstr "Ни један резултат провере није примљен у времену од било којег додатка."
 
-#: module/plugins/Plugin.py:498 module/plugins/Plugin.py:532
+#: module/plugins/Base.py:498 module/plugins/Base.py:532
 #, python-format
 msgid "Setting User and Group failed: %s"
 msgstr "Постављање корисника и групе није успело: %s"

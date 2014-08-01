@@ -2,7 +2,7 @@
 
 from traceback import print_exc
 
-from module.plugins.Plugin import Base
+from module.plugins.Base import Base
 
 
 class Expose:

@@ -832,15 +832,15 @@ msgstr "Si us plau afegiu un compte vàlid premiumize.me primer i reinicieu pyLo
 msgid "%d credits left"
 msgstr "%d crèdits restants"
 
-#: module/plugins/Plugin.py:389
+#: module/plugins/Base.py:389
 msgid "Pil and tesseract not installed and no Client connected for captcha decrypting"
 msgstr "Pil i tesseract no estan instal·lats i no hi ha cap Client connectat per desxifrar captchas"
 
-#: module/plugins/Plugin.py:393
+#: module/plugins/Base.py:393
 msgid "No captcha result obtained in appropiate time by any of the plugins."
 msgstr "Cap plugin ha pogut obtenir resultats apropiats d'aquest captcha en un temps assignat."
 
-#: module/plugins/Plugin.py:498 module/plugins/Plugin.py:532
+#: module/plugins/Base.py:498 module/plugins/Base.py:532
 #, python-format
 msgid "Setting User and Group failed: %s"
 msgstr "Aplicació d'Usuari i el Grup ha fallat: %s"
