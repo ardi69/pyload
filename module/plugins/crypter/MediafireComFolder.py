@@ -46,11 +46,8 @@ class MediafireComFolder(Crypter):
                         for link in json_resp['response']['folder_info']['files']:
                             self.urls.append("http://www.mediafire.com/file/%s" % link['quickkey'])
                     else:
-                        self.fail(json_resp['response']['message'])
+                        self.parseError(json_resp['response']['message'])
         elif result == 1:
             self.offline()
         else:
             self.urls.append(url)
-
-        if not self.urls:
-            self.fail('Could not extract any links')

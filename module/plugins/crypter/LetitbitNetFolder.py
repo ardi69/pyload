@@ -24,9 +24,6 @@ class LetitbitNetFolder(Crypter):
 
         folder = re.search(self.FOLDER_PATTERN, html, re.DOTALL)
         if folder is None:
-            self.fail("Parse error (FOLDER)")
+            self.parseError("Folder url not found")
 
         self.urls.extend(re.findall(self.LINK_PATTERN, folder.group(0)))
-
-        if not self.urls:
-            self.fail('Could not extract any links')

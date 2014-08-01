@@ -28,7 +28,7 @@ class UlozToFolder(Crypter):
             self.logInfo("Fetching links from page %i" % i)
             m = re.search(self.FOLDER_PATTERN, html, re.DOTALL)
             if m is None:
-                self.fail("Parse error (FOLDER)")
+                self.parseError("Folder url not found")
 
             new_links.extend(re.findall(self.LINK_PATTERN, m.group(1)))
             m = re.search(self.NEXT_PAGE_PATTERN, html)
@@ -41,5 +41,3 @@ class UlozToFolder(Crypter):
 
         if new_links:
             self.urls = [map(lambda s: "http://ulozto.net/%s" % s, new_links)]
-        else:
-            self.fail('Could not extract any links')

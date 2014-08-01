@@ -47,11 +47,10 @@ class Crypter(Plugin):
         if self.urls:
             self.api.generateAndAddPackages(self.urls)
         elif not self.packages:
-            self.fail(_("Could not extract any links"))
+            self.fail(_("No link extracted"))
             return
 
         for pack in self.packages:
-
             name, links, folder = pack
 
             self.logDebug("Parsed package %(name)s with %(len)d links" % {"name": name, "len": len(links)})
@@ -61,7 +60,7 @@ class Crypter(Plugin):
             pid = self.api.addPackage(name, links, self.pyfile.package().queue)
 
             if name != folder is not None:
-                self.api.setPackageData(pid, {"folder": folder})  #: Due to not break API addPackage method right now
+                self.api.setPackageData(pid, {"folder": folder})  #: Due to not break api.addPackage method
                 self.logDebug("Set package %(name)s folder to %(folder)s" % {"name": name, "folder": folder})
 
             if self.pyfile.package().password:

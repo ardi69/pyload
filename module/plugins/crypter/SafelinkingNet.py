@@ -34,7 +34,7 @@ class SafelinkingNet(Crypter):
             if m:
                 self.urls = [m.group(1)]
             else:
-                self.fail("Couldn't find forwarded Link")
+                self.parseError("Couldn't find forwarded Link")
 
         else:
             password = ""

@@ -19,5 +19,3 @@ class XupPl(Crypter):
         header = self.load(pyfile.url, just_header=True)
         if 'location' in header:
             self.urls = [header['location']]
-        else:
-            self.fail('Unable to find link')

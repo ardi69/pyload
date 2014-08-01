@@ -74,8 +74,6 @@ class SimpleCrypter(Crypter):
 
         if self.package_links:
             self.packages = [(package_name, self.package_links, folder_name)]
-        else:
-            self.fail('Could not extract any links')
 
     def getLinks(self):
         """

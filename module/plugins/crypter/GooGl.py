@@ -26,4 +26,4 @@ class GooGl(Crypter):
         if 'longUrl' in rep:
             self.urls = [rep['longUrl']]
         else:
-            self.fail('Unable to expand shortened link')
+            self.parseError('Unable to expand shortened link')

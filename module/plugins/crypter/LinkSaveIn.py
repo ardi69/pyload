@@ -68,11 +68,8 @@ class LinkSaveIn(Crypter):
                 break
         package_links = set(package_links)
 
-        # Pack
         if package_links:
             self.packages = [(package_name, package_links, folder_name)]
-        else:
-            self.fail('Could not extract any links')
 
     def isOnline(self):
         if "<big>Error 404 - Folder not found!</big>" in self.html:

@@ -22,16 +22,10 @@ class LinkdecrypterCom(Crypter):
 
 
     def decrypt(self, pyfile):
-
         self.passwords = self.getPassword().splitlines()
-
-        # API not working anymore
         self.urls = self.decryptHTML()
-        if not self.urls:
-            self.fail('Could not extract any links')
 
     def decryptAPI(self):
-
         get_dict = {"t": "link", "url": self.pyfile.url, "lcache": "1"}
         self.html = self.load('http://linkdecrypter.com/api', get=get_dict)
         if self.html.startswith('http://'):
@@ -45,7 +39,7 @@ class LinkdecrypterCom(Crypter):
 
         self.logError('API', self.html)
         if self.html == 'INTERRUPTION(PASSWORD)':
-            self.fail("No or incorrect password")
+            self.fail("Incorrect password")
 
         return None
 
@@ -82,7 +76,7 @@ class LinkdecrypterCom(Crypter):
                     self.logInfo("Password protected link, trying " + password)
                     self.html = self.load('http://linkdecrypter.com/', post={'password': password}, decode=True)
                 else:
-                    self.fail("No or incorrect password")
+                    self.fail("Incorrect password")
 
             else:
                 retries -= 1

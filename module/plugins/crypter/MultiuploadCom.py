@@ -56,9 +56,6 @@ class MultiuploadCom(Crypter):
                     if url:
                         self.urls.append(url)
 
-        if not self.urls:
-            self.fail('Could not extract any links')
-
     def getLocation(self, url):
         header = self.load(url, just_header=True)
         return header['location'] if "location" in header else None

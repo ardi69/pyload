@@ -18,10 +18,9 @@ class ChipDe(Crypter):
 
     def decrypt(self, pyfile):
         self.html = self.load(pyfile.url)
-        try:
-            f = re.search(r'"(http://video.chip.de/\d+?/.*)"', self.html)
-        except:
-            self.fail('Failed to find the URL')
-        else:
-            self.urls = [f.group(1)]
+        m = re.search(r'"(http://video.chip.de/\d+?/.*)"', self.html)
+        if m:
+            self.urls = [m.group(1)]
             self.logDebug('The file URL is %s' % self.urls[0])
+        else:
+            self.parseError('Failed to find the URL')
