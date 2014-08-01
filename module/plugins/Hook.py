@@ -5,7 +5,7 @@ from traceback import print_exc
 from module.plugins.Plugin import Base
 
 
-class Expose(object):
+class Expose:
     """ used for decoration to declare rpc services """
 
     def __new__(cls, f, *args, **kwargs):

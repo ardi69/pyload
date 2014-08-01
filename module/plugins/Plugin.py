@@ -35,7 +35,7 @@ class SkipDownload(Exception):
     """ raised when download should be skipped """
 
 
-class Base(object):
+class Base:
     """
     A Base class with log/config/db methods *all* plugin types can use
     """

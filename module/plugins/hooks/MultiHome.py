@@ -57,7 +57,7 @@ class MultiHome(Hook):
         return best
 
 
-class Interface(object):
+class Interface:
 
     def __init__(self, adress):
         self.adress = adress

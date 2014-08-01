@@ -10,7 +10,7 @@ from PIL import Image, GifImagePlugin, JpegImagePlugin, PngImagePlugin, TiffImag
 from os.path import abspath, join
 
 
-class OCR(object):
+class OCR:
     __name__ = "OCR"
     __type__ = "ocr"
     __version__ = "0.1"
