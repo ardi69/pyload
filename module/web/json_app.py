@@ -6,9 +6,9 @@ from shutil import copyfileobj
 
 from bottle import route, request, HTTPError
 
-from webinterface import PYLOAD
+from module.web.webinterface import PYLOAD
 
-from utils import login_required, render_to_response, toDict
+from module.utils import login_required, render_to_response, toDict
 
 from module.utils import decode, formatSize
 

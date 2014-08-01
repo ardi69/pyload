@@ -8,9 +8,8 @@ from bottle import route, request, response, HTTPError
 from module.lib.SafeEval import const_eval as literal_eval
 
 from module.Api import BaseObject
-from module.common.json_layer import json
-from utils import toDict, set_session
-from webinterface import PYLOAD
+from module.utils import json, toDict, set_session
+from module.web.webinterface import PYLOAD
 
 
 # json encoder that accepts TBase objects

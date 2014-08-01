@@ -21,9 +21,9 @@ from threading import RLock
 from time import time
 
 from module.utils import formatSize, lock
-from module.PullEvents import InsertEvent, ReloadAllEvent, RemoveEvent, UpdateEvent
-from module.PyPackage import PyPackage
-from module.PyFile import PyFile
+from module.manager.PullEvents import InsertEvent, ReloadAllEvent, RemoveEvent, UpdateEvent
+from module.datatype.PyPackage import PyPackage
+from module.datatype.PyFile import PyFile
 from module.database import style, DatabaseBackend
 
 try:

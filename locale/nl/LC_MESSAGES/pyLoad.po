@@ -219,17 +219,17 @@ msgstr "Pakket compleet: %s"
 msgid "Using SSL ThriftBackend"
 msgstr "SSL ThriftBackend gebruiken"
 
-#: module/remote/RemoteManager.py:35
+#: module/manager/RemoteManager.py:35
 #, python-format
 msgid "Remote backend error: %s"
 msgstr "Remotebackendfout: %s"
 
-#: module/remote/RemoteManager.py:82
+#: module/manager/RemoteManager.py:82
 #, python-format
 msgid "Starting %(name)s: %(addr)s:%(port)s"
 msgstr "Opstarten %(name)s: %(addr)s:%(port)s"
 
-#: module/remote/RemoteManager.py:84
+#: module/manager/RemoteManager.py:84
 #, python-format
 msgid "Failed loading backend %(name)s | %(error)s"
 msgstr "Laden van backend %(name)s | %(error)s mislukt"
@@ -411,49 +411,49 @@ msgstr "Opnieuw proberen %s"
 msgid "Info Fetching for %(name)s failed | %(err)s"
 msgstr "Informatie verzamelen voor %(name)s mislukt | %(err)s"
 
-#: module/HookManager.py:90 module/plugins/Hook.py:102
+#: module/manager/HookManager.py:90 module/plugins/Hook.py:102
 #, python-format
 msgid "Error executing hooks: %s"
 msgstr "Uitvoeren van hooks mislukt: %s"
 
-#: module/HookManager.py:140
+#: module/manager/HookManager.py:140
 #, python-format
 msgid "Failed activating %(name)s"
 msgstr "Activeren mislukt van %(name)s"
 
-#: module/HookManager.py:144
+#: module/manager/HookManager.py:144
 #, python-format
 msgid "Activated plugins: %s"
 msgstr "Geactiveerde plugins: %s"
 
-#: module/HookManager.py:145
+#: module/manager/HookManager.py:145
 #, python-format
 msgid "Deactivate plugins: %s"
 msgstr "Niet geactiveerde plugins: %s"
 
-#: module/ThreadManager.py:137
+#: module/manager/ThreadManager.py:137
 #, python-format
 msgid "Reconnect Failed: %s"
 msgstr "Opnieuw verbinden mislukt: %s"
 
-#: module/ThreadManager.py:176
+#: module/manager/ThreadManager.py:176
 msgid "Reconnect script not found!"
 msgstr "Opnieuw verbinden script niet gevonden!"
 
-#: module/ThreadManager.py:182
+#: module/manager/ThreadManager.py:182
 msgid "Starting reconnect"
 msgstr "Opnieuw aan het verbinden"
 
-#: module/ThreadManager.py:196
+#: module/manager/ThreadManager.py:196
 msgid "Failed executing reconnect script!"
 msgstr "Uitvoeren van opnieuw verbinden script mislukt!"
 
-#: module/ThreadManager.py:208
+#: module/manager/ThreadManager.py:208
 #, python-format
 msgid "Reconnected, new IP: %s"
 msgstr "Opnieuw verbonden, nieuwe IP: %s"
 
-#: module/ThreadManager.py:288
+#: module/manager/ThreadManager.py:288
 msgid "Not enough space left on device"
 msgstr "Onvoldoende schijfruimte vrij"
 
@@ -485,12 +485,12 @@ msgstr "Account %s is verlopen, opnieuw te controleren in 1h"
 msgid "Downloadlimit reached"
 msgstr "Downloadlimiet bereikt"
 
-#: module/plugins/PluginManager.py:153
+#: module/manager/PluginManager.py:153
 #, python-format
 msgid "%s has a invalid pattern."
 msgstr "%s heeft een ongeldig patroon."
 
-#: module/plugins/PluginManager.py:272
+#: module/manager/PluginManager.py:272
 #, python-format
 msgid "Error importing %(name)s: %(msg)s"
 msgstr "Fout bij importeren %(name)s: %(msg)s"
@@ -507,7 +507,7 @@ msgstr "Activeer Direct Downloaden in je Bitshare Account"
 msgid "LinkList could not be cleared."
 msgstr "LinkList kon niet gewist worden."
 
-#: module/plugins/AccountManager.py:88
+#: module/manager/AccountManager.py:88
 msgid "Account settings deleted, due to new config format."
 msgstr "Accountgegevens verwijderd, vanwege nieuw configutatie formaat."
 
@@ -845,7 +845,7 @@ msgstr "Geen captcha resultaat ontvangen in aangegeven tijd bij een van de plugi
 msgid "Setting User and Group failed: %s"
 msgstr "Instellingen van gebruiker en groep kunnen niet geladen worden : %s"
 
-#: module/CaptchaManager.py:78
+#: module/manager/CaptchaManager.py:78
 msgid "No Client connected for captcha decrypting"
 msgstr "Geen verbinding met client om captcha te decrypten"
 
@@ -859,7 +859,7 @@ msgstr "Pakket %(name)s toevoegen met %(count)d links"
 msgid "Added %(count)d links to package #%(package)d "
 msgstr "%(count)d links toevoegen aan pakket #%(package)d "
 
-#: module/common/JsEngine.py:156
+#: module/utils/JsEngine.py:156
 msgid "No js engine detected, please install either Spidermonkey, ossp-js, pyv8 or rhino"
 msgstr "Geen js engine gedetecteerd, installeer Spidermonkey, ossp-js, pyv8 of rhino"
 

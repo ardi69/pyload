@@ -1,9 +1,10 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
 import sys
 
-import module.common.pylgettext as gettext
+import module.utils.pylgettext as gettext
 
 from getpass import getpass
 from os import makedirs
@@ -11,6 +12,10 @@ from os.path import exists, join
 from subprocess import PIPE, call
 
 from module.utils import get_console_encoding, versiontuple
+
+
+owd = abspath("")
+pypath = abspath(join(__file__, ".."))
 
 
 class Setup:
@@ -264,7 +269,7 @@ class Setup:
 
         web = sqlite and beaker
 
-        from module.common import JsEngine
+        from module.utils import JsEngine
         js = True if JsEngine.ENGINE else False
         self.print_dep(_("JS engine"), js)
 

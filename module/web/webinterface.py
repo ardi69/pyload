@@ -17,7 +17,7 @@
 """
 
 import sys
-import module.common.pylgettext as gettext
+import module.utils.pylgettext as gettext
 
 import os
 from os.path import join, abspath, exists
@@ -51,7 +51,7 @@ else:
     PYLOAD = ServerThread.core.api
     config = ServerThread.core.config
 
-from module.common.JsEngine import JsEngine
+from module.utils.JsEngine import JsEngine
 
 JS = JsEngine()
 
@@ -138,7 +138,7 @@ def run_threaded(host="0.0.0.0", port="8000", theads=3, cert="", key=""):
 
     CherryPyWSGIServer.numthreads = theads
 
-    from utils import CherryPyWSGI
+    from module.utils import CherryPyWSGI
 
     run(app=web, host=host, port=port, server=CherryPyWSGI, quiet=True)
 

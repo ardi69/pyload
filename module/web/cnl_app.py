@@ -6,7 +6,7 @@ from base64 import standard_b64decode
 from binascii import unhexlify
 
 from bottle import route, request, HTTPError
-from webinterface import PYLOAD, DL_ROOT, JS
+from module.web.webinterface import PYLOAD, DL_ROOT, JS
 
 
 try:

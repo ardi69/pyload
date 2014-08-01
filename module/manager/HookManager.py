@@ -26,8 +26,8 @@ from threading import RLock
 from types import MethodType
 
 from module.PluginThread import HookThread
-from module.plugins.PluginManager import literal_eval
-from utils import lock
+from module.manager.PluginManager import literal_eval
+from module.utils import lock
 
 class HookManager:
     """Manages hooks, delegates and handles Events.

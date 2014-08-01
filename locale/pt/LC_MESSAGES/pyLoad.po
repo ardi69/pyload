@@ -219,17 +219,17 @@ msgstr "Pacote finalizado: %s"
 msgid "Using SSL ThriftBackend"
 msgstr ""
 
-#: module/remote/RemoteManager.py:35
+#: module/manager/RemoteManager.py:35
 #, python-format
 msgid "Remote backend error: %s"
 msgstr "Erro de back-end remoto: %s"
 
-#: module/remote/RemoteManager.py:82
+#: module/manager/RemoteManager.py:82
 #, python-format
 msgid "Starting %(name)s: %(addr)s:%(port)s"
 msgstr "Iniciando %(name)s: %(addr)s:%(port)s"
 
-#: module/remote/RemoteManager.py:84
+#: module/manager/RemoteManager.py:84
 #, python-format
 msgid "Failed loading backend %(name)s | %(error)s"
 msgstr "Falha ao carregar back-end %(name)s | %(error)s"
@@ -411,49 +411,49 @@ msgstr ""
 msgid "Info Fetching for %(name)s failed | %(err)s"
 msgstr "Busca de informações para %(name)s falhou|%(err)s"
 
-#: module/HookManager.py:90 module/plugins/Hook.py:102
+#: module/manager/HookManager.py:90 module/plugins/Hook.py:102
 #, python-format
 msgid "Error executing hooks: %s"
 msgstr ""
 
-#: module/HookManager.py:140
+#: module/manager/HookManager.py:140
 #, python-format
 msgid "Failed activating %(name)s"
 msgstr "Falha de ativação %(name)s"
 
-#: module/HookManager.py:144
+#: module/manager/HookManager.py:144
 #, python-format
 msgid "Activated plugins: %s"
 msgstr ""
 
-#: module/HookManager.py:145
+#: module/manager/HookManager.py:145
 #, python-format
 msgid "Deactivate plugins: %s"
 msgstr ""
 
-#: module/ThreadManager.py:137
+#: module/manager/ThreadManager.py:137
 #, python-format
 msgid "Reconnect Failed: %s"
 msgstr "Reconectar Falhou: %s"
 
-#: module/ThreadManager.py:176
+#: module/manager/ThreadManager.py:176
 msgid "Reconnect script not found!"
 msgstr "Script de reconexão não encontrado!"
 
-#: module/ThreadManager.py:182
+#: module/manager/ThreadManager.py:182
 msgid "Starting reconnect"
 msgstr "Iniciando reconexão"
 
-#: module/ThreadManager.py:196
+#: module/manager/ThreadManager.py:196
 msgid "Failed executing reconnect script!"
 msgstr "Falha ao executar script de reconexão!"
 
-#: module/ThreadManager.py:208
+#: module/manager/ThreadManager.py:208
 #, python-format
 msgid "Reconnected, new IP: %s"
 msgstr "Reconectado, novo IP: %s"
 
-#: module/ThreadManager.py:288
+#: module/manager/ThreadManager.py:288
 msgid "Not enough space left on device"
 msgstr "Espaço insuficiente no dispositivo"
 
@@ -485,12 +485,12 @@ msgstr "A conta %s expirou, checando novamente em 1h"
 msgid "Downloadlimit reached"
 msgstr "Limite de Download alcançado"
 
-#: module/plugins/PluginManager.py:153
+#: module/manager/PluginManager.py:153
 #, python-format
 msgid "%s has a invalid pattern."
 msgstr ""
 
-#: module/plugins/PluginManager.py:272
+#: module/manager/PluginManager.py:272
 #, python-format
 msgid "Error importing %(name)s: %(msg)s"
 msgstr "Erro ao importar %(name)s: %(msg)s"
@@ -507,7 +507,7 @@ msgstr "Ativar Download direto em sua conta Bitshare"
 msgid "LinkList could not be cleared."
 msgstr ""
 
-#: module/plugins/AccountManager.py:88
+#: module/manager/AccountManager.py:88
 msgid "Account settings deleted, due to new config format."
 msgstr ""
 
@@ -845,7 +845,7 @@ msgstr ""
 msgid "Setting User and Group failed: %s"
 msgstr "Configuração de usuário e grupo falhou: %s"
 
-#: module/CaptchaManager.py:78
+#: module/manager/CaptchaManager.py:78
 msgid "No Client connected for captcha decrypting"
 msgstr ""
 
@@ -859,7 +859,7 @@ msgstr ""
 msgid "Added %(count)d links to package #%(package)d "
 msgstr ""
 
-#: module/common/JsEngine.py:156
+#: module/utils/JsEngine.py:156
 msgid "No js engine detected, please install either Spidermonkey, ossp-js, pyv8 or rhino"
 msgstr ""
 

@@ -1,6 +1,6 @@
-from DatabaseBackend import DatabaseBackend
-from DatabaseBackend import style
+from module.database.DatabaseBackend import DatabaseBackend
+from module.database.DatabaseBackend import style
 
-from FileDatabase import FileHandler
-from UserDatabase import UserMethods
-from StorageDatabase import StorageMethods
+from module.database.FileDatabase import FileHandler
+from module.database.UserDatabase import UserMethods
+from module.database.StorageDatabase import StorageMethods

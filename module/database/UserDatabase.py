@@ -19,8 +19,8 @@
 from hashlib import sha1
 import random
 
-from DatabaseBackend import DatabaseBackend
-from DatabaseBackend import style
+from module.database.DatabaseBackend import DatabaseBackend
+from module.database.DatabaseBackend import style
 
 class UserMethods:
     @style.queue

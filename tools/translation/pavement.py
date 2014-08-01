@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from paver.easy import *
@@ -16,6 +17,8 @@ from urllib import urlretrieve
 from subprocess import call, Popen, PIPE
 from zipfile import ZipFile
 
+
+pypath = abspath(join(__file__, "..", ".."))
 sys.path.append(pypath)
 
 options = environment.options

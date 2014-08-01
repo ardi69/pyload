@@ -7,7 +7,7 @@ from os import remove, stat
 from os.path import join, isfile
 from time import time
 
-from module.ConfigParser import IGNORE
+from module.config.ConfigParser import IGNORE
 from module.network.RequestFactory import getURL
 from module.plugins.Hook import threaded, Expose, Hook
 

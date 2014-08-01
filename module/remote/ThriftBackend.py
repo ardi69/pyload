@@ -17,7 +17,7 @@
 """
 from os.path import exists
 
-from module.remote.RemoteManager import BackendBase
+from module.manager.RemoteManager import BackendBase
 
 from thriftbackend.Processor import Processor
 from thriftbackend.Protocol import ProtocolFactory

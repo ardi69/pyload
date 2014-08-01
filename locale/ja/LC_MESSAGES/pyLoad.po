@@ -219,17 +219,17 @@ msgstr "パッケージが完了しました: %s"
 msgid "Using SSL ThriftBackend"
 msgstr ""
 
-#: module/remote/RemoteManager.py:35
+#: module/manager/RemoteManager.py:35
 #, python-format
 msgid "Remote backend error: %s"
 msgstr "リモート バックエンド エラー: %s"
 
-#: module/remote/RemoteManager.py:82
+#: module/manager/RemoteManager.py:82
 #, python-format
 msgid "Starting %(name)s: %(addr)s:%(port)s"
 msgstr "開始 %(name)s：%(addr)s：%(port)s"
 
-#: module/remote/RemoteManager.py:84
+#: module/manager/RemoteManager.py:84
 #, python-format
 msgid "Failed loading backend %(name)s | %(error)s"
 msgstr " バックエンド %(name)sの読み込みに失敗した |%(error)s"
@@ -411,49 +411,49 @@ msgstr ""
 msgid "Info Fetching for %(name)s failed | %(err)s"
 msgstr "%(name)sの失敗の情報取得する |%(err)s"
 
-#: module/HookManager.py:90 module/plugins/Hook.py:102
+#: module/manager/HookManager.py:90 module/plugins/Hook.py:102
 #, python-format
 msgid "Error executing hooks: %s"
 msgstr ""
 
-#: module/HookManager.py:140
+#: module/manager/HookManager.py:140
 #, python-format
 msgid "Failed activating %(name)s"
 msgstr "%(name)sをアクティブ に失敗しました"
 
-#: module/HookManager.py:144
+#: module/manager/HookManager.py:144
 #, python-format
 msgid "Activated plugins: %s"
 msgstr ""
 
-#: module/HookManager.py:145
+#: module/manager/HookManager.py:145
 #, python-format
 msgid "Deactivate plugins: %s"
 msgstr ""
 
-#: module/ThreadManager.py:137
+#: module/manager/ThreadManager.py:137
 #, python-format
 msgid "Reconnect Failed: %s"
 msgstr "再接続に失敗しました: %s"
 
-#: module/ThreadManager.py:176
+#: module/manager/ThreadManager.py:176
 msgid "Reconnect script not found!"
 msgstr "再接続スクリプトが見つかりません!"
 
-#: module/ThreadManager.py:182
+#: module/manager/ThreadManager.py:182
 msgid "Starting reconnect"
 msgstr "再接続を開始中"
 
-#: module/ThreadManager.py:196
+#: module/manager/ThreadManager.py:196
 msgid "Failed executing reconnect script!"
 msgstr "失敗した実行スクリプト再接続 ！"
 
-#: module/ThreadManager.py:208
+#: module/manager/ThreadManager.py:208
 #, python-format
 msgid "Reconnected, new IP: %s"
 msgstr "再接続、新しい IP: %s"
 
-#: module/ThreadManager.py:288
+#: module/manager/ThreadManager.py:288
 msgid "Not enough space left on device"
 msgstr "デバイスに空き領域不足"
 
@@ -485,12 +485,12 @@ msgstr "アカウント %s は有効期限が切れて、1 h でもう一度チ�
 msgid "Downloadlimit reached"
 msgstr "ダウンロード制限に達しました"
 
-#: module/plugins/PluginManager.py:153
+#: module/manager/PluginManager.py:153
 #, python-format
 msgid "%s has a invalid pattern."
 msgstr ""
 
-#: module/plugins/PluginManager.py:272
+#: module/manager/PluginManager.py:272
 #, python-format
 msgid "Error importing %(name)s: %(msg)s"
 msgstr "%(name)s：%(msg)sのインポート エラー"
@@ -507,7 +507,7 @@ msgstr "Bitshare アカウントで直接のダウンロードを有効にしま
 msgid "LinkList could not be cleared."
 msgstr ""
 
-#: module/plugins/AccountManager.py:88
+#: module/manager/AccountManager.py:88
 msgid "Account settings deleted, due to new config format."
 msgstr ""
 
@@ -845,7 +845,7 @@ msgstr ""
 msgid "Setting User and Group failed: %s"
 msgstr "ユーザーとグループの設定に失敗しました: %s"
 
-#: module/CaptchaManager.py:78
+#: module/manager/CaptchaManager.py:78
 msgid "No Client connected for captcha decrypting"
 msgstr ""
 
@@ -859,7 +859,7 @@ msgstr ""
 msgid "Added %(count)d links to package #%(package)d "
 msgstr ""
 
-#: module/common/JsEngine.py:156
+#: module/utils/JsEngine.py:156
 msgid "No js engine detected, please install either Spidermonkey, ossp-js, pyv8 or rhino"
 msgstr ""
 

@@ -4,8 +4,8 @@ Hooks
 =====
 
 A Hook is a python file which is located at :file:`module/plugins/hooks`.
-The :class:`HookManager <module.HookManager.HookManager>` will load it automatically on startup. Only one instance exists
-over the complete lifetime of pyload. Your hook can interact on various events called by the :class:`HookManager <module.HookManager.HookManager>`,
+The :class:`HookManager <module.manager.HookManager.HookManager>` will load it automatically on startup. Only one instance exists
+over the complete lifetime of pyload. Your hook can interact on various events called by the :class:`HookManager <module.manager.HookManager.HookManager>`,
 do something complete autonomic and has full access to the :class:`Api <module.Api.Api>` and every detail of pyLoad.
 The UpdateManager, CaptchaTrader, UnRar and many more are realised as hooks.
 
@@ -46,8 +46,8 @@ The easiest way is to overwrite specific methods defined by the :class:`Hook <mo
 The name is indicating when the function gets called.
 See :class:`Hook <module.plugins.Hook.Hook>` page for a complete listing.
 
-You should be aware of the arguments the Hooks are called with, whether its a :class:`PyFile <module.PyFile.PyFile>`
-or :class:`PyPackage <module.PyPackage.PyPackage>` you should read its related documentation to know how to access her great power and manipulate them.
+You should be aware of the arguments the Hooks are called with, whether its a :class:`PyFile <module.datatype.PyFile.PyFile>`
+or :class:`PyPackage <module.datatype.PyPackage.PyPackage>` you should read its related documentation to know how to access her great power and manipulate them.
 
 A basic excerpt would look like: ::
 
@@ -66,7 +66,7 @@ A basic excerpt would look like: ::
 
 Another and more flexible and powerful way is to use event listener.
 All hook methods exists as event and very useful additional events are dispatched by the core. For a little overview look
-at :class:`HookManager <module.HookManager.HookManager>`. Keep in mind that you can define own events and other people may listen on them.
+at :class:`HookManager <module.manager.HookManager.HookManager>`. Keep in mind that you can define own events and other people may listen on them.
 
 For your convenience it's possible to register listeners automatical via the ``event_map`` attribute.
 It requires a `dict` that maps event names to function names or a `list` of function names. It's important that all names are strings ::
@@ -92,7 +92,7 @@ It requires a `dict` that maps event names to function names or a `list` of func
 
 An advantage of the event listener is that you are able to register and remove the listeners at runtime.
 Use `self.manager.addEvent("name", function)`, `self.manager.removeEvent("name", function)` and see doc for
-:class:`HookManager <module.HookManager.HookManager>`. Contrary to ``event_map``, ``function`` has to be a reference
+:class:`HookManager <module.manager.HookManager.HookManager>`. Contrary to ``event_map``, ``function`` has to be a reference
 and **not** a `string`.
 
 We introduced events because it scales better if there a a huge amount of events and hooks. So all future interaction will be exclusive

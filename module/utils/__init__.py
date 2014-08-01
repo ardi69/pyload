@@ -11,6 +11,15 @@ from itertools import islice
 from os.path import join
 from string import maketrans
 
+# abstraction layer for json operations
+try: # since python 2.6
+    import json
+except ImportError: #use system simplejson if available
+    import simplejson as json
+
+json_loads = json.loads
+json_dumps = json.dumps
+
 
 def chunks(iterable, size):
     it = iter(iterable)

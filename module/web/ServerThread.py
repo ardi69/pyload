@@ -26,7 +26,7 @@ class WebServer(threading.Thread):
         self.setDaemon(True)
 
     def run(self):
-        import webinterface
+        from module.web import webinterface
         global webinterface
 
         reset = False

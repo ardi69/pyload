@@ -219,17 +219,17 @@ msgstr "Ολοκλήρωση πακέτου: %s"
 msgid "Using SSL ThriftBackend"
 msgstr ""
 
-#: module/remote/RemoteManager.py:35
+#: module/manager/RemoteManager.py:35
 #, python-format
 msgid "Remote backend error: %s"
 msgstr "Σφάλμα απομακρυσμένου backend: %s"
 
-#: module/remote/RemoteManager.py:82
+#: module/manager/RemoteManager.py:82
 #, python-format
 msgid "Starting %(name)s: %(addr)s:%(port)s"
 msgstr "Γίνεται εκκίνηση  %(name)s: %(addr)s:%(port)s"
 
-#: module/remote/RemoteManager.py:84
+#: module/manager/RemoteManager.py:84
 #, python-format
 msgid "Failed loading backend %(name)s | %(error)s"
 msgstr "Απέτυχε η φόρτωση του backend %(name)s | %(error)s"
@@ -411,49 +411,49 @@ msgstr ""
 msgid "Info Fetching for %(name)s failed | %(err)s"
 msgstr "Η ανάκτηση πληροφοριών για το %(name)s απέτυχε | %(err)s"
 
-#: module/HookManager.py:90 module/plugins/Hook.py:102
+#: module/manager/HookManager.py:90 module/plugins/Hook.py:102
 #, python-format
 msgid "Error executing hooks: %s"
 msgstr ""
 
-#: module/HookManager.py:140
+#: module/manager/HookManager.py:140
 #, python-format
 msgid "Failed activating %(name)s"
 msgstr "Αποτυχία ενεργοποίησης %(name)s "
 
-#: module/HookManager.py:144
+#: module/manager/HookManager.py:144
 #, python-format
 msgid "Activated plugins: %s"
 msgstr "Ενεργοποιημένα πρόσθετα: %s"
 
-#: module/HookManager.py:145
+#: module/manager/HookManager.py:145
 #, python-format
 msgid "Deactivate plugins: %s"
 msgstr "Απενεργοποίηση πρόσθετων: %s"
 
-#: module/ThreadManager.py:137
+#: module/manager/ThreadManager.py:137
 #, python-format
 msgid "Reconnect Failed: %s"
 msgstr "Επανασύνδεση απέτυχε %s"
 
-#: module/ThreadManager.py:176
+#: module/manager/ThreadManager.py:176
 msgid "Reconnect script not found!"
 msgstr "Δεν βρέθηκε αρχείο εντολών για επανασύνδεση!"
 
-#: module/ThreadManager.py:182
+#: module/manager/ThreadManager.py:182
 msgid "Starting reconnect"
 msgstr "Ξεκινάει η επανασύνδεση"
 
-#: module/ThreadManager.py:196
+#: module/manager/ThreadManager.py:196
 msgid "Failed executing reconnect script!"
 msgstr "Αποτυχία εκτέλεσης αρχείου εντολών επανασύνδεσης!"
 
-#: module/ThreadManager.py:208
+#: module/manager/ThreadManager.py:208
 #, python-format
 msgid "Reconnected, new IP: %s"
 msgstr "Επανασυνδέθηκε, νέα διέυθυνση IP: %s"
 
-#: module/ThreadManager.py:288
+#: module/manager/ThreadManager.py:288
 msgid "Not enough space left on device"
 msgstr "Δεν έχει απομείνει αρκετός χώρος στην συσκευή"
 
@@ -485,12 +485,12 @@ msgstr "Ο λογαριασμός %s έχει λήξει, θα γίνει ξαν
 msgid "Downloadlimit reached"
 msgstr "Φτάσατε στο μέγιστο όριο λήψεων"
 
-#: module/plugins/PluginManager.py:153
+#: module/manager/PluginManager.py:153
 #, python-format
 msgid "%s has a invalid pattern."
 msgstr ""
 
-#: module/plugins/PluginManager.py:272
+#: module/manager/PluginManager.py:272
 #, python-format
 msgid "Error importing %(name)s: %(msg)s"
 msgstr "Σφάλμα κατά την εισαγωγή %(name)s: %(msg)s"
@@ -507,7 +507,7 @@ msgstr "Ενεργοποιήστε τις απευθείας λήψεις στο
 msgid "LinkList could not be cleared."
 msgstr ""
 
-#: module/plugins/AccountManager.py:88
+#: module/manager/AccountManager.py:88
 msgid "Account settings deleted, due to new config format."
 msgstr ""
 
@@ -845,7 +845,7 @@ msgstr ""
 msgid "Setting User and Group failed: %s"
 msgstr "Η ρύθμιση χρηστών και ομάδων απέτυχε: %s"
 
-#: module/CaptchaManager.py:78
+#: module/manager/CaptchaManager.py:78
 msgid "No Client connected for captcha decrypting"
 msgstr ""
 
@@ -859,7 +859,7 @@ msgstr ""
 msgid "Added %(count)d links to package #%(package)d "
 msgstr "Προστέθηκαν %(count)d σύνδεσμοι στο πακέτο #%(package)d  "
 
-#: module/common/JsEngine.py:156
+#: module/utils/JsEngine.py:156
 msgid "No js engine detected, please install either Spidermonkey, ossp-js, pyv8 or rhino"
 msgstr "Καμία μηχανή js δεν βρέθηκε, παρακαλώ εγκαταστήσετε μια απο τις παρακάτω Spidermonkey, ossp-js, pyv8, rhino "
 

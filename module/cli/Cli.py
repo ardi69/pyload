@@ -17,8 +17,8 @@ from traceback import print_exc
 from module.lib.Getch import Getch
 from module.lib.rename_process import renameProcess
 
-import ConfigParser
-import module.common.pylgettext as gettext
+from module.config.ConfigParser import ConfigParser
+import module.utils.pylgettext as gettext
 
 from module import InitHomeDir
 from module.Api import Destination
@@ -464,7 +464,7 @@ def main():
     if (not exists(join(pypath, "locale", config['language']))) or config['language'] == "":
         config['language'] = "en"
 
-    configFile = ConfigParser.ConfigParser()
+    configFile = ConfigParser()
     configFile.read(join(homedir, ".pyload-cli"))
 
     if configFile.has_section("cli"):

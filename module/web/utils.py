@@ -17,7 +17,7 @@
 """
 from bottle import request, HTTPError, redirect, ServerAdapter
 
-from webinterface import env, THEME
+from module.web.webinterface import env, THEME
 
 from module.Api import has_permission, PERMS, ROLE
 

@@ -1,8 +1,10 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from urllib import urlencode
 from urllib2 import urlopen, HTTPError
-from json import loads
+
+from module.utils import json_loads
 
 from logging import log
 
@@ -14,16 +16,16 @@ class TestJson:
         if not post: post = {}
         post['session'] = self.key
         u = urlopen(url % name, data=urlencode(post))
-        return loads(u.read())
+        return json_loads(u.read())
 
     def setUp(self):
         u = urlopen(url % "login", data=urlencode({"username": "TestUser", "password": "pwhere"}))
-        self.key = loads(u.read())
+        self.key = json_loads(u.read())
         assert self.key is not False
 
     def test_wronglogin(self):
         u = urlopen(url % "login", data=urlencode({"username": "crap", "password": "wrongpw"}))
-        assert loads(u.read()) is False
+        assert json_loads(u.read()) is False
 
     def test_access(self):
         try:

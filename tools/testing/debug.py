@@ -1,7 +1,8 @@
-#coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import re
-import InitHomeDir
+from module import InitHomeDir
 from os import listdir
 
 class Wrapper(object):

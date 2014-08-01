@@ -29,9 +29,9 @@ from urllib import unquote
 
 from bottle import route, static_file, request, response, redirect, HTTPError, error
 
-from webinterface import PYLOAD, THEME, THEME_DIR, SETUP, env
+from module.web.webinterface import PYLOAD, THEME, THEME_DIR, SETUP, env
 
-from utils import render_to_response, parse_permissions, parse_userdata, \
+from module.utils import render_to_response, parse_permissions, parse_userdata, \
     login_required, get_permission, set_permission, permlist, toDict, set_session
 
 from filters import relpath, unquotepath

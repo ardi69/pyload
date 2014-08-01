@@ -6,7 +6,7 @@ from os.path import exists, join
 from shutil import copy
 
 from traceback import print_exc
-from utils import chmod
+from module.utils import chmod
 
 # ignore these plugin configs, mainly because plugins were wiped out
 IGNORE = (
