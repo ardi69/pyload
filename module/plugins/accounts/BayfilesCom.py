@@ -3,7 +3,7 @@
 from time import time
 
 from module.plugins.Account import Account
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 
 
 class BayfilesCom(Account):

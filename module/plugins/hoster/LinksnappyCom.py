@@ -4,7 +4,7 @@ import re
 
 from urlparse import urlsplit
 
-from module.common.json_layer import json_loads, json_dumps
+from module.utils import json_loads, json_dumps
 from module.plugins.Hoster import Hoster
 
 

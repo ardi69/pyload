@@ -4,7 +4,7 @@ import re
 
 from time import time
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.plugins.internal.CaptchaService import ReCaptcha
 from module.plugins.internal.SimpleHoster import SimpleHoster, create_getInfo
 

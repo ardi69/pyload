@@ -4,7 +4,7 @@ import time
 
 from module.lib.beaker.crypto.pbkdf2 import PBKDF2
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.plugins.Account import Account
 
 

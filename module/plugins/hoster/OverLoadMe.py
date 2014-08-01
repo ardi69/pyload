@@ -5,7 +5,7 @@ import re
 from random import randrange
 from urllib import unquote
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.plugins.Hoster import Hoster
 from module.utils import parseFileSize
 

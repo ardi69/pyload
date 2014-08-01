@@ -2,7 +2,7 @@
 
 import re
 
-from module.common.json_layer import json_loads, json_dumps
+from module.utils import json_loads, json_dumps
 from module.plugins.hoster.MegaNz import MegaNz
 
 

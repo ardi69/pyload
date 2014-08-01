@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from module.plugins.Account import Account
-# from module.common.json_layer import json_loads, json_dumps
+# from module.utils import json_loads, json_dumps
 
 
 class LetitbitNet(Account):

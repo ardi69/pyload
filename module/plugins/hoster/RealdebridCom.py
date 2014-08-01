@@ -6,7 +6,7 @@ from random import randrange
 from urllib import quote, unquote
 from time import time
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.plugins.Hoster import Hoster
 from module.utils import parseFileSize
 

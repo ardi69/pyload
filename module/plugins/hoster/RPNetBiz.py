@@ -3,7 +3,7 @@
 import re
 
 from module.plugins.Hoster import Hoster
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 
 
 class RPNetBiz(Hoster):

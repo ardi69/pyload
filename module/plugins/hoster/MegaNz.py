@@ -9,7 +9,7 @@ from array import array
 from base64 import standard_b64decode
 from os import remove
 
-from module.common.json_layer import json_loads, json_dumps
+from module.utils import json_loads, json_dumps
 from module.plugins.Hoster import Hoster
 
 

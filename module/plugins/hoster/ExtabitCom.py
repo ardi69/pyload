@@ -2,7 +2,7 @@
 
 import re
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 
 from module.plugins.hoster.UnrestrictLi import secondsToMidnight
 from module.plugins.internal.CaptchaService import ReCaptcha

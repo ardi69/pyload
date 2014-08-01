@@ -3,7 +3,7 @@
 import re
 
 from module.plugins.internal.SimpleCrypter import SimpleCrypter
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 
 
 class TurbobitNetFolder(SimpleCrypter):

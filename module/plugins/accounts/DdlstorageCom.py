@@ -4,7 +4,7 @@ from hashlib import md5
 from time import mktime, strptime
 
 from module.plugins.internal.XFSPAccount import XFSPAccount
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.utils import parseFileSize
 
 # DDLStorage API Documentation:

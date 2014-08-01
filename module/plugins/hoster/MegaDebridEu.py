@@ -4,7 +4,7 @@ import re
 
 from urllib import unquote_plus
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.plugins.Hoster import Hoster
 
 

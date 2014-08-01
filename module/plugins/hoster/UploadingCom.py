@@ -4,7 +4,7 @@ import re
 
 from pycurl import HTTPHEADER
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.plugins.internal.SimpleHoster import SimpleHoster, create_getInfo, timestamp
 
 

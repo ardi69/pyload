@@ -4,7 +4,7 @@ import re
 
 from urlparse import urljoin
 
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 from module.plugins.Crypter import Crypter
 from module.utils import safe_join
 

@@ -4,7 +4,7 @@ import re
 from time import time
 
 from module.plugins.Crypter import Crypter
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 
 
 class MultiuploadCom(Crypter):

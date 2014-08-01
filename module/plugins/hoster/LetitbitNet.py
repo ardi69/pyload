@@ -10,7 +10,7 @@ import re
 
 from urllib import urlencode, urlopen
 
-from module.common.json_layer import json_loads, json_dumps
+from module.utils import json_loads, json_dumps
 from module.plugins.hoster.UnrestrictLi import secondsToMidnight
 from module.plugins.internal.CaptchaService import ReCaptcha
 from module.plugins.internal.SimpleHoster import SimpleHoster

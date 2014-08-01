@@ -3,7 +3,7 @@
 import re
 from module.plugins.Crypter import Crypter
 from module.plugins.hoster.MediafireCom import checkHTMLHeader
-from module.common.json_layer import json_loads
+from module.utils import json_loads
 
 
 class MediafireComFolder(Crypter):
