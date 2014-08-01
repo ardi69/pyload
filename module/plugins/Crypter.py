@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from module.plugins.Plugin import Plugin
+from module.utils import decode
 
 
 class Crypter(Plugin):
     __name__ = "Crypter"
-    __version__ = "0.1"
-    __pattern__ = None
     __type__ = "crypter"
+    __version__ = "0.2"
+
+    __pattern__ = None
+
     __description__ = """Base decrypter plugin"""
-    __author_name__ = "mkaay"
-    __author_mail__ = "mkaay@mkaay.de"
+    __author_name__ = ("mkaay", "Walter Purcaro")
+    __author_mail__ = ("mkaay@mkaay.de", "vuolter@gmail.com")
 
 
     def __init__(self, pyfile):
@@ -41,13 +44,19 @@ class Crypter(Plugin):
 
     def createPackages(self):
         """ create new packages from self.packages """
+        if self.urls:
+            self.api.generateAndAddPackages(self.urls)
+        elif not self.packages:
+            self.fail(_("Could not extract any links"))
+            return
+
         for pack in self.packages:
 
             name, links, folder = pack
 
             self.logDebug("Parsed package %(name)s with %(len)d links" % {"name": name, "len": len(links)})
 
-            links = [x.decode("utf-8") for x in links]
+            links = map(lambda x: decode(x), links)
 
             pid = self.api.addPackage(name, links, self.pyfile.package().queue)
 
@@ -57,6 +66,3 @@ class Crypter(Plugin):
 
             if self.pyfile.package().password:
                 self.api.setPackageData(pid, {"password": self.pyfile.package().password})
-
-        if self.urls:
-            self.api.generateAndAddPackages(self.urls)
