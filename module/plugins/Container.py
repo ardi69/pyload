@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: mkaay
-"""
-
 from module.plugins.Crypter import Crypter
 
 from os.path import join, exists, basename
@@ -25,9 +8,11 @@ import re
 
 class Container(Crypter):
     __name__ = "Container"
-    __version__ = "0.1"
-    __pattern__ = None
     __type__ = "container"
+    __version__ = "0.1"
+
+    __pattern__ = None
+
     __description__ = """Base container decrypter plugin"""
     __author_name__ = "mkaay"
     __author_mail__ = "mkaay@mkaay.de"
@@ -48,7 +33,7 @@ class Container(Crypter):
 
 
     def loadToDisk(self):
-        """loads container to disk if its stored remotely and overwrite url, 
+        """loads container to disk if its stored remotely and overwrite url,
         or check existent on several places at disk"""
 
         if self.pyfile.url.startswith("http"):

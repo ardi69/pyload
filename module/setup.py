@@ -283,7 +283,7 @@ class Setup:
 
         print
         print _("The following logindata is valid for CLI and webinterface.")
-        
+
         from module.database import DatabaseBackend
 
         db = DatabaseBackend(None)

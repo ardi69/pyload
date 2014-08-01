@@ -77,7 +77,7 @@ class PluginManager:
 
     def parse(self, folder, pattern=False, home={}):
         """
-        returns dict with information 
+        returns dict with information
         home contains parsed plugins from module.
 
         {

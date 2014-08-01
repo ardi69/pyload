@@ -55,7 +55,7 @@ def initReport():
 	plugin = Wrapper()
 	pyfile = Wrapper()
 	
-	frame_c = [] 
+	frame_c = []
 	plugin_c = []
 	pyfile_c = []
 	

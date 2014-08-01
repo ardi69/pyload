@@ -143,13 +143,16 @@ class Plugin(Base):
     Overwrite `process` / `decrypt` in your subclassed plugin.
     """
     __name__ = "Plugin"
-    __version__ = "0.5"
-    __pattern__ = None
     __type__ = "hoster"
+    __version__ = "0.5"
+
+    __pattern__ = None
     __config__ = [("name", "type", "desc", "default")]
+
     __description__ = """Base plugin"""
     __author_name__ = ("RaNaN", "spoob", "mkaay")
     __author_mail__ = ("RaNaN@pyload.org", "spoob@pyload.org", "mkaay@mkaay.de")
+
 
     def __init__(self, pyfile):
         Base.__init__(self, pyfile.m.core)
@@ -219,7 +222,7 @@ class Plugin(Base):
         self.html = None
 
         #: quick caller for API
-        self.api = self.core.api 
+        self.api = self.core.api
 
         self.init()
 
