@@ -1,20 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
 
 from imp import find_module
 from os.path import join, exists
@@ -26,8 +10,10 @@ ENGINE = ""
 DEBUG = False
 JS = False
 PYV8 = False
+NODE = False
 RHINO = False
 
+# TODO: Refactor + clean up this class
 
 if not ENGINE:
     try:
@@ -45,9 +31,22 @@ if not ENGINE:
 
 if not ENGINE or DEBUG:
     try:
-        find_module("PyV8")
+        import PyV8
         ENGINE = "pyv8"
         PYV8 = True
+    except:
+        pass
+
+if not ENGINE or DEBUG:
+    try:
+        import subprocess
+        subprocess.Popen(["node", "-v"], bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        p = subprocess.Popen(["node", "-e", "console.log(23+19)"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        #integrity check
+        if out.strip() == "42":
+            ENGINE = "node"
+        NODE = True
     except:
         pass
 
@@ -77,6 +76,7 @@ if not ENGINE or DEBUG:
     except:
         pass
 
+
 class JsEngine:
     def __init__(self):
         self.engine = ENGINE
@@ -84,6 +84,10 @@ class JsEngine:
 
     def __nonzero__(self):
         return False if not ENGINE else True
+
+    def set_debug(self, value):
+        global DEBUG
+        DEBUG = value
 
     def eval(self, script):
         if not self.init:
@@ -104,6 +108,8 @@ class JsEngine:
                 return self.eval_pyv8(script)
             elif ENGINE == "js":
                 return self.eval_js(script)
+            elif ENGINE == "node":
+                return self.eval_node(script)
             elif ENGINE == "rhino":
                 return self.eval_rhino(script)
         else:
@@ -115,6 +121,10 @@ class JsEngine:
             if JS:
                 res = self.eval_js(script)
                 print "JS:", res
+                results.append(res)
+            if NODE:
+                res = self.eval_node(script)
+                print "NODE:", res
                 results.append(res)
             if RHINO:
                 res = self.eval_rhino(script)
@@ -143,6 +153,13 @@ class JsEngine:
         res = out.strip()
         return res
 
+    def eval_node(self, script):
+        script = "console.log(eval(unescape('%s')))" % quote(script)
+        p = subprocess.Popen(["node", "-e", script], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=-1)
+        out, err = p.communicate()
+        res = out.strip()
+        return res
+
     def eval_rhino(self, script):
         script = "print(eval(unescape('%s')))" % quote(script)
         p = subprocess.Popen(["java", "-cp", path, "org.mozilla.javascript.tools.shell.Main", "-e", script],
@@ -152,4 +169,4 @@ class JsEngine:
         return res.decode("utf8").encode("ISO-8859-1")
 
     def error(self):
-        return _("No js engine detected, please install either Spidermonkey, ossp-js, pyv8 or rhino")
+        return _("No js engine detected, please install either Spidermonkey, ossp-js, pyv8, nodejs or rhino")
