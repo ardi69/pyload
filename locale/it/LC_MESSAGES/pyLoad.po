@@ -209,8 +209,8 @@ msgstr "elaborando"
 msgid "unknown"
 msgstr "sconosciuto"
 
-#: module/database/FileDatabase.py:531 module/plugins/hooks/IRCInterface.py:74
-#: module/plugins/hooks/XMPPInterface.py:83
+#: module/database/FileDatabase.py:531 module/plugins/addon/IRCInterface.py:74
+#: module/plugins/addon/XMPPInterface.py:83
 #, python-format
 msgid "Package finished: %s"
 msgstr "Pacchetto completato: %s"
@@ -411,22 +411,22 @@ msgstr "Riprovo %s"
 msgid "Info Fetching for %(name)s failed | %(err)s"
 msgstr "Recupero informazioni per %(name)s fallito | %(err)s"
 
-#: module/manager/HookManager.py:90 module/plugins/Hook.py:102
+#: module/manager/AddonManager.py:90 module/plugins/Addon.py:102
 #, python-format
-msgid "Error executing hooks: %s"
-msgstr "Errore durante l'esecuzione hooks: %s"
+msgid "Error executing addon: %s"
+msgstr "Errore durante l'esecuzione addon: %s"
 
-#: module/manager/HookManager.py:140
+#: module/manager/AddonManager.py:140
 #, python-format
 msgid "Failed activating %(name)s"
 msgstr "Attivazione di %(name)s fallita"
 
-#: module/manager/HookManager.py:144
+#: module/manager/AddonManager.py:144
 #, python-format
 msgid "Activated plugins: %s"
 msgstr "Plugins attivati: %s"
 
-#: module/manager/HookManager.py:145
+#: module/manager/AddonManager.py:145
 #, python-format
 msgid "Deactivate plugins: %s"
 msgstr "Plugins disattivati: %s"
@@ -499,7 +499,7 @@ msgstr "Errore importando %(name)s: %(msg)s"
 msgid "No Hoster loaded"
 msgstr "Nessun Hoster caricato"
 
-#: module/plugins/accounts/BitshareCom.py:37
+#: module/plugins/account/BitshareCom.py:37
 msgid "Activate direct Download in your Bitshare Account"
 msgstr "Attiva il download diretto sul tuo account Bitshare"
 
@@ -526,7 +526,7 @@ msgstr "Richiesta autorizzazione (nomeutente:password)"
 #: module/plugins/hoster/MultiDebridCom.py:41
 #: module/plugins/hoster/ReloadCc.py:24 module/plugins/hoster/RehostTo.py:26
 #: module/plugins/hoster/PremiumizeMe.py:22
-#: module/plugins/hooks/RPNetBiz.py:43
+#: module/plugins/addon/RPNetBiz.py:43
 #, python-format
 msgid "Please enter your %s account or deactivate this plugin"
 msgstr "Per favore Inserisci il tuo account %s o disattiva questo plugin"
@@ -617,217 +617,217 @@ msgstr "Codice di errore:"
 msgid "File not exists."
 msgstr "Il file non esiste."
 
-#: module/plugins/hooks/UpdateManager.py:74
+#: module/plugins/addon/UpdateManager.py:74
 msgid "*** Plugins have been updated, please restart pyLoad ***"
 msgstr "*** I plugin sono stati aggiornati, riavvia pyLoad ***"
 
-#: module/plugins/hooks/UpdateManager.py:76
+#: module/plugins/addon/UpdateManager.py:76
 msgid "Plugins updated and reloaded"
 msgstr "Plugins aggiornati e riavviati"
 
-#: module/plugins/hooks/UpdateManager.py:79
+#: module/plugins/addon/UpdateManager.py:79
 msgid "No plugin updates available"
 msgstr "Nessun aggiornamento per i plugin disponibile"
 
-#: module/plugins/hooks/UpdateManager.py:96
+#: module/plugins/addon/UpdateManager.py:96
 msgid "No Updates for pyLoad"
 msgstr "Nessun aggiornamento per pyLoad"
 
-#: module/plugins/hooks/UpdateManager.py:100
+#: module/plugins/addon/UpdateManager.py:100
 #, python-format
 msgid "***  New pyLoad Version %s available  ***"
 msgstr "***  Nuova versione di pyLoad %s disponibile  ***"
 
-#: module/plugins/hooks/UpdateManager.py:101
+#: module/plugins/addon/UpdateManager.py:101
 msgid "***  Get it here: http://pyload.org/download  ***"
 msgstr "***  Scaricala da qui: http://pyload.org/download  ***"
 
-#: module/plugins/hooks/UpdateManager.py:104
+#: module/plugins/addon/UpdateManager.py:104
 msgid "Not able to connect server for updates"
 msgstr "Impossibile collegarsi al server per gli aggiornamenti"
 
-#: module/plugins/hooks/UpdateManager.py:148
+#: module/plugins/addon/UpdateManager.py:148
 #, python-format
 msgid "New version of %(type)s|%(name)s : %(version).2f"
 msgstr "Nuova versione di %(type)s|%(name)s : %(version).2f"
 
-#: module/plugins/hooks/UpdateManager.py:157
-#: module/plugins/hooks/UpdateManager.py:162
+#: module/plugins/addon/UpdateManager.py:157
+#: module/plugins/addon/UpdateManager.py:162
 #, python-format
 msgid "Error when updating %s"
 msgstr "Errore durante l'aggiornamento di %s"
 
-#: module/plugins/hooks/UpdateManager.py:162
+#: module/plugins/addon/UpdateManager.py:162
 msgid "Version mismatch"
 msgstr "Versione non corrispondente"
 
-#: module/plugins/hooks/IRCInterface.py:82
+#: module/plugins/addon/IRCInterface.py:82
 #, python-format
 msgid "Download finished: %(name)s @ %(plugin)s "
 msgstr "Download finito: %(name)s @ %(plugin)s "
 
-#: module/plugins/hooks/IRCInterface.py:95
+#: module/plugins/addon/IRCInterface.py:95
 #, python-format
 msgid "New Captcha Request: %s"
 msgstr "Nuova richiesta Captcha: %s"
 
-#: module/plugins/hooks/IRCInterface.py:96
+#: module/plugins/addon/IRCInterface.py:96
 #, python-format
 msgid "Answer with 'c %s text on the captcha'"
 msgstr "Rispondi usando 'c %s text on the captcha'"
 
-#: module/plugins/hooks/Premium4Me.py:29
+#: module/plugins/addon/Premium4Me.py:29
 msgid "Please add your premium.to account first and restart pyLoad"
 msgstr "Inserire prima il tuo account premium.to e riavviare pyLoad"
 
-#: module/plugins/hooks/HotFolder.py:82
+#: module/plugins/addon/HotFolder.py:82
 #, python-format
 msgid "Added %s from HotFolder"
 msgstr "Aggiunto %s da HotFolder"
 
-#: module/plugins/hooks/ExtractArchive.py:95
+#: module/plugins/addon/ExtractArchive.py:95
 #, python-format
 msgid "No %s installed"
 msgstr "%s non installato"
 
-#: module/plugins/hooks/ExtractArchive.py:97
-#: module/plugins/hooks/ExtractArchive.py:102
+#: module/plugins/addon/ExtractArchive.py:97
+#: module/plugins/addon/ExtractArchive.py:102
 #, python-format
 msgid "Could not activate %s"
 msgstr "Impossibile attivare %s"
 
-#: module/plugins/hooks/ExtractArchive.py:107
+#: module/plugins/addon/ExtractArchive.py:107
 msgid "Activated"
 msgstr "Attivato"
 
-#: module/plugins/hooks/ExtractArchive.py:109
+#: module/plugins/addon/ExtractArchive.py:109
 msgid "No Extract plugins activated"
 msgstr "Nessun plugin per l'estrazione attivato"
 
-#: module/plugins/hooks/ExtractArchive.py:121
+#: module/plugins/addon/ExtractArchive.py:121
 #, python-format
 msgid "Package %s queued for later extracting"
 msgstr "Il pacchetto %s è stato messo in coda per l'estrazione successiva"
 
-#: module/plugins/hooks/ExtractArchive.py:144
+#: module/plugins/addon/ExtractArchive.py:144
 #, python-format
 msgid "Check package %s"
 msgstr "Verifico pacchetto %s"
 
-#: module/plugins/hooks/ExtractArchive.py:185
+#: module/plugins/addon/ExtractArchive.py:185
 #, python-format
 msgid "Extract to %s"
 msgstr "Estraggo in %s"
 
-#: module/plugins/hooks/ExtractArchive.py:200
+#: module/plugins/addon/ExtractArchive.py:200
 msgid "No files found to extract"
 msgstr "Nessun file trovato da estrarre"
 
-#: module/plugins/hooks/ExtractArchive.py:207
+#: module/plugins/addon/ExtractArchive.py:207
 msgid "extracting"
 msgstr "estrazione"
 
-#: module/plugins/hooks/ExtractArchive.py:218
+#: module/plugins/addon/ExtractArchive.py:218
 msgid "Password protected"
 msgstr "Protetto da password"
 
-#: module/plugins/hooks/ExtractArchive.py:239
+#: module/plugins/addon/ExtractArchive.py:239
 msgid "Wrong password"
 msgstr "Password errata"
 
-#: module/plugins/hooks/ExtractArchive.py:247
+#: module/plugins/addon/ExtractArchive.py:247
 #, python-format
 msgid "Deleting %s files"
 msgstr "Cancello %s file"
 
-#: module/plugins/hooks/ExtractArchive.py:254
+#: module/plugins/addon/ExtractArchive.py:254
 msgid "Extracting finished"
 msgstr "Estrazione completata"
 
-#: module/plugins/hooks/ExtractArchive.py:260
+#: module/plugins/addon/ExtractArchive.py:260
 msgid "Archive Error"
 msgstr "Archivio danneggiato"
 
-#: module/plugins/hooks/ExtractArchive.py:262
+#: module/plugins/addon/ExtractArchive.py:262
 msgid "CRC Mismatch"
 msgstr "CRC non corrispondente"
 
-#: module/plugins/hooks/ExtractArchive.py:266
+#: module/plugins/addon/ExtractArchive.py:266
 msgid "Unknown Error"
 msgstr "Errore Sconosciuto"
 
-#: module/plugins/hooks/ExtractArchive.py:318
+#: module/plugins/addon/ExtractArchive.py:318
 msgid "Setting User and Group failed"
 msgstr "Configurazione Utente e Gruppo fallita"
 
-#: module/plugins/hooks/ClickAndLoad.py:75
+#: module/plugins/addon/ClickAndLoad.py:75
 msgid "Click'N'Load: Port 9666 already in use"
 msgstr "Click'N'Load: Porta 9666 già in uso"
 
-#: module/plugins/hooks/CaptchaTrader.py:69
-#: module/plugins/hooks/Captcha9kw.py:59
-#: module/plugins/hooks/ExpertDecoders.py:50
+#: module/plugins/addon/CaptchaTrader.py:69
+#: module/plugins/addon/Captcha9kw.py:59
+#: module/plugins/addon/ExpertDecoders.py:50
 #, python-format
 msgid "%s credits left"
 msgstr "%s crediti rimasti"
 
-#: module/plugins/hooks/CaptchaTrader.py:117
+#: module/plugins/addon/CaptchaTrader.py:117
 msgid "Could not send response."
 msgstr "Non posso inviare la risposta."
 
-#: module/plugins/hooks/CaptchaTrader.py:135
+#: module/plugins/addon/CaptchaTrader.py:135
 msgid "Your CaptchaTrader Account has not enough credits"
 msgstr "Il tuo account CaptchaTrader non ha crediti sufficienti"
 
-#: module/plugins/hooks/LinkdecrypterCom.py:43
+#: module/plugins/addon/LinkdecrypterCom.py:43
 msgid "Crypter list not found"
 msgstr "Elenco Crypter non trovato"
 
-#: module/plugins/hooks/LinkdecrypterCom.py:57
+#: module/plugins/addon/LinkdecrypterCom.py:57
 msgid "Crypter list is empty"
 msgstr "Elenco Crypter vuoto"
 
-#: module/plugins/hooks/XMPPInterface.py:91
+#: module/plugins/addon/XMPPInterface.py:91
 #, python-format
 msgid "Download finished: %(name)s @ %(plugin)s"
 msgstr "Download finito: %(name)s @ %(plugin)s"
 
-#: module/plugins/hooks/Captcha9kw.py:93
+#: module/plugins/addon/Captcha9kw.py:93
 #, python-format
 msgid "New CaptchaID from upload: %s : %s"
 msgstr "Nuovo CaptchaID dall'upload: %s : %s"
 
-#: module/plugins/hooks/Captcha9kw.py:129
+#: module/plugins/addon/Captcha9kw.py:129
 msgid "Your Captcha 9kw.eu Account has not enough credits"
 msgstr "Il tuo account Captcha 9kw.eu non ha abbastanza crediti"
 
-#: module/plugins/hooks/ExternalScripts.py:54
+#: module/plugins/addon/ExternalScripts.py:54
 #, python-format
 msgid "Installed scripts for %s: "
 msgstr "Script installati per %s: "
 
-#: module/plugins/hooks/ExternalScripts.py:69
+#: module/plugins/addon/ExternalScripts.py:69
 msgid "Script not executable:"
 msgstr "Script non eseguibile:"
 
-#: module/plugins/hooks/ExternalScripts.py:80
+#: module/plugins/addon/ExternalScripts.py:80
 #, python-format
 msgid "Error in %(script)s: %(error)s"
 msgstr "Errore in %(script)s: %(error)s"
 
-#: module/plugins/hooks/ExpertDecoders.py:95
+#: module/plugins/addon/ExpertDecoders.py:95
 msgid "Your ExpertDecoders Account has not enough credits"
 msgstr "Il tuo account ExpertDecoders ha non abbastanza crediti"
 
-#: module/plugins/hooks/RehostTo.py:32
+#: module/plugins/addon/RehostTo.py:32
 msgid "Please add your rehost.to account first and restart pyLoad"
 msgstr "Inserisci prima il tuo account rehost.to e poi riavvia pyLoad"
 
-#: module/plugins/hooks/PremiumizeMe.py:48
+#: module/plugins/addon/PremiumizeMe.py:48
 msgid "Please add a valid premiumize.me account first and restart pyLoad."
 msgstr "Inserire un account premiumize.me valido e riavviare pyLoad."
 
-#: module/plugins/hooks/CaptchaBrotherhood.py:69
+#: module/plugins/addon/CaptchaBrotherhood.py:69
 #, python-format
 msgid "%d credits left"
 msgstr "%d crediti rimasti"

@@ -11,7 +11,7 @@ You can find an overview of some important classes here:
    module.plugins.Base.Plugin
    module.plugins.Crypter.Crypter
    module.plugins.Account.Account
-   module.plugins.Hook.Hook
-   module.manager.HookManager.HookManager
+   module.plugins.Addon.Addon
+   module.manager.AddonManager.AddonManager
    module.datatype.PyFile.PyFile
    module.datatype.PyPackage.PyPackage

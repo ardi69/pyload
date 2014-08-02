@@ -30,7 +30,7 @@ How basic hoster plugin header could look like: ::
 You have to define these meta-data, ``__pattern__`` has to be a regexp that sucessfully compiles with
 ``re.compile(__pattern__)``.
 
-Just like :ref:`write_hooks` you can add and use config values exatly the same way.
+Just like :ref:`write_addons` you can add and use config values exatly the same way.
 If you want a Crypter or Container plugin, just replace the word Hoster with your desired plugin type.
 
 
@@ -71,7 +71,7 @@ Captcha decrypting
 __________________
 
 To handle captcha input just use ``self.decryptCaptcha(url, ...)``, it will be send to clients
-or handled by :class:`Hook <module.plugins.Hook.Hook>` plugins
+or handled by :class:`Addon <module.plugins.Addon.Addon>` plugins
 
 Crypter
 -------

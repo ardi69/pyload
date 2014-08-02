@@ -209,8 +209,8 @@ msgstr "işlem devam ediyor"
 msgid "unknown"
 msgstr "bilinmeyen"
 
-#: module/database/FileDatabase.py:531 module/plugins/hooks/IRCInterface.py:74
-#: module/plugins/hooks/XMPPInterface.py:83
+#: module/database/FileDatabase.py:531 module/plugins/addon/IRCInterface.py:74
+#: module/plugins/addon/XMPPInterface.py:83
 #, python-format
 msgid "Package finished: %s"
 msgstr "Paket tamamlandı. %s"
@@ -411,22 +411,22 @@ msgstr ""
 msgid "Info Fetching for %(name)s failed | %(err)s"
 msgstr "Bilgisi %(name)s alınırken hata | %(err)s oluştu"
 
-#: module/manager/HookManager.py:90 module/plugins/Hook.py:102
+#: module/manager/AddonManager.py:90 module/plugins/Addon.py:102
 #, python-format
-msgid "Error executing hooks: %s"
+msgid "Error executing addon: %s"
 msgstr ""
 
-#: module/manager/HookManager.py:140
+#: module/manager/AddonManager.py:140
 #, python-format
 msgid "Failed activating %(name)s"
 msgstr "Aktive etme başarısız %(name)s"
 
-#: module/manager/HookManager.py:144
+#: module/manager/AddonManager.py:144
 #, python-format
 msgid "Activated plugins: %s"
 msgstr "Eklentiler etkinleştiriliyor: %s"
 
-#: module/manager/HookManager.py:145
+#: module/manager/AddonManager.py:145
 #, python-format
 msgid "Deactivate plugins: %s"
 msgstr "Eklentiler kapatılıyor: %s"
@@ -499,7 +499,7 @@ msgstr "Alınırken hata %(name)s: %(msg)s"
 msgid "No Hoster loaded"
 msgstr "Hiçbir Sunucu yüklenemedi"
 
-#: module/plugins/accounts/BitshareCom.py:37
+#: module/plugins/account/BitshareCom.py:37
 msgid "Activate direct Download in your Bitshare Account"
 msgstr "Bitshare hesabınızdaki direk yüklemeyi aktifleştirin"
 
@@ -526,7 +526,7 @@ msgstr "Yetkilendirme gerekli (kullanıcı adı: şifre)"
 #: module/plugins/hoster/MultiDebridCom.py:41
 #: module/plugins/hoster/ReloadCc.py:24 module/plugins/hoster/RehostTo.py:26
 #: module/plugins/hoster/PremiumizeMe.py:22
-#: module/plugins/hooks/RPNetBiz.py:43
+#: module/plugins/addon/RPNetBiz.py:43
 #, python-format
 msgid "Please enter your %s account or deactivate this plugin"
 msgstr "Lütfen %s hesabınıza girin veya bu eklentiyi devre dışı bırakın"
@@ -617,217 +617,217 @@ msgstr "Hata kodu:"
 msgid "File not exists."
 msgstr ""
 
-#: module/plugins/hooks/UpdateManager.py:74
+#: module/plugins/addon/UpdateManager.py:74
 msgid "*** Plugins have been updated, please restart pyLoad ***"
 msgstr "*** Eklentiler güncellendi, pyLoad'ı yeniden başlatın ***"
 
-#: module/plugins/hooks/UpdateManager.py:76
+#: module/plugins/addon/UpdateManager.py:76
 msgid "Plugins updated and reloaded"
 msgstr "Eklentiler güncellendi ve yeniden yüklendi"
 
-#: module/plugins/hooks/UpdateManager.py:79
+#: module/plugins/addon/UpdateManager.py:79
 msgid "No plugin updates available"
 msgstr "Eklentiler için güncelleme yok"
 
-#: module/plugins/hooks/UpdateManager.py:96
+#: module/plugins/addon/UpdateManager.py:96
 msgid "No Updates for pyLoad"
 msgstr "pyLoad için güncelleme yok"
 
-#: module/plugins/hooks/UpdateManager.py:100
+#: module/plugins/addon/UpdateManager.py:100
 #, python-format
 msgid "***  New pyLoad Version %s available  ***"
 msgstr "***  Yeni pyLoad Sürümü %s mevcuttur  ***"
 
-#: module/plugins/hooks/UpdateManager.py:101
+#: module/plugins/addon/UpdateManager.py:101
 msgid "***  Get it here: http://pyload.org/download  ***"
 msgstr "***  Buradan indirin: http://pyload.org/download  ***"
 
-#: module/plugins/hooks/UpdateManager.py:104
+#: module/plugins/addon/UpdateManager.py:104
 msgid "Not able to connect server for updates"
 msgstr "Güncelleştirmeler için sunucuya bağlanmak mümkün değil"
 
-#: module/plugins/hooks/UpdateManager.py:148
+#: module/plugins/addon/UpdateManager.py:148
 #, python-format
 msgid "New version of %(type)s|%(name)s : %(version).2f"
 msgstr "Yeni versiyonu %(type)s|%(name)s : %(version).2f"
 
-#: module/plugins/hooks/UpdateManager.py:157
-#: module/plugins/hooks/UpdateManager.py:162
+#: module/plugins/addon/UpdateManager.py:157
+#: module/plugins/addon/UpdateManager.py:162
 #, python-format
 msgid "Error when updating %s"
 msgstr "%s güncelleştirme hatası"
 
-#: module/plugins/hooks/UpdateManager.py:162
+#: module/plugins/addon/UpdateManager.py:162
 msgid "Version mismatch"
 msgstr "Sürüm uyuşmazlığı"
 
-#: module/plugins/hooks/IRCInterface.py:82
+#: module/plugins/addon/IRCInterface.py:82
 #, python-format
 msgid "Download finished: %(name)s @ %(plugin)s "
 msgstr "Yükleme bitti: %(name)s @ %(plugin)s "
 
-#: module/plugins/hooks/IRCInterface.py:95
+#: module/plugins/addon/IRCInterface.py:95
 #, python-format
 msgid "New Captcha Request: %s"
 msgstr "Yeni Captcha İsteği: %s"
 
-#: module/plugins/hooks/IRCInterface.py:96
+#: module/plugins/addon/IRCInterface.py:96
 #, python-format
 msgid "Answer with 'c %s text on the captcha'"
 msgstr "captcha üstündeki 'c %s metnini cevapla"
 
-#: module/plugins/hooks/Premium4Me.py:29
+#: module/plugins/addon/Premium4Me.py:29
 msgid "Please add your premium.to account first and restart pyLoad"
 msgstr "Lütfen önce premium.to hesabınızı ekleyin ve pyLoad'u yeniden başlatın"
 
-#: module/plugins/hooks/HotFolder.py:82
+#: module/plugins/addon/HotFolder.py:82
 #, python-format
 msgid "Added %s from HotFolder"
 msgstr "HotFolder gelen ek %s"
 
-#: module/plugins/hooks/ExtractArchive.py:95
+#: module/plugins/addon/ExtractArchive.py:95
 #, python-format
 msgid "No %s installed"
 msgstr "Yüklü %s yok"
 
-#: module/plugins/hooks/ExtractArchive.py:97
-#: module/plugins/hooks/ExtractArchive.py:102
+#: module/plugins/addon/ExtractArchive.py:97
+#: module/plugins/addon/ExtractArchive.py:102
 #, python-format
 msgid "Could not activate %s"
 msgstr "%s etkinleştirilemedi"
 
-#: module/plugins/hooks/ExtractArchive.py:107
+#: module/plugins/addon/ExtractArchive.py:107
 msgid "Activated"
 msgstr "Etkinleştirildi"
 
-#: module/plugins/hooks/ExtractArchive.py:109
+#: module/plugins/addon/ExtractArchive.py:109
 msgid "No Extract plugins activated"
 msgstr "Aktif Extract eklentisi yok"
 
-#: module/plugins/hooks/ExtractArchive.py:121
+#: module/plugins/addon/ExtractArchive.py:121
 #, python-format
 msgid "Package %s queued for later extracting"
 msgstr "%s paketini daha sonra ayıklamak için sıraya alındı"
 
-#: module/plugins/hooks/ExtractArchive.py:144
+#: module/plugins/addon/ExtractArchive.py:144
 #, python-format
 msgid "Check package %s"
 msgstr "%s paketi kontrol et"
 
-#: module/plugins/hooks/ExtractArchive.py:185
+#: module/plugins/addon/ExtractArchive.py:185
 #, python-format
 msgid "Extract to %s"
 msgstr "Arşiv ayıklanıyor şuraya %s"
 
-#: module/plugins/hooks/ExtractArchive.py:200
+#: module/plugins/addon/ExtractArchive.py:200
 msgid "No files found to extract"
 msgstr "Arşivden ayıklanacak dosya bulunamadı"
 
-#: module/plugins/hooks/ExtractArchive.py:207
+#: module/plugins/addon/ExtractArchive.py:207
 msgid "extracting"
 msgstr "Ayıklanıyor"
 
-#: module/plugins/hooks/ExtractArchive.py:218
+#: module/plugins/addon/ExtractArchive.py:218
 msgid "Password protected"
 msgstr "Şifre korumalı"
 
-#: module/plugins/hooks/ExtractArchive.py:239
+#: module/plugins/addon/ExtractArchive.py:239
 msgid "Wrong password"
 msgstr "Hatalı şifre"
 
-#: module/plugins/hooks/ExtractArchive.py:247
+#: module/plugins/addon/ExtractArchive.py:247
 #, python-format
 msgid "Deleting %s files"
 msgstr "%s Dosya siliniyor"
 
-#: module/plugins/hooks/ExtractArchive.py:254
+#: module/plugins/addon/ExtractArchive.py:254
 msgid "Extracting finished"
 msgstr "Ayıklama bitti"
 
-#: module/plugins/hooks/ExtractArchive.py:260
+#: module/plugins/addon/ExtractArchive.py:260
 msgid "Archive Error"
 msgstr "Arşiv hatası"
 
-#: module/plugins/hooks/ExtractArchive.py:262
+#: module/plugins/addon/ExtractArchive.py:262
 msgid "CRC Mismatch"
 msgstr "CRC Uyuşmazlığı"
 
-#: module/plugins/hooks/ExtractArchive.py:266
+#: module/plugins/addon/ExtractArchive.py:266
 msgid "Unknown Error"
 msgstr "Bilinmeyen Hata"
 
-#: module/plugins/hooks/ExtractArchive.py:318
+#: module/plugins/addon/ExtractArchive.py:318
 msgid "Setting User and Group failed"
 msgstr "Kullanıcı ve Grup Ayarları başarısız oldu"
 
-#: module/plugins/hooks/ClickAndLoad.py:75
+#: module/plugins/addon/ClickAndLoad.py:75
 msgid "Click'N'Load: Port 9666 already in use"
 msgstr "Click'N'Load: Port 9666 zaten kullanılıyor"
 
-#: module/plugins/hooks/CaptchaTrader.py:69
-#: module/plugins/hooks/Captcha9kw.py:59
-#: module/plugins/hooks/ExpertDecoders.py:50
+#: module/plugins/addon/CaptchaTrader.py:69
+#: module/plugins/addon/Captcha9kw.py:59
+#: module/plugins/addon/ExpertDecoders.py:50
 #, python-format
 msgid "%s credits left"
 msgstr "%s kredi kaldı"
 
-#: module/plugins/hooks/CaptchaTrader.py:117
+#: module/plugins/addon/CaptchaTrader.py:117
 msgid "Could not send response."
 msgstr "yanıt gönderilemedi."
 
-#: module/plugins/hooks/CaptchaTrader.py:135
+#: module/plugins/addon/CaptchaTrader.py:135
 msgid "Your CaptchaTrader Account has not enough credits"
 msgstr "Sizin CaptchaTrader hesabınızda yeterli kredi bulunmamakta"
 
-#: module/plugins/hooks/LinkdecrypterCom.py:43
+#: module/plugins/addon/LinkdecrypterCom.py:43
 msgid "Crypter list not found"
 msgstr "Şifreleme listesi bulunamadı"
 
-#: module/plugins/hooks/LinkdecrypterCom.py:57
+#: module/plugins/addon/LinkdecrypterCom.py:57
 msgid "Crypter list is empty"
 msgstr "Şifreleme listesi boş"
 
-#: module/plugins/hooks/XMPPInterface.py:91
+#: module/plugins/addon/XMPPInterface.py:91
 #, python-format
 msgid "Download finished: %(name)s @ %(plugin)s"
 msgstr "Yükleme bitti: %(name)s @ %(plugin)s "
 
-#: module/plugins/hooks/Captcha9kw.py:93
+#: module/plugins/addon/Captcha9kw.py:93
 #, python-format
 msgid "New CaptchaID from upload: %s : %s"
 msgstr "Yeni CaptchaID yükleme tarafından: %s : %s"
 
-#: module/plugins/hooks/Captcha9kw.py:129
+#: module/plugins/addon/Captcha9kw.py:129
 msgid "Your Captcha 9kw.eu Account has not enough credits"
 msgstr "Captcha 9kw.eu hesabı yeterli kredi yok"
 
-#: module/plugins/hooks/ExternalScripts.py:54
+#: module/plugins/addon/ExternalScripts.py:54
 #, python-format
 msgid "Installed scripts for %s: "
 msgstr "%s: için yüklü komut dosyaları"
 
-#: module/plugins/hooks/ExternalScripts.py:69
+#: module/plugins/addon/ExternalScripts.py:69
 msgid "Script not executable:"
 msgstr "Komut dosya çalıştırılamaz:"
 
-#: module/plugins/hooks/ExternalScripts.py:80
+#: module/plugins/addon/ExternalScripts.py:80
 #, python-format
 msgid "Error in %(script)s: %(error)s"
 msgstr "Hata %(script)s: %(error)s"
 
-#: module/plugins/hooks/ExpertDecoders.py:95
+#: module/plugins/addon/ExpertDecoders.py:95
 msgid "Your ExpertDecoders Account has not enough credits"
 msgstr "ExpertDecoders hesabınızda yeterli kredi yok"
 
-#: module/plugins/hooks/RehostTo.py:32
+#: module/plugins/addon/RehostTo.py:32
 msgid "Please add your rehost.to account first and restart pyLoad"
 msgstr "Lütfen önce rehost.to hesabınızı ekleyin ve pyLoad'u yeniden başlatın"
 
-#: module/plugins/hooks/PremiumizeMe.py:48
+#: module/plugins/addon/PremiumizeMe.py:48
 msgid "Please add a valid premiumize.me account first and restart pyLoad."
 msgstr "Lütfen önce bir geçerli premiumize.me hesabı ekleyin ve pyLoad yeniden başlatın."
 
-#: module/plugins/hooks/CaptchaBrotherhood.py:69
+#: module/plugins/addon/CaptchaBrotherhood.py:69
 #, python-format
 msgid "%d credits left"
 msgstr "%d kredi kaldı"

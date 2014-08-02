@@ -10,7 +10,7 @@ from module.utils import chmod
 
 # ignore these plugin configs, mainly because plugins were wiped out
 IGNORE = (
-    "FreakshareNet", "SpeedManager", "ArchiveTo", "ShareCx", ('hooks', 'UnRar'),
+    "FreakshareNet", "SpeedManager", "ArchiveTo", "ShareCx", ('addon', 'UnRar'),
     'EasyShareCom', 'FlyshareCz'
     )
 

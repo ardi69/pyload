@@ -2,11 +2,11 @@
 
 import re
 
-from module.plugins.Hook import Hook
+from module.plugins.Addon import Addon
 from module.utils import remove_chars
 
 
-class MultiHoster(Hook):
+class MultiHoster(Addon):
     __name__ = "AbtractExtractor"
     __version__ = "0.19"
 
@@ -171,7 +171,7 @@ class MultiHoster(Hook):
             del dict['new_name']
 
     def deactivated(self):
-        """Remove override for all hosters. Scheduler job is removed by hookmanager"""
+        """Remove override for all hosters. Scheduler job is removed by AddonManager"""
         for hoster in self.supported:
             self.unloadHoster(hoster)
 
