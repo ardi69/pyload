@@ -21,7 +21,7 @@ from itertools import islice
 from time import time
 
 from module.cli.Handler import Handler
-from module.cli.printer import *
+from module.utils.printer import *
 
 from module.Api import Destination, PackageData
 

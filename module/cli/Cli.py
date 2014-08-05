@@ -57,7 +57,7 @@ import module.utils.pylgettext as gettext
 
 from module.Api import Destination
 from module.cli import AddPackage, ManageFiles
-from module.cli.printer import *
+from module.utils.printer import *
 from module.remote.thriftbackend.ThriftClient import ThriftClient, NoConnection, NoSSL, WrongLogin, ConnectionClosed
 from module.utils import formatSize, decode
 

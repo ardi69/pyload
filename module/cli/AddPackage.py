@@ -18,7 +18,7 @@
 ###
 
 from module.cli.Handler import Handler
-from module.cli.printer import *
+from module.utils.printer import *
 
 
 class AddPackage(Handler):
