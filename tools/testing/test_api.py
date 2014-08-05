@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tools.test.APIExerciser import APIExerciser
+import APIExerciser
+
 from nose.tools import nottest
 
 
 class TestApi:
 
     def __init__(self):
-        self.api = APIExerciser(None, True, "TestUser", "pwhere")
+        self.api = APIExerciser.APIExerciser(None, True, "TestUser", "pwhere")
 
     def test_login(self):
         assert self.api.api.login("crapp", "wrong pw") is False

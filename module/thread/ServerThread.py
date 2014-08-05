@@ -11,8 +11,10 @@ log = logging.getLogger("log")
 
 
 class WebServer(threading.Thread):
+
     def __init__(self, pycore):
         global core
+
         threading.Thread.__init__(self)
         self.core = pycore
         core = pycore
@@ -26,8 +28,10 @@ class WebServer(threading.Thread):
 
         self.setDaemon(True)
 
+
     def run(self):
-        from module.web import webinterface
+        from module.webui import Webui as webinterface
+
         global webinterface
 
         reset = False
@@ -57,7 +61,7 @@ class WebServer(threading.Thread):
                 except Exception, e:
                     log.error(_("Error importing lightweight server: %s") % e)
                     log.warning(_("You need to download and compile bjoern, https://github.com/jonashaag/bjoern"))
-                    log.warning(_("Copy the boern.so to module/lib folder or use setup.py install"))
+                    log.warning(_("Copy the boern.so to module/lib folder or use Setup.py install"))
                     log.warning(_("Of course you need to be familiar with linux and know how to compile software"))
                     self.server = "builtin"
             else:
@@ -74,13 +78,14 @@ class WebServer(threading.Thread):
         else:
             self.start_builtin()
 
-    def start_builtin(self):
 
+    def start_builtin(self):
         if self.https:
             log.warning(_("This server offers no SSL, please consider using threaded instead"))
 
         self.core.log.info(_("Starting builtin webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_simple(host=self.host, port=self.port)
+
 
     def start_threaded(self):
         if self.https:
@@ -92,8 +97,8 @@ class WebServer(threading.Thread):
 
         webinterface.run_threaded(host=self.host, port=self.port, cert=self.cert, key=self.key)
 
-    def start_fcgi(self):
 
+    def start_fcgi(self):
         self.core.log.info(_("Starting fastcgi server: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_fcgi(host=self.host, port=self.port)
 
@@ -104,6 +109,7 @@ class WebServer(threading.Thread):
 
         self.core.log.info(_("Starting lightweight webserver (bjoern): %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_lightweight(host=self.host, port=self.port)
+
 
     def quit(self):
         self.running = False

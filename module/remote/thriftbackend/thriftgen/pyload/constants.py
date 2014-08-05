@@ -7,4 +7,4 @@
 #
 
 from thrift.Thrift import TType, TMessageType, TException
-from ttypes import *
+from module.remote.thriftbackend.thriftgen.pyload.ttypes import *

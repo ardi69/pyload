@@ -5,14 +5,14 @@ from os.path import join
 
 sys.path.append(join(pypath, "module", "lib"))
 
-from thriftgen.pyload import Pyload
-from thriftgen.pyload.ttypes import *
-from Socket import Socket
+from module.remote.thriftbackend.thriftgen.pyload import Pyload
+from module.remote.thriftbackend.thriftgen.pyload.ttypes import *
+from module.remote.thriftbackend.Socket import Socket
 
 from thrift import Thrift
 from thrift.transport import TTransport
 
-from Protocol import Protocol
+from module.remote.thriftbackend.Protocol import Protocol
 
 from time import time
 

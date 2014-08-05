@@ -9,18 +9,17 @@ from codecs import getwriter
 from getopt import GetoptError, getopt
 from os import _exit
 from os.path import join, exists, basename
-from sys import exit
 from threading import Thread, Lock
 from time import sleep
 from traceback import print_exc
 
-from module.lib.Getch import Getch
-from module.lib.rename_process import renameProcess
+from Getch import Getch
+from rename_process import renameProcess
 
 from module.config.ConfigParser import ConfigParser
 import module.utils.pylgettext as gettext
 
-from module import InitHomeDir
+from module.utils import InitHomeDir
 from module.Api import Destination
 from module.cli import AddPackage, ManageFiles
 from module.cli.printer import *
@@ -509,17 +508,17 @@ def main():
                 translation.install(unicode=True)
             elif option in ("-h", "--help"):
                 print_help(config)
-                exit()
+                sys.exit()
             elif option in ("--pw"):
                 password = params
             elif option in ("-c", "--comands"):
                 print_commands()
-                exit()
+                sys.exit()
 
     except GetoptError:
         print 'Unknown Argument(s) "%s"' % " ".join(sys.argv[1:])
         print_help(config)
-        exit()
+        sys.exit()
 
     if len(extraparams) >= 1:
         command = extraparams
@@ -533,7 +532,7 @@ def main():
             pass
         except NoSSL:
             print _("You need py-openssl to connect to this pyLoad Core.")
-            exit()
+            sys.exit()
         except NoConnection:
             config['addr'] = False
             config['port'] = False

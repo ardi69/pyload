@@ -16,6 +16,7 @@
 
     @author: RaNaN
 """
+
 from os import remove, stat, fsync
 from os.path import exists
 from time import sleep
@@ -24,7 +25,7 @@ from module.utils import fs_encode
 import codecs
 import pycurl
 
-from HTTPRequest import HTTPRequest
+from module.network.HTTPRequest import HTTPRequest
 
 
 class WrongFormat(Exception):

@@ -14,7 +14,7 @@ class WrongPassword(Exception):
 
 class AbtractExtractor:
     __name__ = "AbtractExtractor"
-    __version__ = "0.1"
+    __version__ = "0.2"
 
     __description__ = """Abtract extractor plugin"""
     __author_name__ = "pyLoad Team"
@@ -54,6 +54,7 @@ class AbtractExtractor:
         self.excludefiles = excludefiles
         self.renice = renice
         self.files = []  #: Store extracted files here
+        self.init()
 
     def init(self):
         """ Initialize additional data structures """

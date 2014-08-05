@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this plrogram; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
-from bottle import request, HTTPError, redirect, ServerAdapter
-
-from module.web.webinterface import env, THEME
+from bottle import request, HTTPError, redirect
 
 from module.Api import has_permission, PERMS, ROLE
+from module.webui.Webui import env, THEME
+
 
 def render_to_response(file, args={}, proc=[]):
     for p in proc:
@@ -120,18 +104,3 @@ def login_required(perm=None):
         return _view
 
     return _dec
-
-
-def toDict(obj):
-    ret = {}
-    for att in obj.__slots__:
-        ret[att] = getattr(obj, att)
-    return ret
-
-
-class CherryPyWSGI(ServerAdapter):
-    def run(self, handler):
-        from wsgiserver import CherryPyWSGIServer
-
-        server = CherryPyWSGIServer((self.host, self.port), handler)
-        server.start()

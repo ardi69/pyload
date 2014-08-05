@@ -2,7 +2,7 @@
 
 from time import mktime, time
 
-from module.lib import feedparser
+import feedparser
 
 from module.plugins.Addon import Addon
 

@@ -247,9 +247,17 @@ def has_method(obj, name):
 
 
 def html_unescape(text):
-    """Removes HTML or XML character references and entities from a text string"""
+    """ removes HTML or XML character references and entities from a text string """
     return re.sub("&#?\w+;", fixup, text)
 
 
 def versiontuple(v):  #: By kindall (http://stackoverflow.com/a/11887825)
+    """ convert version like string to a tuple of integers """
     return tuple(map(int, (v.split("."))))
+
+
+def toDict(obj):
+    ret = {}
+    for att in obj.__slots__:
+        ret[att] = getattr(obj, att)
+    return ret

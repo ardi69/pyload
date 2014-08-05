@@ -43,10 +43,10 @@ class Setup:
         #        viaweb = self.ask(_("Start initial webinterface for configuration?"), "y", bool=True)
         #        if viaweb:
         #            try:
-        #                from module.web import ServerThread
+        #                from module.thread import ServerThread
         #                ServerThread.setup = self
-        #                from module.web import webinterface
-        #                webinterface.run_simple()
+        #                from module.webui import Webui
+        #                Webui.run_simple()
         #                return False
         #            except Exception, e:
         #                print "Setup failed with this error: ", e
@@ -206,7 +206,7 @@ class Setup:
         print _("## System Check ##")
         print
 
-        if (2, 5) > sys.version_info[:2] > (2, 7):
+        if (2, 5) > sys.version_info > (2, 7):
             python = False
         else:
             python = True
@@ -276,7 +276,7 @@ class Setup:
         if not python:
             print
             print
-            if sys.version_info[:2] > (2, 7):
+            if sys.version_info > (2, 7):
                 print _("WARNING: Your python version is too NEW!")
                 print _("Please use Python version 2.6/2.7 .")
             else:

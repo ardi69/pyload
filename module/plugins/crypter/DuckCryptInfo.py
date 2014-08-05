@@ -2,7 +2,7 @@
 
 import re
 
-from module.lib.BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 
 from module.plugins.Crypter import Crypter
 

@@ -19,12 +19,11 @@
 
 from threading import Lock
 
-from Browser import Browser
-from Bucket import Bucket
-from HTTPRequest import HTTPRequest
-from CookieJar import CookieJar
-
-from XDCCRequest import XDCCRequest
+from module.network.Browser import Browser
+from module.network.Bucket import Bucket
+from module.network.HTTPRequest import HTTPRequest
+from module.network.CookieJar import CookieJar
+from module.network.XDCCRequest import XDCCRequest
 
 
 class RequestFactory:

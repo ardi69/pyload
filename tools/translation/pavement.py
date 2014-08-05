@@ -11,14 +11,14 @@ import shutil
 import re
 
 from glob import glob
-from os.path import isfile, join
+from os.path import abspath, isfile, join
 from tempfile import mkdtemp
 from urllib import urlretrieve
 from subprocess import call, Popen, PIPE
 from zipfile import ZipFile
 
 
-pypath = abspath(join(__file__, "..", ".."))
+pypath = abspath(join(__file__, "..", "..", ".."))
 sys.path.append(pypath)
 
 options = environment.options
@@ -214,11 +214,11 @@ def generate_locale():
     """ Generates localization files """
 
     EXCLUDE = ["BeautifulSoup.py", "module/cli", "web/locale", "web/ajax", "web/cnl", "web/pyload",
-               "setup.py"]
+               "Setup.py"]
     makepot("core", path("module"), EXCLUDE, "./pyload.py\n")
 
     makepot("cli", path("module") / "cli", [], includes="./pyload-cli.py\n")
-    makepot("setup", "", [], includes="./module/setup.py\n")
+    makepot("setup", "", [], includes="./module/utils/Setup.py\n")
 
     EXCLUDE = ["ServerThread.py", "web/media/default"]
 

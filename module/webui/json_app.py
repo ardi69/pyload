@@ -6,11 +6,11 @@ from shutil import copyfileobj
 
 from bottle import route, request, HTTPError
 
-from module.web.webinterface import PYLOAD
+from module.webui.Webui import PYLOAD
 
-from module.utils import login_required, render_to_response, toDict
+from module.webui.common import login_required, render_to_response
 
-from module.utils import decode, formatSize
+from module.utils import decode, formatSize, toDict
 
 
 def format_time(seconds):

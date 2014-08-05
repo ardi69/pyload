@@ -19,7 +19,7 @@ Plugin header
 
 How basic hoster plugin header could look like: ::
 
-        from module.plugin.Hoster import Hoster
+        from module.plugins.Hoster import Hoster
 
         class MyFileHoster(Hoster):
                 __name__ = "MyFileHoster"
@@ -41,7 +41,7 @@ We head to the next important section, the ``process`` method of your plugin.
 In fact the ``process`` method is the only functionality your plugin has to provide, but its always a good idea to split up tasks to not produce spaghetti code.
 An example ``process`` function could look like this ::
 
-        from module.plugin.Hoster import Hoster
+        from module.plugins.Hoster import Hoster
 
         class MyFileHoster(Hoster):
             """
@@ -81,7 +81,7 @@ Well, they work nearly the same, only that the function they have to provide is 
 
 Example: ::
 
-    from module.plugin.Crypter import Crypter
+    from module.plugins.Crypter import Crypter
 
     class MyFileCrypter(Crypter):
         """

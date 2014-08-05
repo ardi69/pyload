@@ -17,13 +17,14 @@
 #
 ###
 
-from Handler import Handler
-from printer import *
+from module.cli.Handler import Handler
+from module.cli.printer import *
+
 
 class AddPackage(Handler):
     """ let the user add packages """
 
-    def init(self):
+    def __init__(self):
         self.name = ""
         self.urls = []
 

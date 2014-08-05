@@ -33,8 +33,8 @@ class ExternalScripts(Addon):
         for folder in folders:
             self.scripts[folder] = []
 
-            self.initPluginType(folder, join(pypath, 'scripts', folder))
-            self.initPluginType(folder, join('scripts', folder))
+            self.initPluginType(folder, join(pypath, "scripts", folder))
+            self.initPluginType(folder, join("scripts", folder))
 
         for script_type, names in self.scripts.iteritems():
             if names:

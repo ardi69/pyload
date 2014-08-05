@@ -17,7 +17,7 @@ class UnZip(AbtractExtractor):
 
     @staticmethod
     def checkDeps():
-        return sys.version_info[:2] >= (2, 6)
+        return sys.version_info >= (2, 6)
 
     @staticmethod
     def getTargets(files_ids):

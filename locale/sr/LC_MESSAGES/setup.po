@@ -12,448 +12,448 @@ msgstr "Project-Id-Version: pyload\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: crowdin.net\n"
 
-#: tools/setup.py:51
+#: module/utils/Setup.py:51
 msgid "y"
 msgstr "д"
 
-#: tools/setup.py:53
+#: module/utils/Setup.py:53
 msgid "n"
 msgstr "н"
 
-#: tools/setup.py:72
+#: module/utils/Setup.py:72
 msgid "Welcome to the pyLoad Configuration Assistent."
 msgstr "Добро дошли код помоћника за подешавање pyLoad-а."
 
-#: tools/setup.py:73
+#: module/utils/Setup.py:73
 msgid "It will check your system and make a basic setup in order to run pyLoad."
 msgstr "Он ће проверити систем и наместити основне поставке тако да можете да покренете pyLoad."
 
-#: tools/setup.py:75
+#: module/utils/Setup.py:75
 msgid "The value in brackets [] always is the default value,"
 msgstr "Вредност у угластим заградама је подразумевана."
 
-#: tools/setup.py:76
+#: module/utils/Setup.py:76
 msgid "in case you don't want to change it or you are unsure what to choose, just hit enter."
 msgstr "ако не желите да промените или незнате шта да изаберете, стисните 'ентер'."
 
-#: tools/setup.py:78
+#: module/utils/Setup.py:78
 msgid "Don't forget: You can always rerun this assistent with --setup or -s parameter, when you start pyload.py ."
 msgstr "Знајте: можете поново да покренете овај асистент са параметром --setup или -s када покренет pyload.py ."
 
-#: tools/setup.py:79
+#: module/utils/Setup.py:79
 msgid "If you have any problems with this assistent hit STRG-C,"
 msgstr "Ако имате проблема са асистентом, стисните STRG-C,"
 
-#: tools/setup.py:80
+#: module/utils/Setup.py:80
 msgid "to abort and don't let him start with pyload.py automatically anymore."
 msgstr "за поништавање и немојте да га покренете аутоматски са pyload.py ."
 
-#: tools/setup.py:82
+#: module/utils/Setup.py:82
 msgid "When you are ready for system check, hit enter."
 msgstr "Када сте спремни да проверите систем, стисните 'ентер'."
 
-#: tools/setup.py:89
+#: module/utils/Setup.py:89
 msgid "You need pycurl, sqlite and python 2.5, 2.6 or 2.7 to run pyLoad."
 msgstr "Треба Вам pycurl, sqlite и python 2.5, 2.6 или 2.7 за покретање pyLoad-а."
 
-#: tools/setup.py:90
+#: module/utils/Setup.py:90
 msgid "Please correct this and re-run pyLoad."
 msgstr "Поправите то и поново покрените pyLoad."
 
-#: tools/setup.py:91
+#: module/utils/Setup.py:91
 msgid "Setup will now close."
 msgstr "Сетап ће се затворити."
 
-#: tools/setup.py:95
+#: module/utils/Setup.py:95
 msgid "System check finished, hit enter to see your status report."
 msgstr "Провера система је завршена, стисните 'ентер' да би видели резултат."
 
-#: tools/setup.py:97
+#: module/utils/Setup.py:97
 msgid "## Status ##"
 msgstr "## Статус ##"
 
-#: tools/setup.py:101
+#: module/utils/Setup.py:101
 msgid "container decrypting"
 msgstr "дешифровање контејнера"
 
-#: tools/setup.py:102
+#: module/utils/Setup.py:102
 msgid "ssl connection"
 msgstr "ссл веза"
 
-#: tools/setup.py:103
+#: module/utils/Setup.py:103
 msgid "automatic captcha decryption"
 msgstr "аутоматско налажење провере"
 
-#: tools/setup.py:104
+#: module/utils/Setup.py:104
 msgid "GUI"
 msgstr ""
 
-#: tools/setup.py:105
+#: module/utils/Setup.py:105
 msgid "Webinterface"
 msgstr "Вебинтерфејс"
 
-#: tools/setup.py:106
+#: module/utils/Setup.py:106
 msgid "extended Click'N'Load"
 msgstr "напредан Click'N'Load"
 
-#: tools/setup.py:113
+#: module/utils/Setup.py:113
 msgid "Features available:"
 msgstr "Доступне функције:"
 
-#: tools/setup.py:117
+#: module/utils/Setup.py:117
 msgid "Featues missing: "
 msgstr "Функције које недостају:"
 
-#: tools/setup.py:121
+#: module/utils/Setup.py:121
 msgid "no py-crypto available"
 msgstr "py-crypto није доступан"
 
-#: tools/setup.py:122
+#: module/utils/Setup.py:122
 msgid "You need this if you want to decrypt container files."
 msgstr "То Вам треба ако желите да дешифрујете контејнере."
 
-#: tools/setup.py:126
+#: module/utils/Setup.py:126
 msgid "no SSL available"
 msgstr "ССЛ није доступан"
 
-#: tools/setup.py:127
+#: module/utils/Setup.py:127
 msgid "This is needed if you want to establish a secure connection to core or webinterface."
 msgstr "Потребно ако желите да урадите сигурносну везу на језгро или вебинтерфејс."
 
-#: tools/setup.py:128
+#: module/utils/Setup.py:128
 msgid "If you only want to access locally to pyLoad ssl is not usefull."
 msgstr "Ако желите да приступите pyLoad само локално, ССЛ није потребно."
 
-#: tools/setup.py:132
+#: module/utils/Setup.py:132
 msgid "no Captcha Recognition available"
 msgstr "није доступно налажење провере"
 
-#: tools/setup.py:133
+#: module/utils/Setup.py:133
 msgid "Only needed for some hosters and as freeuser."
 msgstr "Потребно за неке хостере и као бесплатан корисник."
 
-#: tools/setup.py:137
+#: module/utils/Setup.py:137
 msgid "Gui not available"
 msgstr "Gui није доступно"
 
-#: tools/setup.py:138
+#: module/utils/Setup.py:138
 msgid "The Graphical User Interface."
 msgstr "Графички интерфејс."
 
-#: tools/setup.py:142
+#: module/utils/Setup.py:142
 msgid "no JavaScript engine found"
 msgstr "нема JavaScript мотор"
 
-#: tools/setup.py:143
+#: module/utils/Setup.py:143
 msgid "You will need this for some Click'N'Load links. Install Spidermonkey, ossp-js, pyv8 or rhino"
 msgstr "То Вам треба за неке Click'N'Load везе. Инсталирати Spidermonkey, ossp-js, pyv8 или rhino"
 
-#: tools/setup.py:145
+#: module/utils/Setup.py:145
 msgid "You can abort the setup now and fix some dependicies if you want."
 msgstr "Можете сада да зауставите и да поправите неке зависности ако желите."
 
-#: tools/setup.py:147
+#: module/utils/Setup.py:147
 msgid "Continue with setup?"
 msgstr "Наставити са подешавањем?"
 
-#: tools/setup.py:153
+#: module/utils/Setup.py:153
 #, python-format
 msgid "Do you want to change the config path? Current is %s"
 msgstr "Желите ли да промените путању за подешавање? Тренутна путања је %s"
 
-#: tools/setup.py:155
+#: module/utils/Setup.py:155
 msgid "If you use pyLoad on a server or the home partition lives on an iternal flash it may be a good idea to change it."
 msgstr "Ако користите pyLoad на серверу или на партицији на интерном флешу, може да буде добро да промените."
 
-#: tools/setup.py:156
+#: module/utils/Setup.py:156
 msgid "Change config path?"
 msgstr "Променити путању за подешавање?"
 
-#: tools/setup.py:162
+#: module/utils/Setup.py:162
 msgid "Do you want to configure login data and basic settings?"
 msgstr "Желите ли да наместите податке за пријаву и основне поставке?"
 
-#: tools/setup.py:163
+#: module/utils/Setup.py:163
 msgid "This is recommend for first run."
 msgstr "Ово је препоручено на прво покретање."
 
-#: tools/setup.py:164
+#: module/utils/Setup.py:164
 msgid "Make basic setup?"
 msgstr "Уради осносно подешавање?"
 
-#: tools/setup.py:171
+#: module/utils/Setup.py:171
 msgid "Do you want to configure ssl?"
 msgstr "Желите ли да подесите SSL?"
 
-#: tools/setup.py:172
+#: module/utils/Setup.py:172
 msgid "Configure ssl?"
 msgstr "Подесити SSL?"
 
-#: tools/setup.py:178
+#: module/utils/Setup.py:178
 msgid "Do you want to configure webinterface?"
 msgstr "Да се конфигурише веб интерфејс?"
 
-#: tools/setup.py:179
+#: module/utils/Setup.py:179
 msgid "Configure webinterface?"
 msgstr "Подесити веб интерфејс?"
 
-#: tools/setup.py:184
+#: module/utils/Setup.py:184
 msgid "Setup finished successfully."
 msgstr "Подешавање је успешно завршено."
 
-#: tools/setup.py:185
+#: module/utils/Setup.py:185
 msgid "Hit enter to exit and restart pyLoad"
 msgstr "Притисните Enter да изађете и поново покренете pyLoad"
 
-#: tools/setup.py:191
+#: module/utils/Setup.py:191
 msgid "## System Check ##"
 msgstr "## Провера система ##"
 
-#: tools/setup.py:194
+#: module/utils/Setup.py:194
 msgid "Your python version is to new, Please use Python 2.6/2.7"
 msgstr "Ваша верзија python је много нова, употребите python 2.6/2.7"
 
-#: tools/setup.py:197
+#: module/utils/Setup.py:197
 msgid "Your python version is to old, Please use at least Python 2.5"
 msgstr "Ваша верзија python је престара, употребите макар python 2.5"
 
-#: tools/setup.py:200
+#: module/utils/Setup.py:200
 msgid "Python Version: OK"
 msgstr "Верзија Python: У реду"
 
-#: tools/setup.py:247
+#: module/utils/Setup.py:247
 #, python-format
 msgid "Your installed jinja2 version %s seems too old."
 msgstr "Ваша верзија jinja2 %s делу престара."
 
-#: tools/setup.py:248
+#: module/utils/Setup.py:248
 msgid "You can safely continue but if the webinterface is not working,"
 msgstr "Можете да наставите, али ако веб интерјест не ради,"
 
-#: tools/setup.py:249
+#: module/utils/Setup.py:249
 msgid "please upgrade or deinstall it, pyLoad includes a sufficient jinja2 libary."
 msgstr "ажурирајте или деинсталирајте га, pyLoad има довољно jinja2 библиотеку."
 
-#: tools/setup.py:264
+#: module/utils/Setup.py:264
 msgid "JS engine"
 msgstr "JS мотор"
 
-#: tools/setup.py:270
+#: module/utils/Setup.py:270
 msgid "## Basic Setup ##"
 msgstr "## Основно подешавање ##"
 
-#: tools/setup.py:273
+#: module/utils/Setup.py:273
 msgid "The following logindata is valid for CLI, GUI and webinterface."
 msgstr "Следећи подаци за пријаву важе за CLI, GUI и веб интерфејс."
 
-#: tools/setup.py:279 tools/setup.py:370 tools/setup.py:386
+#: module/utils/Setup.py:279 module/utils/Setup.py:370 module/utils/Setup.py:386
 msgid "Username"
 msgstr "Корисничко име"
 
-#: tools/setup.py:285
+#: module/utils/Setup.py:285
 msgid "External clients (GUI, CLI or other) need remote access to work over the network."
 msgstr ""
 
-#: tools/setup.py:286
+#: module/utils/Setup.py:286
 msgid "However, if you only want to use the webinterface you may disable it to save ram."
 msgstr ""
 
-#: tools/setup.py:287
+#: module/utils/Setup.py:287
 msgid "Enable remote access"
 msgstr ""
 
-#: tools/setup.py:291
+#: module/utils/Setup.py:291
 msgid "Language"
 msgstr "Језик"
 
-#: tools/setup.py:293
+#: module/utils/Setup.py:293
 msgid "Downloadfolder"
 msgstr "Фасцикла преузимања"
 
-#: tools/setup.py:294
+#: module/utils/Setup.py:294
 msgid "Max parallel downloads"
 msgstr "Максималан број истовремених преузимања"
 
-#: tools/setup.py:298
+#: module/utils/Setup.py:298
 msgid "Use Reconnect?"
 msgstr "Користити поновно повезивање?"
 
-#: tools/setup.py:301
+#: module/utils/Setup.py:301
 msgid "Reconnect script location"
 msgstr "Локација скрипта за поновно повезивање"
 
-#: tools/setup.py:306
+#: module/utils/Setup.py:306
 msgid "## Webinterface Setup ##"
 msgstr "## Подешавање веб интерфејса ##"
 
-#: tools/setup.py:309
+#: module/utils/Setup.py:309
 msgid "Activate webinterface?"
 msgstr "Активирати веб интерфејс?"
 
-#: tools/setup.py:311
+#: module/utils/Setup.py:311
 msgid "Listen address, if you use 127.0.0.1 or localhost, the webinterface will only accessible locally."
 msgstr "Адреса за пријем. Ако користите 127.0.0.1 или localhost, веб интерфејс ће бити доступан само локално."
 
-#: tools/setup.py:312
+#: module/utils/Setup.py:312
 msgid "Address"
 msgstr "Адреса"
 
-#: tools/setup.py:313
+#: module/utils/Setup.py:313
 msgid "Port"
 msgstr "Порт"
 
-#: tools/setup.py:315
+#: module/utils/Setup.py:315
 msgid "pyLoad offers several server backends, now following a short explanation."
 msgstr "pyLoad пружа неколико системске подршке сервера, ево кратко објашњење."
 
-#: tools/setup.py:316
+#: module/utils/Setup.py:316
 msgid "Default server, best choice if you dont know which one to choose."
 msgstr "Подразумеван сервер, најбољи избор ако незнате који да користите."
 
-#: tools/setup.py:317
+#: module/utils/Setup.py:317
 msgid "This server offers SSL and is a good alternative to builtin."
 msgstr "Овај сервер пружа ССЛ и добра је алтернатива за уграђени."
 
-#: tools/setup.py:319
+#: module/utils/Setup.py:319
 msgid "Can be used by apache, lighttpd, requires you to configure them, which is not too easy job."
 msgstr "Може да га користи apache, lighttpd, потребно је да их подесите, што није најлакше."
 
-#: tools/setup.py:320
+#: module/utils/Setup.py:320
 msgid "Very fast alternative written in C, requires libev and linux knowlegde."
 msgstr "Врло брза алтернатива писана у Ц, потребно libev/линукс знање."
 
-#: tools/setup.py:321
+#: module/utils/Setup.py:321
 msgid "Get it from here: https://github.com/jonashaag/bjoern, compile it"
 msgstr "Узети га овде: https://github.com/jonashaag/bjoern компилујте га"
 
-#: tools/setup.py:322
+#: module/utils/Setup.py:322
 msgid "and copy bjoern.so to module/lib"
 msgstr "и копирајте bjoern.so у module/lib"
 
-#: tools/setup.py:326
+#: module/utils/Setup.py:326
 msgid "Attention: In some rare cases the builtin server is not working, if you notice problems with the webinterface"
 msgstr "Пажња: у неким случајевима уграђен сервер не ради, ако имате проблема са веб интерфејсом"
 
-#: tools/setup.py:327
+#: module/utils/Setup.py:327
 msgid "come back here and change the builtin server to the threaded one here."
 msgstr "вратите се овде и промените уграђен сервер са навојеним."
 
-#: tools/setup.py:329
+#: module/utils/Setup.py:329
 msgid "Server"
 msgstr "Сервер"
 
-#: tools/setup.py:334
+#: module/utils/Setup.py:334
 msgid "## SSL Setup ##"
 msgstr "## Подешавање SSL-а ##"
 
-#: tools/setup.py:336
+#: module/utils/Setup.py:336
 msgid "Execute these commands from pyLoad config folder to make ssl certificates:"
 msgstr "Покрените ове команде из pyLoad фасцикле подешавања да би урадили ССЛ цертификате:"
 
-#: tools/setup.py:342
+#: module/utils/Setup.py:342
 msgid "If you're done and everything went fine, you can activate ssl now."
 msgstr "Ако сте завршили ис све је у реду, можете сада да активирате ССЛ."
 
-#: tools/setup.py:344
+#: module/utils/Setup.py:344
 msgid "Activate SSL?"
 msgstr "Активирати SSL?"
 
-#: tools/setup.py:360
+#: module/utils/Setup.py:360
 msgid "Select action"
 msgstr "Изаберите радњу"
 
-#: tools/setup.py:361
+#: module/utils/Setup.py:361
 msgid "1 - Create/Edit user"
 msgstr "1 – креирајте/уредите корисника"
 
-#: tools/setup.py:362
+#: module/utils/Setup.py:362
 msgid "2 - List users"
 msgstr "2 – излистајте кориснике"
 
-#: tools/setup.py:363
+#: module/utils/Setup.py:363
 msgid "3 - Remove user"
 msgstr "3 – уклоните корисника"
 
-#: tools/setup.py:364
+#: module/utils/Setup.py:364
 msgid "4 - Quit"
 msgstr "4 – изађите"
 
-#: tools/setup.py:376
+#: module/utils/Setup.py:376
 msgid "Users"
 msgstr "Корисници"
 
-#: tools/setup.py:403
+#: module/utils/Setup.py:403
 msgid "Setting new configpath, current configuration will not be transfered!"
 msgstr "Подешавање нове путање, актуелна конфигурација неће бити пренета!"
 
-#: tools/setup.py:404
+#: module/utils/Setup.py:404
 msgid "Configpath"
 msgstr "Путања конфигурације"
 
-#: tools/setup.py:412
+#: module/utils/Setup.py:412
 msgid "Configpath changed, setup will now close, please restart to go on."
 msgstr "Путања промењена, сетај ће се затворити, поново покрените за наставак."
 
-#: tools/setup.py:413
+#: module/utils/Setup.py:413
 msgid "Press Enter to exit."
 msgstr "Притисните Enter да изађете."
 
-#: tools/setup.py:417
+#: module/utils/Setup.py:417
 #, python-format
 msgid "Setting config path failed: %s"
 msgstr "Не могу да поставим путању за подешавање: %s"
 
-#: tools/setup.py:422
+#: module/utils/Setup.py:422
 #, python-format
 msgid "%s: OK"
 msgstr "%s: У реду"
 
-#: tools/setup.py:424
+#: module/utils/Setup.py:424
 #, python-format
 msgid "%s: missing"
 msgstr "%s: фали"
 
-#: tools/setup.py:464
+#: module/utils/Setup.py:464
 msgid "Password: "
 msgstr "Лозинка: "
 
-#: tools/setup.py:468
+#: module/utils/Setup.py:468
 msgid "Password too short. Use at least 4 symbols."
 msgstr "Лозинка је прекратка. Унесите бар четири симбола."
 
-#: tools/setup.py:471
+#: module/utils/Setup.py:471
 msgid "Password (again): "
 msgstr "Потврда лозинке: "
 
-#: tools/setup.py:477
+#: module/utils/Setup.py:477
 msgid "Passwords did not match."
 msgstr "Лозинке се не поклапају"
 
-#: tools/setup.py:493
+#: module/utils/Setup.py:493
 msgid "yes"
 msgstr "да"
 
-#: tools/setup.py:493
+#: module/utils/Setup.py:493
 msgid "true"
 msgstr "тачно"
 
-#: tools/setup.py:493
+#: module/utils/Setup.py:493
 msgid "t"
 msgstr "т"
 
-#: tools/setup.py:496
+#: module/utils/Setup.py:496
 msgid "no"
 msgstr "не"
 
-#: tools/setup.py:496
+#: module/utils/Setup.py:496
 msgid "false"
 msgstr "нетачно"
 
-#: tools/setup.py:496
+#: module/utils/Setup.py:496
 msgid "f"
 msgstr "н"
 
-#: tools/setup.py:499 tools/setup.py:509
+#: module/utils/Setup.py:499 module/utils/Setup.py:509
 msgid "Invalid Input"
 msgstr "Неисправан унос"
 

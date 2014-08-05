@@ -17,463 +17,463 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: tools/setup.py:33
+#: module/utils/Setup.py:33
 msgid "y"
 msgstr ""
 
-#: tools/setup.py:35
+#: module/utils/Setup.py:35
 msgid "n"
 msgstr ""
 
-#: tools/setup.py:53
+#: module/utils/Setup.py:53
 msgid "Welcome to the pyLoad Configuration Assistant."
 msgstr ""
 
-#: tools/setup.py:54
+#: module/utils/Setup.py:54
 msgid ""
 "It will check your system and make a basic setup in order to run pyLoad."
 msgstr ""
 
-#: tools/setup.py:56
+#: module/utils/Setup.py:56
 msgid "The value in brackets [] always is the default value,"
 msgstr ""
 
-#: tools/setup.py:57
+#: module/utils/Setup.py:57
 msgid ""
 "in case you don't want to change it or you are unsure what to choose, just "
 "hit enter."
 msgstr ""
 
-#: tools/setup.py:59
+#: module/utils/Setup.py:59
 msgid ""
 "Don't forget: You can always rerun this assistant with --setup or -s "
 "parameter, when you start pyload.py ."
 msgstr ""
 
-#: tools/setup.py:60
+#: module/utils/Setup.py:60
 msgid "If you have any problems with this assistant hit STRG-C,"
 msgstr ""
 
-#: tools/setup.py:61
+#: module/utils/Setup.py:61
 msgid "to abort and don't let him start with pyload.py automatically anymore."
 msgstr ""
 
-#: tools/setup.py:63
+#: module/utils/Setup.py:63
 msgid "When you are ready for system check, hit enter."
 msgstr ""
 
-#: tools/setup.py:70
+#: module/utils/Setup.py:70
 msgid "You need pycurl, sqlite and python 2.5, 2.6 or 2.7 to run pyLoad."
 msgstr ""
 
-#: tools/setup.py:71
+#: module/utils/Setup.py:71
 msgid "Please correct this and re-run pyLoad."
 msgstr ""
 
-#: tools/setup.py:72
+#: module/utils/Setup.py:72
 msgid "Setup will now close."
 msgstr ""
 
-#: tools/setup.py:76
+#: module/utils/Setup.py:76
 msgid "System check finished, hit enter to see your status report."
 msgstr ""
 
-#: tools/setup.py:78
+#: module/utils/Setup.py:78
 msgid "## Status ##"
 msgstr ""
 
-#: tools/setup.py:83
+#: module/utils/Setup.py:83
 msgid "container decrypting"
 msgstr ""
 
-#: tools/setup.py:85
+#: module/utils/Setup.py:85
 msgid "ssl connection"
 msgstr ""
 
-#: tools/setup.py:87
+#: module/utils/Setup.py:87
 msgid "automatic captcha decryption"
 msgstr ""
 
-#: tools/setup.py:89
+#: module/utils/Setup.py:89
 msgid "Webinterface"
 msgstr ""
 
-#: tools/setup.py:91
+#: module/utils/Setup.py:91
 msgid "extended Click'N'Load"
 msgstr ""
 
-#: tools/setup.py:98
+#: module/utils/Setup.py:98
 msgid "Features available:"
 msgstr ""
 
-#: tools/setup.py:102
+#: module/utils/Setup.py:102
 msgid "Featues missing: "
 msgstr ""
 
-#: tools/setup.py:106
+#: module/utils/Setup.py:106
 msgid "no py-crypto available"
 msgstr ""
 
-#: tools/setup.py:107
+#: module/utils/Setup.py:107
 msgid "You need this if you want to decrypt container files."
 msgstr ""
 
-#: tools/setup.py:111
+#: module/utils/Setup.py:111
 msgid "no SSL available"
 msgstr ""
 
-#: tools/setup.py:112
+#: module/utils/Setup.py:112
 msgid ""
 "This is needed if you want to establish a secure connection to core or "
 "webinterface."
 msgstr ""
 
-#: tools/setup.py:113
+#: module/utils/Setup.py:113
 msgid "If you only want to access locally to pyLoad ssl is not usefull."
 msgstr ""
 
-#: tools/setup.py:117
+#: module/utils/Setup.py:117
 msgid "no Captcha Recognition available"
 msgstr ""
 
-#: tools/setup.py:118
+#: module/utils/Setup.py:118
 msgid "Only needed for some hosters and as freeuser."
 msgstr ""
 
-#: tools/setup.py:122
+#: module/utils/Setup.py:122
 msgid "no JavaScript engine found"
 msgstr ""
 
-#: tools/setup.py:123
+#: module/utils/Setup.py:123
 msgid ""
 "You will need this for some Click'N'Load links. Install Spidermonkey, ossp-"
 "js, pyv8 or rhino"
 msgstr ""
 
-#: tools/setup.py:125
+#: module/utils/Setup.py:125
 msgid "You can abort the setup now and fix some dependicies if you want."
 msgstr ""
 
-#: tools/setup.py:127
+#: module/utils/Setup.py:127
 msgid "Continue with setup?"
 msgstr ""
 
-#: tools/setup.py:133
+#: module/utils/Setup.py:133
 #, python-format
 msgid "Do you want to change the config path? Current is %s"
 msgstr ""
 
-#: tools/setup.py:135
+#: module/utils/Setup.py:135
 msgid ""
 "If you use pyLoad on a server or the home partition lives on an iternal "
 "flash it may be a good idea to change it."
 msgstr ""
 
-#: tools/setup.py:136
+#: module/utils/Setup.py:136
 msgid "Change config path?"
 msgstr ""
 
-#: tools/setup.py:142
+#: module/utils/Setup.py:142
 msgid "Do you want to configure login data and basic settings?"
 msgstr ""
 
-#: tools/setup.py:143
+#: module/utils/Setup.py:143
 msgid "This is recommend for first run."
 msgstr ""
 
-#: tools/setup.py:144
+#: module/utils/Setup.py:144
 msgid "Make basic setup?"
 msgstr ""
 
-#: tools/setup.py:151
+#: module/utils/Setup.py:151
 msgid "Do you want to configure ssl?"
 msgstr ""
 
-#: tools/setup.py:152
+#: module/utils/Setup.py:152
 msgid "Configure ssl?"
 msgstr ""
 
-#: tools/setup.py:158
+#: module/utils/Setup.py:158
 msgid "Do you want to configure webinterface?"
 msgstr ""
 
-#: tools/setup.py:159
+#: module/utils/Setup.py:159
 msgid "Configure webinterface?"
 msgstr ""
 
-#: tools/setup.py:164
+#: module/utils/Setup.py:164
 msgid "Setup finished successfully."
 msgstr ""
 
-#: tools/setup.py:165
+#: module/utils/Setup.py:165
 msgid "Hit enter to exit and restart pyLoad"
 msgstr ""
 
-#: tools/setup.py:172
+#: module/utils/Setup.py:172
 msgid "## System Check ##"
 msgstr ""
 
-#: tools/setup.py:175
+#: module/utils/Setup.py:175
 msgid "Your python version is to new, Please use Python 2.6/2.7"
 msgstr ""
 
-#: tools/setup.py:178
+#: module/utils/Setup.py:178
 msgid "Your python version is to old, Please use at least Python 2.5"
 msgstr ""
 
-#: tools/setup.py:181
+#: module/utils/Setup.py:181
 msgid "Python Version: OK"
 msgstr ""
 
-#: tools/setup.py:224
+#: module/utils/Setup.py:224
 #, python-format
 msgid "Your installed jinja2 version %s seems too old."
 msgstr ""
 
-#: tools/setup.py:225
+#: module/utils/Setup.py:225
 msgid "You can safely continue but if the webinterface is not working,"
 msgstr ""
 
-#: tools/setup.py:226
+#: module/utils/Setup.py:226
 msgid ""
 "please upgrade or deinstall it, pyLoad includes a sufficient jinja2 libary."
 msgstr ""
 
-#: tools/setup.py:243
+#: module/utils/Setup.py:243
 msgid "JS engine"
 msgstr ""
 
-#: tools/setup.py:250
+#: module/utils/Setup.py:250
 msgid "## Basic Setup ##"
 msgstr ""
 
-#: tools/setup.py:253
+#: module/utils/Setup.py:253
 msgid "The following logindata is valid for CLI and webinterface."
 msgstr ""
 
-#: tools/setup.py:259 tools/setup.py:357 tools/setup.py:373
+#: module/utils/Setup.py:259 module/utils/Setup.py:357 module/utils/Setup.py:373
 msgid "Username"
 msgstr ""
 
-#: tools/setup.py:265
+#: module/utils/Setup.py:265
 msgid ""
 "External clients (GUI, CLI or other) need remote access to work over the "
 "network."
 msgstr ""
 
-#: tools/setup.py:266
+#: module/utils/Setup.py:266
 msgid ""
 "However, if you only want to use the webinterface you may disable it to save "
 "ram."
 msgstr ""
 
-#: tools/setup.py:267
+#: module/utils/Setup.py:267
 msgid "Enable remote access"
 msgstr ""
 
-#: tools/setup.py:271
+#: module/utils/Setup.py:271
 msgid "Language"
 msgstr ""
 
-#: tools/setup.py:273
+#: module/utils/Setup.py:273
 msgid "Downloadfolder"
 msgstr ""
 
-#: tools/setup.py:274
+#: module/utils/Setup.py:274
 msgid "Max parallel downloads"
 msgstr ""
 
-#: tools/setup.py:278
+#: module/utils/Setup.py:278
 msgid "Use Reconnect?"
 msgstr ""
 
-#: tools/setup.py:281
+#: module/utils/Setup.py:281
 msgid "Reconnect script location"
 msgstr ""
 
-#: tools/setup.py:286
+#: module/utils/Setup.py:286
 msgid "## Webinterface Setup ##"
 msgstr ""
 
-#: tools/setup.py:289
+#: module/utils/Setup.py:289
 msgid "Activate webinterface?"
 msgstr ""
 
-#: tools/setup.py:291
+#: module/utils/Setup.py:291
 msgid ""
 "Listen address, if you use 127.0.0.1 or localhost, the webinterface will "
 "only accessible locally."
 msgstr ""
 
-#: tools/setup.py:292
+#: module/utils/Setup.py:292
 msgid "Address"
 msgstr ""
 
-#: tools/setup.py:293
+#: module/utils/Setup.py:293
 msgid "Port"
 msgstr ""
 
-#: tools/setup.py:295
+#: module/utils/Setup.py:295
 msgid ""
 "pyLoad offers several server backends, now following a short explanation."
 msgstr ""
 
-#: tools/setup.py:296
+#: module/utils/Setup.py:296
 msgid "Default server; best choice if you plan to use pyLoad just for you."
 msgstr ""
 
-#: tools/setup.py:297
+#: module/utils/Setup.py:297
 msgid ""
 "Support SSL connection and can serve simultaneously more client flawlessly."
 msgstr ""
 
-#: tools/setup.py:299
+#: module/utils/Setup.py:299
 msgid ""
 "Can be used by apache, lighttpd, etc.; needs to be properly configured "
 "before."
 msgstr ""
 
-#: tools/setup.py:301
+#: module/utils/Setup.py:301
 msgid "Very fast alternative to builtin; requires libev and bjoern packages."
 msgstr ""
 
-#: tools/setup.py:305
+#: module/utils/Setup.py:305
 msgid ""
 "Attention: In some rare cases the builtin server is not working, if you "
 "notice problems with the webinterface"
 msgstr ""
 
-#: tools/setup.py:306
+#: module/utils/Setup.py:306
 msgid "come back here and change the builtin server to the threaded one here."
 msgstr ""
 
-#: tools/setup.py:315
+#: module/utils/Setup.py:315
 msgid "Server"
 msgstr ""
 
-#: tools/setup.py:320
+#: module/utils/Setup.py:320
 msgid "## SSL Setup ##"
 msgstr ""
 
-#: tools/setup.py:322
+#: module/utils/Setup.py:322
 msgid ""
 "Execute these commands from pyLoad config folder to make ssl certificates:"
 msgstr ""
 
-#: tools/setup.py:328
+#: module/utils/Setup.py:328
 msgid "If you're done and everything went fine, you can activate ssl now."
 msgstr ""
 
-#: tools/setup.py:330
+#: module/utils/Setup.py:330
 msgid "Activate SSL?"
 msgstr ""
 
-#: tools/setup.py:347
+#: module/utils/Setup.py:347
 msgid "Select action"
 msgstr ""
 
-#: tools/setup.py:348
+#: module/utils/Setup.py:348
 msgid "1 - Create/Edit user"
 msgstr ""
 
-#: tools/setup.py:349
+#: module/utils/Setup.py:349
 msgid "2 - List users"
 msgstr ""
 
-#: tools/setup.py:350
+#: module/utils/Setup.py:350
 msgid "3 - Remove user"
 msgstr ""
 
-#: tools/setup.py:351
+#: module/utils/Setup.py:351
 msgid "4 - Quit"
 msgstr ""
 
-#: tools/setup.py:363
+#: module/utils/Setup.py:363
 msgid "Users"
 msgstr ""
 
-#: tools/setup.py:391
+#: module/utils/Setup.py:391
 msgid "Setting new configpath, current configuration will not be transfered!"
 msgstr ""
 
-#: tools/setup.py:392
+#: module/utils/Setup.py:392
 msgid "Configpath"
 msgstr ""
 
-#: tools/setup.py:400
+#: module/utils/Setup.py:400
 msgid "Configpath changed, setup will now close, please restart to go on."
 msgstr ""
 
-#: tools/setup.py:401
+#: module/utils/Setup.py:401
 msgid "Press Enter to exit."
 msgstr ""
 
-#: tools/setup.py:405
+#: module/utils/Setup.py:405
 #, python-format
 msgid "Setting config path failed: %s"
 msgstr ""
 
-#: tools/setup.py:411
+#: module/utils/Setup.py:411
 #, python-format
 msgid "%s: OK"
 msgstr ""
 
-#: tools/setup.py:413
+#: module/utils/Setup.py:413
 #, python-format
 msgid "%s: missing"
 msgstr ""
 
-#: tools/setup.py:456
+#: module/utils/Setup.py:456
 msgid ""
 "Warning: Consider a password of 10 or more symbols if you expect to access "
 "from outside your local network (ex. internet)."
 msgstr ""
 
-#: tools/setup.py:457
+#: module/utils/Setup.py:457
 msgid "Password: "
 msgstr ""
 
-#: tools/setup.py:461
+#: module/utils/Setup.py:461
 #, python-format
 msgid "Password too short! Use at least %s symbols."
 msgstr ""
 
-#: tools/setup.py:464
+#: module/utils/Setup.py:464
 msgid "Password must be alphanumeric."
 msgstr ""
 
-#: tools/setup.py:467
+#: module/utils/Setup.py:467
 msgid "Password (again): "
 msgstr ""
 
-#: tools/setup.py:473
+#: module/utils/Setup.py:473
 msgid "Passwords did not match."
 msgstr ""
 
-#: tools/setup.py:489
+#: module/utils/Setup.py:489
 msgid "yes"
 msgstr ""
 
-#: tools/setup.py:489
+#: module/utils/Setup.py:489
 msgid "true"
 msgstr ""
 
-#: tools/setup.py:489
+#: module/utils/Setup.py:489
 msgid "t"
 msgstr ""
 
-#: tools/setup.py:492
+#: module/utils/Setup.py:492
 msgid "no"
 msgstr ""
 
-#: tools/setup.py:492
+#: module/utils/Setup.py:492
 msgid "false"
 msgstr ""
 
-#: tools/setup.py:492
+#: module/utils/Setup.py:492
 msgid "f"
 msgstr ""
 
-#: tools/setup.py:495 tools/setup.py:505
+#: module/utils/Setup.py:495 module/utils/Setup.py:505
 msgid "Invalid Input"
 msgstr ""

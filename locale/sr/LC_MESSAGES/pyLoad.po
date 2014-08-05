@@ -12,120 +12,120 @@ msgstr "Project-Id-Version: pyload\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: crowdin.net\n"
 
-#: pyload.py:182
+#: module/Core.py:182
 msgid "Received Quit signal"
 msgstr "Примљен је сигнал за излазак"
 
-#: pyload.py:303
+#: module/Core.py:303
 #, python-format
 msgid "pyLoad already running with pid %s"
 msgstr "pyLoad већ ради са бројем %s"
 
-#: pyload.py:317
+#: module/Core.py:317
 #, python-format
 msgid "Failed changing group: %s"
 msgstr "Не могу да променим групу: %s"
 
-#: pyload.py:327
+#: module/Core.py:327
 #, python-format
 msgid "Failed changing user: %s"
 msgstr "Не могу да променим корисника: %s"
 
-#: pyload.py:329
+#: module/Core.py:329
 msgid "folder for logs"
 msgstr "фасцикла за извештаје"
 
-#: pyload.py:340
+#: module/Core.py:340
 msgid "Starting"
 msgstr "Покрећем"
 
-#: pyload.py:341
+#: module/Core.py:341
 #, python-format
 msgid "Using home directory: %s"
 msgstr "Основна фасцикла: %s"
 
-#: pyload.py:350
+#: module/Core.py:350
 msgid "pycrypto to decode container files"
 msgstr "pycrypto за дешифровање контејнера"
 
-#: pyload.py:353
+#: module/Core.py:353
 msgid "folder for temporary files"
 msgstr "фасцикла за привремене датотеке"
 
-#: pyload.py:358
+#: module/Core.py:358
 msgid "folder for downloads"
 msgstr "фасцикла за преузимања"
 
-#: pyload.py:361
+#: module/Core.py:361
 msgid "OpenSSL for secure connection"
 msgstr "OpenSSL за сигурносне везе"
 
-#: pyload.py:365
+#: module/Core.py:365
 msgid "Moving old user config to DB"
 msgstr "Премештање старих подешавања у базу"
 
-#: pyload.py:368
+#: module/Core.py:368
 msgid "Please check your logindata with ./pyload.py -u"
 msgstr "Проверите ваше податке пријављивања са ./pyload.py -u"
 
-#: pyload.py:371
+#: module/Core.py:371
 msgid "All links removed"
 msgstr "Све везе су уклоњене"
 
-#: pyload.py:402
+#: module/Core.py:402
 #, python-format
 msgid "Downloadtime: %s"
 msgstr "Време преузимања: %s"
 
-#: pyload.py:412
+#: module/Core.py:412
 #, python-format
 msgid "Free space: %s"
 msgstr "Слободно простора: %s"
 
-#: pyload.py:432
+#: module/Core.py:432
 msgid "Activating Accounts..."
 msgstr "Активирам налоге…"
 
-#: pyload.py:438
+#: module/Core.py:438
 msgid "Activating Plugins..."
 msgstr "Активација додатка..."
 
-#: pyload.py:441
+#: module/Core.py:441
 msgid "pyLoad is up and running"
 msgstr "pyLoad је спреман за коришћење"
 
-#: pyload.py:460
+#: module/Core.py:460
 msgid "restarting pyLoad"
 msgstr "поновно покретање pyLoad-а"
 
-#: pyload.py:464
+#: module/Core.py:464
 msgid "pyLoad quits"
 msgstr "pyLoad се затвара"
 
-#: pyload.py:521
+#: module/Core.py:521
 #, python-format
 msgid "Install %s"
 msgstr "Инсталација %s"
 
-#: pyload.py:557
+#: module/Core.py:557
 #, python-format
 msgid "could not find %(desc)s: %(name)s"
 msgstr "не могу да нађем %(desc)s: %(name)s"
 
-#: pyload.py:559
+#: module/Core.py:559
 #, python-format
 msgid "could not create %(desc)s: %(name)s"
 msgstr "не могу да креирам %(desc)s: %(name)s"
 
-#: pyload.py:580
+#: module/Core.py:580
 msgid "shutting down..."
 msgstr "искључујем…"
 
-#: pyload.py:597
+#: module/Core.py:597
 msgid "error while shutting down"
 msgstr "грешка при искључивању"
 
-#: pyload.py:661
+#: module/Core.py:661
 msgid "killed pyLoad from Terminal"
 msgstr "убити pyLoad из терминала"
 
@@ -239,79 +239,79 @@ msgstr "Не могу да учитам позадинску компонент�
 msgid "waiting %s"
 msgstr "чекам %s"
 
-#: module/web/ServerThread.py:35
+#: module/thread/ServerThread.py:35
 msgid "SSL certificates not found."
 msgstr "SSL сертификати нису пронађени."
 
-#: module/web/ServerThread.py:39
+#: module/thread/ServerThread.py:39
 #, python-format
 msgid "Sorry, we dropped support for starting %s directly within pyLoad"
 msgstr "Одпустили смо подршку да би стартовали %s директно са pyLoad"
 
-#: module/web/ServerThread.py:40
+#: module/thread/ServerThread.py:40
 msgid "You can use the threaded server which offers good performance and ssl,"
 msgstr "Можете да употребите сервер са навојом који пружа добре перформансе и ссл,"
 
-#: module/web/ServerThread.py:41
+#: module/thread/ServerThread.py:41
 #, python-format
 msgid "of course you can still use your existing %s with pyLoads fastcgi server"
 msgstr "а можете и да наставите са вашим %s са pyLoads fastcgi сервером"
 
-#: module/web/ServerThread.py:42
+#: module/thread/ServerThread.py:42
 msgid "sample configs are located in the module/web/servers directory"
 msgstr "примере подешавања су у фасцикли module/web/servers"
 
-#: module/web/ServerThread.py:49
+#: module/thread/ServerThread.py:49
 #, python-format
 msgid "Can't use %(server)s, python-flup is not installed!"
 msgstr "Не могу да употребим %(server)s, python-flup није инсталиран!"
 
-#: module/web/ServerThread.py:56
+#: module/thread/ServerThread.py:56
 #, python-format
 msgid "Error importing lightweight server: %s"
 msgstr "Грешка увоза lightweight сервера: %s"
 
-#: module/web/ServerThread.py:57
+#: module/thread/ServerThread.py:57
 msgid "You need to download and compile bjoern, https://github.com/jonashaag/bjoern"
 msgstr "Требате да преузмете и компилујете bjoern, https://github.com/jonashaag/bjoern"
 
-#: module/web/ServerThread.py:58
-msgid "Copy the boern.so to module/lib folder or use setup.py install"
-msgstr "Копирајте boern.so у фасциклу module/lib или употребите setup.py install"
+#: module/thread/ServerThread.py:58
+msgid "Copy the boern.so to module/lib folder or use Setup.py install"
+msgstr "Копирајте boern.so у фасциклу module/lib или употребите Setup.py install"
 
-#: module/web/ServerThread.py:59
+#: module/thread/ServerThread.py:59
 msgid "Of course you need to be familiar with linux and know how to compile software"
 msgstr "Наравно требате да познајете линукс и да знате како да конпилујете програме"
 
-#: module/web/ServerThread.py:63
+#: module/thread/ServerThread.py:63
 msgid "Server set to threaded, due to known performance problems on windows."
 msgstr "Сервер постављен на навојен, због проблема на Виндоз."
 
-#: module/web/ServerThread.py:80 module/web/ServerThread.py:103
+#: module/thread/ServerThread.py:80 module/thread/ServerThread.py:103
 msgid "This server offers no SSL, please consider using threaded instead"
 msgstr "Овај сервер не подржава SSL. Уместо њега користите угнеждени."
 
-#: module/web/ServerThread.py:82
+#: module/thread/ServerThread.py:82
 #, python-format
 msgid "Starting builtin webserver: %(host)s:%(port)d"
 msgstr "Стартовање уграђеног сервера: %(host)s:%(port)d"
 
-#: module/web/ServerThread.py:87
+#: module/thread/ServerThread.py:87
 #, python-format
 msgid "Starting threaded SSL webserver: %(host)s:%(port)d"
 msgstr "Стартовање навојеног ССЛ веб сервера: %(host)s:%(port)d"
 
-#: module/web/ServerThread.py:91
+#: module/thread/ServerThread.py:91
 #, python-format
 msgid "Starting threaded webserver: %(host)s:%(port)d"
 msgstr "Стартовање навојеног веб сервера: %(host)s:%(port)d"
 
-#: module/web/ServerThread.py:97
+#: module/thread/ServerThread.py:97
 #, python-format
 msgid "Starting fastcgi server: %(host)s:%(port)d"
 msgstr "Стартовање fastcgi сервера: %(host)s:%(port)d"
 
-#: module/web/ServerThread.py:105
+#: module/thread/ServerThread.py:105
 #, python-format
 msgid "Starting lightweight webserver (bjoern): %(host)s:%(port)d"
 msgstr "Стартовање вебсервера (bjoern): %(host)s:%(port)d"
@@ -341,72 +341,72 @@ msgstr "Покренути pyload.py -s за приступ подешавању
 msgid "Download chunks failed, fallback to single connection | %s"
 msgstr "Одломци преузимања нису успели. Враћање на једну везу | %s"
 
-#: module/PluginThread.py:183
+#: module/thread/PluginThread.py:183
 #, python-format
 msgid "Download starts: %s"
 msgstr "Преузимање је започето: %s"
 
-#: module/PluginThread.py:189
+#: module/thread/PluginThread.py:189
 #, python-format
 msgid "Download finished: %s"
 msgstr "Преузимање је завршено: %s"
 
-#: module/PluginThread.py:194 module/PluginThread.py:365
+#: module/thread/PluginThread.py:194 module/thread/PluginThread.py:365
 #, python-format
 msgid "Plugin %s is missing a function."
 msgstr "Прикључку %s недостаје функција."
 
-#: module/PluginThread.py:202 module/PluginThread.py:265
-#: module/PluginThread.py:382
+#: module/thread/PluginThread.py:202 module/thread/PluginThread.py:265
+#: module/thread/PluginThread.py:382
 #, python-format
 msgid "Download aborted: %s"
 msgstr "Преузимање је прекинуто: %s"
 
-#: module/PluginThread.py:222
+#: module/thread/PluginThread.py:222
 #, python-format
 msgid "Download restarted: %(name)s | %(msg)s"
 msgstr "Преузимање је поново покренуто: %(name)s | %(msg)s"
 
-#: module/PluginThread.py:231 module/PluginThread.py:373
+#: module/thread/PluginThread.py:231 module/thread/PluginThread.py:373
 #, python-format
 msgid "Download is offline: %s"
 msgstr "Преузимање је ван мреже: %s"
 
-#: module/PluginThread.py:234
+#: module/thread/PluginThread.py:234
 #, python-format
 msgid "Download is temporary offline: %s"
 msgstr "Преузимање је тренутно ван мреже: %s"
 
-#: module/PluginThread.py:237 module/PluginThread.py:304
+#: module/thread/PluginThread.py:237 module/thread/PluginThread.py:304
 #, python-format
 msgid "Download failed: %(name)s | %(msg)s"
 msgstr "Преузимање није успело: %(name)s | %(msg)s"
 
-#: module/PluginThread.py:254
+#: module/thread/PluginThread.py:254
 msgid "Couldn't connect to host or connection reset, waiting 1 minute and retry."
 msgstr "Не могу да се повежем са хостом или је веза прекинута. Поновно повезивање за 1 минут."
 
-#: module/PluginThread.py:290
+#: module/thread/PluginThread.py:290
 #, python-format
 msgid "Download skipped: %(name)s due to %(plugin)s"
 msgstr "Преузимање је прескочено: %(name)s због %(plugin)s"
 
-#: module/PluginThread.py:361
+#: module/thread/PluginThread.py:361
 #, python-format
 msgid "Decrypting starts: %s"
 msgstr "Дешифровање почело: %s"
 
-#: module/PluginThread.py:376 module/PluginThread.py:394
+#: module/thread/PluginThread.py:376 module/thread/PluginThread.py:394
 #, python-format
 msgid "Decrypting failed: %(name)s | %(msg)s"
 msgstr "Неуспешно дешифровање: %(name)s | %(msg)s"
 
-#: module/PluginThread.py:388
+#: module/thread/PluginThread.py:388
 #, python-format
 msgid "Retrying %s"
 msgstr "Понављање %s"
 
-#: module/PluginThread.py:635
+#: module/thread/PluginThread.py:635
 #, python-format
 msgid "Info Fetching for %(name)s failed | %(err)s"
 msgstr "Не могу да преузмем податке за %(name)s | %(err)s"

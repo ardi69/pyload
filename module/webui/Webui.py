@@ -24,23 +24,24 @@ import os
 from os.path import join, abspath, exists
 from os import makedirs
 
-THEME_DIR = abspath(join(__file__, "themes"))
+THEME_DIR = abspath(join(__file__, "..", "themes"))
 
 sys.path.append(pypath)
 
-from module import InitHomeDir
+from module.utils import InitHomeDir
 from module.utils import decode, formatSize
 
 import bottle
 from bottle import run, app
 
 from jinja2 import Environment, FileSystemLoader, PrefixLoader, FileSystemBytecodeCache
-from middlewares import StripPathMiddleware, GZipMiddleWare, PrefixMiddleware
+
+from module.thread import ServerThread
+from module.utils.middlewares import StripPathMiddleware, GZipMiddleWare, PrefixMiddleware
+
 
 SETUP = None
 PYLOAD = None
-
-from module.web import ServerThread
 
 if not ServerThread.core:
     if ServerThread.setup:
@@ -80,7 +81,7 @@ loader = FileSystemLoader(THEME_DIR)
 env = Environment(loader=loader, extensions=['jinja2.ext.i18n', 'jinja2.ext.autoescape'], trim_blocks=True, auto_reload=False,
                   bytecode_cache=bcc)
 
-from filters import quotepath, path_make_relative, path_make_absolute, truncate, date
+from module.utils.filters import quotepath, path_make_relative, path_make_absolute, truncate, date
 
 env.filters['quotepath'] = quotepath
 env.filters['truncate'] = truncate
@@ -117,10 +118,8 @@ web = GZipMiddleWare(web)
 if PREFIX:
     web = PrefixMiddleware(web, prefix=PREFIX)
 
-import pyload_app
-import json_app
-import cnl_app
-import api_app
+from module.webui import api_app, cnl_app, json_app, pyload_app
+
 
 def run_simple(host="0.0.0.0", port="8000"):
     run(app=web, host=host, port=port, quiet=True)
@@ -131,6 +130,7 @@ def run_lightweight(host="0.0.0.0", port="8000"):
 
 
 def run_threaded(host="0.0.0.0", port="8000", theads=3, cert="", key=""):
+    from bottle import ServerAdapter
     from wsgiserver import CherryPyWSGIServer
 
     if cert and key:
@@ -139,7 +139,12 @@ def run_threaded(host="0.0.0.0", port="8000", theads=3, cert="", key=""):
 
     CherryPyWSGIServer.numthreads = theads
 
-    from module.utils import CherryPyWSGI
+    class CherryPyWSGI(ServerAdapter):
+        def run(self, handler):
+            from wsgiserver import CherryPyWSGIServer
+
+            server = CherryPyWSGIServer((self.host, self.port), handler)
+            server.start()
 
     run(app=web, host=host, port=port, server=CherryPyWSGI, quiet=True)
 

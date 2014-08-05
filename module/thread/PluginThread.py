@@ -17,6 +17,8 @@
     @author: RaNaN
 """
 
+import sys
+
 from Queue import Queue
 from threading import Thread
 from os import listdir, stat
@@ -24,7 +26,6 @@ from os.path import join
 from time import sleep, time, strftime, gmtime
 from traceback import print_exc, format_exc
 from pprint import pformat
-from sys import exc_info, exc_clear
 from copy import copy
 from types import MethodType
 
@@ -34,7 +35,7 @@ from module.datatype.PyFile import PyFile
 from module.plugins.Base import Abort, Fail, Reconnect, Retry, SkipDownload
 from module.utils.packagetools import parseNames
 from module.utils import safe_join
-from Api import OnlineStatus
+from module.Api import OnlineStatus
 
 
 class PluginThread(Thread):
@@ -91,7 +92,7 @@ class PluginThread(Thread):
         dump = "pyLoad %s Debug Report of %s %s \n\nTRACEBACK:\n %s \n\nFRAMESTACK:\n" % (
             self.m.core.api.getServerVersion(), pyfile.pluginname, pyfile.plugin.__version__, format_exc())
 
-        tb = exc_info()[2]
+        tb = sys.exc_info()[2]
         stack = []
         while tb:
             stack.append(tb.tb_frame)
@@ -316,7 +317,7 @@ class DownloadThread(PluginThread):
             finally:
                 self.m.core.files.save()
                 pyfile.checkIfProcessed()
-                exc_clear()
+                sys.exc_clear()
 
             #pyfile.plugin.req.clean()
 
@@ -408,7 +409,7 @@ class DecrypterThread(PluginThread):
                 self.active = False
                 self.m.core.files.save()
                 self.m.localThreads.remove(self)
-                exc_clear()
+                sys.exc_clear()
 
 
         #self.m.core.addonManager.downloadFinished(pyfile)

@@ -24,7 +24,6 @@ import sys
 
 from os import chdir, makedirs, path
 from os.path import abspath, exists, expanduser, join
-from sys import argv, platform
 
 
 __builtin__.owd = abspath("")  # original working directory
@@ -34,7 +33,7 @@ sys.path.append(join(pypath, "module", "lib"))
 
 homedir = expanduser("~")
 
-if platform == 'nt':
+if sys.platform == 'nt':
     if homedir == "~":
         import ctypes
 
@@ -51,11 +50,11 @@ if platform == 'nt':
 
 __builtin__.homedir = homedir
 
-args = " ".join(argv[1:])
+args = " ".join(sys.argv[1:])
 
 # dirty method to set configdir from commandline arguments
 if "--configdir=" in args:
-    for aa in argv:
+    for aa in sys.argv:
         if aa.startswith("--configdir="):
             configdir = aa.replace("--configdir=", "", 1).strip()
 elif exists(join(pypath, "module", "config", "configdir")):
@@ -64,7 +63,7 @@ elif exists(join(pypath, "module", "config", "configdir")):
     f.close()
     configdir = join(pypath, c)
 else:
-    if platform in ("posix", "linux2"):
+    if sys.platform in ("posix", "linux2"):
         configdir = join(homedir, ".pyload")
     else:
         configdir = join(homedir, "pyload")

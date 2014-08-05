@@ -19,23 +19,22 @@
 from datetime import datetime
 from operator import itemgetter, attrgetter
 
-import time
 import os
 import sys
+import time
 
 from os import listdir
 from os.path import abspath, dirname, isdir, isfile, join, normpath
-from sys import getfilesystemencoding
 from urllib import unquote
 
 from bottle import route, static_file, request, response, redirect, HTTPError, error
 
-from module.web.webinterface import PYLOAD, THEME, THEME_DIR, SETUP, env
+from module.webui.Webui import PYLOAD, THEME, THEME_DIR, SETUP, env
 
-from module.utils import render_to_response, parse_permissions, parse_userdata, \
+from module.webui.common import render_to_response, parse_permissions, parse_userdata, \
     login_required, get_permission, set_permission, permlist, toDict, set_session
 
-from filters import relpath, unquotepath
+from module.utils.filters import relpath, unquotepath
 
 from module.utils import formatSize, safe_join, fs_encode, fs_decode
 
@@ -345,7 +344,7 @@ def path(file="", path=""):
 
     for f in folders:
         try:
-            f = f.decode(getfilesystemencoding())
+            f = f.decode(sys.getfilesystemencoding())
             data = {'name': f, 'fullpath': join(cwd, f)}
             data['sort'] = data['fullpath'].lower()
             data['modified'] = datetime.fromtimestamp(int(os.path.getmtime(join(cwd, f))))
@@ -524,7 +523,8 @@ def info():
     data = {'python': sys.version,
             'os': " ".join((os.name, sys.platform) + extra),
             'version': PYLOAD.getServerVersion(),
-            'folder': pypath, "config": owd,
+            'folder': pypath,
+            'config': owd,
             'download': abspath(conf['general']['download_folder']['value']),
             'freespace': formatSize(PYLOAD.freeSpace()),
             'remote': conf['remote']['port']['value'],

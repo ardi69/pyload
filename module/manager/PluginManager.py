@@ -6,10 +6,9 @@ import sys
 from itertools import chain
 from os import listdir, makedirs
 from os.path import isfile, join, exists
-from sys import version_info
 from traceback import print_exc
 
-from module.lib.SafeEval import const_eval as literal_eval
+from SafeEval import const_eval as literal_eval
 
 
 class PluginManager:
@@ -87,11 +86,11 @@ class PluginManager:
                 content = data.read()
                 data.close()
 
-                if f.endswith("_25.pyc") and version_info[0:2] != (2, 5):
+                if f.endswith("_25.pyc") and sys.version_info != (2, 5):
                     continue
-                elif f.endswith("_26.pyc") and version_info[0:2] != (2, 6):
+                elif f.endswith("_26.pyc") and sys.version_info != (2, 6):
                     continue
-                elif f.endswith("_27.pyc") and version_info[0:2] != (2, 7):
+                elif f.endswith("_27.pyc") and sys.version_info != (2, 7):
                     continue
 
                 name = f[:-3]

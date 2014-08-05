@@ -2,7 +2,7 @@
 
 import re
 
-from module.PyFile import statusMap
+from module.datatype.PyFile import statusMap
 from module.utils import json_loads
 from module.network.RequestFactory import getURL
 from module.plugins.Hoster import Hoster

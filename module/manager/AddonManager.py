@@ -25,7 +25,7 @@ from threading import RLock
 
 from types import MethodType
 
-from module.PluginThread import AddonThread
+from module.thread.PluginThread import AddonThread
 from module.manager.PluginManager import literal_eval
 from module.utils import lock
 

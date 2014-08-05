@@ -20,15 +20,16 @@
 from itertools import islice
 from time import time
 
-from Handler import Handler
-from printer import *
+from module.cli.Handler import Handler
+from module.cli.printer import *
 
 from module.Api import Destination, PackageData
+
 
 class ManageFiles(Handler):
     """ possibility to manage queue/collector """
 
-    def init(self):
+    def __init__(self):
         self.target = Destination.Queue
         self.pos = 0    #position in queue
         self.package = -1  #choosen package

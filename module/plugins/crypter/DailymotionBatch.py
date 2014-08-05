@@ -95,4 +95,4 @@ class DailymotionBatch(Crypter):
             p_videos = self.getVideos(p_id)
             p_folder = safe_join(self.config['general']['download_folder'], p_owner, p_name)
             self.logDebug("%s video\s found on playlist \"%s\"" % (len(p_videos), p_name))
-            self.packages.append((p_name, p_videos, p_folder))  #: folder is NOT recognized by pyload 0.4.9!
+            self.packages.append((p_name, p_videos, p_folder))

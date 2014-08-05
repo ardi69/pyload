@@ -14,8 +14,8 @@ from thrift.transport import TSocket
 from thrift.transport import THttpClient
 from thrift.protocol import TBinaryProtocol
 
-import Pyload
-from ttypes import *
+from module.remote.thriftbackend.thriftgen.pyload import Pyload
+from module.remote.thriftbackend.thriftgen.pyload.ttypes import *
 
 if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print

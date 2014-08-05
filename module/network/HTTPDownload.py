@@ -25,11 +25,11 @@ from logging import getLogger
 
 import pycurl
 
-from HTTPChunk import ChunkInfo, HTTPChunk
-from HTTPRequest import BadHeader
-
+from module.network.HTTPChunk import ChunkInfo, HTTPChunk
+from module.network.HTTPRequest import BadHeader
 from module.plugins.Base import Abort
 from module.utils import safe_join, fs_encode
+
 
 class HTTPDownload:
     """ loads a url http + ftp """

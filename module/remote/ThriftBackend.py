@@ -20,11 +20,11 @@ from os.path import exists
 
 from module.manager.RemoteManager import BackendBase
 
-from thriftbackend.Processor import Processor
-from thriftbackend.Protocol import ProtocolFactory
-from thriftbackend.Socket import ServerSocket
-from thriftbackend.Transport import TransportFactory
-#from thriftbackend.Transport import TransportFactoryCompressed
+from module.remote.thriftbackend.Processor import Processor
+from module.remote.thriftbackend.Protocol import ProtocolFactory
+from module.remote.thriftbackend.Socket import ServerSocket
+from module.remote.thriftbackend.Transport import TransportFactory
+#from module.remote.thriftbackend.Transport import TransportFactoryCompressed
 
 from thrift.server import TServer
 
