@@ -40,7 +40,7 @@ class RPNetBiz(MultiHoster):
         # Extract hosters from json file
         return hoster_list['hosters']
 
-    def activated(self):
+    def activate(self):
         # Get account plugin and check if there is a valid account available
         self.account = self.core.accountManager.getAccountPlugin("RPNetBiz")
         if not self.account.canUse():
@@ -49,4 +49,4 @@ class RPNetBiz(MultiHoster):
             return
 
         # Run the overwriten core ready which actually enables the multihoster addon
-        return MultiHoster.activated(self)
+        return MultiHoster.activate(self)

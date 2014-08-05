@@ -58,7 +58,7 @@ A basic excerpt would look like: ::
         Your Addon code here.
         """
 
-        def activated(self):
+        def activate(self):
             print "Yay, the core is ready let's do some work."
 
         def downloadFinished(self, pyfile):
@@ -79,7 +79,7 @@ It requires a `dict` that maps event names to function names or a `list` of func
         """
         event_map = {'downloadFinished': "doSomeWork",
                      'allDownloadsFnished': "someMethod",
-                     'activated': "initialize"}
+                     'activate': "initialize"}
 
         def initialize(self):
             print "Initialized."
@@ -142,7 +142,7 @@ Just store everything in ``self.info``. ::
         def setup(self):
             self.info = {'running': False}
 
-        def activated(self):
+        def activate(self):
             self.info['running'] = True
 
 Usable with: ::

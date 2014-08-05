@@ -3,6 +3,7 @@
 from traceback import print_exc
 
 from module.plugins.Base import Base
+from module.utils import has_method
 
 
 class Expose:
@@ -98,11 +99,13 @@ class Addon(Base):
         """ more init stuff if needed """
         pass
 
-    def deactivated(self):
+    def deactivate(self):
         """ called when addon was deactivated """
-        pass
+        if has_method(self.__class__, "unload"):
+            self.logDebug("Deprecated method unload(), use deactivate() instead")
+            self.unload()
 
-    def unload(self):  # Deprecated, use "deactivated" method instead
+    def unload(self):  # Deprecated, use method deactivated() instead
         """ called when addon was deactivated """
         pass
 
@@ -113,17 +116,22 @@ class Addon(Base):
 
     # Event methods - overwrite these if needed
 
-    def activated(self):
+    def activate(self):
+        """ activate the addon """
+        if has_method(self.__class__, "coreReady"):
+            self.logDebug("Deprecated method coreReady(), use activate() instead")
+            self.coreReady()
+
+    def coreReady(self):  # Deprecated, use method activate() instead
         pass
 
-    def coreReady(self):  # Deprecated, use "activated" method instead
-        pass
+    def exit(self):
+        """ called by core.shutdown just before exit """
+        if has_method(self.__class__, "coreExiting"):
+            self.logDebug("Deprecated method coreExiting(), use exit() instead")
+            self.coreExiting()
 
-    def exiting(self):
-        """ called by core.shutdown just before exiting """
-        pass
-
-    def coreExiting(self):  # Deprecated, use "exiting" method instead
+    def coreExiting(self):  # Deprecated, use method exit() instead
         pass
 
 

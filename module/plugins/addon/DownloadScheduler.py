@@ -25,7 +25,7 @@ class DownloadScheduler(Addon):
     def setup(self):
         self.cb = None  # callback to scheduler job; will be by removed AddonManager when addon unloaded
 
-    def activated(self):
+    def activate(self):
         self.updateSchedule()
 
     def updateSchedule(self, schedule=None):

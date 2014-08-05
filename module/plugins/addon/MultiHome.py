@@ -35,7 +35,7 @@ class MultiHome(Addon):
                 continue
             self.interfaces.append(Interface(interface))
 
-    def activated(self):
+    def activate(self):
         requestFactory = self.core.requestFactory
         oldGetRequest = requestFactory.getRequest
 

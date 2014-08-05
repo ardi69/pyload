@@ -436,7 +436,7 @@ class Core:
         self.running = True
 
         self.log.info(_("Activating Plugins..."))
-        self.addonManager.activated()
+        self.addonManager.coreReady()
 
         self.log.info(_("pyLoad is up and running"))
 

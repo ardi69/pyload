@@ -29,6 +29,7 @@ from module.PluginThread import AddonThread
 from module.manager.PluginManager import literal_eval
 from module.utils import lock
 
+
 class AddonManager:
     """Manages addons, delegates and handles Events.
 
@@ -170,9 +171,7 @@ class AddonManager:
         self.plugins.append(addon)
         self.pluginMap[pluginClass.__name__] = addon
 
-        # call core Ready
-        addon.coreReady()  # Deprecated
-        addon.activated()
+        addon.activate()
 
     def deactivateAddon(self, plugin):
 
@@ -185,8 +184,7 @@ class AddonManager:
 
         self.log.debug("De-activate addon: " + plugin)
 
-        addon.unload()  # Deprecated
-        addon.deactivated()
+        addon.deactivate()
 
         #remove periodic call
         self.log.debug("Remove peridical callback %s" % self.core.scheduler.removeJob(addon.cb))
@@ -198,19 +196,17 @@ class AddonManager:
     def coreReady(self):
         for plugin in self.plugins:
             if plugin.isActivated():
-                plugin.coreReady()  # Deprecated
-                plugin.activated()
+                plugin.activate()
 
-        self.dispatchEvent("activated")
+        self.dispatchEvent("activate")
 
     @try_catch
     def coreExiting(self):
         for plugin in self.plugins:
             if plugin.isActivated():
-                plugin.coreExiting()  # Deprecated
-                plugin.exiting()
+                plugin.exit()
 
-        self.dispatchEvent("exiting")
+        self.dispatchEvent("exit")
 
     @lock
     def downloadPreparing(self, pyfile):

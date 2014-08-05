@@ -9,7 +9,7 @@ class PremiumizeMe(Hoster):
     __type__ = "hoster"
     __version__ = "0.12"
 
-    __pattern__ = None  #: Since we want to allow the user to specify the list of hoster to use we let MultiHoster.activated
+    __pattern__ = None  #: Since we want to allow the user to specify the list of hoster to use we let MultiHoster.activate
 
     __description__ = """Premiumize.me hoster plugin"""
     __author_name__ = "Florian Franzen"

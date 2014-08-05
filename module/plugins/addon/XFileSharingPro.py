@@ -20,7 +20,7 @@ class XFileSharingPro(Addon):
     __author_mail__ = "zoidberg@mujmail.cz"
 
 
-    def activated(self):
+    def activate(self):
         self.loadPattern()
 
     def loadPattern(self):
@@ -57,7 +57,7 @@ class XFileSharingPro(Addon):
         hosterList -= set(('', u''))
 
         if not hosterList:
-            self.deactivated()
+            self.deactivate()
             return
 
         regexp = r"http://(?:[^/]*\.)?(%s)/\w{12}" % ("|".join(sorted(hosterList)).replace('.', '\.'))
@@ -72,7 +72,7 @@ class XFileSharingPro(Addon):
         s = self.getConfig(option).lower().replace('|', ',').replace(';', ',')
         return set([x.strip() for x in s.split(',')])
 
-    def deactivated(self):
+    def deactivate(self):
         dict = self.core.pluginManager.hosterPlugins['XFileSharingPro']
         dict['pattern'] = r'^unmatchable$'
         dict['re'] = re.compile(r'^unmatchable$')

@@ -22,7 +22,7 @@ class Premium4Me(MultiHoster):
         page = getURL("http://premium.to/api/hosters.php?authcode=%s" % self.account.authcode)
         return [x.strip() for x in page.replace("\"", "").split(";")]
 
-    def activated(self):
+    def activate(self):
         self.account = self.core.accountManager.getAccountPlugin("Premium4Me")
 
         user = self.account.selectAccount()[0]
@@ -31,4 +31,4 @@ class Premium4Me(MultiHoster):
             self.logError(_("Please add your premium.to account first and restart pyLoad"))
             return
 
-        return MultiHoster.activated(self)
+        return MultiHoster.activate(self)

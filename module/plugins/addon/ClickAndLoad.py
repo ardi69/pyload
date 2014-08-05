@@ -19,7 +19,7 @@ class ClickAndLoad(Addon):
     __author_mail__ = ("RaNaN@pyload.de", "mkaay@mkaay.de")
 
 
-    def activated(self):
+    def activate(self):
         self.port = int(self.config['webinterface']['port'])
         if self.config['webinterface']['activated']:
             try:

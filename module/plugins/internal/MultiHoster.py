@@ -78,7 +78,7 @@ class MultiHoster(Addon):
         """
         raise NotImplementedError
 
-    def activated(self):
+    def activate(self):
         if self.cb:
             self.core.scheduler.removeJob(self.cb)
 
@@ -170,7 +170,7 @@ class MultiHoster(Addon):
             del dict['new_module']
             del dict['new_name']
 
-    def deactivated(self):
+    def deactivate(self):
         """Remove override for all hosters. Scheduler job is removed by AddonManager"""
         for hoster in self.supported:
             self.unloadHoster(hoster)

@@ -44,7 +44,7 @@ class IRCInterface(Addon, Thread):
         #   self.sm = core.server_methods
         self.api = core.api  # todo, only use api
 
-    def activated(self):
+    def activate(self):
         self.abort = False
         self.more = []
         self.new_package = {}

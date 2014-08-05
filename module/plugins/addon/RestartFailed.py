@@ -38,5 +38,5 @@ class RestartFailed(Addon):
         self.api = self.core.api
         self.interval = self.MIN_INTERVAL
 
-    def activated(self):
+    def activate(self):
         self.pluginConfigChanged(self.__name__, "interval", self.getConfig("interval"))

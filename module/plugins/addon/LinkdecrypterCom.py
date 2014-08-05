@@ -19,7 +19,7 @@ class LinkdecrypterCom(Addon):
     __author_mail__ = "zoidberg@mujmail.cz"
 
 
-    def activated(self):
+    def activate(self):
         try:
             self.loadPatterns()
         except Exception, e:

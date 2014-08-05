@@ -34,10 +34,10 @@ class DeleteFinished(Addon):
             self.interval = value * 3600
             self.initPeriodical()
 
-    def deactivated(self):
+    def deactivate(self):
         self.removeEvent('packageFinished', self.wakeup)
 
-    def activated(self):
+    def activate(self):
         self.info = {'sleep': True}
         interval = self.getConfig('interval')
         self.pluginConfigChanged('DeleteFinished', 'interval', interval)

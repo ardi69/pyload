@@ -58,7 +58,7 @@ class XMPPInterface(IRCInterface, JabberClient):
             self,
         ]
 
-    def activated(self):
+    def activate(self):
         self.new_package = {}
 
         self.start()

@@ -49,11 +49,11 @@ class UpdateManager(Addon):
             if value is True and self.core.debug:
                 self.periodical2()
 
-    def activated(self):
+    def activate(self):
         self.pluginConfigChanged(self.__name__, "interval", self.getConfig("interval"))
         self.pluginConfigChanged(self.__name__, "reloadplugins", self.getConfig("reloadplugins"))
 
-    def deactivated(self):
+    def deactivate(self):
         self.pluginConfigChanged(self.__name__, "reloadplugins", False)
 
     def setup(self):

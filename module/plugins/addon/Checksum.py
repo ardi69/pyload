@@ -59,7 +59,7 @@ class Checksum(Addon):
                'default': r'^(?P<hash>[0-9A-Fa-f]+)\s+\*?(?P<name>.+)$'}
 
 
-    def activated(self):
+    def activate(self):
         if not self.config['general']['checksum']:
             self.logInfo("Checksum validation is disabled in general configuration")
 
