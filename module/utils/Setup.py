@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import __builtin__
 import os
 import sys
 
 import module.utils.pylgettext as gettext
 
 from getpass import getpass
-from os import makedirs
-from os.path import exists, join
+from os import chdir, makedirs
+from os.path import abspath, exists, join
 from subprocess import PIPE, call
 
-from module.utils import get_console_encoding, versiontuple
+from module.utils import get_console_encoding, safe_join, versiontuple
 
 
 class Setup(object):
@@ -153,7 +154,7 @@ class Setup(object):
         if path:
             print
             self.conf_path()
-            #calls exit when changed
+            print
 
         print
         print _("Do you want to configure login data and basic settings?")
@@ -427,32 +428,37 @@ class Setup(object):
                 db.shutdown()
 
 
-    def conf_path(self, trans=False):
-        if trans:
-            gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-            translation = gettext.translation("setup", join(self.path, "locale"),
-                languages=[self.config['general']['language'], "en"], fallback=True)
-            translation.install(True)
+    def set_configdir(self, configdir, persistent=False):
+        dirname = abspath(configdir)
+        try:
+            if not exists(dirname):
+                makedirs(dirname, 0700)
+            if persistent:
+                c = join(pypath, "module", "config", "configdir")
+                if not exists(c):
+                    makedirs(c, 0700)
+                f = open(c, "wb")
+                f.write(dirname)
+                f.close()
+            chdir(dirname)
+        except:
+            return False
+        else:
+            __builtin__.configdir = dirname
+            return dirname  #: return always abspath
 
+
+    def conf_path(self):
         print _("Setting new config path.")
         print _("NOTE: Current configuration will not be transfered!")
-        path = self.ask(_("CONFIG PATH"), configdir)
-        try:
-            path = join(pypath, path)
-            if not exists(path):
-                makedirs(path)
-            f = open(join(pypath, "module", "config", "configdir"), "wb")
-            f.write(path)
-            f.close()
+
+        while True:
+            dir = self.ask(_("CONFIG PATH"), configdir)
+            path = self.set_configdir(dir)
             print
-            print
-            print _("pyLoad config path changed, setup will now close!")
-            print
-            print
-            raw_input(_("Press Enter to exit."))
-            sys.exit()
-        except Exception, e:
-            print _("Setting config path failed: %s") % str(e)
+            if path:
+                print _("pyLoad config path successfully changed.")
+                break
 
 
     def print_dep(self, name, value, false="MISSING", true="OK"):

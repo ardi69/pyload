@@ -1,29 +1,45 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: spoob
-    @author: sebnapi
-    @author: RaNaN
-    @author: mkaay
-    @version: v0.4.10
-"""
-
 CURRENT_VERSION = '0.4.10'
 
+
 import __builtin__
+import sys
+
+from os.path import abspath, exists, isfile, join
+
+__builtin__.owd = abspath("")  # original working directory
+__builtin__.pypath = abspath(join(__file__, "..", "..", ".."))
+__builtin__.homedir = expanduser("~")
+
+if __builtin__.homedir == "~" and sys.platform == 'nt':
+
+    import ctypes
+
+    CSIDL_APPDATA = 26
+    _SHGetFolderPath = ctypes.windll.shell32.SHGetFolderPathW
+    _SHGetFolderPath.argtypes = [ctypes.wintypes.HWND,
+                                 ctypes.c_int,
+                                 ctypes.wintypes.HANDLE,
+                                 ctypes.wintypes.DWORD, ctypes.wintypes.LPCWSTR]
+
+    path_buf = ctypes.wintypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+    result = _SHGetFolderPath(0, CSIDL_APPDATA, 0, 0, path_buf)
+
+    __builtin__.homedir = path_buf.value
+
+try:
+    p = join(pypath, "module", "config", "configdir")
+    if exists(p):
+        f = open(p, "rb")
+        __builtin__.configdir = f.read().strip()
+        f.close()
+except:
+    if sys.platform in ("posix", "linux2"):
+        __builtin__.configdir = join(__builtin__.homedir, ".pyload")
+    else:
+        __builtin__.configdir = join(__builtin__.homedir, "pyload")
+
 
 from getopt import getopt, GetoptError
 import module.utils.pylgettext as gettext
@@ -32,14 +48,11 @@ import logging
 import logging.handlers
 import os
 from os import _exit, execl, getcwd, makedirs, remove, sep, walk, chdir, close
-from os.path import exists, isfile, join
 import signal
 import subprocess
-import sys
 from time import time, sleep
 from traceback import print_exc
 
-from module.utils import InitHomeDir
 from module.manager.AccountManager import AccountManager
 from module.manager.CaptchaManager import CaptchaManager
 from module.config.ConfigParser import ConfigParser
@@ -112,12 +125,12 @@ class Core(object):
                         s = Setup(pypath, self.config)
                         s.start()
                         sys.exit()
-                    elif option == "--changedir":
+                    elif option == "--configdir=":
                         from module.utils.Setup import Setup
 
                         self.config = ConfigParser()
                         s = Setup(pypath, self.config)
-                        s.conf_path(True)
+                        s.set_configdir(argument, True if "--changedir" in options else False)
                         sys.exit()
                     elif option in ("-q", "--quit"):
                         self.quitInstance()
@@ -128,7 +141,7 @@ class Core(object):
                             print pid
                             sys.exit(0)
                         else:
-			    print "false"
+                            print "false"
                             sys.exit(1)
                     elif option == "--clean":
                         self.cleanTree()

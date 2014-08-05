@@ -2,13 +2,49 @@
 
 from __future__ import with_statement
 
-import os
+import __builtin__
 import sys
+
+from os.path import abspath, basename, exists, isfile, join
+
+__builtin__.owd = abspath("")  # original working directory
+__builtin__.pypath = abspath(join(__file__, "..", "..", ".."))
+__builtin__.homedir = expanduser("~")
+
+if __builtin__.homedir == "~" and sys.platform == 'nt':
+
+    import ctypes
+
+    CSIDL_APPDATA = 26
+    _SHGetFolderPath = ctypes.windll.shell32.SHGetFolderPathW
+    _SHGetFolderPath.argtypes = [ctypes.wintypes.HWND,
+                                 ctypes.c_int,
+                                 ctypes.wintypes.HANDLE,
+                                 ctypes.wintypes.DWORD, ctypes.wintypes.LPCWSTR]
+
+    path_buf = ctypes.wintypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+    result = _SHGetFolderPath(0, CSIDL_APPDATA, 0, 0, path_buf)
+
+    __builtin__.homedir = path_buf.value
+
+try:
+    p = join(pypath, "module", "config", "configdir")
+    if exists(p):
+        f = open(p, "rb")
+        __builtin__.configdir = f.read().strip()
+        f.close()
+except:
+    if sys.platform in ("posix", "linux2"):
+        __builtin__.configdir = join(__builtin__.homedir, ".pyload")
+    else:
+        __builtin__.configdir = join(__builtin__.homedir, "pyload")
+
+
+import os
 
 from codecs import getwriter
 from getopt import GetoptError, getopt
 from os import _exit
-from os.path import join, exists, basename
 from threading import Thread, Lock
 from time import sleep
 from traceback import print_exc
@@ -19,7 +55,6 @@ from rename_process import renameProcess
 from module.config.ConfigParser import ConfigParser
 import module.utils.pylgettext as gettext
 
-from module.utils import InitHomeDir
 from module.Api import Destination
 from module.cli import AddPackage, ManageFiles
 from module.cli.printer import *

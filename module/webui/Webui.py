@@ -28,7 +28,6 @@ THEME_DIR = abspath(join(__file__, "..", "themes"))
 
 sys.path.append(pypath)
 
-from module.utils import InitHomeDir
 from module.utils import decode, formatSize
 
 import bottle
