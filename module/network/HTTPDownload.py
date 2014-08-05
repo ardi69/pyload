@@ -92,7 +92,7 @@ class HTTPDownload:
 
         if self.info.getCount() > 1:
             fo = open(init, "rb+") #first chunkfile
-            for i in range(1, self.info.getCount()):
+            for i in xrange(1, self.info.getCount()):
                 #input file
                 fo.seek(
                     self.info.getChunkRange(i - 1)[1] + 1) #seek to beginning of chunk, to get rid of overlapping chunks
@@ -180,7 +180,7 @@ class HTTPDownload:
 
                 init.setRange(self.info.getChunkRange(0))
 
-                for i in range(1, chunks):
+                for i in xrange(1, chunks):
                     c = HTTPChunk(i, self, self.info.getChunkRange(i), resume)
 
                     handle = c.getHandle()

@@ -125,7 +125,7 @@ class ManageFiles(Handler):
                     i += 1
                 except Exception, e:
                     pass
-            for x in range(5 - i):
+            for _ in xrange(5 - i):
                 println(line, "")
                 line += 1
         else:
@@ -140,7 +140,7 @@ class ManageFiles(Handler):
                     i += 1
                 except Exception, e:
                     pass
-            for x in range(5 - i):
+            for _ in xrange(5 - i):
                 println(line, "")
                 line += 1
 
@@ -185,7 +185,7 @@ class ManageFiles(Handler):
             l, n, h = inp.partition("-")
             l = int(l)
             h = int(h)
-            r = range(l, h + 1)
+            r = xrange(l, h + 1)
 
             ret = []
             if package:

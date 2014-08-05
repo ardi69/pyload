@@ -27,7 +27,7 @@ class LinksaveIn(OCR):
         frame_nr = 0
 
         lut = im.resize((256, 1))
-        lut.putdata(range(256))
+        lut.putdata(xrange(256))
         lut = list(lut.convert("RGB").getdata())
 
         new = Image.new("RGB", im.size)
@@ -58,11 +58,11 @@ class LinksaveIn(OCR):
             bg = Image.open(bgpath)
 
             bglut = bg.resize((256, 1))
-            bglut.putdata(range(256))
+            bglut.putdata(xrange(256))
             bglut = list(bglut.convert("RGB").getdata())
 
             lut = img.resize((256, 1))
-            lut.putdata(range(256))
+            lut.putdata(xrange(256))
             lut = list(lut.convert("RGB").getdata())
 
             bgpix = bg.load()
@@ -90,11 +90,11 @@ class LinksaveIn(OCR):
         img = self.image.convert("P")
 
         bglut = bg.resize((256, 1))
-        bglut.putdata(range(256))
+        bglut.putdata(xrange(256))
         bglut = list(bglut.convert("RGB").getdata())
 
         lut = img.resize((256, 1))
-        lut.putdata(range(256))
+        lut.putdata(xrange(256))
         lut = list(lut.convert("RGB").getdata())
 
         bgpix = bg.load()

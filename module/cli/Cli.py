@@ -201,7 +201,7 @@ class Cli:
 
         #clear old output
         if line < self.lastLowestLine:
-            for i in range(line + 1, self.lastLowestLine + 1):
+            for i in xrange(line + 1, self.lastLowestLine + 1):
                 println(i, "")
 
         self.lastLowestLine = line

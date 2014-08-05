@@ -619,7 +619,7 @@ class FileMethods:
     def addLinks(self, links, package):
         """ links is a list of tupels (url, plugin)"""
         order = self._nextFileOrder(package)
-        orders = [order + x for x in range(len(links))]
+        orders = [order + x for x in xrange(len(links))]
         links = [(x[0], x[0], x[1], package, o) for x, o in zip(links, orders)]
         self.c.executemany('INSERT INTO links(url, name, plugin, package, linkorder) VALUES(?,?,?,?,?)', links)
 

@@ -16,6 +16,5 @@ class TestApi:
     #takes really long, only test when needed
     @nottest
     def test_random(self):
-
-        for i in range(0, 100):
+        for _ in xrange(0, 100):
             self.api.testAPI()

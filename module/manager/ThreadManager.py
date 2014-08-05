@@ -67,7 +67,7 @@ class ThreadManager:
 
         pycurl.global_init(pycurl.GLOBAL_DEFAULT)
 
-        for i in range(0, self.core.config.get("download", "max_downloads")):
+        for _ in xrange(0, self.core.config.get("download", "max_downloads")):
             self.createThread()
 
 
@@ -214,7 +214,7 @@ class ThreadManager:
                     ("http://checkip.dyndns.org/",".*Current IP Address: (\S+)</body>.*")]
 
         ip = ""
-        for i in range(10):
+        for _ in xrange(10):
             try:
                 sv = choice(services)
                 ip = getURL(sv[0])
