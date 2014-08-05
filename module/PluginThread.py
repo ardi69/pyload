@@ -36,6 +36,7 @@ from module.utils.packagetools import parseNames
 from module.utils import safe_join
 from Api import OnlineStatus
 
+
 class PluginThread(Thread):
     """abstract base class for thread types"""
 
@@ -472,6 +473,7 @@ class AddonThread(PluginThread):
 
 
 class InfoThread(PluginThread):
+
     def __init__(self, manager, data, pid=-1, rid=-1, add=False):
         """Constructor"""
         PluginThread.__init__(self, manager)

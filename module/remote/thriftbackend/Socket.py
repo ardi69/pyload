@@ -8,9 +8,12 @@ from time import sleep
 
 from thrift.transport.TSocket import TSocket, TServerSocket, TTransportException
 
+
 WantReadError = Exception #overwritten when ssl is used
 
+
 class SecureSocketConnection:
+
     def __init__(self, connection):
         self.__dict__['connection'] = connection
 
@@ -41,7 +44,9 @@ class SecureSocketConnection:
             sleep(0.1)
             return self.recv(buff)
 
+
 class Socket(TSocket):
+
     def __init__(self, host='localhost', port=7228, ssl=False):
         TSocket.__init__(self, host, port)
         self.ssl = ssl

@@ -2,7 +2,9 @@
 
 from thriftgen.pyload import Pyload
 
+
 class Processor(Pyload.Processor):
+
     def __init__(self, *args, **kwargs):
         Pyload.Processor.__init__(self, *args, **kwargs)
         self.authenticated = {}

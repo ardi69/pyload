@@ -78,6 +78,7 @@ if not ENGINE or DEBUG:
 
 
 class JsEngine:
+
     def __init__(self):
         self.engine = ENGINE
         self.init = False

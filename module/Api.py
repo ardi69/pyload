@@ -45,6 +45,7 @@ permMap = {}
 
 # decorator only called on init, never initialized, so has no effect on runtime
 def permission(bits):
+
     class _Dec:
         def __new__(cls, func, *args, **kwargs):
             permMap[func.__name__] = bits
@@ -54,6 +55,7 @@ def permission(bits):
 
 
 urlmatcher = re.compile(r"((https?|ftps?|xdcc|sftp):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+\-=\\\.&]*)", re.IGNORECASE)
+
 
 class PERMS:
     ALL = 0  # requires no permission, but login
@@ -66,6 +68,7 @@ class PERMS:
     SETTINGS = 128 # can access settings
     ACCOUNTS = 256 # can access accounts
     LOGS = 512 # can see server logs
+
 
 class ROLE:
     ADMIN = 0  #admin has all permissions implicit

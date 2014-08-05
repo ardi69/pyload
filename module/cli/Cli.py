@@ -33,6 +33,7 @@ sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
 
 
 class Cli:
+
     def __init__(self, client, command):
         self.client = client
         self.command = command
@@ -355,6 +356,7 @@ class Cli:
 
 
 class RefreshThread(Thread):
+
     def __init__(self, cli):
         Thread.__init__(self)
         self.setDaemon(True)

@@ -27,6 +27,7 @@ from cStringIO import StringIO
 
 from module.plugins.Base import Abort
 
+
 def myquote(url):
     return quote(url.encode('utf_8') if isinstance(url, unicode) else url, safe="%/:=&?~#+!$,;'@()*[]")
 
@@ -35,9 +36,12 @@ def myurlencode(data):
     return urlencode(dict((x.encode('utf_8') if isinstance(x, unicode) else x, \
         y.encode('utf_8') if isinstance(y, unicode) else y ) for x, y in data.iteritems()))
 
+
 bad_headers = range(400, 404) + range(405, 418) + range(500, 506)
 
+
 class BadHeader(Exception):
+
     def __init__(self, code, content=""):
         Exception.__init__(self, "Bad server response: %s %s" % (code, responses[int(code)]))
         self.code = code
@@ -45,6 +49,7 @@ class BadHeader(Exception):
 
 
 class HTTPRequest:
+
     def __init__(self, cookies=None, options=None):
         self.c = pycurl.Curl()
         self.rep = StringIO()

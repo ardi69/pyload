@@ -22,11 +22,13 @@ from heapq import heappop, heappush
 from thread import start_new_thread
 from threading import Lock
 
+
 class AlreadyCalled(Exception):
     pass
 
 
 class Deferred:
+
     def __init__(self):
         self.call = []
         self.result = ()
@@ -45,6 +47,7 @@ class Deferred:
 
 
 class Scheduler:
+
     def __init__(self, core):
         self.core = core
 
@@ -89,6 +92,7 @@ class Scheduler:
 
 
 class Job:
+
     def __init__(self, time, call, args=[], kwargs={}, deferred=None, threaded=True):
         self.time = float(time)
         self.call = call

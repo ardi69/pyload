@@ -20,7 +20,9 @@
 from threading import Thread
 from traceback import print_exc
 
+
 class BackendBase(Thread):
+
     def __init__(self, manager):
         Thread.__init__(self)
         self.m = manager

@@ -32,8 +32,8 @@ from module.plugins.Base import Abort
 
 
 class XDCCRequest:
-    def __init__(self, timeout=30, proxies={}):
 
+    def __init__(self, timeout=30, proxies={}):
         self.proxies = proxies
         self.timeout = timeout
 

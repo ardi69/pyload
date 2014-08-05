@@ -26,11 +26,13 @@ import pycurl
 
 from HTTPRequest import HTTPRequest
 
+
 class WrongFormat(Exception):
     pass
 
 
 class ChunkInfo:
+
     def __init__(self, name):
         self.name = unicode(name)
         self.size = 0
@@ -123,6 +125,7 @@ class ChunkInfo:
 
 
 class HTTPChunk(HTTPRequest):
+
     def __init__(self, id, parent, range=None, resume=False):
         self.id = id
         self.p = parent # HTTPDownload instance

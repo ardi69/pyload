@@ -26,7 +26,9 @@ from CookieJar import CookieJar
 
 from XDCCRequest import XDCCRequest
 
+
 class RequestFactory:
+
     def __init__(self, core):
         self.lock = Lock()
         self.core = core
@@ -118,6 +120,7 @@ class RequestFactory:
             self.bucket.setRate(-1)
         else:
             self.bucket.setRate(self.core.config['download']['max_speed'] * 1024)
+
 
 # needs pyreq in global namespace
 def getURL(*args, **kwargs):

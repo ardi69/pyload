@@ -9,6 +9,7 @@ core = None
 setup = None
 log = logging.getLogger("log")
 
+
 class WebServer(threading.Thread):
     def __init__(self, pycore):
         global core

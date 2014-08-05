@@ -20,18 +20,24 @@ from Protocol import Protocol
 from thriftgen.pyload import Pyload
 from thriftgen.pyload.ttypes import *
 
+
 ConnectionClosed = TTransport.TTransportException
+
 
 class WrongLogin(Exception):
     pass
 
+
 class NoConnection(Exception):
     pass
+
 
 class NoSSL(Exception):
     pass
 
+
 class ThriftClient:
+
     def __init__(self, host="localhost", port=7227, user="", password=""):
 
         self.createConnection(host, port)

@@ -16,6 +16,7 @@ Cookie._getdate = _getdate
 
 
 class CookieJar(Cookie.SimpleCookie):
+
     def getCookie(self, name):
         return self[name].value
 
