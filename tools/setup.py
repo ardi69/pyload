@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
@@ -14,24 +13,23 @@ from subprocess import PIPE, call
 from module.utils import get_console_encoding, versiontuple
 
 
-owd = abspath("")
-pypath = abspath(join(__file__, ".."))
-
-
 class Setup:
     """ pyLoads initial setup configuration assistant """
 
     def __init__(self, path, config):
-        self.path = path
         self.config = config
+        self.lang = "en"
+        self.path = path
         self.stdin_encoding = get_console_encoding(sys.stdin.encoding)
 
 
     def start(self):
-        langs = self.config.getMetaData("general", "language")['type'].split(";")
-        lang = self.ask(u"Choose setup language", "en", langs)
+        print
+        langs = sorted(self.config.getMetaData("general", "language")['type'].split(";"))
+        self.lang = self.ask(u"Choose setup language", "en", langs)
+
         gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("setup", join(self.path, "locale"), languages=[lang, "en"], fallback=True)
+        translation = gettext.translation("setup", join(self.path, "locale"), languages=[self.lang, "en"], fallback=True)
         translation.install(True)
 
         #Input shorthand for yes
@@ -56,7 +54,8 @@ class Setup:
 
         print
         print
-        print _("Welcome to the pyLoad Configuration Assistant.")
+        print _("## Welcome to the pyLoad Configuration Assistant ##")
+        print
         print _("It will check your system and make a basic setup in order to run pyLoad.")
         print
         print _("The value in brackets [] always is the default value,")
@@ -93,26 +92,24 @@ class Setup:
 
         avail = []
         if self.check_module("Crypto"):
-            avail.append(_("container decrypting"))
+            avail.append(_("- container decrypting"))
         if ssl:
-            avail.append(_("ssl connection"))
+            avail.append(_("- ssl connection"))
         if captcha:
-            avail.append(_("automatic captcha decryption"))
+            avail.append(_("- automatic captcha decryption"))
         if web:
-            avail.append(_("webinterface"))
+            avail.append(_("- webinterface"))
         if js:
-            avail.append(_("extended Click'N'Load"))
+            avail.append(_("- extended Click'N'Load"))
 
-        string = ""
-
-        for av in avail:
-            string += ", " + av
-
-        print _("AVAILABLE FEATURES:") + string[1:]
-        print
+        if avail:
+            print _("AVAILABLE FEATURES:")
+            for feature in avail:
+                print feature
+            print
 
         if len(avail) < 5:
-            print _("MISSING FEATURES: ")
+            print _("MISSING FEATURES:")
 
             if not self.check_module("Crypto"):
                 print _("- no py-crypto available")
@@ -137,7 +134,10 @@ class Setup:
 
             print
             print _("You can abort the setup now and fix some dependicies if you want.")
+        else:
+            print _("NO MISSING FEATURES!")
 
+        print
         print
         con = self.ask(_("Continue with setup?"), self.yes, bool=True)
 
@@ -146,7 +146,7 @@ class Setup:
 
         print
         print
-        print _("CURRENT CONFIG PATH: %s") % owd
+        print _("CURRENT CONFIG PATH: %s") % configdir
         print
         print _("NOTE: If you use pyLoad on a server or the home partition lives on an iternal flash it may be a good idea to change it.")
         path = self.ask(_("Do you want to change the config path?"), self.no, bool=True)
@@ -197,24 +197,21 @@ class Setup:
 
         print _("## System Information ##")
         print
-        print _("Platform: %s") % sys.platform
-        print _("Operating System: %s") % os.name
-        print _("Python: %s") % sys.version.replace("\n", "")
+        print _("Platform:    %s") % sys.platform
+        print _("OS:          %s") % os.name
+        print _("Python:      %s") % sys.version.replace("\n", "")
         print
         print
 
         print _("## System Check ##")
         print
 
-        if sys.version_info[:2] > (2, 7):
-            print _("Your python version is to new, Please use Python 2.6/2.7")
-            python = False
-        elif sys.version_info[:2] < (2, 5):
-            print _("Your python version is to old, Please use at least Python 2.5")
+        if (2, 5) > sys.version_info[:2] > (2, 7):
             python = False
         else:
-            print _("Python Version: OK")
             python = True
+
+        self.print_dep("python", python, false="NOT OK")
 
         curl = self.check_module("pycurl")
         self.print_dep("pycurl", curl)
@@ -258,8 +255,11 @@ class Setup:
                 jinja = True
         except:
             jinja = False
+            jinja_error = "MISSING"
+        else:
+            jinja_error = "NOT OK"
 
-        jinja = self.print_dep("jinja2", jinja)
+        self.print_dep("jinja2", jinja, false=jinja_error)
 
         beaker = self.check_module("beaker")
         self.print_dep("beaker", beaker)
@@ -273,10 +273,20 @@ class Setup:
         js = True if JsEngine.ENGINE else False
         self.print_dep(_("JS engine"), js)
 
-        if not jinja:
+        if not python:
             print
             print
-            print _("WARNING: Your installed jinja2 version %s seems too old.") % jinja2.__version__
+            if sys.version_info[:2] > (2, 7):
+                print _("WARNING: Your python version is too NEW!")
+                print _("Please use Python version 2.6/2.7 .")
+            else:
+                print _("WARNING: Your python version is too OLD!")
+                print _("Please use at least Python version 2.5 .")
+
+        if not jinja and jinja_error == "NOT OK":
+            print
+            print
+            print _("WARNING: Your installed jinja2 version %s is too OLD!") % jinja2.__version__
             print _("You can safely continue but if the webinterface is not working,")
             print _("please upgrade or uninstall it, because pyLoad self-includes jinja2 libary.")
 
@@ -293,7 +303,7 @@ class Setup:
 
         db = DatabaseBackend(None)
         db.setup()
-        print _("NOTE: Consider a password of 10 or more symbols if you expect to access from outside your local network (ex. internet).")
+        print _("NOTE: Consider a password of 10 or more symbols if you expect to access to your local network from outside (ex. internet).")
         print
         username = self.ask(_("Username"), "User")
         password = self.ask("", "", password=True)
@@ -306,8 +316,8 @@ class Setup:
         self.config['remote']['activated'] = self.ask(_("Enable remote access"), self.no, bool=True)
 
         print
-        langs = self.config.getMetaData("general", "language")
-        self.config['general']['language'] = self.ask(_("Choose pyLoad language"), "en", langs['type'].split(";"))
+        langs = sorted(self.config.getMetaData("general", "language")['type'].split(";"))
+        self.config['general']['language'] = self.ask(_("Choose system language"), self.lang, langs)
 
         print
         self.config['general']['download_folder'] = self.ask(_("Download folder"), "Downloads")
@@ -339,8 +349,8 @@ class Setup:
             print "- lightweight:", _("Very fast alternative to builtin; requires libev and bjoern packages.")
 
         print
-        print _("NOTE: In some rare cases the builtin server is not working, if you notice problems with the webinterface")
-        print _("come back here and change the builtin server to the threaded one here.")
+        print _("NOTE: In some rare cases the builtin server not works correctly, so if you have troubles with the web interface")
+        print _("run this setup assistant again and change the builtin server to the threaded.")
 
         if os.name == "nt":
             servers = ["builtin", "threaded", "fastcgi"]
@@ -349,7 +359,7 @@ class Setup:
             servers = ["builtin", "threaded", "fastcgi", "lightweight"]
             default = "lightweight" if self.check_module("bjoern") else "builtin"
 
-        self.config['webinterface']['server'] = self.ask(_("Server"), default, servers)
+        self.config['webinterface']['server'] = self.ask(_("Choose webserver"), default, servers)
 
 
     def conf_ssl(self):
@@ -424,8 +434,9 @@ class Setup:
                 languages=[self.config['general']['language'], "en"], fallback=True)
             translation.install(True)
 
-        print _("Setting new config path, current configuration will not be transfered!")
-        path = self.ask(_("CONFIG PATH"), owd)
+        print _("Setting new config path.")
+        print _("NOTE: Current configuration will not be transfered!")
+        path = self.ask(_("CONFIG PATH"), configdir)
         try:
             path = join(pypath, path)
             if not exists(path):
@@ -444,12 +455,9 @@ class Setup:
             print _("Setting config path failed: %s") % str(e)
 
 
-    def print_dep(self, name, value):
+    def print_dep(self, name, value, false="MISSING", true="OK"):
         """Print Status of dependency"""
-        if value:
-            print _("%s: OK") % name
-        else:
-            print _("%s: MISSING") % name
+        print "%-12s %s" % (name + ':', _(true if value else false).upper())
 
 
     def check_module(self, module):
@@ -491,7 +499,6 @@ class Setup:
             p2 = False
             pwlen = 8
             while p1 != p2:
-                # getpass(_("Password: ")) will crash on systems with broken locales (Win, NAS)
                 sys.stdout.write(_("Password: "))
                 p1 = getpass("")
 
@@ -531,13 +538,10 @@ class Setup:
                     return False
                 else:
                     print _("Invalid Input")
+                    print
                     continue
 
-            if not answers:
+            if not answers or input in answers:
                 return input
-
             else:
-                if input in answers:
-                    return input
-                else:
-                    print _("Invalid Input")
+                print _("Invalid Input")
