@@ -45,7 +45,7 @@ statusMap = {
 def setSize(self, value):
     self._size = int(value)
 
-class PyFile:
+class PyFile(object):
     """
     Represents a file object at runtime
     """

@@ -6,7 +6,7 @@ from module.plugins.Base import Base
 from module.utils import has_method
 
 
-class Expose:
+class Expose(object):
     """ used for decoration to declare rpc services """
 
     def __new__(cls, f, *args, **kwargs):

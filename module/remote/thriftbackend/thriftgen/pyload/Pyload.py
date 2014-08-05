@@ -12,7 +12,7 @@ from thrift.Thrift import TProcessor
 from thrift.protocol.TBase import TBase, TExceptionBase
 
 
-class Iface:
+class Iface(object):
 
     def getConfigValue(self, category, option, section):
         """

@@ -32,7 +32,7 @@ class WrongFormat(Exception):
     pass
 
 
-class ChunkInfo:
+class ChunkInfo(object):
 
     def __init__(self, name):
         self.name = unicode(name)

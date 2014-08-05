@@ -31,7 +31,7 @@ enc = "cp850" if os.name == "nt" else "utf8"
 sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
 
 
-class Cli:
+class Cli(object):
 
     def __init__(self, client, command):
         self.client = client

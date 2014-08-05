@@ -33,7 +33,7 @@ from module.network.RequestFactory import getURL
 from module.utils import freeSpace, lock
 
 
-class ThreadManager:
+class ThreadManager(object):
     """manages the download threads, assign jobs, reconnect etc"""
 
 

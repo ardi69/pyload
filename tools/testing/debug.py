@@ -5,7 +5,7 @@ import re
 from module.utils import InitHomeDir
 from os import listdir
 
-class Wrapper:
+class Wrapper(object):
 	pass
 
 def filter_info(line):

@@ -32,7 +32,7 @@ class CustomBrowser(Browser):
         return Browser.load(self, *args, **kwargs)
 
 
-class AdYouLike:
+class AdYouLike(object):
     """
     Class to support adyoulike captcha service
     """

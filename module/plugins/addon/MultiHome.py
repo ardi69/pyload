@@ -57,7 +57,7 @@ class MultiHome(Addon):
         return best
 
 
-class Interface:
+class Interface(object):
 
     def __init__(self, adress):
         self.adress = adress

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class Handler:
+class Handler(object):
 
     def __init__(self, cli):
         self.cli = cli

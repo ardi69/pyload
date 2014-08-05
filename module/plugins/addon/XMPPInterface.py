@@ -194,7 +194,7 @@ class XMPPInterface(IRCInterface, JabberClient):
         self.connect()
 
 
-class VersionHandler:
+class VersionHandler(object):
     """Provides handler for a version query.
 
     This class will answer version query and announce 'jabber:iq:version' namespace

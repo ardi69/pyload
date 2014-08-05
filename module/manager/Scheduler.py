@@ -27,7 +27,7 @@ class AlreadyCalled(Exception):
     pass
 
 
-class Deferred:
+class Deferred(object):
 
     def __init__(self):
         self.call = []
@@ -46,7 +46,7 @@ class Deferred:
             f(*args ** kwargs)
 
 
-class Scheduler:
+class Scheduler(object):
 
     def __init__(self, core):
         self.core = core
@@ -91,7 +91,7 @@ class Scheduler:
                     break
 
 
-class Job:
+class Job(object):
 
     def __init__(self, time, call, args=[], kwargs={}, deferred=None, threaded=True):
         self.time = float(time)
@@ -115,7 +115,7 @@ class Job:
             self.run()
 
 
-class PriorityQueue:
+class PriorityQueue(object):
     """ a non blocking priority queue """
 
     def __init__(self):

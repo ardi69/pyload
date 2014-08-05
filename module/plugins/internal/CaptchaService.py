@@ -5,7 +5,7 @@ import re
 from random import random
 
 
-class CaptchaService:
+class CaptchaService(object):
     __name__ = "CaptchaService"
     __version__ = "0.05"
 
@@ -18,7 +18,7 @@ class CaptchaService:
         self.plugin = plugin
 
 
-class ReCaptcha:
+class ReCaptcha(object):
     RECAPTCHA_KEY_PATTERN = r"https?://(?:www\.)?google\.com/recaptcha/api/challenge\?k=(?P<key>\w+)"
     RECAPTCHA_KEY_AJAX_PATTERN = r"Recaptcha\.create\s*\(\s*[\"'](?P<key>\w+)[\"']\s*,"
 

@@ -10,7 +10,7 @@ from logging import log
 
 url = "http://localhost:8001/api/%s"
 
-class TestJson:
+class TestJson(object):
 
     def call(self, name, post=None):
         if not post:

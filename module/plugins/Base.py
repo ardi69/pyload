@@ -46,7 +46,7 @@ class ParseError(Exception):
         return repr(self.value)
 
 
-class Base:
+class Base(object):
     """
     A Base class with log/config/db methods *all* plugin types can use
     """

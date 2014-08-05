@@ -20,7 +20,7 @@ except:
 DB_VERSION = 4
 
 
-class style:
+class style(object):
     db = None
 
     @classmethod
@@ -52,7 +52,7 @@ class style:
         return x
 
 
-class DatabaseJob:
+class DatabaseJob(object):
 
     def __init__(self, f, *args, **kwargs):
         self.done = Event()
