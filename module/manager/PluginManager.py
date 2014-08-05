@@ -11,8 +11,6 @@ from traceback import print_exc
 
 from module.lib.SafeEval import const_eval as literal_eval
 
-from module.config.ConfigParser import IGNORE
-
 
 class PluginManager:
     ROOT = "module.plugins."
@@ -110,9 +108,6 @@ class PluginManager:
                 if home and name in home:
                     if home[name]['v'] >= version:
                         continue
-
-                if name in IGNORE or (folder, name) in IGNORE:
-                     continue
 
                 plugins[name] = {}
                 plugins[name]['v'] = version
