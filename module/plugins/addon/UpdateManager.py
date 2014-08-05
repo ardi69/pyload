@@ -10,13 +10,13 @@ from time import time
 
 from module.network.RequestFactory import getURL
 from module.plugins.Addon import Addon, Expose, threaded
-from module.utils import safe_join
+from module.utils import safe_join, versiontuple
 
 
 class UpdateManager(Addon):
     __name__ = "UpdateManager"
     __type__ = "addon"
-    __version__ = "0.34"
+    __version__ = "0.35"
 
     __config__ = [("activated", "bool", "Activated", True),
                   ("mode", "pyLoad + plugins;plugins only", "Check updates for", "pyLoad + plugins"),
@@ -67,7 +67,7 @@ class UpdateManager(Addon):
     def periodical2(self):
         if not self.updating:
             self.autoreloadPlugins()
-        self.cb2 = self.scheduler.addJob(10, self.periodical2, threaded=False)
+        self.cb2 = self.scheduler.addJob(4, self.periodical2, threaded=False)
 
     @Expose
     def autoreloadPlugins(self):
@@ -174,8 +174,8 @@ class UpdateManager(Addon):
 
             plugins = getattr(self.core.pluginManager, "%sPlugins" % type)
 
-            oldver = float(plugins[name]['v']) if name in plugins else None
-            newver = float(version)
+            oldver = versiontuple(plugins[name]['v']) if name in plugins else None
+            newver = versiontuple(version)
 
             if not oldver:
                 msg = "New [%(type)s] %(name)s (v%(newver)s)"
