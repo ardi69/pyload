@@ -1,4 +1,16 @@
 /* ----------- stylized ----------- */
+.window_table td {
+border:none;
+text-align:left;
+}
+#add_box {
+background-image: url(../img/dark-bg.jpg);
+color:white;
+}
+#pack_box {
+background-image: url(../img/dark-bg.jpg);
+color:white;
+}
 .window_box h1{
     font-size:14px;
     font-weight:bold;
@@ -6,20 +18,21 @@
 }
 .window_box p{
     font-size:11px;
-    color:#666666;
+    color:white;
     margin-bottom:20px;
     border-bottom:solid 1px #b7ddf2;
     padding-bottom:10px;
 }
-.window_box label{
+.window_box label{ /*Linke Seite*/
     display:block;
     font-weight:bold;
     text-align:right;
     width:240px;
     float:left;
+    color:white;
 }
 .window_box .small{
-    color:#666666;
+    color:grey;
     display:block;
     font-size:11px;
     font-weight:normal;
@@ -33,6 +46,8 @@
     border:solid 1px #aacfe4;
     width:300px;
     margin:2px 0 20px 10px;
+    background-color:#202020;
+    color:white;
 }
 .window_box .cont{
     float:left;
@@ -40,10 +55,12 @@
     padding: 0px 10px 15px 0px;
     width:300px;
     margin:0px 0px 0px 10px;
+    color:white;
 }
 .window_box .cont input{
     float: none;
     margin: 0px 15px 0px 1px;
+    color:white;
 }
 .window_box textarea{
     float:left;
@@ -52,6 +69,8 @@
     border:solid 1px #aacfe4;
     width:300px;
     margin:2px 0 20px 10px;
+    background-color:#202020;
+    color:white;
 }
 .window_box button, .styled_button{
     clear:both;
