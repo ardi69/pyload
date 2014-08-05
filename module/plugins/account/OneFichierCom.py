@@ -33,16 +33,16 @@ class OneFichierCom(Account):
             premium = False
             validuntil = -1
 
-        return {"premium": premium, "trafficleft": -1, "validuntil": validuntil}
+        return {'premium': premium, 'trafficleft': -1, 'validuntil': validuntil}
 
     def login(self, user, data, req):
 
         req.http.c.setopt(REFERER, "http://1fichier.com/login.pl?lg=en")
 
         html = req.load("http://1fichier.com/login.pl?lg=en", post={
-            "mail": user,
-            "pass": data['password'],
-            "Login": "Login"})
+            'mail': user,
+            'pass': data['password'],
+            'Login': "Login"})
 
         if r'<div class="error_message">Invalid username or password.</div>' in html:
             self.wrongPassword()

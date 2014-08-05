@@ -32,7 +32,7 @@ class RyushareCom(XFileSharingPro):
     def getDownloadLink(self):
         retry = False
         self.html = self.load(self.pyfile.url)
-        action, inputs = self.parseHtmlForm(input_names={"op": re.compile("^download")})
+        action, inputs = self.parseHtmlForm(input_names={'op': re.compile("^download")})
         if "method_premium" in inputs:
             del inputs['method_premium']
 

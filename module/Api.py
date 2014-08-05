@@ -327,7 +327,7 @@ class Api(Iface):
 
         self.core.files.addLinks(links, pid)
 
-        self.core.log.info(_("Added package %(name)s containing %(count)d links") % {"name": name, "count": len(links)})
+        self.core.log.info(_("Added package %(name)s containing %(count)d links") % {'name': name, 'count': len(links)})
 
         self.core.files.save()
 
@@ -590,7 +590,7 @@ class Api(Iface):
         """
         self.core.files.addLinks(links, int(pid))
 
-        self.core.log.info(_("Added %(count)d links to package #%(package)d ") % {"count": len(links), "package": pid})
+        self.core.log.info(_("Added %(count)d links to package #%(package)d ") % {'count': len(links), 'package': pid})
         self.core.files.save()
 
     @permission(PERMS.MODIFY)
@@ -963,7 +963,7 @@ class Api(Iface):
     def getServices(self):
         """ A dict of available services, these can be defined by addon plugins.
 
-        :return: dict with this style: {"plugin": {"method": "description"}}
+        :return: dict with this style: {'plugin': {'method': "description"}}
         """
         data = {}
         for plugin, funcs in self.core.addonManager.methods.iteritems():
@@ -1009,7 +1009,7 @@ class Api(Iface):
     def getAllInfo(self):
         """Returns all information stored by addon plugins. Values are always strings
 
-        :return: {"plugin": {"name": value}}
+        :return: {'plugin': {'name': value}}
         """
         return self.core.addonManager.getAllInfo()
 
@@ -1018,7 +1018,7 @@ class Api(Iface):
         """Returns information stored by a specific plugin.
 
         :param plugin: pluginname
-        :return: dict of attr names mapped to value {"name": value}
+        :return: dict of attr names mapped to value {'name': value}
         """
         return self.core.addonManager.getInfo(plugin)
 

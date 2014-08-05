@@ -254,7 +254,7 @@ class PluginManager:
                 plugins[name]['module'] = module  #cache import, maybe unneeded
                 return module
             except Exception, e:
-                self.log.error(_("Error importing %(name)s: %(msg)s") % {"name": name, "msg": str(e)})
+                self.log.error(_("Error importing %(name)s: %(msg)s") % {'name': name, 'msg': str(e)})
                 if self.core.debug:
                     print_exc()
 

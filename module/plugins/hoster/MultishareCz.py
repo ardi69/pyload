@@ -51,14 +51,14 @@ class MultishareCz(SimpleHoster):
         if not self.premium:
             self.fail("Only premium users can download from other hosters")
 
-        self.html = self.load('http://www.multishare.cz/html/mms_ajax.php', post={"link": self.pyfile.url}, decode=True)
+        self.html = self.load('http://www.multishare.cz/html/mms_ajax.php', post={'link': self.pyfile.url}, decode=True)
         self.getFileInfo()
 
         if not self.checkCredit():
             self.fail("Not enough credit left to download file")
 
         url = "http://dl%d.mms.multishare.cz/html/mms_process.php" % round(random() * 10000 * random())
-        params = {"u_ID": self.acc_info['u_ID'], "u_hash": self.acc_info['u_hash'], "link": self.pyfile.url}
+        params = {'u_ID': self.acc_info['u_ID'], 'u_hash': self.acc_info['u_hash'], 'link': self.pyfile.url}
         self.logDebug(url, params)
         self.download(url, get=params)
 

@@ -40,7 +40,7 @@ class FiredriveCom(SimpleHoster):
         if f:
             return f.group(1)
         else:
-            self.html = self.load(self.pyfile.url, post={"confirm": re.search(r'name="confirm" value="(.+?)"', self.html).group(1)})
+            self.html = self.load(self.pyfile.url, post={'confirm': re.search(r'name="confirm" value="(.+?)"', self.html).group(1)})
             f = re.search(self.LINK_PATTERN, self.html)
             if f:
                 return f.group(1)

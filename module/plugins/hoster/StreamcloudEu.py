@@ -66,7 +66,7 @@ class StreamcloudEu(XFileSharingPro):
             if hasattr(self, "FORM_PATTERN"):
                 action, inputs = self.parseHtmlForm(self.FORM_PATTERN)
             else:
-                action, inputs = self.parseHtmlForm(input_names={"op": re.compile("^download")})
+                action, inputs = self.parseHtmlForm(input_names={'op': re.compile("^download")})
 
             if not inputs:
                 action, inputs = self.parseHtmlForm('F1')

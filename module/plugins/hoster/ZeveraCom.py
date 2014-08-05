@@ -35,7 +35,7 @@ class ZeveraCom(Hoster):
 
         self.download(header['location'], disposition=True)
 
-        check = self.checkDownload({"error": 'action="ErrorDownload.aspx'})
+        check = self.checkDownload({'error': 'action="ErrorDownload.aspx'})
         if check == "error":
             self.fail("Error response received - contact Zevera support")
 

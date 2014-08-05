@@ -25,7 +25,7 @@ def getID(url):
 
 
 def getAPIData(urls):
-    post = {"apikey": key}
+    post = {'apikey': key}
 
     idMap = {}
 
@@ -156,8 +156,8 @@ class UploadedTo(Hoster):
 
     def handlePremium(self):
         info = self.account.getAccountInfo(self.user, True)
-        self.logDebug("%(name)s: Use Premium Account (%(left)sGB left)" % {"name": self.__name__,
-                                                                           "left": info['trafficleft'] / 1024 / 1024})
+        self.logDebug("%(name)s: Use Premium Account (%(left)sGB left)" % {'name': self.__name__,
+                                                                           'left': info['trafficleft'] / 1024 / 1024})
         if int(self.data[1]) / 1024 > info['trafficleft']:
             self.logInfo(_("%s: Not enough traffic left" % self.__name__))
             self.account.empty(self.user)
@@ -201,7 +201,7 @@ class UploadedTo(Hoster):
         for _ in xrange(5):
             re_captcha = ReCaptcha(self)
             challenge, result = re_captcha.challenge(challengeId.group(1))
-            options = {"recaptcha_challenge_field": challenge, "recaptcha_response_field": result}
+            options = {'recaptcha_challenge_field': challenge, 'recaptcha_response_field': result}
             self.wait()
 
             result = self.load(url, post=options)
@@ -233,7 +233,7 @@ class UploadedTo(Hoster):
             self.fail("No Download url retrieved/all captcha attempts failed")
 
         self.download(downloadURL, disposition=True)
-        check = self.checkDownload({"limit-dl": self.DL_LIMIT_PATTERN})
+        check = self.checkDownload({'limit-dl': self.DL_LIMIT_PATTERN})
         if check == "limit-dl":
             self.setWait(3 * 60 * 60, True)
             self.wait()

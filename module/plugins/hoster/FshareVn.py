@@ -11,8 +11,8 @@ from module.plugins.internal.SimpleHoster import SimpleHoster, parseFileInfo
 def getInfo(urls):
     for url in urls:
         html = getURL('http://www.fshare.vn/check_link.php', post={
-            "action": "check_link",
-            "arrlinks": url
+            'action': "check_link",
+            'arrlinks': url
         }, decode=True)
 
         file_info = parseFileInfo(FshareVn, url, html)
@@ -46,8 +46,8 @@ class FshareVn(SimpleHoster):
 
     def process(self, pyfile):
         self.html = self.load('http://www.fshare.vn/check_link.php', post={
-            "action": "check_link",
-            "arrlinks": pyfile.url
+            'action': "check_link",
+            'arrlinks': pyfile.url
         }, decode=True)
         self.getFileInfo()
 
@@ -113,7 +113,7 @@ class FshareVn(SimpleHoster):
     def checkDownloadedFile(self):
         # check download
         check = self.checkDownload({
-            "not_found": "<head><title>404 Not Found</title></head>"
+            'not_found': "<head><title>404 Not Found</title></head>"
         })
 
         if check == "not_found":

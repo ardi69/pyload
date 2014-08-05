@@ -95,7 +95,7 @@ class AccountManager:
 
             elif ":" in line:
                 name, sep, pw = line.partition(":")
-                self.accounts[plugin][name] = {"password": pw, "options": {}, "valid": True}
+                self.accounts[plugin][name] = {'password': pw, 'options': {}, 'valid': True}
 
     #--------------------------------------------------------------------------
     def saveAccounts(self):

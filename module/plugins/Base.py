@@ -458,7 +458,7 @@ class Plugin(Base):
 
         if just_header:
             # Parse header
-            header = {"code": self.req.code}
+            header = {'code': self.req.code}
             for line in res.splitlines():
                 line = line.strip()
                 if not line or ":" not in line:
@@ -528,7 +528,7 @@ class Plugin(Base):
             self.pyfile.size = self.req.size
 
         if disposition and newname and newname != name:  #: triple check, just to be sure
-            self.logInfo("%(name)s saved as %(newname)s" % {"name": name, "newname": newname})
+            self.logInfo("%(name)s saved as %(newname)s" % {'name': name, 'newname': newname})
             self.pyfile.name = newname
             filename = join(location, newname)
 

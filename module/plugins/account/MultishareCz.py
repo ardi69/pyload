@@ -31,13 +31,13 @@ class MultishareCz(Account):
         html = req.load("http://www.multishare.cz/", decode=True)
         mms_info = dict(re.findall(self.ACCOUNT_INFO_PATTERN, html))
 
-        return dict(mms_info, **{"validuntil": -1, "trafficleft": trafficleft})
+        return dict(mms_info, **{'validuntil': -1, 'trafficleft': trafficleft})
 
     def login(self, user, data, req):
         html = req.load('http://www.multishare.cz/html/prihlaseni_process.php', post={
-            "akce": "Přihlásit",
-            "heslo": data['password'],
-            "jmeno": user
+            'akce': "Přihlásit",
+            'heslo': data['password'],
+            'jmeno': user
         }, decode=True)
 
         if '<div class="akce-chyba akce">' in html:

@@ -25,7 +25,7 @@ class DataportCz(SimpleHoster):
 
 
     def handleFree(self):
-        captchas = {"1": "jkeG", "2": "hMJQ", "3": "vmEK", "4": "ePQM", "5": "blBd"}
+        captchas = {'1': "jkeG", '2': "hMJQ", '3': "vmEK", '4': "ePQM", '5': "blBd"}
 
         for _ in xrange(60):
             action, inputs = self.parseHtmlForm('free_download_form')
@@ -40,8 +40,8 @@ class DataportCz(SimpleHoster):
 
             self.html = self.download("http://www.dataport.cz%s" % action, post=inputs)
 
-            check = self.checkDownload({"captcha": 'alert("\u0160patn\u011b opsan\u00fd k\u00f3d z obr\u00e1zu");',
-                                        "slot": 'alert("Je n\u00e1m l\u00edto, ale moment\u00e1ln\u011b nejsou'})
+            check = self.checkDownload({'captcha': 'alert("\u0160patn\u011b opsan\u00fd k\u00f3d z obr\u00e1zu");',
+                                        'slot': 'alert("Je n\u00e1m l\u00edto, ale moment\u00e1ln\u011b nejsou'})
             if check == "captcha":
                 self.parseError('invalid captcha')
             elif check == "slot":

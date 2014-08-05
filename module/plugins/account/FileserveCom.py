@@ -19,19 +19,19 @@ class FileserveCom(Account):
     def loadAccountInfo(self, user, req):
         data = self.getAccountData(user)
 
-        page = req.load("http://app.fileserve.com/api/login/", post={"username": user, "password": data['password'],
-                                                                     "submit": "Submit+Query"})
+        page = req.load("http://app.fileserve.com/api/login/", post={'username': user, "password": data['password'],
+                                                                     'submit': "Submit+Query"})
         res = json_loads(page)
 
         if res['type'] == "premium":
             validuntil = mktime(strptime(res['expireTime'], "%Y-%m-%d %H:%M:%S"))
-            return {"trafficleft": res['traffic'], "validuntil": validuntil}
+            return {'trafficleft': res['traffic'], 'validuntil': validuntil}
         else:
-            return {"premium": False, "trafficleft": None, "validuntil": None}
+            return {'premium': False, 'trafficleft': None, 'validuntil': None}
 
     def login(self, user, data, req):
-        page = req.load("http://app.fileserve.com/api/login/", post={"username": user, "password": data['password'],
-                                                                     "submit": "Submit+Query"})
+        page = req.load("http://app.fileserve.com/api/login/", post={'username': user, "password": data['password'],
+                                                                     'submit': "Submit+Query"})
         res = json_loads(page)
 
         if not res['type']:
@@ -39,5 +39,5 @@ class FileserveCom(Account):
 
         #login at fileserv page
         req.load("http://www.fileserve.com/login.php",
-                 post={"loginUserName": user, "loginUserPassword": data['password'], "autoLogin": "checked",
-                       "loginFormSubmit": "Login"})
+                 post={'loginUserName': user, "loginUserPassword": data['password'], "autoLogin": "checked",
+                       'loginFormSubmit': "Login"})

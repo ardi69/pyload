@@ -36,7 +36,7 @@ class NarodRu(SimpleHoster):
             m = re.search(self.CAPTCHA_PATTERN, self.html)
             if m is None:
                 self.parseError('Captcha')
-            post_data = {"action": "sendcapcha"}
+            post_data = {'action': "sendcapcha"}
             captcha_url, post_data['key'] = m.groups()
             post_data['rep'] = self.decryptCaptcha(captcha_url)
 

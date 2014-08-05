@@ -51,7 +51,7 @@ class CaptchaBrotherhood(Addon):
 
     def getCredits(self):
         response = getURL(self.API_URL + "askCredits.aspx",
-                          get={"username": self.getConfig("username"), "password": self.getConfig("passkey")})
+                          get={'username': self.getConfig("username"), 'password': self.getConfig("passkey")})
         if not response.startswith("OK"):
             raise CaptchaBrotherhoodException(response)
         else:
@@ -79,10 +79,10 @@ class CaptchaBrotherhood(Addon):
         req = getRequest()
 
         url = "%ssendNewCaptcha.aspx?%s" % (self.API_URL,
-                                            urlencode({"username": self.getConfig("username"),
-                                                       "password": self.getConfig("passkey"),
-                                                       "captchaSource": "pyLoad",
-                                                       "timeout": "80"}))
+                                            urlencode({'username': self.getConfig("username"),
+                                                       'password': self.getConfig("passkey"),
+                                                       'captchaSource': "pyLoad",
+                                                       'timeout': "80"}))
 
         req.c.setopt(pycurl.URL, url)
         req.c.setopt(pycurl.POST, 1)
@@ -112,9 +112,9 @@ class CaptchaBrotherhood(Addon):
 
     def get_api(self, api, ticket):
         response = getURL("%s%s.aspx" % (self.API_URL, api),
-                          get={"username": self.getConfig("username"),
-                               "password": self.getConfig("passkey"),
-                               "captchaID": ticket})
+                          get={'username': self.getConfig("username"),
+                               'password': self.getConfig("passkey"),
+                               'captchaID': ticket})
         if not response.startswith("OK"):
             raise CaptchaBrotherhoodException("Unknown response: %s" % response)
 

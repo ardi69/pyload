@@ -98,7 +98,7 @@ class MediafireCom(SimpleHoster):
             if len(passwords):
                 password = passwords.pop(0)
                 self.logInfo("Password protected link, trying " + password)
-                self.html = self.load(self.url, post={"downloadp": password})
+                self.html = self.load(self.url, post={'downloadp': password})
             else:
                 self.fail("No or incorrect password")
 
@@ -117,8 +117,8 @@ class MediafireCom(SimpleHoster):
                 captcha_key = m.group(1)
                 solvemedia = SolveMedia(self)
                 captcha_challenge, captcha_response = solvemedia.challenge(captcha_key)
-                self.html = self.load(self.url, post={"adcopy_challenge": captcha_challenge,
-                                                      "adcopy_response": captcha_response}, decode=True)
+                self.html = self.load(self.url, post={'adcopy_challenge': captcha_challenge,
+                                                      'adcopy_response': captcha_response}, decode=True)
             else:
                 break
         else:

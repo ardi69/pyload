@@ -99,8 +99,8 @@ class ConfigParser:
             homeconf = self.parseConfig("pyload.conf")
             if "username" in homeconf['remote']:
                 if "password" in homeconf['remote']:
-                    self.oldRemoteData = {"username": homeconf['remote']['username']['value'],
-                                          "password": homeconf['remote']['username']['value']}
+                    self.oldRemoteData = {'username': homeconf['remote']['username']['value'],
+                                          'password': homeconf['remote']['username']['value']}
                     del homeconf['remote']['password']
                 del homeconf['remote']['username']
             self.updateValues(homeconf, self.config)
@@ -143,7 +143,7 @@ class ConfigParser:
                     section, none, desc = line[:-1].partition('-')
                     section = section.strip()
                     desc = desc.replace('"', "").strip()
-                    conf[section] = {"desc": desc}
+                    conf[section] = {'desc': desc}
                 else:
                     if listmode:
                         if line.endswith("]"):
@@ -153,9 +153,9 @@ class ConfigParser:
                         value += [self.cast(typ, x.strip()) for x in line.split(",") if x]
 
                         if not listmode:
-                            conf[section][option] = {"desc": desc,
-                                                     "type": typ,
-                                                     "value": value}
+                            conf[section][option] = {'desc': desc,
+                                                     'type': typ,
+                                                     'value': value}
 
 
                     else:
@@ -181,9 +181,9 @@ class ConfigParser:
                             value = self.cast(typ, value)
 
                         if not listmode:
-                            conf[section][option] = {"desc": desc,
-                                                     "type": typ,
-                                                     "value": value}
+                            conf[section][option] = {'desc': desc,
+                                                     'type': typ,
+                                                     'value': value}
 
             except Exception, e:
                 print "Config Warning"
@@ -318,8 +318,8 @@ class ConfigParser:
     def addPluginConfig(self, name, config, outline=""):
         """adds config options with tuples (name, type, desc, default)"""
         if name not in self.plugin:
-            conf = {"desc": name,
-                    "outline": outline}
+            conf = {'desc': name,
+                    'outline': outline}
             self.plugin[name] = conf
         else:
             conf = self.plugin[name]
@@ -331,9 +331,9 @@ class ConfigParser:
                 conf[item[0]]['desc'] = item[2]
             else:
                 conf[item[0]] = {
-                    "desc": item[2],
-                    "type": item[1],
-                    "value": self.cast(item[1], item[3])
+                    'desc': item[2],
+                    'type': item[1],
+                    'value': self.cast(item[1], item[3])
                 }
 
         values = [x[0] for x in config] + ["desc", "outline"]

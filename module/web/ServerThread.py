@@ -46,7 +46,7 @@ class WebServer(threading.Thread):
                 import flup
             except:
                 log.warning(_("Can't use %(server)s, python-flup is not installed!") % {
-                    "server": self.server})
+                    'server': self.server})
                 reset = True
 
         if reset or self.server == "lightweight":
@@ -78,22 +78,22 @@ class WebServer(threading.Thread):
         if self.https:
             log.warning(_("This server offers no SSL, please consider using threaded instead"))
 
-        self.core.log.info(_("Starting builtin webserver: %(host)s:%(port)d") % {"host": self.host, "port": self.port})
+        self.core.log.info(_("Starting builtin webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_simple(host=self.host, port=self.port)
 
     def start_threaded(self):
         if self.https:
-            self.core.log.info(_("Starting threaded SSL webserver: %(host)s:%(port)d") % {"host": self.host, "port": self.port})
+            self.core.log.info(_("Starting threaded SSL webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         else:
             self.cert = ""
             self.key = ""
-            self.core.log.info(_("Starting threaded webserver: %(host)s:%(port)d") % {"host": self.host, "port": self.port})
+            self.core.log.info(_("Starting threaded webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
 
         webinterface.run_threaded(host=self.host, port=self.port, cert=self.cert, key=self.key)
 
     def start_fcgi(self):
 
-        self.core.log.info(_("Starting fastcgi server: %(host)s:%(port)d") % {"host": self.host, "port": self.port})
+        self.core.log.info(_("Starting fastcgi server: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_fcgi(host=self.host, port=self.port)
 
 
@@ -101,7 +101,7 @@ class WebServer(threading.Thread):
         if self.https:
             log.warning(_("This server offers no SSL, please consider using threaded instead"))
 
-        self.core.log.info(_("Starting lightweight webserver (bjoern): %(host)s:%(port)d") % {"host": self.host, "port": self.port})
+        self.core.log.info(_("Starting lightweight webserver (bjoern): %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_lightweight(host=self.host, port=self.port)
 
     def quit(self):

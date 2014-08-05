@@ -52,7 +52,7 @@ class SettingsUI
         new Request({
             "method" : "get"
             "url" : "/json/load_config/#{category}/#{section}"
-            "onSuccess": (data) =>
+            'onSuccess': (data) =>
                 target.set "html", data
                 target.reveal()
                 this.name.set "text", name
@@ -64,13 +64,13 @@ class SettingsUI
         form = $("#{category}_form");
 
         form.set "send", {
-            "method": "post"
-            "url": "/json/save_config/#{category}"
+            'method': "post"
+            'url': "/json/save_config/#{category}"
             "onSuccess" : ->
                 root.notify.alert '{{ _("Settings saved.")}}', {
                             'className': 'success'
                         }
-            "onFailure": ->
+            'onFailure': ->
                 root.notify.alert '{{ _("Error occured.")}}', {
                             'className': 'error'
                         }
@@ -81,9 +81,9 @@ class SettingsUI
     addAccount: (e) ->
         form = $ "add_account_form"
         form.set "send", {
-            "method": "post"
+            'method': "post"
             "onSuccess" : -> window.location.reload()
-            "onFailure": ->
+            'onFailure': ->
                 root.notify.alert '{{_("Error occured.")}}', {
                     'className': 'error'
                     }
@@ -95,9 +95,9 @@ class SettingsUI
     submitAccounts: (e) ->
         form = $ "account_form"
         form.set "send", {
-             "method": "post",
+             'method': "post",
              "onSuccess" : -> window.location.reload()
-             "onFailure": ->
+             'onFailure': ->
                  root.notify.alert('{{ _("Error occured.") }}', {
                              'className': 'error'
                          });

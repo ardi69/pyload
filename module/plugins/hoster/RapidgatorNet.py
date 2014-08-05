@@ -125,9 +125,9 @@ class RapidgatorNet(SimpleHoster):
                 captcha_challenge, captcha_response = captcha.challenge(captcha_key)
 
                 self.html = self.load(url, post={
-                    "DownloadCaptchaForm[captcha]": "",
-                    "adcopy_challenge": captcha_challenge,
-                    "adcopy_response": captcha_response
+                    'DownloadCaptchaForm[captcha]': "",
+                    'adcopy_challenge': captcha_challenge,
+                    'adcopy_response': captcha_response
                 })
 
                 if "The verification code is incorrect" in self.html:
@@ -165,7 +165,7 @@ class RapidgatorNet(SimpleHoster):
             m = re.search(self.WAIT_PATTERN, self.html)
 
         if m:
-            wait_time = int(m.group(1)) * {"hour": 60, "min": 1}[m.group(2)]
+            wait_time = int(m.group(1)) * {'hour': 60, 'min': 1}[m.group(2)]
         else:
             m = re.search(self.DOWNLOAD_LIMIT_ERROR_PATTERN, self.html)
             if m is None:

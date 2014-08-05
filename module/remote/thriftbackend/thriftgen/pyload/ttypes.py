@@ -47,21 +47,21 @@ class DownloadStatus(TBase):
   }
 
   _NAMES_TO_VALUES = {
-    "Finished": 0,
-    "Offline": 1,
-    "Online": 2,
-    "Queued": 3,
-    "Skipped": 4,
-    "Waiting": 5,
-    "TempOffline": 6,
-    "Starting": 7,
-    "Failed": 8,
-    "Aborted": 9,
-    "Decrypting": 10,
-    "Custom": 11,
-    "Downloading": 12,
-    "Processing": 13,
-    "Unknown": 14,
+    'Finished': 0,
+    'Offline': 1,
+    'Online': 2,
+    'Queued': 3,
+    'Skipped': 4,
+    'Waiting': 5,
+    'TempOffline': 6,
+    'Starting': 7,
+    'Failed': 8,
+    'Aborted': 9,
+    'Decrypting': 10,
+    'Custom': 11,
+    'Downloading': 12,
+    'Processing': 13,
+    'Unknown': 14,
   }
 
 class Destination(TBase):
@@ -74,8 +74,8 @@ class Destination(TBase):
   }
 
   _NAMES_TO_VALUES = {
-    "Collector": 0,
-    "Queue": 1,
+    'Collector': 0,
+    'Queue': 1,
   }
 
 class ElementType(TBase):
@@ -88,8 +88,8 @@ class ElementType(TBase):
   }
 
   _NAMES_TO_VALUES = {
-    "Package": 0,
-    "File": 1,
+    'Package': 0,
+    'File': 1,
   }
 
 class Input(TBase):
@@ -118,16 +118,16 @@ class Input(TBase):
   }
 
   _NAMES_TO_VALUES = {
-    "NONE": 0,
-    "TEXT": 1,
-    "TEXTBOX": 2,
-    "PASSWORD": 3,
-    "BOOL": 4,
-    "CLICK": 5,
-    "CHOICE": 6,
-    "MULTIPLE": 7,
-    "LIST": 8,
-    "TABLE": 9,
+    'NONE': 0,
+    'TEXT': 1,
+    'TEXTBOX': 2,
+    'PASSWORD': 3,
+    'BOOL': 4,
+    'CLICK': 5,
+    'CHOICE': 6,
+    'MULTIPLE': 7,
+    'LIST': 8,
+    'TABLE': 9,
   }
 
 class Output(TBase):
@@ -142,9 +142,9 @@ class Output(TBase):
   }
 
   _NAMES_TO_VALUES = {
-    "CAPTCHA": 1,
-    "QUESTION": 2,
-    "NOTIFICATION": 4,
+    'CAPTCHA': 1,
+    'QUESTION': 2,
+    'NOTIFICATION': 4,
   }
 
 

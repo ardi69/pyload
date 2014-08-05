@@ -31,5 +31,5 @@ class FreeWayMe(Hoster):
 
         self.download(
             "https://www.free-way.me/load.php",
-            get={"multiget": 7, "url": pyfile.url, "user": user, "pw": self.account.getpw(user), "json": ""},
+            get={'multiget': 7, 'url': pyfile.url, 'user': user, 'pw': self.account.getpw(user), 'json': ""},
             disposition=True)

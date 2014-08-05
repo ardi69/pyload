@@ -62,8 +62,8 @@ class FastixRu(Hoster):
 
         self.download(new_url, disposition=True)
 
-        check = self.checkDownload({"error": "<title>An error occurred while processing your request</title>",
-                                    "empty": re.compile(r"^$")})
+        check = self.checkDownload({'error': "<title>An error occurred while processing your request</title>",
+                                    'empty': re.compile(r"^$")})
 
         if check == "error":
             self.retry(wait_time=60, reason="An error occurred while generating link.")

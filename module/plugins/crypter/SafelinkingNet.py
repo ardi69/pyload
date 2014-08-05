@@ -38,7 +38,7 @@ class SafelinkingNet(Crypter):
 
         else:
             password = ""
-            postData = {"post-protect": "1"}
+            postData = {'post-protect': "1"}
 
             self.html = self.load(url)
 

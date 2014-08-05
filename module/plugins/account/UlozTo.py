@@ -27,7 +27,7 @@ class UlozTo(Account):
         trafficleft = int(float(m.group(1).replace(' ', '').replace(',', '.')) * 1000 * 1.048) if m else 0
         self.premium = True if trafficleft else False
 
-        return {"validuntil": -1, "trafficleft": trafficleft}
+        return {'validuntil': -1, 'trafficleft': trafficleft}
 
     def login(self, user, data, req):
         login_page = req.load('http://www.ulozto.net/?do=web-login', decode=True)
@@ -35,10 +35,10 @@ class UlozTo(Account):
         token = re.search('_token_" value="(.+?)"', login_page).group(1)
 
         html = req.load('http://www.ulozto.net'+action, post={
-            "_token_": token,
-            "login": "Submit",
-            "password": data['password'],
-            "username": user
+            '_token_': token,
+            'login': "Submit",
+            'password': data['password'],
+            'username': user
         }, decode=True)
 
         if '<div class="flash error">' in html:

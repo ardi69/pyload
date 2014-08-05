@@ -90,7 +90,7 @@ class UploadingCom(SimpleHoster):
 
         self.download(url)
 
-        check = self.checkDownload({"html": re.compile("\A<!DOCTYPE html PUBLIC")})
+        check = self.checkDownload({'html': re.compile("\A<!DOCTYPE html PUBLIC")})
         if check == "html":
             self.logWarning("Redirected to a HTML page, wait 10 minutes and retry")
             self.wait(10 * 60, True)

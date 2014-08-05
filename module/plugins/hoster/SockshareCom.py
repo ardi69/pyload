@@ -42,7 +42,7 @@ class SockshareCom(SimpleHoster):
         if not hash_data:
             self.parseError("Unable to detect hash")
 
-        post_data = {"hash": hash_data.group(1), "confirm": "Continue+as+Free+User"}
+        post_data = {'hash': hash_data.group(1), 'confirm': "Continue+as+Free+User"}
         self.html = self.load(self.pyfile.url, post=post_data)
         if ">You have exceeded the daily stream limit for your country\\. You can wait until tomorrow" in self.html:
             self.logWarning("You have exceeded your daily stream limit for today")
@@ -82,7 +82,7 @@ class SockshareCom(SimpleHoster):
         filename = self.lastDownload
         self.pyfile.name = name_new
         rename(filename, filename.rsplit(name)[0] + name_new)
-        self.logInfo("%(name)s renamed to %(newname)s" % {"name": name, "newname": name_new})
+        self.logInfo("%(name)s renamed to %(newname)s" % {'name': name, 'newname': name_new})
 
 
 getInfo = create_getInfo(SockshareCom)

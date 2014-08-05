@@ -12,7 +12,7 @@ def getInfo(urls):
     result = []  #: [ .. (name, size, status, url) .. ]
     regex = re.compile(DailymotionCom.__pattern__)
     apiurl = "https://api.dailymotion.com/video/"
-    request = {"fields": "access_error,status,title"}
+    request = {'fields': "access_error,status,title"}
     for url in urls:
         id = regex.search(url).group("ID")
         page = getURL(apiurl + id, get=request)

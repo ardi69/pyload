@@ -91,9 +91,9 @@ def set_session(request, info):
 
 
 def parse_userdata(session):
-    return {"name": session.get("name", "Anonymous"),
-            "is_admin": True if session.get("role", 1) == 0 else False,
-            "is_authenticated": session.get("authenticated", False)}
+    return {'name': session.get("name", "Anonymous"),
+            'is_admin': True if session.get("role", 1) == 0 else False,
+            'is_authenticated': session.get("authenticated", False)}
 
 
 def login_required(perm=None):

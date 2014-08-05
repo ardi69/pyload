@@ -47,7 +47,7 @@ class HellshareCz(Account):
                 validuntil = -1
                 trafficleft = -1
 
-        return {"validuntil": validuntil, "trafficleft": trafficleft, "premium": premium}
+        return {'validuntil': validuntil, 'trafficleft': trafficleft, 'premium': premium}
 
     def login(self, user, data, req):
         html = req.load('http://www.hellshare.com/')
@@ -64,10 +64,10 @@ class HellshareCz(Account):
             return
 
         html = req.load('http://www.hellshare.com/login?do=loginForm-submit', post={
-            "login": "Log in",
-            "password": data['password'],
-            "username": user,
-            "perm_login": "on"
+            'login': "Log in",
+            'password': data['password'],
+            'username': user,
+            'perm_login': "on"
         })
 
         if "<p>You input a wrong user name or wrong password</p>" in html:

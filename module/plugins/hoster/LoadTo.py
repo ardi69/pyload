@@ -55,8 +55,8 @@ class LoadTo(SimpleHoster):
             captcha_key = m.group(1)
             solvemedia = SolveMedia(self)
             captcha_challenge, captcha_response = solvemedia.challenge(captcha_key)
-            self.download(download_url, post={"adcopy_challenge": captcha_challenge, "adcopy_response": captcha_response})
-            check = self.checkDownload({"404": re.compile("\A<h1>404 Not Found</h1>")})
+            self.download(download_url, post={'adcopy_challenge': captcha_challenge, 'adcopy_response': captcha_response})
+            check = self.checkDownload({'404': re.compile("\A<h1>404 Not Found</h1>")})
             if check == "404":
                 self.logWarning("The captcha you entered was incorrect. Please try again.")
                 self.invalidCaptcha()

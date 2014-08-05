@@ -40,11 +40,11 @@ class LomafileCom(SimpleHoster):
             self.wait(60)
 
             self.html = self.load(self.pyfile.url, post={
-                "op": "download2",
-                "id": form_id,
-                "rand": captcha_id,
-                "code": captcha,
-                "down_direct": "1"})
+                'op': "download2",
+                'id': form_id,
+                'rand': captcha_id,
+                'code': captcha,
+                'down_direct': "1"})
 
             download_url = re.search(r'http://[\d\.]+:\d+/d/\w+/[\w\.]+', self.html)
             if download_url is None:

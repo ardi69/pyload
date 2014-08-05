@@ -95,7 +95,7 @@ class ShareLinksBiz(Crypter):
     def unlockPasswordProtection(self):
         password = self.getPassword()
         self.logDebug("Submitting password [%s] for protected links" % password)
-        post = {"password": password, 'login': 'Submit form'}
+        post = {'password': password, 'login': 'Submit form'}
         url = self.baseUrl + '/' + self.fileId
         self.html = self.load(url, post=post, decode=True)
 

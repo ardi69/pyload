@@ -52,7 +52,7 @@ class SerienjunkiesOrg(Crypter):
             if found:
                 packageName = found
 
-        nav = soup.find("div", attrs={"id": "scb"})
+        nav = soup.find("div", attrs={'id': "scb"})
 
         package_links = []
         for a in nav.findAll("a"):
@@ -68,16 +68,16 @@ class SerienjunkiesOrg(Crypter):
     def handleSeason(self, url):
         src = self.getSJSrc(url)
         soup = BeautifulSoup(src)
-        post = soup.find("div", attrs={"class": "post-content"})
+        post = soup.find("div", attrs={'class': "post-content"})
         ps = post.findAll("p")
 
-        seasonName = unescape(soup.find("a", attrs={"rel": "bookmark"}).string).replace("&#8211;", "-")
+        seasonName = unescape(soup.find("a", attrs={'rel': "bookmark"}).string).replace("&#8211;", "-")
         groups = {}
         gid = -1
         for p in ps:
             if re.search("<strong>Sprache|<strong>Format", str(p)):
                 var = p.findAll("strong")
-                opts = {"Sprache": "", "Format": ""}
+                opts = {'Sprache': "", 'Format': ""}
                 for v in var:
                     n = unescape(v.string).strip()
                     n = re.sub(r"^([:]?)(.*?)([:]?)$", r'\2', n)
@@ -136,20 +136,20 @@ class SerienjunkiesOrg(Crypter):
             h1 = soup.find("h1")
 
             if h1.get("class") == "wrap":
-                captchaTag = soup.find(attrs={"src": re.compile("^/secure/")})
+                captchaTag = soup.find(attrs={'src': re.compile("^/secure/")})
                 if not captchaTag:
                     sleep(5)
                     self.retry()
 
                 captchaUrl = "http://download.serienjunkies.org" + captchaTag['src']
                 result = self.decryptCaptcha(str(captchaUrl), imgtype="png")
-                sinp = form.find(attrs={"name": "s"})
+                sinp = form.find(attrs={'name': "s"})
 
                 self.req.lastURL = str(url)
                 sj = self.load(str(url), post={'s': sinp['value'], 'c': result, 'action': "Download"})
 
                 soup = BeautifulSoup(sj)
-            rawLinks = soup.findAll(attrs={"action": re.compile("^http://download.serienjunkies.org/")})
+            rawLinks = soup.findAll(attrs={'action': re.compile("^http://download.serienjunkies.org/")})
 
             if not len(rawLinks) > 0:
                 sleep(1)
@@ -175,12 +175,12 @@ class SerienjunkiesOrg(Crypter):
     def handleOldStyleLink(self, url):
         sj = self.req.load(str(url))
         soup = BeautifulSoup(sj)
-        form = soup.find("form", attrs={"action": re.compile("^http://serienjunkies.org")})
-        captchaTag = form.find(attrs={"src": re.compile("^/safe/secure/")})
+        form = soup.find("form", attrs={'action': re.compile("^http://serienjunkies.org")})
+        captchaTag = form.find(attrs={'src': re.compile("^/safe/secure/")})
         captchaUrl = "http://serienjunkies.org" + captchaTag['src']
         result = self.decryptCaptcha(str(captchaUrl))
         url = form['action']
-        sinp = form.find(attrs={"name": "s"})
+        sinp = form.find(attrs={'name': "s"})
 
         self.req.load(str(url), post={'s': sinp['value'], 'c': result, 'dl.start': "Download"}, cookies=False,
                       just_header=True)
@@ -196,7 +196,7 @@ class SerienjunkiesOrg(Crypter):
     def handleShowDJ(self, url):
         src = self.getSJSrc(url)
         soup = BeautifulSoup(src)
-        post = soup.find("div", attrs={"id": "page_post"})
+        post = soup.find("div", attrs={'id': "page_post"})
         ps = post.findAll("p")
         found = unescape(soup.find("h2").find("a").string.split(' &#8211;')[0])
         if found:
@@ -207,7 +207,7 @@ class SerienjunkiesOrg(Crypter):
         for p in ps:
             if re.search("<strong>Sprache|<strong>Format", str(p)):
                 var = p.findAll("strong")
-                opts = {"Sprache": "", "Format": ""}
+                opts = {'Sprache': "", 'Format': ""}
                 for v in var:
                     n = unescape(v.string).strip()
                     n = re.sub(r"^([:]?)(.*?)([:]?)$", r'\2', n)
@@ -259,8 +259,8 @@ class SerienjunkiesOrg(Crypter):
         package_links = []
         src = self.getSJSrc(url)
         soup = BeautifulSoup(src)
-        content = soup.find("div", attrs={"id": "content"})
-        for a in content.findAll("a", attrs={"rel": "bookmark"}):
+        content = soup.find("div", attrs={'id': "content"})
+        for a in content.findAll("a", attrs={'rel': "bookmark"}):
             package_links.append(a['href'])
         self.core.files.addLinks(package_links, self.pyfile.package().id)
 

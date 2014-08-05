@@ -27,33 +27,33 @@ class YoutubeBatch(Crypter):
 
 
     def api_response(self, ref, req):
-        req.update({"key": API_KEY})
+        req.update({'key': API_KEY})
         url = urljoin("https://www.googleapis.com/youtube/v3/", ref)
         page = self.load(url, get=req)
         return json_loads(page)
 
     def getChannel(self, user):
-        channels = self.api_response("channels", {"part": "id,snippet,contentDetails", "forUsername": user, "maxResults": "50"})
+        channels = self.api_response("channels", {'part': "id,snippet,contentDetails", 'forUsername': user, 'maxResults': "50"})
         if channels['items']:
             channel = channels['items'][0]
-            return {"id": channel['id'],
-                    "title": channel['snippet']['title'],
-                    "relatedPlaylists": channel['contentDetails']['relatedPlaylists'],
-                    "user": user}  # One lone channel for user?
+            return {'id': channel['id'],
+                    'title': channel['snippet']['title'],
+                    'relatedPlaylists': channel['contentDetails']['relatedPlaylists'],
+                    'user': user}  # One lone channel for user?
 
     def getPlaylist(self, p_id):
-        playlists = self.api_response("playlists", {"part": "snippet", "id": p_id})
+        playlists = self.api_response("playlists", {'part': "snippet", 'id': p_id})
         if playlists['items']:
             playlist = playlists['items'][0]
-            return {"id": p_id,
-                    "title": playlist['snippet']['title'],
-                    "channelId": playlist['snippet']['channelId'],
-                    "channelTitle": playlist['snippet']['channelTitle']}
+            return {'id': p_id,
+                    'title': playlist['snippet']['title'],
+                    'channelId': playlist['snippet']['channelId'],
+                    'channelTitle': playlist['snippet']['channelTitle']}
 
     def _getPlaylists(self, id, token=None):
-        req = {"part": "id", "maxResults": "50", "channelId": id}
+        req = {'part': "id", 'maxResults': "50", 'channelId': id}
         if token:
-            req.update({"pageToken": token})
+            req.update({'pageToken': token})
 
         playlists = self.api_response("playlists", req)
 
@@ -68,9 +68,9 @@ class YoutubeBatch(Crypter):
         return map(self.getPlaylist, self._getPlaylists(ch_id))
 
     def _getVideosId(self, id, token=None):
-        req = {"part": "contentDetails", "maxResults": "50", "playlistId": id}
+        req = {'part': "contentDetails", 'maxResults': "50", 'playlistId': id}
         if token:
-            req.update({"pageToken": token})
+            req.update({'pageToken': token})
 
         playlist = self.api_response("playlistItems", req)
 

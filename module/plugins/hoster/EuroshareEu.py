@@ -37,8 +37,8 @@ class EuroshareEu(SimpleHoster):
 
         self.download(self.pyfile.url.rstrip('/') + "/download/")
 
-        check = self.checkDownload({"login": re.compile(self.ERR_NOT_LOGGED_IN_PATTERN),
-                                    "json": re.compile(r'\{"status":"error".*?"message":"(.*?)"')})
+        check = self.checkDownload({'login': re.compile(self.ERR_NOT_LOGGED_IN_PATTERN),
+                                    'json': re.compile(r'\{'status':"error".*?'message':"(.*?)"')})
         if check == "login" or (check == "json" and self.lastCheck.group(1) == "Access token expired"):
             self.account.relogin(self.user)
             self.retry(reason="Access token expired")
@@ -56,7 +56,7 @@ class EuroshareEu(SimpleHoster):
         self.logDebug("URL", parsed_url)
         self.download(parsed_url, disposition=True)
 
-        check = self.checkDownload({"multi_dl": re.compile(self.ERR_PARDL_PATTERN)})
+        check = self.checkDownload({'multi_dl': re.compile(self.ERR_PARDL_PATTERN)})
         if check == "multi_dl":
             self.longWait(5 * 60, 12)
 

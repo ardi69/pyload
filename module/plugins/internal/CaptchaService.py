@@ -44,7 +44,7 @@ class ReCaptcha:
         else:
             raise TypeError("ReCaptcha key not found")
 
-        js = self.plugin.req.load("http://www.google.com/recaptcha/api/challenge", get={"k": key}, cookies=True)
+        js = self.plugin.req.load("http://www.google.com/recaptcha/api/challenge", get={'k': key}, cookies=True)
 
         try:
             challenge = re.search("challenge : '(.*?)',", js).group(1)
@@ -56,7 +56,7 @@ class ReCaptcha:
         return challenge, result
 
     def result(self, server, challenge):
-        return self.plugin.decryptCaptcha("%simage" % server, get={"c": challenge},
+        return self.plugin.decryptCaptcha("%simage" % server, get={'c': challenge},
                                           cookies=True, forceUser=True, imgtype="jpg")
 
 
@@ -75,7 +75,7 @@ class AdsCaptcha(CaptchaService):
         return challenge, result
 
     def result(self, server, challenge):
-        return self.plugin.decryptCaptcha("%sChallenge.aspx" % server, get={"cid": challenge, "dummy": random()},
+        return self.plugin.decryptCaptcha("%sChallenge.aspx" % server, get={'cid': challenge, 'dummy': random()},
                                           cookies=True, imgtype="jpg")
 
 

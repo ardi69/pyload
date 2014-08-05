@@ -97,18 +97,18 @@ class RequestFactory:
                 pw = self.core.config['proxy']['password']
 
             return {
-                "type": type,
-                "address": self.core.config['proxy']['address'],
-                "port": self.core.config['proxy']['port'],
-                "username": username,
-                "password": pw,
+                'type': type,
+                'address': self.core.config['proxy']['address'],
+                'port': self.core.config['proxy']['port'],
+                'username': username,
+                'password': pw,
                 }
 
     def getOptions(self):
         """returns options needed for pycurl"""
-        return {"interface": self.iface(),
-                "proxies": self.getProxies(),
-                "ipv6": self.core.config['download']['ipv6']}
+        return {'interface': self.iface(),
+                'proxies': self.getProxies(),
+                'ipv6': self.core.config['download']['ipv6']}
 
     def updateBucket(self):
         """ set values in the bucket according to settings"""

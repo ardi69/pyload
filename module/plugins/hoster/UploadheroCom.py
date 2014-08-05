@@ -43,7 +43,7 @@ class UploadheroCom(SimpleHoster):
 
         for _ in xrange(5):
             captcha = self.decryptCaptcha(captcha_url)
-            self.html = self.load(self.pyfile.url, get={"code": captcha})
+            self.html = self.load(self.pyfile.url, get={'code': captcha})
             m = re.search(self.FREE_URL_PATTERN, self.html)
             if m:
                 self.correctCaptcha()

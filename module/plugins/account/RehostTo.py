@@ -23,10 +23,10 @@ class RehostTo(Account):
         page = req.load("http://rehost.to/api.php?cmd=get_premium_credits&long_ses=%s" % long_ses)
         traffic, valid = page.split(",")
 
-        account_info = {"trafficleft": int(traffic) * 1024,
-                        "validuntil": int(valid),
-                        "long_ses": long_ses,
-                        "ses": ses}
+        account_info = {'trafficleft': int(traffic) * 1024,
+                        'validuntil': int(valid),
+                        'long_ses': long_ses,
+                        'ses': ses}
 
         return account_info
 

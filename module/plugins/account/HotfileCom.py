@@ -33,10 +33,10 @@ class HotfileCom(Account):
             zone = int(zone[:3])
 
             validuntil = int(mktime(strptime(info['premium_until'], "%Y-%m-%d %H:%M:%S"))) + (zone * 60 * 60)
-            tmp = {"validuntil": validuntil, "trafficleft": -1, "premium": True}
+            tmp = {'validuntil': validuntil, 'trafficleft': -1, 'premium': True}
 
         elif info['is_premium'] == '0':
-            tmp = {"premium": False}
+            tmp = {'premium': False}
 
         return tmp
 
@@ -48,7 +48,7 @@ class HotfileCom(Account):
 
         req = self.getAccountRequest(user)
 
-        digest = req.load("http://api.hotfile.com/", post={"action": "getdigest"})
+        digest = req.load("http://api.hotfile.com/", post={'action': "getdigest"})
         h = hashlib.md5()
         h.update(data['password'])
         hp = h.hexdigest()
@@ -57,8 +57,8 @@ class HotfileCom(Account):
         h.update(digest)
         pwhash = h.hexdigest()
 
-        post.update({"action": method})
-        post.update({"username": user, "passwordmd5dig": pwhash, "digest": digest})
+        post.update({'action': method})
+        post.update({'username': user, 'passwordmd5dig': pwhash, 'digest': digest})
         resp = req.load("http://api.hotfile.com/", post=post)
         req.close()
         return resp
@@ -67,7 +67,7 @@ class HotfileCom(Account):
         cj = self.getAccountCookies(user)
         cj.setCookie("hotfile.com", "lang", "en")
         req.load("http://hotfile.com/", cookies=True)
-        page = req.load("http://hotfile.com/login.php", post={"returnto": "/", "user": user, "pass": data['password']},
+        page = req.load("http://hotfile.com/login.php", post={'returnto': "/", 'user': user, 'pass': data['password']},
                         cookies=True)
 
         if "Bad username/password" in page:

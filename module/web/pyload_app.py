@@ -62,7 +62,7 @@ def pre_processor():
                 plugins = True
 
 
-    return {"user": user,
+    return {'user': user,
             'status': status,
             'captcha': captcha,
             'perms': perms,
@@ -136,7 +136,7 @@ def login_post():
     info = PYLOAD.checkAuth(user, password)
 
     if not info:
-        return render_to_response("login.html", {"errors": True}, [pre_processor])
+        return render_to_response("login.html", {'errors': True}, [pre_processor])
 
     set_session(request, info)
     return redirect("/")
@@ -164,7 +164,7 @@ def home():
         if link['status'] == 12:
             link['information'] = "%s kB @ %s kB/s" % (link['size'] - link['bleft'], link['speed'])
 
-    return render_to_response("home.html", {"res": res}, [pre_processor])
+    return render_to_response("home.html", {'res': res}, [pre_processor])
 
 
 @route('/queue')
@@ -501,7 +501,7 @@ def admin():
 
             PYLOAD.setUserPermission(name, user[name]['permission'], user[name]['role'])
 
-    return render_to_response("admin.html", {"users": user, "permlist": perms}, [pre_processor])
+    return render_to_response("admin.html", {'users': user, 'permlist': perms}, [pre_processor])
 
 
 @route('/setup')
@@ -509,7 +509,7 @@ def setup():
     if PYLOAD or not SETUP:
         return base([_("Run pyload.py -s to access the setup.")])
 
-    return render_to_response('setup.html', {"user": False, "perms": False})
+    return render_to_response('setup.html', {'user': False, 'perms': False})
 
 
 @route('/info')
@@ -521,14 +521,14 @@ def info():
     else:
         extra = tuple()
 
-    data = {"python": sys.version,
-            "os": " ".join((os.name, sys.platform) + extra),
-            "version": PYLOAD.getServerVersion(),
-            "folder": pypath, "config": owd,
-            "download": abspath(conf['general']['download_folder']['value']),
-            "freespace": formatSize(PYLOAD.freeSpace()),
-            "remote": conf['remote']['port']['value'],
-            "webif": conf['webinterface']['port']['value'],
-            "language": conf['general']['language']['value']}
+    data = {'python': sys.version,
+            'os': " ".join((os.name, sys.platform) + extra),
+            'version': PYLOAD.getServerVersion(),
+            'folder': pypath, "config": owd,
+            'download': abspath(conf['general']['download_folder']['value']),
+            'freespace': formatSize(PYLOAD.freeSpace()),
+            'remote': conf['remote']['port']['value'],
+            'webif': conf['webinterface']['port']['value'],
+            'language': conf['general']['language']['value']}
 
     return render_to_response("info.html", data, [pre_processor])

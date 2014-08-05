@@ -28,9 +28,9 @@ class CCF(Container):
         infile = pyfile.url.replace("\n", "")
 
         opener = build_opener(MultipartPostHandler)
-        params = {"src": "ccf",
-            "filename": "test.ccf",
-            "upload": open(infile, "rb")}
+        params = {'src': "ccf",
+            'filename': "test.ccf",
+            'upload': open(infile, "rb")}
         tempdlc_content = opener.open('http://service.jdownloader.net/dlcrypt/getDLC.php', params).read()
 
         download_folder = self.config['general']['download_folder']

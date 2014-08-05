@@ -554,9 +554,9 @@ class Core:
                 else:
                     if not empty:
                         self.log.warning(
-                            _("could not find %(desc)s: %(name)s") % {"desc": description, "name": tmp_name})
+                            _("could not find %(desc)s: %(name)s") % {'desc': description, 'name': tmp_name})
                     else:
-                        print _("could not create %(desc)s: %(name)s") % {"desc": description, "name": tmp_name}
+                        print _("could not create %(desc)s: %(name)s") % {'desc': description, 'name': tmp_name}
                     if essential:
                         exit()
 

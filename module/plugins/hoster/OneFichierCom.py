@@ -77,7 +77,7 @@ class OneFichierCom(SimpleHoster):
         self.checkDownloadedFile()
 
     def checkDownloadedFile(self):
-        check = self.checkDownload({"wait": self.WAITING_PATTERN})
+        check = self.checkDownload({'wait': self.WAITING_PATTERN})
         if check == "wait":
             self.waitAndRetry(int(self.lastcheck.group(1)) * 60)
 

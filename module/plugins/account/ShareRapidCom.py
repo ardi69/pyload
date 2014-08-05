@@ -29,14 +29,14 @@ class ShareRapidCom(Account):
         m = re.search(ur'<td>Paušální stahování aktivní. Vyprší </td><td><strong>(.*?)</strong>', src)
         if m:
             validuntil = mktime(strptime(m.group(1), "%d.%m.%Y - %H:%M"))
-            return {"premium": True, "trafficleft": -1, "validuntil": validuntil}
+            return {'premium': True, 'trafficleft': -1, 'validuntil': validuntil}
 
         m = re.search(r'<tr><td>Kredit</td><td>(.*?) GiB', src)
         if m:
             trafficleft = float(m.group(1)) * (1 << 20)
-            return {"premium": True, "trafficleft": trafficleft, "validuntil": -1}
+            return {'premium': True, 'trafficleft': trafficleft, 'validuntil': -1}
 
-        return {"premium": False, "trafficleft": None, "validuntil": None}
+        return {'premium': False, 'trafficleft': None, 'validuntil': None}
 
     def login(self, user, data, req):
         htm = req.load("http://megarapid.cz/prihlaseni/", cookies=True)
@@ -45,8 +45,8 @@ class ShareRapidCom(Account):
             htm = htm[start + 33:]
             hashes = htm[0:32]
             htm = req.load("http://megarapid.cz/prihlaseni/",
-                           post={"hash": hashes,
-                                 "login": user,
-                                 "pass1": data['password'],
-                                 "remember": 0,
-                                 "sbmt": u"Přihlásit"}, cookies=True)
+                           post={'hash': hashes,
+                                 'login': user,
+                                 'pass1': data['password'],
+                                 'remember': 0,
+                                 'sbmt': u"Přihlásit"}, cookies=True)

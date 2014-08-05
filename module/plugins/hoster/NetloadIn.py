@@ -106,8 +106,8 @@ class NetloadIn(Hoster):
 
         apiurl = "http://api.netload.in/info.php"
         src = self.load(apiurl, cookies=False,
-                        get={"file_id": match.group(1), "auth": "Zf9SnQh9WiReEsb18akjvQGqT0I830e8", "bz": "1",
-                             "md5": "1"}, decode=True).strip()
+                        get={'file_id': match.group(1), "auth": "Zf9SnQh9WiReEsb18akjvQGqT0I830e8", "bz": "1",
+                             'md5': "1"}, decode=True).strip()
         if not src and n <= 3:
             sleep(0.2)
             self.download_api_data(n + 1)
@@ -220,7 +220,7 @@ class NetloadIn(Hoster):
                 captchawaited = True
 
             captcha = self.decryptCaptcha(captcha_url)
-            page = self.load("http://netload.in/index.php?id=10", post={"file_id": file_id, "captcha_check": captcha},
+            page = self.load("http://netload.in/index.php?id=10", post={'file_id': file_id, 'captcha_check': captcha},
                              cookies=True)
 
         return False
@@ -249,7 +249,7 @@ class NetloadIn(Hoster):
 
         self.download(url, disposition=True)
 
-        check = self.checkDownload({"empty": re.compile(r"^$"), "offline": re.compile("The file was deleted")})
+        check = self.checkDownload({'empty': re.compile(r"^$"), 'offline': re.compile("The file was deleted")})
 
         if check == "empty":
             self.logInfo(_("Downloaded File was empty"))

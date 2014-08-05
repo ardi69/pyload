@@ -26,7 +26,7 @@ class LetitbitNet(Account):
         #     self.logWarning(api_rep['data'])
         #     return {'valid': False, 'premium': False}
 
-        return {"premium": True}
+        return {'premium': True}
 
     def login(self, user, data, req):
         # API_KEY is the username and the PREMIUM_KEY is the password

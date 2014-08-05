@@ -37,7 +37,7 @@ class DepositfilesCom(SimpleHoster):
 
 
     def handleFree(self):
-        self.html = self.load(self.pyfile.url, post={"gateway_result": "1"}, cookies=True)
+        self.html = self.load(self.pyfile.url, post={'gateway_result': "1"}, cookies=True)
 
         if re.search(r'File is checked, please try again in a minute.', self.html) is not None:
             self.logInfo("DepositFiles.com: The file is being checked. Waiting 1 minute.")

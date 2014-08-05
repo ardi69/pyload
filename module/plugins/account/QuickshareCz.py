@@ -26,13 +26,13 @@ class QuickshareCz(Account):
             trafficleft = None
             premium = False
 
-        return {"validuntil": -1, "trafficleft": trafficleft, "premium": premium}
+        return {'validuntil': -1, 'trafficleft': trafficleft, 'premium': premium}
 
     def login(self, user, data, req):
         html = req.load('http://www.quickshare.cz/html/prihlaseni_process.php', post={
-            "akce": u'Přihlásit',
-            "heslo": data['password'],
-            "jmeno": user
+            'akce': u'Přihlásit',
+            'heslo': data['password'],
+            'jmeno': user
         }, decode=True)
 
         if u'>Takový uživatel neexistuje.<' in html or u'>Špatné heslo.<' in html:

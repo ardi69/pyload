@@ -21,11 +21,11 @@ class CyberlockerCh(XFSPAccount):
 
         action, inputs = parseHtmlForm('name="FL"', html)
         if not inputs:
-            inputs = {"op": "login",
-                      "redirect": self.MAIN_PAGE}
+            inputs = {'op': "login",
+                      'redirect': self.MAIN_PAGE}
 
-        inputs.update({"login": user,
-                       "password": data['password']})
+        inputs.update({'login': user,
+                       'password': data['password']})
 
         # Without this a 403 Forbidden is returned
         req.http.lastURL = self.MAIN_PAGE + 'login.html'

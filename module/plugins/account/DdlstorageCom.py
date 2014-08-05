@@ -37,7 +37,7 @@ class DdlstorageCom(XFSPAccount):
         api_data = json_loads(api_data)
 
         if api_data['status'] != 'OK':  # 'status' must be always OK for a working account
-            return {"premium": False, "valid": False}
+            return {'premium': False, 'valid': False}
 
         if api_data['account_type'] == 'REGISTERED':
             premium = False
@@ -51,4 +51,4 @@ class DdlstorageCom(XFSPAccount):
         else:
             trafficleft = parseFileSize(api_data['usr_bandwidth_available']) / 1024
 
-        return {"premium": premium, "validuntil": validuntil, "trafficleft": trafficleft}
+        return {'premium': premium, 'validuntil': validuntil, 'trafficleft': trafficleft}

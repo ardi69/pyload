@@ -50,8 +50,8 @@ class ImageTyperz(Addon):
         self.info = {}
 
     def getCredits(self):
-        response = getURL(self.GETCREDITS_URL, post={"action": "REQUESTBALANCE", "username": self.getConfig("username"),
-                                                     "password": self.getConfig("passkey")})
+        response = getURL(self.GETCREDITS_URL, post={'action': "REQUESTBALANCE", "username": self.getConfig("username"),
+                                                     'password': self.getConfig("passkey")})
 
         if response.startswith('ERROR'):
             raise ImageTyperzException(response)
@@ -80,9 +80,9 @@ class ImageTyperz(Addon):
                     data = f.read()
                 data = b64encode(data)
 
-            response = req.load(self.SUBMIT_URL, post={"action": "UPLOADCAPTCHA",
-                                                       "username": self.getConfig("username"),
-                                                       "password": self.getConfig("passkey"), "file": data},
+            response = req.load(self.SUBMIT_URL, post={'action': "UPLOADCAPTCHA",
+                                                       'username': self.getConfig("username"),
+                                                       'password': self.getConfig("passkey"), "file": data},
                                                        multipart=multipart)
         finally:
             req.close()
@@ -122,9 +122,9 @@ class ImageTyperz(Addon):
 
     def captchaInvalid(self, task):
         if task.data['service'] == self.__name__ and "ticket" in task.data:
-            response = getURL(self.RESPOND_URL, post={"action": "SETBADIMAGE", "username": self.getConfig("username"),
-                                                      "password": self.getConfig("passkey"),
-                                                      "imageid": task.data['ticket']})
+            response = getURL(self.RESPOND_URL, post={'action': "SETBADIMAGE", "username": self.getConfig("username"),
+                                                      'password': self.getConfig("passkey"),
+                                                      'imageid': task.data['ticket']})
 
             if response == "SUCCESS":
                 self.logInfo("Bad captcha solution received, requested refund")

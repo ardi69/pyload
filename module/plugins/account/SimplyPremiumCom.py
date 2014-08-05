@@ -20,24 +20,24 @@ class SimplyPremiumCom(Account):
         json_data = json_loads(json_data)
 
         if 'vip' in json_data['result'] and json_data['result']['vip'] == 0:
-            return {"premium": False}
+            return {'premium': False}
 
         #Time package
         validuntil = float(json_data['result']['timeend'])
         #Traffic package
-        # {"trafficleft": int(traffic) / 1024, "validuntil": -1}
+        # {'trafficleft': int(traffic) / 1024, 'validuntil': -1}
         #trafficleft = int(json_data['result']['traffic'] / 1024)
 
-        #return {"premium": True, "validuntil": validuntil, "trafficleft": trafficleft}
-        return {"premium": True, "validuntil": validuntil}
+        #return {'premium': True, 'validuntil': validuntil, 'trafficleft': trafficleft}
+        return {'premium': True, 'validuntil': validuntil}
 
     def login(self, user, data, req):
         req.cj.setCookie("simply-premium.com", "lang", "EN")
 
         if data['password'] == '' or data['password'] == '0':
-            post_data = {"key": user}
+            post_data = {'key': user}
         else:
-            post_data = {"login_name": user, "login_pass": data['password']}
+            post_data = {'login_name': user, 'login_pass': data['password']}
 
         html = req.load("http://www.simply-premium.com/login.php", post=post_data)
 

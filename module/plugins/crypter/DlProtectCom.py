@@ -30,17 +30,17 @@ class DlProtectCom(SimpleCrypter):
         #id = re.match(self.__pattern__, self.pyfile.url).group("ID")
         key = re.search(r'name="id_key" value="(.+?)"', self.html).group(1)
 
-        post_req = {"id_key": key, "submitform": ""}
+        post_req = {'id_key': key, 'submitform': ""}
 
         if self.OFFLINE_PATTERN in self.html:
             self.offline()
         elif ">Please click on continue to see the content" in self.html:
-            post_req.update({"submitform": "Continue"})
+            post_req.update({'submitform': "Continue"})
         else:
             mstime = int(round(time() * 1000))
             b64time = "_" + urlsafe_b64encode(str(mstime)).replace("=", "%3D")
 
-            post_req.update({"i": b64time, "submitform": "Decrypt+link"})
+            post_req.update({'i': b64time, 'submitform': "Decrypt+link"})
 
             if ">Password :" in self.html:
                 post_req['pwd'] = self.getPassword()

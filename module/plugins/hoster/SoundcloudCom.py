@@ -44,7 +44,7 @@ class SoundcloudCom(Hoster):
                 pyfile.name = re.match(self.__pattern__, pyfile.url).group("SID") + ".mp3"
 
             # url to retrieve the actual song url
-            page = self.load("https://api.sndcdn.com/i1/tracks/%s/streams" % songId, get={"client_id": clientId})
+            page = self.load("https://api.sndcdn.com/i1/tracks/%s/streams" % songId, get={'client_id': clientId})
             # getting streams
             # for now we choose the first stream found in all cases
             # it could be improved if relevant for this hoster

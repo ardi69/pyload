@@ -47,7 +47,7 @@ class BypassCaptcha(Addon):
         self.info = {}
 
     def getCredits(self):
-        response = getURL(self.GETCREDITS_URL, post={"key": self.getConfig("passkey")})
+        response = getURL(self.GETCREDITS_URL, post={'key': self.getConfig("passkey")})
 
         data = dict([x.split(' ', 1) for x in response.splitlines()])
         return int(data['Left'])
@@ -60,10 +60,10 @@ class BypassCaptcha(Addon):
 
         try:
             response = req.load(self.SUBMIT_URL,
-                                post={"vendor_key": self.PYLOAD_KEY,
-                                      "key": self.getConfig("passkey"),
-                                      "gen_task_id": "1",
-                                      "file": (FORM_FILE, captcha)},
+                                post={'vendor_key': self.PYLOAD_KEY,
+                                      'key': self.getConfig("passkey"),
+                                      'gen_task_id': "1",
+                                      'file': (FORM_FILE, captcha)},
                                 multipart=True)
         finally:
             req.close()
@@ -80,8 +80,8 @@ class BypassCaptcha(Addon):
 
     def respond(self, ticket, success):
         try:
-            response = getURL(self.RESPOND_URL, post={"task_id": ticket, "key": self.getConfig("passkey"),
-                                                      "cv": 1 if success else 0})
+            response = getURL(self.RESPOND_URL, post={'task_id': ticket, "key": self.getConfig("passkey"),
+                                                      'cv': 1 if success else 0})
         except BadHeader, e:
             self.logError("Could not send response.", str(e))
 

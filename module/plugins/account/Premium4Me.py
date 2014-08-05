@@ -16,8 +16,8 @@ class Premium4Me(Account):
     def loadAccountInfo(self, user, req):
         traffic = req.load("http://premium.to/api/traffic.php?authcode=%s" % self.authcode)
 
-        account_info = {"trafficleft": int(traffic) / 1024,
-                        "validuntil": -1}
+        account_info = {'trafficleft': int(traffic) / 1024,
+                        'validuntil': -1}
 
         return account_info
 

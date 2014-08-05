@@ -32,7 +32,7 @@ class ExpertDecoders(Addon):
         self.info = {}
 
     def getCredits(self):
-        response = getURL(self.API_URL, post={"key": self.getConfig("passkey"), "action": "balance"})
+        response = getURL(self.API_URL, post={'key': self.getConfig("passkey"), 'action': "balance"})
 
         if response.isdigit():
             self.logInfo(_("%s credits left") % response)
@@ -56,8 +56,8 @@ class ExpertDecoders(Addon):
         req.c.setopt(LOW_SPEED_TIME, 80)
 
         try:
-            result = req.load(self.API_URL,  post={"action": "upload", "key": self.getConfig("passkey"),
-                                                   "file": data, "gen_task_id": ticket})
+            result = req.load(self.API_URL,  post={'action': "upload", "key": self.getConfig("passkey"),
+                                                   'file': data, "gen_task_id": ticket})
         finally:
             req.close()
 
@@ -86,8 +86,8 @@ class ExpertDecoders(Addon):
         if "ticket" in task.data:
 
             try:
-                response = getURL(self.API_URL, post={"action": "refund", "key": self.getConfig("passkey"),
-                                                      "gen_task_id": task.data['ticket']})
+                response = getURL(self.API_URL, post={'action': "refund", "key": self.getConfig("passkey"),
+                                                      'gen_task_id': task.data['ticket']})
                 self.logInfo("Request refund: %s" % response)
 
             except BadHeader, e:

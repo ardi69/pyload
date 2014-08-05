@@ -27,14 +27,14 @@ class EuroshareEu(Account):
             premium = True
             validuntil = mktime(strptime(m.group(1), "%d.%m.%Y %H:%M"))
 
-        return {"validuntil": validuntil, "trafficleft": -1, "premium": premium}
+        return {'validuntil': validuntil, 'trafficleft': -1, 'premium': premium}
 
     def login(self, user, data, req):
 
         html = req.load('http://euroshare.eu/customer-zone/login/', post={
-            "trvale": "1",
-            "login": user,
-            "password": data['password']
+            'trvale': "1",
+            'login': user,
+            'password': data['password']
         }, decode=True)
 
         if u">Nesprávne prihlasovacie meno alebo heslo" in html:

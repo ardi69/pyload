@@ -91,14 +91,14 @@ class LinkSaveIn(Crypter):
     def unlockPasswordProtection(self):
         password = self.getPassword()
         self.logDebug("Submitting password [%s] for protected links" % password)
-        post = {"id": self.fileid, "besucherpasswort": password, 'login': 'submit'}
+        post = {'id': self.fileid, 'besucherpasswort': password, 'login': 'submit'}
         self.html = self.load(self.pyfile.url, post=post)
 
     def unlockCaptchaProtection(self):
         captcha_hash = re.search(r'name="hash" value="([^"]+)', self.html).group(1)
         captcha_url = re.search(r'src=".(/captcha/cap.php\?hsh=[^"]+)', self.html).group(1)
         captcha_code = self.decryptCaptcha("http://linksave.in" + captcha_url, forceUser=True)
-        self.html = self.load(self.pyfile.url, post={"id": self.fileid, "hash": captcha_hash, "code": captcha_code})
+        self.html = self.load(self.pyfile.url, post={'id': self.fileid, 'hash': captcha_hash, 'code': captcha_code})
 
     def getPackageInfo(self):
         name = self.pyfile.package().name

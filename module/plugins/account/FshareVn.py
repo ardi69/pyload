@@ -28,7 +28,7 @@ class FshareVn(Account):
         if re.search(self.LIFETIME_PATTERN, html):
             self.logDebug("Lifetime membership detected")
             trafficleft = self.getTrafficLeft()
-            return {"validuntil": -1, "trafficleft": trafficleft, "premium": True}
+            return {'validuntil': -1, 'trafficleft': trafficleft, 'premium': True}
 
         m = re.search(self.VALID_UNTIL_PATTERN, html)
         if m:
@@ -40,15 +40,15 @@ class FshareVn(Account):
             validuntil = None
             trafficleft = None
 
-        return {"validuntil": validuntil, "trafficleft": trafficleft, "premium": premium}
+        return {'validuntil': validuntil, 'trafficleft': trafficleft, 'premium': premium}
 
     def login(self, user, data, req):
         req.http.c.setopt(REFERER, "https://www.fshare.vn/login.php")
 
         html = req.load('https://www.fshare.vn/login.php', post={
-            "login_password": data['password'],
-            "login_useremail": user,
-            "url_refe": "http://www.fshare.vn/index.php"
+            'login_password': data['password'],
+            'login_useremail': user,
+            'url_refe': "http://www.fshare.vn/index.php"
         }, referer=True, decode=True)
 
         if not re.search(r'<img\s+alt="VIP"', html):

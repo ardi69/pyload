@@ -24,13 +24,13 @@ class LinksnappyCom(Account):
         j = json_loads(r)
 
         if j['error']:
-            return {"premium": False}
+            return {'premium': False}
 
         validuntil = j['return']['expire']
         if validuntil == 'lifetime':
             validuntil = -1
         elif validuntil == 'expired':
-            return {"premium": False}
+            return {'premium': False}
         else:
             validuntil = float(validuntil)
 
@@ -39,7 +39,7 @@ class LinksnappyCom(Account):
         else:
             trafficleft = int(j['return']['trafficleft']) * 1024
 
-        return {"premium": True, "validuntil": validuntil, "trafficleft": trafficleft}
+        return {'premium': True, 'validuntil': validuntil, 'trafficleft': trafficleft}
 
     def login(self, user, data, req):
         r = req.load('http://gen.linksnappy.com/lseAPI.php',

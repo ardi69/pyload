@@ -27,15 +27,15 @@ class TurbobitNet(Account):
             premium = False
             validuntil = -1
 
-        return {"premium": premium, "trafficleft": -1, "validuntil": validuntil}
+        return {'premium': premium, 'trafficleft': -1, 'validuntil': validuntil}
 
     def login(self, user, data, req):
         req.cj.setCookie("turbobit.net", "user_lang", "en")
 
         html = req.load("http://turbobit.net/user/login", post={
-            "user[login]": user,
-            "user[pass]": data['password'],
-            "user[submit]": "Login"})
+            'user[login]': user,
+            'user[pass]': data['password'],
+            'user[submit]': "Login"})
 
         if not '<div class="menu-item user-name">' in html:
             self.wrongPassword()

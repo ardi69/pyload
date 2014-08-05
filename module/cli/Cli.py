@@ -404,19 +404,19 @@ def print_packages(data):
 
 def print_file(download):
     return "#%(id)-6d %(name)-30s %(statusmsg)-10s %(plugin)-8s" % {
-        "id": download.fid,
-        "name": download.name,
-        "statusmsg": download.statusmsg,
-        "plugin": download.plugin
+        'id': download.fid,
+        'name': download.name,
+        'statusmsg': download.statusmsg,
+        'plugin': download.plugin
     }
 
 
 def print_status(download):
     return "#%(id)-6s %(name)-40s Status: %(statusmsg)-10s Size: %(size)s" % {
-        "id": download.fid,
-        "name": download.name,
-        "statusmsg": download.statusmsg,
-        "size": download.format_size
+        'id': download.fid,
+        'name': download.name,
+        'statusmsg': download.statusmsg,
+        'size': download.format_size
     }
 
 
@@ -455,7 +455,7 @@ def writeConfig(opts):
 
 
 def main():
-    config = {"addr": "127.0.0.1", "port": "7227", "language": "en"}
+    config = {'addr': "127.0.0.1", 'port': "7227", 'language': "en"}
     try:
         config['language'] = os.environ['LANG'][0:2]
     except:
@@ -546,8 +546,8 @@ def main():
             except WrongLogin:
                 print _("Login data is wrong.")
             except NoConnection:
-                print _("Could not establish connection to %(addr)s:%(port)s." % {"addr": config['addr'],
-                                                                                  "port": config['port']})
+                print _("Could not establish connection to %(addr)s:%(port)s." % {'addr': config['addr'],
+                                                                                  'port': config['port']})
 
     else:
         try:
@@ -555,8 +555,8 @@ def main():
         except WrongLogin:
             print _("Login data is wrong.")
         except NoConnection:
-            print _("Could not establish connection to %(addr)s:%(port)s." % {"addr": config['addr'],
-                                                                              "port": config['port']})
+            print _("Could not establish connection to %(addr)s:%(port)s." % {'addr': config['addr'],
+                                                                              'port': config['port']})
         except NoSSL:
             print _("You need py-openssl to connect to this pyLoad core.")
 

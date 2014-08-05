@@ -56,7 +56,7 @@ class SimplydebridCom(Hoster):
 
         self.download(new_url, disposition=True)
 
-        check = self.checkDownload({"bad1": "No address associated with hostname", "bad2": "<html"})
+        check = self.checkDownload({'bad1': "No address associated with hostname", 'bad2': "<html"})
 
         if check == "bad1" or check == "bad2":
             self.retry(24, 3 * 60, "Bad file downloaded")

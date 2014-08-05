@@ -123,7 +123,7 @@ def package_order(ids):
     try:
         pid, pos = ids.split("|")
         PYLOAD.orderPackage(int(pid), int(pos))
-        return {"response": "success"}
+        return {'response': "success"}
     except:
         return HTTPError()
 
@@ -133,7 +133,7 @@ def package_order(ids):
 def abort_link(id):
     try:
         PYLOAD.stopDownloads([id])
-        return {"response": "success"}
+        return {'response': "success"}
     except:
         return HTTPError()
 
@@ -144,7 +144,7 @@ def link_order(ids):
     try:
         pid, pos = ids.split("|")
         PYLOAD.orderFile(int(pid), int(pos))
-        return {"response": "success"}
+        return {'response': "success"}
     except:
         return HTTPError()
 
@@ -181,7 +181,7 @@ def add_package():
     pack = PYLOAD.addPackage(name, links, queue)
     if pw:
         pw = pw.decode("utf8", "ignore")
-        data = {"password": pw}
+        data = {'password': pw}
         PYLOAD.setPackageData(pack, data)
 
 
@@ -190,7 +190,7 @@ def add_package():
 def move_package(dest, id):
     try:
         PYLOAD.movePackage(dest, id)
-        return {"response": "success"}
+        return {'response': "success"}
     except:
         return HTTPError()
 
@@ -200,12 +200,12 @@ def move_package(dest, id):
 def edit_package():
     try:
         id = int(request.forms.get("pack_id"))
-        data = {"name": request.forms.get("pack_name").decode("utf8", "ignore"),
-                "folder": request.forms.get("pack_folder").decode("utf8", "ignore"),
-                 "password": request.forms.get("pack_pws").decode("utf8", "ignore")}
+        data = {'name': request.forms.get("pack_name").decode("utf8", "ignore"),
+                'folder': request.forms.get("pack_folder").decode("utf8", "ignore"),
+                'password': request.forms.get("pack_pws").decode("utf8", "ignore")}
 
         PYLOAD.setPackageData(id, data)
-        return {"response": "success"}
+        return {'response': "success"}
 
     except:
         return HTTPError()
@@ -248,7 +248,7 @@ def load_config(category, section):
 
         option['value'] = decode(option['value'])
 
-    return render_to_response("settings_item.html", {"skey": section, "section": conf[section]})
+    return render_to_response("settings_item.html", {'skey': section, 'section': conf[section]})
 
 
 @route('/json/save_config/<category>', method='POST')
@@ -292,9 +292,9 @@ def update_accounts():
         if action == "password":
             PYLOAD.updateAccount(plugin, user, value)
         elif action == "time" and "-" in value:
-            PYLOAD.updateAccount(plugin, user, options={"time": [value]})
+            PYLOAD.updateAccount(plugin, user, options={'time': [value]})
         elif action == "limitdl" and value.isdigit():
-            PYLOAD.updateAccount(plugin, user, options={"limitDL": [value]})
+            PYLOAD.updateAccount(plugin, user, options={'limitDL': [value]})
         elif action == "delete":
             deleted.append((plugin,user))
             PYLOAD.removeAccount(plugin, user)

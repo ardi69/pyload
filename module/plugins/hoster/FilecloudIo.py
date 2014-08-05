@@ -36,7 +36,7 @@ class FilecloudIo(SimpleHoster):
         self.chunkLimit = 1
 
     def handleFree(self):
-        data = {"ukey": self.file_info['ID']}
+        data = {'ukey': self.file_info['ID']}
 
         m = re.search(self.AB1_PATTERN, self.html)
         if m is None:
@@ -48,8 +48,8 @@ class FilecloudIo(SimpleHoster):
         elif not self.account.logged_in:
             recaptcha = ReCaptcha(self)
             captcha_challenge, captcha_response = recaptcha.challenge(self.RECAPTCHA_KEY)
-            self.account.form_data = {"recaptcha_challenge_field": captcha_challenge,
-                                      "recaptcha_response_field": captcha_response}
+            self.account.form_data = {'recaptcha_challenge_field': captcha_challenge,
+                                      'recaptcha_response_field': captcha_response}
             self.account.relogin(self.user)
             self.retry(2)
 
@@ -93,7 +93,7 @@ class FilecloudIo(SimpleHoster):
             self.logDebug("Download URL: %s" % download_url)
 
             if "size" in self.file_info and self.file_info['size']:
-                self.check_data = {"size": int(self.file_info['size'])}
+                self.check_data = {'size': int(self.file_info['size'])}
             self.download(download_url)
         else:
             self.fail("Unexpected server response")
@@ -103,7 +103,7 @@ class FilecloudIo(SimpleHoster):
         ukey = self.file_info['ID']
         self.logDebug("Akey: %s | Ukey: %s" % (akey, ukey))
         rep = self.load("http://api.filecloud.io/api-fetch_download_url.api",
-                        post={"akey": akey, "ukey": ukey})
+                        post={'akey': akey, 'ukey': ukey})
         self.logDebug("FetchDownloadUrl: " + rep)
         rep = json_loads(rep)
         if rep['status'] == 'ok':

@@ -17,7 +17,7 @@ from module.plugins.internal.SimpleHoster import SimpleHoster
 
 
 def api_download_info(url):
-    json_data = ["yw7XQy2v9", ["download/info", {"link": url}]]
+    json_data = ["yw7XQy2v9", ["download/info", {'link': url}]]
     post_data = urlencode({'r': json_dumps(json_data)})
     api_rep = urlopen("http://api.letitbit.net/json", data=post_data).read()
     return json_loads(api_rep)
@@ -109,8 +109,8 @@ class LetitbitNet(SimpleHoster):
 
         recaptcha = ReCaptcha(self)
         challenge, response = recaptcha.challenge(self.RECAPTCHA_KEY)
-        post_data = {"recaptcha_challenge_field": challenge, "recaptcha_response_field": response,
-                     "recaptcha_control_field": recaptcha_control_field}
+        post_data = {'recaptcha_challenge_field': challenge, "recaptcha_response_field": response,
+                     'recaptcha_control_field': recaptcha_control_field}
         self.logDebug("Post data to send", post_data)
         response = self.load('%s/ajax/check_recaptcha.php' % domain, post=post_data, cookies=True)
         self.logDebug(response)
@@ -146,7 +146,7 @@ class LetitbitNet(SimpleHoster):
         api_key = self.user
         premium_key = self.account.getAccountData(self.user)['password']
 
-        json_data = [api_key, ["download/direct_links", {"pass": premium_key, "link": self.pyfile.url}]]
+        json_data = [api_key, ["download/direct_links", {'pass': premium_key, 'link': self.pyfile.url}]]
         api_rep = self.load('http://api.letitbit.net/json', post={'r': json_dumps(json_data)})
         self.logDebug('API Data: ' + api_rep)
         api_rep = json_loads(api_rep)

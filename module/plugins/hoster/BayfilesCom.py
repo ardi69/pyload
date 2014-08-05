@@ -41,9 +41,9 @@ class BayfilesCom(SimpleHoster):
         vfid, delay = m.groups()
 
         response = json_loads(self.load('http://bayfiles.com/ajax_download', get={
-            "_": time() * 1000,
-            "action": "startTimer",
-            "vfid": vfid}, decode=True))
+            '_': time() * 1000,
+            'action': "startTimer",
+            'vfid': vfid}, decode=True))
 
         if not "token" in response or not response['token']:
             self.fail('No token')
@@ -51,9 +51,9 @@ class BayfilesCom(SimpleHoster):
         self.wait(int(delay))
 
         self.html = self.load('http://bayfiles.com/ajax_download', get={
-            "token": response['token'],
-            "action": "getLink",
-            "vfid": vfid})
+            'token': response['token'],
+            'action': "getLink",
+            'vfid': vfid})
 
         # Get final link and download
         m = re.search(self.FREE_LINK_PATTERN, self.html)
@@ -72,8 +72,8 @@ class BayfilesCom(SimpleHoster):
         self.download(url)
         # check download
         check = self.checkDownload({
-            "waitforfreeslots": re.compile(r"<title>BayFiles</title>"),
-            "notfound": re.compile(r"<title>404 Not Found</title>")
+            'waitforfreeslots': re.compile(r"<title>BayFiles</title>"),
+            'notfound': re.compile(r"<title>404 Not Found</title>")
         })
         if check == "waitforfreeslots":
             self.retry(30, 5 * 60, "Wait for free slot")

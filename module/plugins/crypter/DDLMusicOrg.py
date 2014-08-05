@@ -40,7 +40,7 @@ class DDLMusicOrg(Crypter):
         sleep(3)
         htmlwithlink = self.req.load(pyfile.url, cookies=True,
                                      post={"calc%s" % linknr: solve, "send%s" % linknr: "Send", "id": id,
-                                           "linknr": linknr})
+                                           'linknr': linknr})
         m = re.search(r"<form id=\"ff\" action=\"(.*?)\" method=\"post\">", htmlwithlink)
         if m:
             self.urls = [m.group(1)]

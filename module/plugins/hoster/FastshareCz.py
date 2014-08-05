@@ -45,12 +45,12 @@ class FastshareCz(SimpleHoster):
 
         baseurl = "http://www.fastshare.cz"
         captcha = self.decryptCaptcha(urljoin(baseurl, captcha_src))
-        self.download(urljoin(baseurl, action), post={"code": captcha, "btn.x": 77, "btn.y": 18})
+        self.download(urljoin(baseurl, action), post={'code': captcha, 'btn.x': 77, 'btn.y': 18})
 
         check = self.checkDownload({
-            "paralell_dl":
+            'paralell_dl':
             "<title>FastShare.cz</title>|<script>alert\('Pres FREE muzete stahovat jen jeden soubor najednou.'\)",
-            "wrong_captcha": "Download for FREE"
+            'wrong_captcha': "Download for FREE"
         })
 
         if check == "paralell_dl":
@@ -80,7 +80,7 @@ class FastshareCz(SimpleHoster):
         self.logDebug("PREMIUM URL: " + url)
         self.download(url, disposition=True)
 
-        check = self.checkDownload({"credit": re.compile(self.CREDIT_PATTERN)})
+        check = self.checkDownload({'credit': re.compile(self.CREDIT_PATTERN)})
         if check == "credit":
             self.resetAccount()
 

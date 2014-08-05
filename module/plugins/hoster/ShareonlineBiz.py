@@ -16,7 +16,7 @@ def getInfo(urls):
     urls = [url.replace("https://", "http://") for url in urls]
 
     for chunk in chunks(urls, 90):
-        api_param_file = {"links": "\n".join(x.replace("http://www.share-online.biz/dl/", "").rstrip("/") for x in
+        api_param_file = {'links': "\n".join(x.replace("http://www.share-online.biz/dl/", "").rstrip("/") for x in
                                              chunk)}  # api only supports old style links
         src = getURL(api_url_base, post=api_param_file, decode=True)
         result = []
@@ -70,7 +70,7 @@ class ShareonlineBiz(Hoster):
         else:
             self.handleFree()
 
-        # check = self.checkDownload({"failure": re.compile(self.ERROR_INFO_PATTERN)})
+        # check = self.checkDownload({'failure': re.compile(self.ERROR_INFO_PATTERN)})
         # if check == "failure":
         #     try:
         #         self.retry(reason=self.lastCheck.group(1).decode("utf8"))
@@ -78,16 +78,16 @@ class ShareonlineBiz(Hoster):
         #         self.retry(reason="Unknown error")
 
         if self.api_data:
-            self.check_data = {"size": int(self.api_data['size']), "md5": self.api_data['md5']}
+            self.check_data = {'size': int(self.api_data['size']), 'md5': self.api_data['md5']}
 
     def loadAPIData(self):
         api_url_base = "http://api.share-online.biz/linkcheck.php?md5=1"
-        api_param_file = {"links": self.file_id}  # api only supports old style links
+        api_param_file = {'links': self.file_id}  # api only supports old style links
         src = self.load(api_url_base, cookies=False, post=api_param_file, decode=True)
 
         fields = src.split(";")
-        self.api_data = {"fileid": fields[0],
-                         "status": fields[1]}
+        self.api_data = {'fileid': fields[0],
+                         'status': fields[1]}
         if not self.api_data['status'] == "OK":
             self.offline()
         else:
@@ -104,7 +104,7 @@ class ShareonlineBiz(Hoster):
         self.setWait(3)
         self.wait()
 
-        self.html = self.load("%s/free/" % self.pyfile.url, post={"dl_free": "1", "choice": "free"}, decode=True)
+        self.html = self.load("%s/free/" % self.pyfile.url, post={'dl_free': "1", 'choice': "free"}, decode=True)
         self.checkErrors()
 
         m = re.search(r'var wait=(\d+);', self.html)
@@ -136,8 +136,8 @@ class ShareonlineBiz(Hoster):
         self.download(download_url)
         # check download
         check = self.checkDownload({
-            "cookie": re.compile(r'<div id="dl_failure"'),
-            "fail": re.compile(r"<title>Share-Online")
+            'cookie': re.compile(r'<div id="dl_failure"'),
+            'fail': re.compile(r"<title>Share-Online")
         })
         if check == "cookie":
             self.invalidCaptcha()
@@ -151,8 +151,8 @@ class ShareonlineBiz(Hoster):
     def handlePremium(self):  #: should be working better loading (account) api internally
         self.account.getAccountInfo(self.user, True)
         src = self.load("http://api.share-online.biz/account.php",
-                        {"username": self.user, "password": self.account.accounts[self.user]['password'],
-                         "act": "download", "lid": self.file_id})
+                        {'username': self.user, "password": self.account.accounts[self.user]['password'],
+                         'act': "download", "lid": self.file_id})
 
         self.api_data = dlinfo = {}
         for line in src.splitlines():

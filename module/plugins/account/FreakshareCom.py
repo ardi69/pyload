@@ -29,11 +29,11 @@ class FreakshareCom(Account):
         traffic = traffic.group(1).strip()
         traffic = self.parseTraffic(traffic)
 
-        return {"validuntil": validuntil, "trafficleft": traffic}
+        return {'validuntil': validuntil, 'trafficleft': traffic}
 
     def login(self, user, data, req):
         page = req.load("http://freakshare.com/login.html", None,
-                        {"submit": "Login", "user": user, "pass": data['password']}, cookies=True)
+                        {'submit': "Login", 'user': user, 'pass': data['password']}, cookies=True)
 
         if "Falsche Logindaten!" in page or "Wrong Username or Password!" in page:
             self.wrongPassword()

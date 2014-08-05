@@ -137,7 +137,7 @@ class AddonManager:
 
 
             except:
-                self.log.warning(_("Failed activating %(name)s") % {"name": pluginname})
+                self.log.warning(_("Failed activating %(name)s") % {'name': pluginname})
                 if self.core.debug:
                     traceback.print_exc()
 

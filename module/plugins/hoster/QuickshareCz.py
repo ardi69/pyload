@@ -48,7 +48,7 @@ class QuickshareCz(SimpleHoster):
         else:
             self.handleFree()
 
-        check = self.checkDownload({"err": re.compile(r"\AChyba!")}, max_size=100)
+        check = self.checkDownload({'err': re.compile(r"\AChyba!")}, max_size=100)
         if check == "err":
             self.fail("File not m or plugin defect")
 

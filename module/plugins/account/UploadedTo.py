@@ -35,19 +35,19 @@ class UploadedTo(Account):
                 raw_valid = re.findall(r"(\d+) (Week|weeks|days|day|hours|hour)", raw_valid)
                 validuntil = time()
                 for n, u in raw_valid:
-                    validuntil += int(n) * 60 * 60 * {"Week": 168, "weeks": 168, "days": 24,
-                                                      "day": 24, "hours": 1, "hour": 1}[u]
+                    validuntil += int(n) * 60 * 60 * {'Week': 168, "weeks": 168, "days": 24,
+                                                      'day': 24, "hours": 1, "hour": 1}[u]
 
-            return {"validuntil": validuntil, "trafficleft": traffic, "maxtraffic": 50 * 1024 * 1024}
+            return {'validuntil': validuntil, 'trafficleft': traffic, 'maxtraffic': 50 * 1024 * 1024}
         else:
-            return {"premium": False, "validuntil": -1}
+            return {'premium': False, 'validuntil': -1}
 
     def login(self, user, data, req):
 
         req.load("http://uploaded.net/language/en")
         req.cj.setCookie("uploaded.net", "lang", "en")
 
-        page = req.load("http://uploaded.net/io/login", post={"id": user, "pw": data['password'], "_": ""})
+        page = req.load("http://uploaded.net/io/login", post={'id': user, 'pw': data['password'], '_': ""})
 
         if "User and password do not match!" in page:
             self.wrongPassword()

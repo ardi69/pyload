@@ -72,7 +72,7 @@ class BitshareCom(SimpleHoster):
         self.logDebug("Downloading file with url [%s]" % url)
         self.download(url)
 
-        check = self.checkDownload({"404": ">404 Not Found<", "Error": ">Error occured<"})
+        check = self.checkDownload({'404': ">404 Not Found<", 'Error': ">Error occured<"})
         if check == "404":
             self.retry(3, 60, 'Error 404')
         elif check == "error":
@@ -88,7 +88,7 @@ class BitshareCom(SimpleHoster):
         # Get download info
         self.logDebug("Getting download info")
         response = self.load("http://bitshare.com/files-ajax/" + self.file_id + "/request.html",
-                             post={"request": "generateID", "ajaxid": self.ajaxid})
+                             post={'request': "generateID", 'ajaxid': self.ajaxid})
         self.handleErrors(response, ':')
         parts = response.split(":")
         filetype = parts[0]
@@ -115,15 +115,15 @@ class BitshareCom(SimpleHoster):
                 recaptcha = ReCaptcha(self)
                 challenge, code = recaptcha.challenge(id)
                 response = self.load("http://bitshare.com/files-ajax/" + self.file_id + "/request.html",
-                                     post={"request": "validateCaptcha", "ajaxid": self.ajaxid,
-                                           "recaptcha_challenge_field": challenge, "recaptcha_response_field": code})
+                                     post={'request': "validateCaptcha", "ajaxid": self.ajaxid,
+                                           'recaptcha_challenge_field': challenge, "recaptcha_response_field": code})
                 if self.handleCaptchaErrors(response):
                     break
 
         # Get download URL
         self.logDebug("Getting download url")
         response = self.load("http://bitshare.com/files-ajax/" + self.file_id + "/request.html",
-                             post={"request": "getDownloadURL", "ajaxid": self.ajaxid})
+                             post={'request': "getDownloadURL", 'ajaxid': self.ajaxid})
         self.handleErrors(response, '#')
         url = response.split("#")[-1]
 

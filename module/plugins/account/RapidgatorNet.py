@@ -29,19 +29,19 @@ class RapidgatorNet(Account):
                 if "reset_in" in json['response']:
                     self.scheduleRefresh(user, json['response']['reset_in'])
 
-                return {"validuntil": json['response']['expire_date'],
-                        "trafficleft": int(json['response']['traffic_left']) / 1024,
-                        "premium": True}
+                return {'validuntil': json['response']['expire_date'],
+                        'trafficleft': int(json['response']['traffic_left']) / 1024,
+                        'premium': True}
             else:
                 self.logError(json['response_details'])
         except Exception, e:
             self.logError(e)
 
-        return {"validuntil": None, "trafficleft": None, "premium": False}
+        return {'validuntil': None, 'trafficleft': None, 'premium': False}
 
     def login(self, user, data, req):
         try:
-            json = req.load('%s/login' % self.API_URL, post={"username": user, "password": data['password']})
+            json = req.load('%s/login' % self.API_URL, post={'username': user, 'password': data['password']})
             self.logDebug("API:LOGIN", json)
             json = json_loads(json)
 

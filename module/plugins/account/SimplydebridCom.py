@@ -20,9 +20,9 @@ class SimplydebridCom(Account):
         response = req.load("http://simply-debrid.com/api.php", get=get_data, decode=True)
         data = [x.strip() for x in response.split(";")]
         if str(data[0]) != "1":
-            return {"premium": False}
+            return {'premium': False}
         else:
-            return {"trafficleft": -1, "validuntil": mktime(strptime(str(data[2]), "%d/%m/%Y"))}
+            return {'trafficleft': -1, 'validuntil': mktime(strptime(str(data[2]), "%d/%m/%Y"))}
 
     def login(self, user, data, req):
         self.loginname = user

@@ -52,10 +52,10 @@ class OboomCom(Hoster):
         for _ in xrange(5):
             challenge, response = recaptcha.challenge(self.RECAPTCHA_KEY)
             apiUrl = "https://www.oboom.com/1.0/download/ticket"
-            params = {"recaptcha_challenge_field": challenge,
-                      "recaptcha_response_field": response,
-                      "download_id": self.fileId,
-                      "token": self.sessionToken}
+            params = {'recaptcha_challenge_field': challenge,
+                      'recaptcha_response_field': response,
+                      'download_id': self.fileId,
+                      'token': self.sessionToken}
             result = self.loadUrl(apiUrl, params)
 
             if result[0] == 200:
@@ -85,7 +85,7 @@ class OboomCom(Hoster):
 
     def getFileInfo(self, token, fileId):
         apiUrl = "https://api.oboom.com/1.0/info"
-        params = {"token": token, "items": fileId, "http_errors": 0}
+        params = {'token': token, 'items': fileId, 'http_errors': 0}
 
         result = self.loadUrl(apiUrl, params)
         if result[0] == 200:
@@ -100,7 +100,7 @@ class OboomCom(Hoster):
 
     def getDownloadTicket(self):
         apiUrl = "https://api.oboom.com/1.0/dl"
-        params = {"item": self.fileId, "http_errors": 0}
+        params = {'item': self.fileId, 'http_errors': 0}
         if self.premium:
             params['token'] = self.sessionToken
         else:
@@ -129,4 +129,4 @@ class OboomCom(Hoster):
         if not self.premium:
             self.solveCaptcha()
         self.getDownloadTicket()
-        self.download("https://%s/1.0/dlh" % self.downloadDomain, get={"ticket": self.downloadTicket, "http_errors": 0})
+        self.download("https://%s/1.0/dlh" % self.downloadDomain, get={'ticket': self.downloadTicket, 'http_errors': 0})

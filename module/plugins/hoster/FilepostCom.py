@@ -50,7 +50,7 @@ class FilepostCom(SimpleHoster):
         if wait_time > 0:
             self.wait(wait_time)
 
-        post_dict = {"token": flp_token, "code": file_id, "file_pass": ''}
+        post_dict = {'token': flp_token, 'code': file_id, 'file_pass': ''}
 
         if 'var is_pass_exists = true;' in self.html:
             # Solve password

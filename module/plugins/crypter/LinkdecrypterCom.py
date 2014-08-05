@@ -26,7 +26,7 @@ class LinkdecrypterCom(Crypter):
         self.urls = self.decryptHTML()
 
     def decryptAPI(self):
-        get_dict = {"t": "link", "url": self.pyfile.url, "lcache": "1"}
+        get_dict = {'t': "link", 'url': self.pyfile.url, 'lcache': "1"}
         self.html = self.load('http://linkdecrypter.com/api', get=get_dict)
         if self.html.startswith('http://'):
             return self.html.splitlines()
@@ -47,7 +47,7 @@ class LinkdecrypterCom(Crypter):
 
         retries = 5
 
-        post_dict = {"link_cache": "on", "pro_links": self.pyfile.url, "modo_links": "text"}
+        post_dict = {'link_cache': "on", 'pro_links': self.pyfile.url, 'modo_links': "text"}
         self.html = self.load('http://linkdecrypter.com/', post=post_dict, cookies=True, decode=True)
 
         while self.passwords or retries:
@@ -67,7 +67,7 @@ class LinkdecrypterCom(Crypter):
                 captcha = self.decryptCaptcha(captcha_url, result_type=result_type)
                 if result_type == "positional":
                     captcha = "%d|%d" % captcha
-                self.html = self.load('http://linkdecrypter.com/', post={"captcha": captcha}, decode=True)
+                self.html = self.load('http://linkdecrypter.com/', post={'captcha': captcha}, decode=True)
                 retries -= 1
 
             elif self.PASSWORD_PATTERN in self.html:

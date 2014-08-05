@@ -12,7 +12,7 @@ from module.utils import parseFileSize
 
 
 def checkFile(plugin, urls):
-    html = getURL(plugin.URLS[1], post={"urls": "\n".join(urls)}, decode=True)
+    html = getURL(plugin.URLS[1], post={'urls': "\n".join(urls)}, decode=True)
 
     file_info = []
     for li in re.finditer(plugin.LINKCHECK_TR, html, re.DOTALL):
@@ -73,13 +73,13 @@ class FileserveCom(Hoster):
 
     def handleFree(self):
         self.html = self.load(self.url)
-        action = self.load(self.url, post={"checkDownload": "check"}, decode=True)
+        action = self.load(self.url, post={'checkDownload': "check"}, decode=True)
         action = json_loads(action)
         self.logDebug(action)
 
         if "fail" in action:
             if action['fail'] == "timeLimit":
-                self.html = self.load(self.url, post={"checkDownload": "showError", "errorType": "timeLimit"},
+                self.html = self.load(self.url, post={'checkDownload': "showError", 'errorType': "timeLimit"},
                                       decode=True)
 
                 self.doLongWait(re.search(self.LONG_WAIT_PATTERN, self.html))
@@ -102,18 +102,18 @@ class FileserveCom(Hoster):
             self.fail("Unknown server response")
 
         # show download link
-        response = self.load(self.url, post={"downloadLink": "show"}, decode=True)
+        response = self.load(self.url, post={'downloadLink': "show"}, decode=True)
         self.logDebug("show downloadLink response : %s" % response)
         if "fail" in response:
             self.fail("Couldn't retrieve download url")
 
         # this may either download our file or forward us to an error page
-        self.download(self.url, post={"download": "normal"})
+        self.download(self.url, post={'download': "normal"})
         self.logDebug(self.req.http.lastEffectiveURL)
 
-        check = self.checkDownload({"expired": self.LINK_EXPIRED_PATTERN,
-                                    "wait": re.compile(self.LONG_WAIT_PATTERN),
-                                    "limit": self.DAILY_LIMIT_PATTERN})
+        check = self.checkDownload({'expired': self.LINK_EXPIRED_PATTERN,
+                                    'wait': re.compile(self.LONG_WAIT_PATTERN),
+                                    'limit': self.DAILY_LIMIT_PATTERN})
 
         if check == "expired":
             self.logDebug("Download link was expired")
@@ -129,7 +129,7 @@ class FileserveCom(Hoster):
         self.thread.m.reconnecting.wait(3)  # Ease issue with later downloads appearing to be in parallel
 
     def doTimmer(self):
-        response = self.load(self.url, post={"downloadLink": "wait"}, decode=True)
+        response = self.load(self.url, post={'downloadLink': "wait"}, decode=True)
         self.logDebug("wait response : %s" % response[:80])
 
         if "fail" in response:
@@ -177,9 +177,9 @@ class FileserveCom(Hoster):
         if self.__name__ == "FileserveCom":
             #try api download
             response = self.load("http://app.fileserve.com/api/download/premium/",
-                                 post={"username": self.user,
-                                       "password": self.account.getAccountData(self.user)['password'],
-                                       "shorten": self.file_id},
+                                 post={'username': self.user,
+                                       'password': self.account.getAccountData(self.user)['password'],
+                                       'shorten': self.file_id},
                                  decode=True)
             if response:
                 response = json_loads(response)
@@ -197,7 +197,7 @@ class FileserveCom(Hoster):
         self.download(premium_url or self.pyfile.url)
 
         if not premium_url:
-            check = self.checkDownload({"login": re.compile(self.NOT_LOGGED_IN_PATTERN)})
+            check = self.checkDownload({'login': re.compile(self.NOT_LOGGED_IN_PATTERN)})
 
             if check == "login":
                 self.account.relogin(self.user)

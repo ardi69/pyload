@@ -95,7 +95,7 @@ class RapidshareCom(Hoster):
             self.logInfo(_("Rapidshare: Traffic Share (direct download)"))
             self.pyfile.name = self.get_file_name()
 
-            self.download(self.pyfile.url, get={"directstart": 1})
+            self.download(self.pyfile.url, get={'directstart': 1})
 
         elif self.api_data['status'] in ("0", "4", "5"):
             self.offline()
@@ -114,8 +114,8 @@ class RapidshareCom(Hoster):
         self.logDebug("RS API Request: %s" % download)
         self.download(download, ref=False)
 
-        check = self.checkDownload({"ip": "You need RapidPro to download more files from your IP address",
-                                    "auth": "Download auth invalid"})
+        check = self.checkDownload({'ip': "You need RapidPro to download more files from your IP address",
+                                    'auth': "Download auth invalid"})
         if check == "ip":
             self.setWait(60)
             self.logInfo(_("Already downloading from this ip address, waiting 60 seconds"))
@@ -130,7 +130,7 @@ class RapidshareCom(Hoster):
         info = self.account.getAccountInfo(self.user, True)
         self.logDebug("%s: Use Premium Account" % self.__name__)
         url = self.api_data['mirror']
-        self.download(url, get={"directstart": 1})
+        self.download(url, get={'directstart': 1})
 
     def download_api_data(self, force=False):
         """
@@ -139,7 +139,7 @@ class RapidshareCom(Hoster):
         if self.api_data and not force:
             return
         api_url_base = "http://api.rapidshare.com/cgi-bin/rsapi.cgi"
-        api_param_file = {"sub": "checkfiles", "incmd5": "1", "files": self.id, "filenames": self.name}
+        api_param_file = {'sub': "checkfiles", 'incmd5': "1", 'files': self.id, 'filenames': self.name}
         src = self.load(api_url_base, cookies=False, get=api_param_file).strip()
         self.logDebug("RS INFO API: %s" % src)
         if src.startswith("ERROR"):
@@ -156,8 +156,8 @@ class RapidshareCom(Hoster):
         #   100+n=File OK (TrafficShare direct download type "n" with logging.
         #                  Read our privacy policy to see what is logged.)
 
-        self.api_data = {"fileid": fields[0], "filename": fields[1], "size": int(fields[2]), "serverid": fields[3],
-                         "status": fields[4], "shorthost": fields[5], "checksum": fields[6].strip().lower()}
+        self.api_data = {'fileid': fields[0], "filename": fields[1], "size": int(fields[2]), "serverid": fields[3],
+                         'status': fields[4], "shorthost": fields[5], "checksum": fields[6].strip().lower()}
 
         if int(self.api_data['status']) > 100:
             self.api_data['status'] = str(int(self.api_data['status']) - 100)
@@ -175,7 +175,7 @@ class RapidshareCom(Hoster):
         name = self.name
 
         prepare = "https://api.rapidshare.com/cgi-bin/rsapi.cgi?sub=download&fileid=%(id)s&filename=%(name)s&try=1&cbf=RSAPIDispatcher&cbid=1" % {
-            "name": name, "id": id}
+            'name': name, "id": id}
 
         self.logDebug("RS API Request: %s" % prepare)
         result = self.load(prepare, ref=False)
@@ -206,12 +206,12 @@ class RapidshareCom(Hoster):
             tmp, info = result.split(":")
             data = info.split(",")
 
-            dl_dict = {"id": id,
-                       "name": name,
-                       "host": data[0],
-                       "auth": data[1],
-                       "server": self.api_data['serverid'],
-                       "size": self.api_data['size']}
+            dl_dict = {'id': id,
+                       'name': name,
+                       'host': data[0],
+                       'auth': data[1],
+                       'server': self.api_data['serverid'],
+                       'size': self.api_data['size']}
             self.setWait(int(data[2]) + 2 + self.offset)
             self.wait()
 

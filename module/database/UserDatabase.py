@@ -36,8 +36,8 @@ class UserMethods:
         pw = r[2][5:]
         h = sha1(salt + password)
         if h.hexdigest() == pw:
-            return {"id": r[0], "name": r[1], "role": r[3],
-                    "permission": r[4], "template": r[5], "email": r[6]}
+            return {'id': r[0], "name": r[1], "role": r[3],
+                    'permission': r[4], "template": r[5], "email": r[6]}
         else:
             return {}
 
@@ -98,7 +98,7 @@ class UserMethods:
         db.c.execute("SELECT name, permission, role, template, email FROM users")
         user = {}
         for r in db.c:
-            user[r[0]] = {"permission": r[1], "role": r[2], "template": r[3], "email": r[4]}
+            user[r[0]] = {'permission': r[1], 'role': r[2], 'template': r[3], 'email': r[4]}
 
         return user
 

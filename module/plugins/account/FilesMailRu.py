@@ -14,14 +14,14 @@ class FilesMailRu(Account):
 
 
     def loadAccountInfo(self, user, req):
-        return {"validuntil": None, "trafficleft": None}
+        return {'validuntil': None, 'trafficleft': None}
 
     def login(self, user, data, req):
         user, domain = user.split("@")
 
         page = req.load("http://swa.mail.ru/cgi-bin/auth", None,
-                        {"Domain": domain, "Login": user, "Password": data['password'],
-                         "Page": "http://files.mail.ru/"}, cookies=True)
+                        {'Domain': domain, "Login": user, "Password": data['password'],
+                         'Page': "http://files.mail.ru/"}, cookies=True)
 
         if "Неверное имя пользователя или пароль" in page:  # @TODO seems not to work
             self.wrongPassword()

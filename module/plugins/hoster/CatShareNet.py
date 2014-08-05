@@ -32,9 +32,9 @@ class CatShareNet(SimpleHoster):
         self.wait(seconds + 1)
         recaptcha = ReCaptcha(self)
         challenge, code = recaptcha.challenge(self.RECAPTCHA_KEY)
-        post_data = {"recaptcha_challenge_field": challenge, "recaptcha_response_field": code}
+        post_data = {'recaptcha_challenge_field': challenge, 'recaptcha_response_field': code}
         self.download(self.pyfile.url, post=post_data)
-        check = self.checkDownload({"html": re.compile("\A<!DOCTYPE html PUBLIC")})
+        check = self.checkDownload({'html': re.compile("\A<!DOCTYPE html PUBLIC")})
         if check == "html":
             self.logDebug("Wrong captcha entered")
             self.invalidCaptcha()

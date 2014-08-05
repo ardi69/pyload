@@ -22,7 +22,7 @@ class OboomCom(Account):
         passwd = self.getAccountData(user)['password']
         salt = passwd[::-1]
         pbkdf2 = PBKDF2(passwd, salt, 1000).hexread(16)
-        result = json_loads(req.load("https://www.oboom.com/1.0/login", get={"auth": user, "pass": pbkdf2}))
+        result = json_loads(req.load("https://www.oboom.com/1.0/login", get={'auth': user, 'pass': pbkdf2}))
         if not result[0] == 200:
             self.logWarning("Failed to log in: %s" % result[1])
             self.wrongPassword()
@@ -41,13 +41,13 @@ class OboomCom(Account):
                 trafficLeft = traffic['current']
                 maxTraffic = traffic['max']
                 session = accountData['session']
-                return {"premium": premium,
-                        "validuntil": validUntil,
-                        "trafficleft": trafficLeft / 1024,
-                        "maxtraffic": maxTraffic / 1024,
-                        "session": session
+                return {'premium': premium,
+                        'validuntil': validUntil,
+                        'trafficleft': trafficLeft / 1024,
+                        'maxtraffic': maxTraffic / 1024,
+                        'session': session
                 }
-        return {"premium": False, "validuntil": -1}
+        return {'premium': False, 'validuntil': -1}
 
     def login(self, user, data, req):
         self.loadAccountData(user, req)

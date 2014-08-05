@@ -28,7 +28,7 @@ class IfileIt(SimpleHoster):
     def handleFree(self):
         ukey = re.match(self.__pattern__, self.pyfile.url).group(1)
         json_url = 'http://ifile.it/new_download-request.json'
-        post_data = {"ukey": ukey, "ab": "0"}
+        post_data = {'ukey': ukey, 'ab': "0"}
 
         json_response = json_loads(self.load(json_url, post=post_data))
         self.logDebug(json_response)

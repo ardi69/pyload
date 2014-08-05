@@ -84,7 +84,7 @@ class RealdebridCom(Hoster):
         self.download(new_url, disposition=True)
 
         check = self.checkDownload(
-            {"error": "<title>An error occured while processing your request</title>"})
+            {'error': "<title>An error occured while processing your request</title>"})
 
         if check == "error":
             #usual this download can safely be retried

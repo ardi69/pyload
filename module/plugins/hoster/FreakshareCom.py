@@ -39,11 +39,11 @@ class FreakshareCom(Hoster):
 
             self.download(pyfile.url, post=self.req_opts)
 
-            check = self.checkDownload({"bad": "bad try",
-                                        "paralell": "> Sorry, you cant download more then 1 files at time. <",
-                                        "empty": "Warning: Unknown: Filename cannot be empty",
-                                        "wrong_captcha": "Wrong Captcha!",
-                                        "downloadserver": "No Downloadserver. Please try again later!"})
+            check = self.checkDownload({'bad': "bad try",
+                                        'paralell': "> Sorry, you cant download more then 1 files at time. <",
+                                        'empty': "Warning: Unknown: Filename cannot be empty",
+                                        'wrong_captcha': "Wrong Captcha!",
+                                        'downloadserver': "No Downloadserver. Please try again later!"})
 
             if check == "bad":
                 self.fail("Bad Try.")
@@ -79,7 +79,7 @@ class FreakshareCom(Hoster):
         return True
 
     def download_html(self):
-        self.load("http://freakshare.com/index.php", {"language": "EN"})  # Set english language in server session
+        self.load("http://freakshare.com/index.php", {'language': "EN"})  # Set english language in server session
         self.html = self.load(self.pyfile.url)
 
     def get_file_url(self):

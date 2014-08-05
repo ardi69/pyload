@@ -24,21 +24,21 @@ from time import sleep, time
 from threading import RLock
 
 statusMap = {
-    "finished":    0,
-    "offline":     1,
-    "online":      2,
-    "queued":      3,
-    "skipped":     4,
-    "waiting":     5,
-    "temp. offline": 6,
-    "starting":    7,
-    "failed":      8,
-    "aborted":     9,
-    "decrypting":  10,
-    "custom":      11,
-    "downloading": 12,
-    "processing":  13,
-    "unknown":     14,
+    'finished':      0,
+    'offline':       1,
+    'online':        2,
+    'queued':        3,
+    'skipped':       4,
+    'waiting':       5,
+    'temp. offline': 6,
+    'starting':      7,
+    'failed':        8,
+    'aborted':       9,
+    'decrypting':   10,
+    'custom':       11,
+    'downloading':  12,
+    'processing':   13,
+    'unknown':      14,
 }
 
 

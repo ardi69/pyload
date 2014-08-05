@@ -55,21 +55,21 @@ class UlozTo(SimpleHoster):
                 self.parseError('TOKEN')
             token = m.group(1)
 
-            self.html = self.load(pyfile.url, get={"do": "askAgeForm-submit"},
-                                  post={"agree": "Confirm", "_token_": token}, cookies=True)
+            self.html = self.load(pyfile.url, get={'do': "askAgeForm-submit"},
+                                  post={'agree': "Confirm", '_token_': token}, cookies=True)
 
         passwords = self.getPassword().splitlines()
         while self.PASSWD_PATTERN in self.html:
             if passwords:
                 password = passwords.pop(0)
                 self.logInfo("Password protected link, trying " + password)
-                self.html = self.load(pyfile.url, get={"do": "passwordProtectedForm-submit"},
-                                      post={"password": password, "password_send": 'Send'}, cookies=True)
+                self.html = self.load(pyfile.url, get={'do': "passwordProtectedForm-submit"},
+                                      post={'password': password, 'password_send': 'Send'}, cookies=True)
             else:
                 self.fail("No or incorrect password")
 
         if re.search(self.VIPLINK_PATTERN, self.html):
-            self.html = self.load(pyfile.url, get={"disclaimer": "1"})
+            self.html = self.load(pyfile.url, get={'disclaimer': "1"})
 
         self.file_info = self.getFileInfo()
 
@@ -100,7 +100,7 @@ class UlozTo(SimpleHoster):
             # New version - better to get new parameters (like captcha reload) because of image url - since 6.12.2013
             self.logDebug('Using "new" version')
 
-            xapca = self.load("http://www.ulozto.net/reloadXapca.php", get={"rnd": str(int(time.time()))})
+            xapca = self.load("http://www.ulozto.net/reloadXapca.php", get={'rnd': str(int(time.time()))})
             self.logDebug('xapca = ' + str(xapca))
 
             data = json_loads(xapca)
@@ -117,7 +117,7 @@ class UlozTo(SimpleHoster):
     def handlePremium(self):
         self.download(self.pyfile.url + "?do=directDownload", disposition=True)
         #parsed_url = self.findDownloadURL(premium=True)
-        #self.download(parsed_url, post={"download": "Download"})
+        #self.download(parsed_url, post={'download': "Download"})
 
     def findDownloadURL(self, premium=False):
         msg = "%s link" % ("Premium" if premium else "Free")
@@ -130,11 +130,11 @@ class UlozTo(SimpleHoster):
 
     def doCheckDownload(self):
         check = self.checkDownload({
-            "wrong_captcha": re.compile(r'<ul class="error">\s*<li>Error rewriting the text.</li>'),
-            "offline": re.compile(self.OFFLINE_PATTERN),
-            "passwd": self.PASSWD_PATTERN,
-            "server_error": 'src="http://img.ulozto.cz/error403/vykricnik.jpg"',  # paralell dl, server overload etc.
-            "not_found": "<title>Ulož.to</title>"
+            'wrong_captcha': re.compile(r'<ul class="error">\s*<li>Error rewriting the text.</li>'),
+            'offline': re.compile(self.OFFLINE_PATTERN),
+            'passwd': self.PASSWD_PATTERN,
+            'server_error': 'src="http://img.ulozto.cz/error403/vykricnik.jpg"',  # paralell dl, server overload etc.
+            'not_found': "<title>Ulož.to</title>"
         })
 
         if check == "wrong_captcha":

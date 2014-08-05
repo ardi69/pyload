@@ -19,14 +19,14 @@ class MultiDebridCom(Account):
     def loadAccountInfo(self, user, req):
         if 'days_left' in self.json_data:
             validuntil = int(time() + self.json_data['days_left'] * 24 * 60 * 60)
-            return {"premium": True, "validuntil": validuntil, "trafficleft": -1}
+            return {'premium': True, 'validuntil': validuntil, 'trafficleft': -1}
         else:
             self.logError('Unable to get account information')
 
     def login(self, user, data, req):
         # Password to use is the API-Password written in http://multi-debrid.com/myaccount
         html = req.load("http://multi-debrid.com/api.php",
-                             get={"user": user, "pass": data['password']})
+                             get={'user': user, 'pass': data['password']})
         self.logDebug('JSON data: ' + html)
         self.json_data = json_loads(html)
         if self.json_data['status'] != 'ok':

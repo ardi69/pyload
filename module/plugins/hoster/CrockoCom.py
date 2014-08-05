@@ -61,7 +61,7 @@ class CrockoCom(SimpleHoster):
             self.download(action, post=inputs)
 
             check = self.checkDownload({
-                "captcha_err": self.CAPTCHA_KEY_PATTERN
+                'captcha_err': self.CAPTCHA_KEY_PATTERN
             })
 
             if check == "captcha_err":

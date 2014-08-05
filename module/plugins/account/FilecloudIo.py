@@ -18,26 +18,26 @@ class FilecloudIo(Account):
         # It looks like the first API request always fails, so we retry 5 times, it should work on the second try
         for _ in xrange(5):
             rep = req.load("https://secure.filecloud.io/api-fetch_apikey.api",
-                           post={"username": user, "password": self.accounts[user]['password']})
+                           post={'username': user, 'password': self.accounts[user]['password']})
             rep = json_loads(rep)
             if rep['status'] == 'ok':
                 break
             elif rep['status'] == 'error' and rep['message'] == 'no such user or wrong password':
                 self.logError("Wrong username or password")
-                return {"valid": False, "premium": False}
+                return {'valid': False, 'premium': False}
         else:
-            return {"premium": False}
+            return {'premium': False}
 
         akey = rep['akey']
         self.accounts[user]['akey'] = akey  # Saved for hoster plugin
         rep = req.load("http://api.filecloud.io/api-fetch_account_details.api",
-                       post={"akey": akey})
+                       post={'akey': akey})
         rep = json_loads(rep)
 
         if rep['is_premium'] == 1:
-            return {"validuntil": int(rep['premium_until']), "trafficleft": -1}
+            return {'validuntil': int(rep['premium_until']), 'trafficleft': -1}
         else:
-            return {"premium": False}
+            return {'premium': False}
 
     def login(self, user, data, req):
         req.cj.setCookie("secure.filecloud.io", "lang", "en")

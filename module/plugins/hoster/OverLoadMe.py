@@ -46,7 +46,7 @@ class OverLoadMe(Hoster):
             data = self.account.getAccountData(self.user)
 
             page = self.load("https://api.over-load.me/getdownload.php",
-                             get={"auth": data['password'], "link": pyfile.url})
+                             get={'auth': data['password'], 'link': pyfile.url})
             data = json_loads(page)
 
             self.logDebug("Returned Data: %s" % data)
@@ -75,7 +75,7 @@ class OverLoadMe(Hoster):
         self.download(new_url, disposition=True)
 
         check = self.checkDownload(
-            {"error": "<title>An error occured while processing your request</title>"})
+            {'error': "<title>An error occured while processing your request</title>"})
 
         if check == "error":
             # usual this download can safely be retried

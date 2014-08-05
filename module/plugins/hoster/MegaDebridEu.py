@@ -68,7 +68,7 @@ class MegaDebridEu(Hoster):
         Return The debrided link if succeed or original link if fail
         """
         jsonResponse = self.load(self.API_URL, get={'action': 'getLink', 'token': self.token},
-                                 post={"link": linkToDebrid})
+                                 post={'link': linkToDebrid})
         response = json_loads(jsonResponse)
 
         if response['response_code'] == "ok":

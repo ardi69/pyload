@@ -46,14 +46,14 @@ class EasybytezCom(Account):
                 else:
                     trafficleft = parseFileSize(trafficleft) / 1024
 
-        return {"validuntil": validuntil, "trafficleft": trafficleft, "premium": premium}
+        return {'validuntil': validuntil, 'trafficleft': trafficleft, 'premium': premium}
 
     def login(self, user, data, req):
         html = req.load('http://www.easybytez.com/login.html', decode=True)
         action, inputs = parseHtmlForm('name="FL"', html)
-        inputs.update({"login": user,
-                       "password": data['password'],
-                       "redirect": "http://www.easybytez.com/"})
+        inputs.update({'login': user,
+                       'password': data['password'],
+                       'redirect': "http://www.easybytez.com/"})
 
         html = req.load(action, post=inputs, decode=True)
 

@@ -20,12 +20,12 @@ class UnrestrictLi(Account):
         json_data = json_loads(json_data)
 
         if 'vip' in json_data['result'] and json_data['result']['vip'] == 0:
-            return {"premium": False}
+            return {'premium': False}
 
         validuntil = json_data['result']['expires']
         trafficleft = int(json_data['result']['traffic'] / 1024)
 
-        return {"premium": True, "validuntil": validuntil, "trafficleft": trafficleft}
+        return {'premium': True, 'validuntil': validuntil, 'trafficleft': trafficleft}
 
     def login(self, user, data, req):
         req.cj.setCookie("unrestrict.li", "lang", "EN")
@@ -35,8 +35,8 @@ class UnrestrictLi(Account):
             self.logError("A Captcha is required. Go to http://unrestrict.li/sign_in and login, then retry")
             return
 
-        post_data = {"username": user, "password": data['password'],
-                     "remember_me": "remember", "signin": "Sign in"}
+        post_data = {'username': user, "password": data['password'],
+                     'remember_me': "remember", "signin": "Sign in"}
         html = req.load("https://unrestrict.li/sign_in", post=post_data)
 
         if 'sign_out' not in html:

@@ -29,8 +29,8 @@ class MultiuploadCom(Crypter):
         ml_url = m.group(1) if m else None
 
         json_list = json_loads(self.load("http://multiupload.com/progress/", get={
-            "d": re.match(self.__pattern__, pyfile.url).group(1),
-            "r": str(int(time() * 1000))
+            'd': re.match(self.__pattern__, pyfile.url).group(1),
+            'r': str(int(time() * 1000))
         }))
 
         prefered_set = map(lambda s: s.lower().split('.')[0], set(self.getConfig("preferedHoster").split('|')))

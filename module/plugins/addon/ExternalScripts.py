@@ -60,11 +60,11 @@ class ExternalScripts(Addon):
     def callScript(self, script, *args):
         try:
             cmd = [script] + [str(x) if not isinstance(x, basestring) else x for x in args]
-            self.logDebug("Executing %(script)s: %(cmd)s" % {"script": abspath(script), "cmd": " ".join(cmd)})
+            self.logDebug("Executing %(script)s: %(cmd)s" % {'script': abspath(script), 'cmd': " ".join(cmd)})
             #output goes to pyload
             subprocess.Popen(cmd, bufsize=-1)
         except Exception, e:
-            self.logError(_("Error in %(script)s: %(error)s") % {"script": basename(script), "error": str(e)})
+            self.logError(_("Error in %(script)s: %(error)s") % {'script': basename(script), 'error': str(e)})
 
     def downloadPreparing(self, pyfile):
         for script in self.scripts['download_preparing']:

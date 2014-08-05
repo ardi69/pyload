@@ -28,7 +28,7 @@ class DailymotionBatch(Crypter):
 
     def getPlaylistInfo(self, id):
         ref = "playlist/" + id
-        req = {"fields": "name,owner.screenname"}
+        req = {'fields': "name,owner.screenname"}
         playlist = self.api_response(ref, req)
 
         if "error" in playlist:
@@ -40,7 +40,7 @@ class DailymotionBatch(Crypter):
 
     def _getPlaylists(self, user_id, page=1):
         ref = "user/%s/playlists" % user_id
-        req = {"fields": "id", "page": page, "limit": 100}
+        req = {'fields': "id", 'page': page, 'limit': 100}
         user = self.api_response(ref, req)
 
         if "error" in user:
@@ -58,7 +58,7 @@ class DailymotionBatch(Crypter):
 
     def _getVideos(self, id, page=1):
         ref = "playlist/%s/videos" % id
-        req = {"fields": "url", "page": page, "limit": 100}
+        req = {'fields': "url", 'page': page, 'limit': 100}
         playlist = self.api_response(ref, req)
 
         if "error" in playlist:

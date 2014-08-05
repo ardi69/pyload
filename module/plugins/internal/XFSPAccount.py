@@ -50,18 +50,18 @@ class XFSPAccount(Account):
                 else:
                     trafficleft = parseFileSize(trafficleft) / 1024
 
-        return {"validuntil": validuntil, "trafficleft": trafficleft, "premium": premium}
+        return {'validuntil': validuntil, 'trafficleft': trafficleft, 'premium': premium}
 
     def login(self, user, data, req):
         html = req.load('%slogin.html' % self.MAIN_PAGE, decode=True)
 
         action, inputs = parseHtmlForm('name="FL"', html)
         if not inputs:
-            inputs = {"op": "login",
-                      "redirect": self.MAIN_PAGE}
+            inputs = {'op': "login",
+                      'redirect': self.MAIN_PAGE}
 
-        inputs.update({"login": user,
-                       "password": data['password']})
+        inputs.update({'login': user,
+                       'password': data['password']})
 
         html = req.load(self.MAIN_PAGE, post=inputs, decode=True)
 

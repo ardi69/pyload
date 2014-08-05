@@ -21,6 +21,6 @@ class FreeWayMe(MultiHoster):
 
 
     def getHoster(self):
-        hostis = getURL("https://www.free-way.me/ajax/jd.php", get={"id": 3}).replace("\"", "").strip()
+        hostis = getURL("https://www.free-way.me/ajax/jd.php", get={'id': 3}).replace("\"", "").strip()
         self.logDebug("hosters: %s" % hostis)
         return [x.strip() for x in hostis.split(",") if x.strip()]

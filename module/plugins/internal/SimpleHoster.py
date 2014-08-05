@@ -68,7 +68,7 @@ def parseHtmlForm(attr_str, html, input_names=None):
 
 
 def parseFileInfo(self, url='', html=''):
-    info = {"name": url, "size": 0, "status": 3}
+    info = {'name': url, 'size': 0, 'status': 3}
 
     if hasattr(self, "pyfile"):
         url = self.pyfile.url

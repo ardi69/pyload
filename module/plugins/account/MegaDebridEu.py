@@ -24,10 +24,10 @@ class MegaDebridEu(Account):
         response = json_loads(jsonResponse)
 
         if response['response_code'] == "ok":
-            return {"premium": True, "validuntil": float(response['vip_end']), "status": True}
+            return {'premium': True, 'validuntil': float(response['vip_end']), 'status': True}
         else:
             self.logError(response)
-            return {"status": False, "premium": False}
+            return {'status': False, 'premium': False}
 
     def login(self, user, data, req):
         jsonResponse = req.load(self.API_URL,

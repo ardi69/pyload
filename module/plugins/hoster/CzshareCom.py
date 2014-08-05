@@ -128,10 +128,10 @@ class CzshareCom(SimpleHoster):
     def checkDownloadedFile(self):
         # check download
         check = self.checkDownload({
-            "tempoffline": re.compile(r"^Soubor je do.*asn.* nedostupn.*$"),
-            "credit": re.compile(r"^Nem.*te dostate.*n.* kredit.$"),
-            "multi_dl": re.compile(self.MULTIDL_PATTERN),
-            "captcha_err": "<li>Zadaný ověřovací kód nesouhlasí!</li>"
+            'tempoffline': re.compile(r"^Soubor je do.*asn.* nedostupn.*$"),
+            'credit': re.compile(r"^Nem.*te dostate.*n.* kredit.$"),
+            'multi_dl': re.compile(self.MULTIDL_PATTERN),
+            'captcha_err': "<li>Zadaný ověřovací kód nesouhlasí!</li>"
         })
 
         if check == "tempoffline":

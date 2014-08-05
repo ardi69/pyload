@@ -53,15 +53,15 @@ class Crypter(Plugin):
         for pack in self.packages:
             name, links, folder = pack
 
-            self.logDebug("Parsed package %(name)s with %(len)d links" % {"name": name, "len": len(links)})
+            self.logDebug("Parsed package %(name)s with %(len)d links" % {'name': name, 'len': len(links)})
 
             links = map(lambda x: decode(x), links)
 
             pid = self.api.addPackage(name, links, self.pyfile.package().queue)
 
             if name != folder is not None:
-                self.api.setPackageData(pid, {"folder": folder})  #: Due to not break api.addPackage method
-                self.logDebug("Set package %(name)s folder to %(folder)s" % {"name": name, "folder": folder})
+                self.api.setPackageData(pid, {'folder': folder})  #: Due to not break api.addPackage method
+                self.logDebug("Set package %(name)s folder to %(folder)s" % {'name': name, 'folder': folder})
 
             if self.pyfile.package().password:
-                self.api.setPackageData(pid, {"password": self.pyfile.package().password})
+                self.api.setPackageData(pid, {'password': self.pyfile.package().password})

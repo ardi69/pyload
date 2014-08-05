@@ -43,7 +43,7 @@ class DebridItaliaCom(Hoster):
 
         self.download(new_url, disposition=True)
 
-        check = self.checkDownload({"empty": re.compile(r"^$")})
+        check = self.checkDownload({'empty': re.compile(r"^$")})
 
         if check == "empty":
             self.retry(5, 2 * 60, "Empty file downloaded")

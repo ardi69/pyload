@@ -40,7 +40,7 @@ class Premium4Me(Hoster):
             "http://premium.to/api/getfile.php?authcode=%s&link=%s" % (self.account.authcode, quote(pyfile.url, "")),
             disposition=True)
 
-        check = self.checkDownload({"nopremium": "No premium account available"})
+        check = self.checkDownload({'nopremium': "No premium account available"})
 
         if check == "nopremium":
             self.retry(60, 5 * 60, "No premium account available")

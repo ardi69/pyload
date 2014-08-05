@@ -32,14 +32,14 @@ class MegasharesCom(Account):
         except Exception, e:
             self.logError(e)
 
-        return {"validuntil": validuntil, "trafficleft": -1, "premium": premium}
+        return {'validuntil': validuntil, 'trafficleft': -1, 'premium': premium}
 
     def login(self, user, data, req):
         html = req.load('http://d01.megashares.com/myms_login.php', post={
-            "httpref": "",
-            "myms_login": "Login",
-            "mymslogin_name": user,
-            "mymspassword": data['password']
+            'httpref': "",
+            'myms_login': "Login",
+            'mymslogin_name': user,
+            'mymspassword': data['password']
         }, decode=True)
 
         if not '<span class="b ml">%s</span>' % user in html:

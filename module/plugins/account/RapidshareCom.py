@@ -16,8 +16,8 @@ class RapidshareCom(Account):
     def loadAccountInfo(self, user, req):
         data = self.getAccountData(user)
         api_url_base = "http://api.rapidshare.com/cgi-bin/rsapi.cgi"
-        api_param_prem = {"sub": "getaccountdetails", "type": "prem", "login": user,
-                          "password": data['password'], "withcookie": 1}
+        api_param_prem = {'sub': "getaccountdetails", "type": "prem", "login": user,
+                          'password': data['password'], "withcookie": 1}
         src = req.load(api_url_base, cookies=False, get=api_param_prem)
         if src.startswith("ERROR"):
             raise Exception(src)
@@ -32,14 +32,14 @@ class RapidshareCom(Account):
         validuntil = int(info['billeduntil'])
         premium = True if validuntil else False
 
-        tmp = {"premium": premium, "validuntil": validuntil, "trafficleft": -1, "maxtraffic": -1}
+        tmp = {'premium': premium, 'validuntil': validuntil, 'trafficleft': -1, 'maxtraffic': -1}
 
         return tmp
 
     def login(self, user, data, req):
         api_url_base = "http://api.rapidshare.com/cgi-bin/rsapi.cgi"
-        api_param_prem = {"sub": "getaccountdetails", "type": "prem", "login": user,
-                          "password": data['password'], "withcookie": 1}
+        api_param_prem = {'sub': "getaccountdetails", "type": "prem", "login": user,
+                          'password': data['password'], "withcookie": 1}
         src = req.load(api_url_base, cookies=False, get=api_param_prem)
         if src.startswith("ERROR"):
             raise Exception(src + "### Note you have to use your account number for login, instead of name.")

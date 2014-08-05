@@ -45,11 +45,11 @@ class LixIn(Crypter):
                     self.logDebug("trying captcha")
                     captcharesult = self.decryptCaptcha("http://lix.in/" + m.group("image"))
                 self.html = self.req.load(url, decode=True,
-                                          post={"capt": captcharesult, "submit": "submit", "tiny": id})
+                                          post={'capt': captcharesult, 'submit': "submit", 'tiny': id})
             else:
                 self.logDebug("no captcha/captcha solved")
         else:
-            self.html = self.req.load(url, decode=True, post={"submit": "submit", "tiny": id})
+            self.html = self.req.load(url, decode=True, post={'submit': "submit", 'tiny': id})
 
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:

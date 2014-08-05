@@ -76,8 +76,8 @@ class FilefactoryCom(SimpleHoster):
         self.logDebug('DIRECT LINK: ' + direct)
         self.download(direct, disposition=True)
 
-        check = self.checkDownload({"multiple": "You are currently downloading too many files at once.",
-                                    "error": '<div id="errorMessage">'})
+        check = self.checkDownload({'multiple': "You are currently downloading too many files at once.",
+                                    'error': '<div id="errorMessage">'})
 
         if check == "multiple":
             self.logDebug("Parallel downloads detected; waiting 15 minutes")

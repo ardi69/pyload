@@ -67,12 +67,12 @@ class Account(Base):
             self.login(user, data, req)
         except WrongPassword:
             self.logWarning(
-                _("Could not login with account %(user)s | %(msg)s") % {"user": user
+                _("Could not login with account %(user)s | %(msg)s") % {'user': user
                                                                         , "msg": _("Wrong Password")})
             success = data['valid'] = False
         except Exception, e:
             self.logWarning(
-                _("Could not login with account %(user)s | %(msg)s") % {"user": user
+                _("Could not login with account %(user)s | %(msg)s") % {'user': user
                                                                         , "msg": e})
             success = data['valid'] = False
             if self.core.debug:
@@ -114,7 +114,7 @@ class Account(Base):
                 self.accounts[user]['options'].update(options)
                 return self.accounts[user]['options'] != before
         else:
-            self.accounts[user] = {"password": password, "options": options, "valid": True}
+            self.accounts[user] = {'password': password, 'options': options, 'valid': True}
             self._login(user, self.accounts[user])
             return True
 
@@ -146,7 +146,7 @@ class Account(Base):
                 if not type(infos) == dict:
                     raise Exception("Wrong return format")
             except Exception, e:
-                infos = {"error": str(e)}
+                infos = {'error': str(e)}
 
             if req: req.close()
 
@@ -175,16 +175,16 @@ class Account(Base):
         :return:
         """
         return {
-            "validuntil": None, # -1 for unlimited
-            "login": name,
+            'validuntil': None, # -1 for unlimited
+            'login': name,
             #"password": self.accounts[name]['password'], #@XXX: security
-            "options": self.accounts[name]['options'],
-            "valid": self.accounts[name]['valid'],
-            "trafficleft": None, # in kb, -1 for unlimited
-            "maxtraffic": None,
-            "premium": True, #useful for free accounts
-            "timestamp": 0, #time this info was retrieved
-            "type": self.__name__,
+            'options': self.accounts[name]['options'],
+            'valid': self.accounts[name]['valid'],
+            'trafficleft': None, # in kb, -1 for unlimited
+            'maxtraffic': None,
+            'premium': True, #useful for free accounts
+            'timestamp': 0, #time this info was retrieved
+            'type': self.__name__,
             }
 
     def getAllAccounts(self, force=False):
@@ -253,14 +253,14 @@ class Account(Base):
         if user in self.infos:
             self.logWarning(_("Account %s has not enough traffic, checking again in 30min") % user)
 
-            self.infos[user].update({"trafficleft": 0})
+            self.infos[user].update({'trafficleft': 0})
             self.scheduleRefresh(user, 30 * 60)
 
     def expired(self, user):
         if user in self.infos:
             self.logWarning(_("Account %s is expired, checking again in 1h") % user)
 
-            self.infos[user].update({"validuntil": time() - 1})
+            self.infos[user].update({'validuntil': time() - 1})
             self.scheduleRefresh(user, 60 * 60)
 
     def scheduleRefresh(self, user, time=0, force=True):

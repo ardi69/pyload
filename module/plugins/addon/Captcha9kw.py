@@ -41,8 +41,8 @@ class Captcha9kw(Addon):
         self.info = {}
 
     def getCredits(self):
-        response = getURL(self.API_URL, get={"apikey": self.getConfig("passkey"), "pyload": "1", "source": "pyload",
-                                             "action": "usercaptchaguthaben"})
+        response = getURL(self.API_URL, get={'apikey': self.getConfig("passkey"), "pyload": "1", "source": "pyload",
+                                             'action': "usercaptchaguthaben"})
 
         if response.isdigit():
             self.logInfo(_("%s credits left") % response)
@@ -65,26 +65,26 @@ class Captcha9kw(Addon):
             mouse = 0
 
         response = getURL(self.API_URL, post={
-            "apikey": self.getConfig("passkey"),
-            "prio": self.getConfig("prio"),
-            "confirm": self.getConfig("confirm"),
-            "captchaperhour": self.getConfig("captchaperhour"),
-            "maxtimeout": self.getConfig("timeout"),
-            "selfsolve": self.getConfig("selfsolve"),
-            "pyload": "1",
-            "source": "pyload",
-            "base64": "1",
-            "mouse": mouse,
-            "file-upload-01": data,
-            "action": "usercaptchaupload"})
+            'apikey': self.getConfig("passkey"),
+            'prio': self.getConfig("prio"),
+            'confirm': self.getConfig("confirm"),
+            'captchaperhour': self.getConfig("captchaperhour"),
+            'maxtimeout': self.getConfig("timeout"),
+            'selfsolve': self.getConfig("selfsolve"),
+            'pyload': "1",
+            'source': "pyload",
+            'base64': "1",
+            'mouse': mouse,
+            'file-upload-01': data,
+            'action': "usercaptchaupload"})
 
         if response.isdigit():
             self.logInfo(_("New CaptchaID from upload: %s : %s") % (response, task.captchaFile))
 
             for _ in xrange(1, 100, 1):
-                response2 = getURL(self.API_URL, get={"apikey": self.getConfig("passkey"), "id": response,
-                                                      "pyload": "1", "source": "pyload",
-                                                      "action": "usercaptchacorrectdata"})
+                response2 = getURL(self.API_URL, get={'apikey': self.getConfig("passkey"), "id": response,
+                                                      'pyload': "1", "source": "pyload",
+                                                      'action': "usercaptchacorrectdata"})
 
                 if response2 != "":
                     break
@@ -122,13 +122,13 @@ class Captcha9kw(Addon):
 
             try:
                 response = getURL(self.API_URL,
-                                  post={"action": "usercaptchacorrectback",
-                                        "apikey": self.getConfig("passkey"),
-                                        "api_key": self.getConfig("passkey"),
-                                        "correct": "1",
-                                        "pyload": "1",
-                                        "source": "pyload",
-                                        "id": task.data['ticket']})
+                                  post={'action': "usercaptchacorrectback",
+                                        'apikey': self.getConfig("passkey"),
+                                        'api_key': self.getConfig("passkey"),
+                                        'correct': "1",
+                                        'pyload': "1",
+                                        'source': "pyload",
+                                        'id': task.data['ticket']})
                 self.logInfo("Request correct: %s" % response)
 
             except BadHeader, e:
@@ -141,13 +141,13 @@ class Captcha9kw(Addon):
 
             try:
                 response = getURL(self.API_URL,
-                                  post={"action": "usercaptchacorrectback",
-                                        "apikey": self.getConfig("passkey"),
-                                        "api_key": self.getConfig("passkey"),
-                                        "correct": "2",
-                                        "pyload": "1",
-                                        "source": "pyload",
-                                        "id": task.data['ticket']})
+                                  post={'action': "usercaptchacorrectback",
+                                        'apikey': self.getConfig("passkey"),
+                                        'api_key': self.getConfig("passkey"),
+                                        'correct': "2",
+                                        'pyload': "1",
+                                        'source': "pyload",
+                                        'id': task.data['ticket']})
                 self.logInfo("Request refund: %s" % response)
 
             except BadHeader, e:

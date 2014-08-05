@@ -18,12 +18,12 @@ class ZeveraCom(Account):
     def loadAccountInfo(self, user, req):
         data = self.getAPIData(req)
         if data == "No traffic":
-            account_info = {"trafficleft": 0, "validuntil": 0, "premium": False}
+            account_info = {'trafficleft': 0, 'validuntil': 0, 'premium': False}
         else:
             account_info = {
-                "trafficleft": int(data['availabletodaytraffic']) * 1024,
-                "validuntil": mktime(strptime(data['endsubscriptiondate'], "%Y/%m/%d %H:%M:%S")),
-                "premium": True
+                'trafficleft': int(data['availabletodaytraffic']) * 1024,
+                'validuntil': mktime(strptime(data['endsubscriptiondate'], "%Y/%m/%d %H:%M:%S")),
+                'premium': True
             }
         return account_info
 

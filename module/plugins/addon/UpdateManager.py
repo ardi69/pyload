@@ -61,7 +61,7 @@ class UpdateManager(Addon):
         self.cb2 = None
         self.interval = self.MIN_INTERVAL
         self.updating = False
-        self.info = {"pyload": False, "version": None, "plugins": False}
+        self.info = {'pyload': False, 'version': None, 'plugins': False}
         self.mtimes = {}  #: store modification time for each plugin
 
     def periodical2(self):
@@ -185,10 +185,10 @@ class UpdateManager(Addon):
                 continue
 
             self.logInfo(_(msg) % {
-                "type": type,
-                "name": name,
-                "oldver": oldver,
-                "newver": newver
+                'type': type,
+                'name': name,
+                'oldver': oldver,
+                'newver': newver
             })
 
             try:
@@ -216,8 +216,8 @@ class UpdateManager(Addon):
             removed = self.removePlugins(blacklisted)
             for t, n in removed:
                 self.logInfo(_("Removed blacklisted plugin [%(type)s] %(name)s") % {
-                    "type": t,
-                    "name": n
+                    'type': t,
+                    'name': n
                 })
 
         if updated:

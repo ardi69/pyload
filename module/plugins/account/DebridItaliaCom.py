@@ -20,17 +20,17 @@ class DebridItaliaCom(Account):
 
     def loadAccountInfo(self, user, req):
         if 'Account premium not activated' in self.html:
-            return {"premium": False, "validuntil": None, "trafficleft": None}
+            return {'premium': False, 'validuntil': None, 'trafficleft': None}
 
         m = re.search(self.WALID_UNTIL_PATTERN, self.html)
         if m:
             validuntil = int(time.mktime(time.strptime(m.group('D'), "%d/%m/%Y %H:%M")))
-            return {"premium": True, "validuntil": validuntil, "trafficleft": -1}
+            return {'premium': True, 'validuntil': validuntil, 'trafficleft': -1}
         else:
             self.logError('Unable to retrieve account information - Plugin may be out of date')
 
     def login(self, user, data, req):
         self.html = req.load("http://debriditalia.com/login.php",
-                             get={"u": user, "p": data['password']})
+                             get={'u': user, 'p': data['password']})
         if 'NO' in self.html:
             self.wrongPassword()

@@ -203,7 +203,7 @@ class XFileSharingPro(SimpleHoster):
             self.logWarning(re.sub(r"<.*?>", " ", self.errmsg))
 
             if 'wait' in self.errmsg:
-                wait_time = sum([int(v) * {"hour": 3600, "minute": 60, "second": 1}[u] for v, u in
+                wait_time = sum([int(v) * {'hour': 3600, 'minute': 60, 'second': 1}[u] for v, u in
                                  re.findall(r'(\d+)\s*(hour|minute|second)?', self.errmsg)])
                 self.wait(wait_time, True)
             elif 'captcha' in self.errmsg:
@@ -235,7 +235,7 @@ class XFileSharingPro(SimpleHoster):
             if hasattr(self, "FORM_PATTERN"):
                 action, inputs = self.parseHtmlForm(self.FORM_PATTERN)
             else:
-                action, inputs = self.parseHtmlForm(input_names={"op": re.compile("^download")})
+                action, inputs = self.parseHtmlForm(input_names={'op': re.compile("^download")})
 
             if not inputs:
                 action, inputs = self.parseHtmlForm('F1')

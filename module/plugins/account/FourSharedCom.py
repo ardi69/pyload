@@ -16,15 +16,15 @@ class FourSharedCom(Account):
 
     def loadAccountInfo(self, user, req):
         #fixme
-        return {"validuntil": -1, "trafficleft": -1, "premium": False}
+        return {'validuntil': -1, 'trafficleft': -1, 'premium': False}
 
     def login(self, user, data, req):
         req.cj.setCookie("www.4shared.com", "4langcookie", "en")
         response = req.load('http://www.4shared.com/login',
-                            post={"login": user,
-                                  "password": data['password'],
-                                  "remember": "false",
-                                  "doNotRedirect": "true"})
+                            post={'login': user,
+                                  'password': data['password'],
+                                  'remember': "false",
+                                  'doNotRedirect': "true"})
         self.logDebug(response)
         response = json_loads(response)
 

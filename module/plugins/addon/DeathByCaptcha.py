@@ -71,8 +71,8 @@ class DeathByCaptcha(Addon):
         if post:
             if not isinstance(post, dict):
                 post = {}
-            post.update({"username": self.getConfig("username"),
-                         "password": self.getConfig("passkey")})
+            post.update({'username': self.getConfig("username"),
+                         'password': self.getConfig("passkey")})
 
         response = None
         try:
@@ -131,7 +131,7 @@ class DeathByCaptcha(Addon):
                 data = f.read()
             data = "base64:" + b64encode(data)
 
-        response = self.call_api("captcha", {"captchafile": data}, multipart)
+        response = self.call_api("captcha", {'captchafile': data}, multipart)
 
         if "captcha" not in response:
             raise DeathByCaptchaException(response)
