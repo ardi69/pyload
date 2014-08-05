@@ -93,7 +93,7 @@ options(
         virtual="virtualenv2",
     ),
     cog=Bunch(
-    	pattern="*.py",
+        pattern="*.py",
     )
 )
 
