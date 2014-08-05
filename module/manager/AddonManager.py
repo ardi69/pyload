@@ -30,7 +30,7 @@ from module.manager.PluginManager import literal_eval
 from module.utils import lock
 
 
-class AddonManager(object):
+class AddonManager:
     """Manages addons, delegates and handles Events.
 
         Every plugin can define events, \

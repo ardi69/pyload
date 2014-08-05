@@ -19,7 +19,8 @@
 from module.manager.PullEvents import UpdateEvent
 from module.utils import safe_filename
 
-class PyPackage(object):
+
+class PyPackage:
     """
     Represents a package object at runtime
     """

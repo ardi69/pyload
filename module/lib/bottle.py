@@ -1401,7 +1401,7 @@ def _hkey(s):
     return s.title().replace('_','-')
 
 
-class HeaderProperty(object):
+class HeaderProperty:
     def __init__(self, name, reader=None, writer=str, default=''):
         self.name, self.default = name, default
         self.reader, self.writer = reader, writer
@@ -1763,7 +1763,7 @@ class TemplatePlugin(object):
 
 
 #: Not a plugin, but part of the plugin API. TODO: Find a better place.
-class _ImportRedirect(object):
+class _ImportRedirect:
     def __init__(self, name, impmask):
         ''' Create a virtual package that redirects imports (see PEP 302). '''
         self.name = name
@@ -2213,7 +2213,7 @@ class AppStack(list):
         return value
 
 
-class WSGIFileWrapper(object):
+class WSGIFileWrapper:
 
     def __init__(self, fp, buffer_size=1024*64):
         self.fp, self.buffer_size = fp, buffer_size
@@ -2330,7 +2330,7 @@ class ResourceManager(object):
         return self.opener(fname, mode=mode, *args, **kwargs)
 
 
-class FileUpload(object):
+class FileUpload:
 
     def __init__(self, fileobj, name, filename, headers=None):
         ''' Wrapper for file uploads. '''

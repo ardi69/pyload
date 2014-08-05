@@ -77,7 +77,7 @@ sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
 # - configurable auth system ldap/mysql
 # - cron job like sheduler
 
-class Core(object):
+class Core:
     """pyLoad Core, one tool to rule them all... (the filehosters) :D"""
 
     def __init__(self):

@@ -22,7 +22,7 @@ from traceback import print_exc
 from threading import Lock
 
 
-class CaptchaManager(object):
+class CaptchaManager:
 
     def __init__(self, core):
         self.lock = Lock()
@@ -82,7 +82,7 @@ class CaptchaManager(object):
         return False
 
 
-class CaptchaTask(object):
+class CaptchaTask:
 
     def __init__(self, id, img, format, file, result_type='textual'):
         self.id = str(id)

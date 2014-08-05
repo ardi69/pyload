@@ -32,7 +32,7 @@ except:
     import sqlite3
 
 
-class FileHandler(object):
+class FileHandler:
     """Handles all request made to obtain information,
     modify status or other request for links or packages"""
 

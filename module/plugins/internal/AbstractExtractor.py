@@ -12,7 +12,7 @@ class WrongPassword(Exception):
     pass
 
 
-class AbtractExtractor(object):
+class AbtractExtractor:
     __name__ = "AbtractExtractor"
     __version__ = "0.2"
 

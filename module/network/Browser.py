@@ -6,7 +6,7 @@ from module.network.HTTPRequest import HTTPRequest
 from module.network.HTTPDownload import HTTPDownload
 
 
-class Browser(object):
+class Browser:
     __slots__ = ("log", "options", "bucket", "cj", "_size", "http", "dl")
 
     def __init__(self, bucket=None, options={}):

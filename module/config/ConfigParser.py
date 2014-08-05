@@ -12,7 +12,7 @@ from module.utils import chmod
 CONF_VERSION = 2
 
 
-class ConfigParser(object):
+class ConfigParser:
     """
     holds and manage the configuration
 
@@ -347,7 +347,7 @@ class ConfigParser(object):
             del self.plugin[name]
 
 
-class Section(object):
+class Section:
     """provides dictionary like access for configparser"""
 
     def __init__(self, parser, section):

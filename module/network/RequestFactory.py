@@ -26,7 +26,7 @@ from module.network.CookieJar import CookieJar
 from module.network.XDCCRequest import XDCCRequest
 
 
-class RequestFactory(object):
+class RequestFactory:
 
     def __init__(self, core):
         self.lock = Lock()

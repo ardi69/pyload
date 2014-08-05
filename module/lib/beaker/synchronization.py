@@ -43,7 +43,7 @@ class NameLock(object):
     """
     locks = util.WeakValuedRegistry()
 
-    class NLContainer(object):
+    class NLContainer:
         def __init__(self, reentrant):
             if reentrant:
                 self.lock = _threading.RLock()

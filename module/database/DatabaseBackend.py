@@ -52,7 +52,7 @@ class style(object):
         return x
 
 
-class DatabaseJob(object):
+class DatabaseJob:
 
     def __init__(self, f, *args, **kwargs):
         self.done = Event()

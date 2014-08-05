@@ -58,7 +58,7 @@ class BackendBase(Thread):
         self.shutdown()
 
 
-class RemoteManager(object):
+class RemoteManager:
     available = []
 
     def __init__(self, core):

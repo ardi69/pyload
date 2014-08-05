@@ -31,7 +31,7 @@ from module.plugins.Base import Abort
 from module.utils import safe_join, fs_encode
 
 
-class HTTPDownload(object):
+class HTTPDownload:
     """ loads a url http + ftp """
 
     def __init__(self, url, filename, get={}, post={}, referer=None, cj=None, bucket=None,

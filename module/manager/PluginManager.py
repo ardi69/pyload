@@ -11,7 +11,7 @@ from traceback import print_exc
 from SafeEval import const_eval as literal_eval
 
 
-class PluginManager(object):
+class PluginManager:
     ROOT = "module.plugins."
     USERROOT = "userplugins."
     TYPES = ("account", "container", "crypter", "addon", "hoster", "internal",  "ocr")

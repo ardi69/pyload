@@ -48,7 +48,7 @@ class BadHeader(Exception):
         self.content = content
 
 
-class HTTPRequest(object):
+class HTTPRequest:
 
     def __init__(self, cookies=None, options=None):
         self.c = pycurl.Curl()

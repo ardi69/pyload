@@ -6,7 +6,7 @@ import APIExerciser
 from nose.tools import nottest
 
 
-class TestApi(object):
+class TestApi:
 
     def __init__(self):
         self.api = APIExerciser.APIExerciser(None, True, "TestUser", "pwhere")

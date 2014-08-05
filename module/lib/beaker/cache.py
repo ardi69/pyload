@@ -357,7 +357,7 @@ class Cache(object):
         self.put(key, value)
 
 
-class CacheManager(object):
+class CacheManager:
     def __init__(self, **kwargs):
         """Initialize a CacheManager object with a set of options
 

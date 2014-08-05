@@ -152,7 +152,7 @@ class FilterTestCase(JinjaTestCase):
         assert tmpl.render() == '&lt;foo&gt;<span>foo</span>'
 
     def test_join_attribute(self):
-        class User(object):
+        class User:
             def __init__(self, username):
                 self.username = username
         tmpl = env.from_string('''{{ users|join(', ', 'username') }}''')
@@ -309,7 +309,7 @@ class FilterTestCase(JinjaTestCase):
 
     def test_sort4(self):
         @implements_to_string
-        class Magic(object):
+        class Magic:
             def __init__(self, value):
                 self.value = value
             def __str__(self):
@@ -340,12 +340,12 @@ class FilterTestCase(JinjaTestCase):
         assert tmpl.render() == 'a:1:2|b:1|'
 
     def test_groupby_multidot(self):
-        class Date(object):
+        class Date:
             def __init__(self, day, month, year):
                 self.day = day
                 self.month = month
                 self.year = year
-        class Article(object):
+        class Article:
             def __init__(self, title, *date):
                 self.date = Date(*date)
                 self.title = title
@@ -411,7 +411,7 @@ class FilterTestCase(JinjaTestCase):
         self.assertEqual(tmpl.render(), '6')
 
     def test_attribute_map(self):
-        class User(object):
+        class User:
             def __init__(self, name):
                 self.name = name
         env = Environment()
@@ -449,7 +449,7 @@ class FilterTestCase(JinjaTestCase):
         self.assertEqual(tmpl.render(), 'None|False|0')
 
     def test_simple_select_attr(self):
-        class User(object):
+        class User:
             def __init__(self, name, is_active):
                 self.name = name
                 self.is_active = is_active
@@ -464,7 +464,7 @@ class FilterTestCase(JinjaTestCase):
         self.assertEqual(tmpl.render(users=users), 'john|jane')
 
     def test_simple_reject_attr(self):
-        class User(object):
+        class User:
             def __init__(self, name, is_active):
                 self.name = name
                 self.is_active = is_active
@@ -479,7 +479,7 @@ class FilterTestCase(JinjaTestCase):
         self.assertEqual(tmpl.render(users=users), 'mike')
 
     def test_func_select_attr(self):
-        class User(object):
+        class User:
             def __init__(self, id, name):
                 self.id = id
                 self.name = name
@@ -494,7 +494,7 @@ class FilterTestCase(JinjaTestCase):
         self.assertEqual(tmpl.render(users=users), 'john|mike')
 
     def test_func_reject_attr(self):
-        class User(object):
+        class User:
             def __init__(self, id, name):
                 self.id = id
                 self.name = name

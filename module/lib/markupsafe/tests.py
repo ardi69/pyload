@@ -100,7 +100,7 @@ class MarkupTestCase(unittest.TestCase):
         assert Markup('{0}').format(HasHTMLAndFormat()) == Markup('<FORMAT>')
 
     def test_complex_custom_formatting(self):
-        class User(object):
+        class User:
             def __init__(self, id, username):
                 self.id = id
                 self.username = username
