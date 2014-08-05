@@ -560,13 +560,16 @@ class Plugin(Base):
         :return: dictionary key of the first rule that matched
         """
         lastDownload = fs_encode(self.lastDownload)
-        if not exists(lastDownload): return None
+        if not exists(lastDownload):
+            return None
 
         size = stat(lastDownload)
         size = size.st_size
 
-        if api_size and api_size <= size: return None
-        elif size > max_size and not read_size: return None
+        if api_size and api_size <= size:
+            return None
+        elif size > max_size and not read_size:
+            return None
         self.logDebug("Download Check triggered")
         f = open(lastDownload, "rb")
         content = f.read(read_size if read_size else -1)

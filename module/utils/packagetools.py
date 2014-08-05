@@ -72,7 +72,8 @@ def parseNames(files):
         #                found = True
         #                break
         #
-        #        if found: continue
+        #        if found:
+        #            continue
 
         # unrar pattern, 7zip/zip and hjmerge pattern, isz pattern, FFSJ pattern
         before = name
@@ -123,7 +124,8 @@ def parseNames(files):
         # fallback: package by hoster
         if not name:
             name = urlparse(file).hostname
-            if name: name = name.replace("www.", "")
+            if name:
+                name = name.replace("www.", "")
 
         # fallback : default name
         if not name:

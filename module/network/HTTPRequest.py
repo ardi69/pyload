@@ -232,11 +232,13 @@ class HTTPRequest:
 
     def getResponse(self):
         """ retrieve response from string io """
-        if self.rep is None: return ""
-        value = self.rep.getvalue()
-        self.rep.close()
-        self.rep = StringIO()
-        return value
+        if self.rep is None:
+            return ""
+        else:
+            value = self.rep.getvalue()
+            self.rep.close()
+            self.rep = StringIO()
+            return value
 
     def decodeResponse(self, rep):
         """ decode with correct encoding, relies on header """
@@ -276,7 +278,8 @@ class HTTPRequest:
         """ writes response """
         if self.rep.tell() > 1000000 or self.abort:
             rep = self.getResponse()
-            if self.abort: raise Abort()
+            if self.abort:
+                raise Abort()
             f = open("response.dump", "wb")
             f.write(rep)
             f.close()

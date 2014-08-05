@@ -341,13 +341,17 @@ class Cli:
             sleep(1)
             result = client.pollResults(rid)
             for url, status in result.data.iteritems():
-                if status.status == 2: check = "Online"
-                elif status.status == 1: check = "Offline"
-                else: check = "Unknown"
+                if status.status == 2:
+                    check = "Online"
+                elif status.status == 1:
+                    check = "Offline"
+                else:
+                    check = "Unknown"
 
                 print "%-45s %-12s\t %-15s\t %s" % (status.name, formatSize(status.size), status.plugin, check)
 
-            if result.rid == -1: break
+            if result.rid == -1:
+                break
 
 
 class RefreshThread(Thread):
@@ -533,9 +537,12 @@ def main():
             config['port'] = False
 
         if not client:
-            if not config['addr']: config['addr'] = raw_input(_("Address: "))
-            if not config['port']: config['port'] = raw_input(_("Port: "))
-            if not username: username = raw_input(_("Username: "))
+            if not config['addr']:
+                config['addr'] = raw_input(_("Address: "))
+            if not config['port']:
+                config['port'] = raw_input(_("Port: "))
+            if not username:
+                username = raw_input(_("Username: "))
             if not password:
                 from getpass import getpass
 
@@ -560,7 +567,8 @@ def main():
         except NoSSL:
             print _("You need py-openssl to connect to this pyLoad core.")
 
-    if interactive and command: print _("Interactive mode ignored since you passed some commands.")
+    if interactive and command:
+        print _("Interactive mode ignored since you passed some commands.")
 
     if client:
         writeConfig(config)

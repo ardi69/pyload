@@ -153,8 +153,10 @@ class XDCCRequest:
 
     @property
     def percent(self):
-        if not self.filesize: return 0
-        return (self.recv * 100) / self.filesize
+        if not self.filesize:
+            return 0
+        else:
+            return (self.recv * 100) / self.filesize
 
     def close(self):
         pass

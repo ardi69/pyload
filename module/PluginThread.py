@@ -175,7 +175,8 @@ class DownloadThread(PluginThread):
                 return True
 
             try:
-                if not pyfile.hasPlugin(): continue
+                if not pyfile.hasPlugin():
+                    continue
                 #this pyfile was deleted while queueing
 
                 pyfile.plugin.checkForSameFiles(starting=True)
@@ -622,7 +623,8 @@ class InfoThread(PluginThread):
                 self.m.log.debug("Run Info Fetching for %s" % pluginname)
                 for result in plugin.getInfo(process):
                     #result = [ .. (name, size, status, url) .. ]
-                    if not type(result) == list: result = [result]
+                    if not type(result) == list:
+                        result = [result]
 
                     for res in result:
                         self.m.infoCache[res[3]] = res

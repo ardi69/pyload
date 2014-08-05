@@ -213,11 +213,12 @@ class PyFile:
         """ formats and return wait time in humanreadable format """
         seconds = self.waitUntil - time()
 
-        if seconds < 0: return "00:00:00"
-
-        hours, seconds = divmod(seconds, 3600)
-        minutes, seconds = divmod(seconds, 60)
-        return "%.2i:%.2i:%.2i" % (hours, minutes, seconds)
+        if seconds < 0:
+            return "00:00:00"
+        else:
+            hours, seconds = divmod(seconds, 3600)
+            minutes, seconds = divmod(seconds, 60)
+            return "%.2i:%.2i:%.2i" % (hours, minutes, seconds)
 
     def formatSize(self):
         """ formats size to readable format """
@@ -227,11 +228,12 @@ class PyFile:
         """ formats eta to readable format """
         seconds = self.getETA()
 
-        if seconds < 0: return "00:00:00"
-
-        hours, seconds = divmod(seconds, 3600)
-        minutes, seconds = divmod(seconds, 60)
-        return "%.2i:%.2i:%.2i" % (hours, minutes, seconds)
+        if seconds < 0:
+            return "00:00:00"
+        else:
+            hours, seconds = divmod(seconds, 3600)
+            minutes, seconds = divmod(seconds, 60)
+            return "%.2i:%.2i:%.2i" % (hours, minutes, seconds)
 
     def getSpeed(self):
         """ calculates speed """

@@ -137,7 +137,8 @@ class JsEngine:
                     if x != y:
                         warning = True
 
-            if warning: print "### WARNING ###: Different results"
+            if warning:
+                print "### WARNING ###: Different results"
 
             return results[0]
 

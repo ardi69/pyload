@@ -109,7 +109,8 @@ class ChunkInfo:
 
     def remove(self):
         fs_name = fs_encode("%s.chunks" % self.name)
-        if exists(fs_name): remove(fs_name)
+        if exists(fs_name):
+            remove(fs_name)
 
     def getCount(self):
         return len(self.chunks)
@@ -175,7 +176,8 @@ class HTTPChunk(HTTPRequest):
 
             if self.range:
                 #do nothing if chunk already finished
-                if self.arrived + self.range[0] >= self.range[1]: return None
+                if self.arrived + self.range[0] >= self.range[1]:
+                    return None
 
                 if self.id == len(self.p.info.chunks) - 1: #as last chunk dont set end range, so we get everything
                     range = "%i-" % (self.arrived + self.range[0])
@@ -288,6 +290,8 @@ class HTTPChunk(HTTPRequest):
 
     def close(self):
         """ closes everything, unusable after this """
-        if self.fp: self.fp.close()
+        if self.fp:
+            self.fp.close()
         self.c.close()
-        if hasattr(self, "p"): del self.p
+        if hasattr(self, "p"):
+            del self.p

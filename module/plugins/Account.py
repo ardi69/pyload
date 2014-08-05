@@ -148,7 +148,8 @@ class Account(Base):
             except Exception, e:
                 infos = {'error': str(e)}
 
-            if req: req.close()
+            if req:
+                req.close()
 
             self.logDebug("Account Info: %s" % str(infos))
 
@@ -215,7 +216,8 @@ class Account(Base):
         """ returns an valid account name and data"""
         usable = []
         for user, data in self.accounts.iteritems():
-            if not data['valid']: continue
+            if not data['valid']:
+                continue
 
             if "time" in data['options'] and data['options']['time']:
                 time_data = ""
@@ -237,8 +239,10 @@ class Account(Base):
 
             usable.append((user, data))
 
-        if not usable: return None, None
-        return choice(usable)
+        if not usable:
+            return None, None
+        else:
+            return choice(usable)
 
     def canUse(self):
         return False if self.selectAccount() == (None, None) else True

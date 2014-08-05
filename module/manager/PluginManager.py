@@ -97,7 +97,8 @@ class PluginManager:
                     continue
 
                 name = f[:-3]
-                if name[-1] == ".": name = name[:-4]
+                if name[-1] == ".":
+                    name = name[:-4]
 
                 version = self.VERSION.findall(content)
                 if version:
@@ -157,10 +158,12 @@ class PluginManager:
                     if folder == "addon":
                         append = True
                         for item in config:
-                            if item[0] == "activated": append = False
+                            if item[0] == "activated":
+                                append = False
 
                         # activated flag missing
-                        if append: config.append(["activated", "bool", "Activated", False])
+                        if append:
+                            config.append(["activated", "bool", "Activated", False])
 
                     try:
                         self.config.addPluginConfig(name, config, desc)
@@ -191,7 +194,8 @@ class PluginManager:
         res = [] # tupels of (url, plugin)
 
         for url in urls:
-            if type(url) not in (str, unicode, buffer): continue
+            if type(url) not in (str, unicode, buffer):
+                continue
             found = False
 
             if last and last[1]['re'].match(url):
@@ -247,7 +251,9 @@ class PluginManager:
         """
         plugins = self.plugins[type]
         if name in plugins:
-            if "module" in plugins[name]: return plugins[name]['module']
+            if "module" in plugins[name]:
+                return plugins[name]['module']
+
             try:
                 module = __import__(self.ROOT + "%s.%s" % (type, plugins[name]['name']), globals(), locals(),
                     plugins[name]['name'])
@@ -261,7 +267,7 @@ class PluginManager:
     def loadClass(self, type, name):
         """Returns the class of a plugin with the same name"""
         module = self.loadModule(type, name)
-        if module: return getattr(module, name)
+        return getattr(module, name) if module else None
 
     def getAccountPlugins(self):
         """return list of account plugin names"""
@@ -270,11 +276,11 @@ class PluginManager:
     def find_module(self, fullname, path=None):
         #redirecting imports if necesarry
         if fullname.startswith(self.ROOT) or fullname.startswith(self.USERROOT): #seperate pyload plugins
-            if fullname.startswith(self.USERROOT): user = 1
-            else: user = 0 #used as bool and int
+            user = 1 if fullname.startswith(self.USERROOT) else 0  #: used as bool and int
 
             split = fullname.split(".")
-            if len(split) != 4 - user: return
+            if len(split) != 4 - user:
+                return
             type, name = split[2 - user:4 - user]
 
             if type in self.plugins and name in self.plugins[type]:
@@ -293,7 +299,8 @@ class PluginManager:
                     newname = name.replace(self.ROOT, self.USERROOT)
                 else:
                     newname = name.replace(self.USERROOT, self.ROOT)
-            else: newname = name
+            else:
+                newname = name
 
             base, plugin = newname.rsplit(".", 1)
 

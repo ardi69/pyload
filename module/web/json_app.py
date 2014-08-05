@@ -241,7 +241,8 @@ def load_config(category, section):
         conf = PYLOAD.getPluginConfigDict()
 
     for key, option in conf[section].iteritems():
-        if key in ("desc", "outline"): continue
+        if key in ("desc", "outline"):
+            continue
 
         if ";" in option['type']:
             option['list'] = option['type'].split(";")
@@ -260,7 +261,8 @@ def save_config(category):
         except:
             continue
 
-        if category == "general": category = "core"
+        if category == "general":
+            category = "core"
 
         PYLOAD.setConfigValue(section, option, decode(value), category)
 
@@ -282,12 +284,14 @@ def update_accounts():
 
     for name, value in request.POST.iteritems():
         value = value.strip()
-        if not value: continue
+        if not value:
+            continue
 
         tmp, user = name.split(";")
         plugin, action = tmp.split("|")
 
-        if (plugin, user) in deleted: continue
+        if (plugin, user) in deleted:
+            continue
 
         if action == "password":
             PYLOAD.updateAccount(plugin, user, value)

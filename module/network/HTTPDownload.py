@@ -84,8 +84,10 @@ class HTTPDownload:
 
     @property
     def percent(self):
-        if not self.size: return 0
-        return (self.arrived * 100) / self.size
+        if not self.size:
+            return 0
+        else:
+            return (self.arrived * 100) / self.size
 
     def _copyChunks(self):
         init = fs_encode(self.info.getChunkName(0)) #initial chunk name
@@ -144,8 +146,10 @@ class HTTPDownload:
         finally:
             self.close()
 
-        if self.nameDisposition and self.disposition: return self.nameDisposition
-        return None
+        if self.nameDisposition and self.disposition:
+            return self.nameDisposition
+        else:
+            return None
 
     def _download(self, chunks, resume):
         if not resume:
@@ -301,7 +305,8 @@ class HTTPDownload:
     def findChunk(self, handle):
         """ linear search to find a chunk (should be ok since chunk size is usually low) """
         for chunk in self.chunks:
-            if chunk.c == handle: return chunk
+            if chunk.c == handle:
+                return chunk
 
     def closeChunk(self, chunk):
         try:

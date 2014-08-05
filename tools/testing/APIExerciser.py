@@ -120,7 +120,8 @@ class APIExerciser(Thread):
 
     def deleteFiles(self):
         info = self.api.getQueueData()
-        if not info: return
+        if not info:
+            return
 
         pack = choice(info)
         fids = pack.links
@@ -132,7 +133,8 @@ class APIExerciser(Thread):
 
     def deletePackages(self):
         info = choice([self.api.getQueue(), self.api.getCollector()])
-        if not info: return
+        if not info:
+            return
 
         pids = [p.pid for p in info]
         if len(pids):

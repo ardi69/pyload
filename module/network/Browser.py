@@ -23,7 +23,8 @@ class Browser:
 
 
     def renewHTTPRequest(self):
-        if hasattr(self, "http"): self.http.close()
+        if hasattr(self, "http"):
+            self.http.close()
         self.http = HTTPRequest(self.cj, self.options)
 
     def setLastURL(self, val):
@@ -61,8 +62,10 @@ class Browser:
 
     @property
     def percent(self):
-        if not self.size: return 0
-        return (self.arrived * 100) / self.size
+        if not self.size:
+            return 0
+        else:
+            return (self.arrived * 100) / self.size
 
     def clearCookies(self):
         if self.cj:
@@ -108,7 +111,8 @@ class Browser:
         self.renewHTTPRequest() #we need a new request
 
     def removeAuth(self):
-        if "auth" in self.options: del self.options['auth']
+        if "auth" in self.options:
+            del self.options['auth']
         self.renewHTTPRequest()
 
     def setOption(self, name, value):
@@ -116,7 +120,8 @@ class Browser:
         self.options[name] = value
 
     def deleteOption(self, name):
-        if name in self.options: del self.options[name]
+        if name in self.options:
+            del self.options[name]
 
     def clearHeaders(self):
         self.http.clearHeaders()

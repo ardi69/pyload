@@ -199,7 +199,8 @@ class ConfigParser:
         for section in config.iterkeys():
             if section in dest:
                 for option in config[section].iterkeys():
-                    if option in ("desc", "outline"): continue
+                    if option in ("desc", "outline"):
+                        continue
 
                     if option in dest[section]:
                         dest[section][option]['value'] = config[section][option]['value']
@@ -220,7 +221,8 @@ class ConfigParser:
                 f.write('\n%s - "%s":\n' % (section, config[section]['desc']))
 
                 for option, data in config[section].iteritems():
-                    if option in ("desc", "outline"): continue
+                    if option in ("desc", "outline"):
+                        continue
 
                     if isinstance(data['value'], list):
                         value = "[ \n"
@@ -247,8 +249,10 @@ class ConfigParser:
         elif typ == "bool":
             return True if value.lower() in ("1", "true", "on", "an", "yes") else False
         elif typ == "time":
-            if not value: value = "0:00"
-            if not ":" in value: value += ":00"
+            if not value:
+                value = "0:00"
+            if not ":" in value:
+                value += ":00"
             return value
         elif typ in ("str", "file", "folder"):
             try:
@@ -306,7 +310,8 @@ class ConfigParser:
 
         value = self.cast(self.plugin[plugin][option]['type'], value)
 
-        if self.pluginCB: self.pluginCB(plugin, option, value)
+        if self.pluginCB:
+            self.pluginCB(plugin, option, value)
 
         self.plugin[plugin][option]['value'] = value
         self.save()

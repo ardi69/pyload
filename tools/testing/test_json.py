@@ -13,7 +13,8 @@ url = "http://localhost:8001/api/%s"
 class TestJson:
 
     def call(self, name, post=None):
-        if not post: post = {}
+        if not post:
+            post = {}
         post['session'] = self.key
         u = urlopen(url % name, data=urlencode(post))
         return json_loads(u.read())

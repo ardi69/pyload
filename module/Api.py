@@ -673,8 +673,8 @@ class Api(Iface):
         :param destination: `Destination`
         :param pid: package id
         """
-        if destination not in (0, 1): return
-        self.core.files.setPackageLocation(pid, destination)
+        if destination in (0, 1):
+            self.core.files.setPackageLocation(pid, destination)
 
     @permission(PERMS.MODIFY)
     def moveFiles(self, fids, pid):
@@ -727,10 +727,12 @@ class Api(Iface):
         :param data: dict that maps attribute to desired value
         """
         p = self.core.files.getPackage(pid)
-        if not p: raise PackageDoesNotExists(pid)
+        if not p:
+            raise PackageDoesNotExists(pid)
 
         for key, value in data.iteritems():
-            if key == "id": continue
+            if key == "id":
+                continue
             setattr(p, key, value)
 
         p.sync()

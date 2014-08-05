@@ -105,7 +105,8 @@ class AddonManager:
             self.methods[plugin] = {func: doc}
 
     def callRPC(self, plugin, func, args, parse):
-        if not args: args = tuple()
+        if not args:
+            args = tuple()
         if parse:
             args = tuple([literal_eval(x) for x in args])
 
@@ -126,7 +127,8 @@ class AddonManager:
 
                 if self.config.getPlugin(pluginname, "activated"):
                     pluginClass = self.core.pluginManager.loadClass("addon", pluginname)
-                    if not pluginClass: continue
+                    if not pluginClass:
+                        continue
 
                     plugin = pluginClass(self.core, self)
                     plugins.append(plugin)

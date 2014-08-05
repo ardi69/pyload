@@ -85,8 +85,10 @@ class RequestFactory:
         else:
             type = "http"
             setting = self.core.config['proxy']['type'].lower()
-            if setting == "socks4": type = "socks4"
-            elif setting == "socks5": type = "socks5"
+            if setting == "socks4":
+                type = "socks4"
+            elif setting == "socks5":
+                type = "socks5"
 
             username = None
             if self.core.config['proxy']['username'] and self.core.config['proxy']['username'].lower() != "none":

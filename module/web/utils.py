@@ -69,7 +69,8 @@ def set_permission(perms):
     """
     permission = 0
     for name in dir(PERMS):
-        if name.startswith("_"): continue
+        if name.startswith("_"):
+            continue
 
         if name in perms and perms[name]:
             permission |= getattr(PERMS, name)

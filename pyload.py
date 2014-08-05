@@ -208,13 +208,15 @@ class Core:
 
     def isAlreadyRunning(self):
         pid = self.checkPidFile()
-        if not pid or os.name == "nt": return False
-        try:
-            os.kill(pid, 0)  # 0 - default signal (does nothing)
-        except:
-            return 0
+        if not pid or os.name == "nt":
+            return False
+        else:
+            try:
+                os.kill(pid, 0)  # 0 - default signal (does nothing)
+            except:
+                return 0
 
-        return pid
+            return pid
 
     def quitInstance(self):
         if os.name == "nt":
@@ -285,8 +287,10 @@ class Core:
 
             exit()
 
-        try: signal.signal(signal.SIGQUIT, self.quit)
-        except: pass
+        try:
+            signal.signal(signal.SIGQUIT, self.quit)
+        except:
+            pass
 
         self.config = ConfigParser()
 

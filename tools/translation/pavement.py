@@ -119,7 +119,8 @@ def html():
 ])
 def get_source(options):
     """ Downloads pyload source from bitbucket tip or given rev"""
-    if options.rev: options.url = "https://bitbucket.org/spoob/pyload/get/%s.zip" % options.rev
+    if options.rev:
+        options.url = "https://bitbucket.org/spoob/pyload/get/%s.zip" % options.rev
 
     pyload = path("pyload")
 
@@ -225,7 +226,8 @@ def generate_locale():
     strings = set()
 
     for fi in path("module/web").walkfiles():
-        if not fi.name.endswith(".js") and not fi.endswith(".coffee"): continue
+        if not fi.name.endswith(".js") and not fi.endswith(".coffee"):
+            continue
         with open(fi, "rb") as c:
             content = c.read()
 
@@ -367,8 +369,10 @@ def walk_trans(path, EXCLUDE, endings=[".py"]):
     result = ""
 
     for f in path.walkfiles():
-        if [True for x in EXCLUDE if x in f.dirname().relpath()]: continue
-        if f.name in EXCLUDE: continue
+        if [True for x in EXCLUDE if x in f.dirname().relpath()]:
+            continue
+        if f.name in EXCLUDE:
+            continue
 
         for e in endings:
             if f.name.endswith(e):

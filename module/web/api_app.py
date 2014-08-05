@@ -43,7 +43,8 @@ def call_api(func, args=""):
     kwargs = {}
 
     for x, y in chain(request.GET.iteritems(), request.POST.iteritems()):
-        if x == "session": continue
+        if x == "session":
+            continue
         kwargs[x] = unquote(y)
 
     try:
@@ -62,7 +63,8 @@ def callApi(func, *args, **kwargs):
                                    **dict([(x, literal_eval(y)) for x, y in kwargs.iteritems()]))
 
     # null is invalid json  response
-    if result is None: result = True
+    if result is None:
+        result = True
 
     return json.dumps(result, cls=TBaseEncoder)
 
