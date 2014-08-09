@@ -18,6 +18,7 @@ class File4safeCom(XFileSharingPro):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     HOSTER_NAME = "file4safe.com"
 
 
@@ -34,7 +35,7 @@ class File4safeCom(XFileSharingPro):
             location = m.group(1).strip()
             self.startDownload(location)
         else:
-            self.parseError("Unable to detect premium download link")
+            self.error("Unable to detect premium download link")
 
 
 getInfo = create_getInfo(File4safeCom)

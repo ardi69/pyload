@@ -33,6 +33,7 @@ class Captcha9kw(Addon):
     __author_name__ = "RaNaN"
     __author_mail__ = "RaNaN@pyload.org"
 
+
     API_URL = "://www.9kw.eu/index.cgi"
 
 

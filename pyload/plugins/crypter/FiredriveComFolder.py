@@ -16,6 +16,7 @@ class FiredriveComFolder(SimpleCrypter):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     LINK_PATTERN = r'<div class="pf_item pf_(file|folder).+?public=\'(.+?)\''
     TITLE_PATTERN = r'>Shared Folder "(?P<title>.+)" | Firedrive<'
     OFFLINE_PATTERN = r'class="sad_face_image"|>No such page here.<'

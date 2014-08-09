@@ -15,6 +15,7 @@ class UlozToFolder(Crypter):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FOLDER_PATTERN = r'<ul class="profile_files">(.*?)</ul>'
     LINK_PATTERN = r'<br /><a href="/([^"]+)">[^<]+</a>'
     NEXT_PAGE_PATTERN = r'<a class="next " href="/([^"]+)">&nbsp;</a>'
@@ -28,7 +29,7 @@ class UlozToFolder(Crypter):
             self.logInfo("Fetching links from page %i" % i)
             m = re.search(self.FOLDER_PATTERN, html, re.DOTALL)
             if m is None:
-                self.parseError("Folder url not found")
+                self.error("Folder url not found")
 
             new_links.extend(re.findall(self.LINK_PATTERN, m.group(1)))
             m = re.search(self.NEXT_PAGE_PATTERN, html)

@@ -20,6 +20,7 @@ class OneFichierCom(SimpleHoster):
     __author_mail__ = ("fragonib[AT]yahoo[DOT]es", "daniel_ AT gmx DOT net", "zoidberg@mujmail.cz",
                        "imclem on github", "l.stickell@yahoo.it", "elrick69[AT]rocketmail[DOT]com")
 
+
     FILE_NAME_PATTERN = r'">Filename :</th>\s*<td>(?P<N>[^<]+)</td>'
     FILE_SIZE_PATTERN = r'<th>Size :</th>\s*<td>(?P<S>[^<]+)</td>'
     OFFLINE_PATTERN = r'The (requested)? file (could not be found|has been deleted)'
@@ -49,7 +50,7 @@ class OneFichierCom(SimpleHoster):
 
         url, inputs = self.parseHtmlForm('action="http://%s' % self.file_info['id'])
         if not url:
-            self.parseError("Download link not found")
+            self.error("Download link not found")
 
         # Check for protection
         if "pass" in inputs:
@@ -64,7 +65,7 @@ class OneFichierCom(SimpleHoster):
     def handlePremium(self):
         url, inputs = self.parseHtmlForm('action="http://%s' % self.file_info['id'])
         if not url:
-            self.parseError("Download link not found")
+            self.error("Download link not found")
 
         # Check for protection
         if "pass" in inputs:

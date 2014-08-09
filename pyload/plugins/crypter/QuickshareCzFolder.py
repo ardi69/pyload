@@ -15,6 +15,7 @@ class QuickshareCzFolder(Crypter):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FOLDER_PATTERN = r'<textarea[^>]*>(.*?)</textarea>'
     LINK_PATTERN = r'(http://www.quickshare.cz/\S+)'
 
@@ -24,5 +25,5 @@ class QuickshareCzFolder(Crypter):
 
         m = re.search(self.FOLDER_PATTERN, html, re.DOTALL)
         if m is None:
-            self.parseError("Folder url not found")
+            self.error("Folder url not found")
         self.urls.extend(re.findall(self.LINK_PATTERN, m.group(1)))

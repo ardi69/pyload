@@ -23,4 +23,4 @@ class ChipDe(Crypter):
             self.urls = [m.group(1)]
             self.logDebug('The file URL is %s' % self.urls[0])
         else:
-            self.parseError('Failed to find the URL')
+            self.error("Failed to find the URL")

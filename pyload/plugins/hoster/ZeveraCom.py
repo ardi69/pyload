@@ -60,11 +60,11 @@ class ZeveraCom(Hoster):
     #         if self.retData['FileInfo']['StatusID'] == 100:
     #             break
     #         elif self.retData['FileInfo']['StatusID'] == 99:
-    #             self.fail('Failed to initialize download (99)')
+    #             self.fail("Failed to initialize download (99)")
     #         else:
     #             if self.retData['FileInfo']['Progress']['BytesReceived'] <= last_size:
     #                 if retries >= 6:
-    #                     self.fail('Failed to initialize download (%d)' % self.retData['FileInfo']['StatusID'] )
+    #                     self.fail("Failed to initialize download (%d)" % self.retData['FileInfo']['StatusID'] )
     #                 retries += 1
     #             else:
     #                 retries = 0
@@ -92,11 +92,11 @@ class ZeveraCom(Hoster):
     #
     # def checkAPIErrors(self, retData):
     #     if not retData:
-    #         self.fail('Unknown API response')
+    #         self.error("Unknown API response")
     #
     #     if retData['ErrorCode']:
     #         self.logError(retData['ErrorCode'], retData['ErrorMessage'])
-    #         #self.fail('ERROR: ' + retData['ErrorMessage'])
+    #         #self.fail("ERROR: " + retData['ErrorMessage'])
     #
     #     if pyfile.size / 1024000 > retData['AccountInfo']['AvailableTODAYTrafficForUseInMBytes']:
     #         self.logWarning("Not enough data left to download the file")

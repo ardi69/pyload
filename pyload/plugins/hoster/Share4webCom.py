@@ -15,6 +15,7 @@ class Share4webCom(UnibytesCom):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     HOSTER_NAME = "share4web.com"
 
 

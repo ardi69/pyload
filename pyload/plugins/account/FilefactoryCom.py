@@ -17,6 +17,7 @@ class FilefactoryCom(Account):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     VALID_UNTIL_PATTERN = r'Premium valid until: <strong>(?P<d>\d{1,2})\w{1,2} (?P<m>\w{3}), (?P<y>\d{4})</strong>'
 
 

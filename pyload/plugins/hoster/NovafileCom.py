@@ -18,6 +18,7 @@ class NovafileCom(XFileSharingPro):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     HOSTER_NAME = "novafile.com"
 
     FILE_SIZE_PATTERN = r'<div class="size">(?P<S>.+?)</div>'

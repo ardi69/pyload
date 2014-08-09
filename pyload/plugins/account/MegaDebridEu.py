@@ -13,6 +13,7 @@ class MegaDebridEu(Account):
     __author_name__ = "D.Ducatel"
     __author_mail__ = "dducatel@je-geek.fr"
 
+
     # Define the base URL of MegaDebrid api
     API_URL = "https://www.mega-debrid.eu/api.php"
 

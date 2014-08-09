@@ -16,6 +16,7 @@ class TnyCz(SimpleCrypter):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     TITLE_PATTERN = r'<title>(?P<title>.+) - .+</title>'
 
 

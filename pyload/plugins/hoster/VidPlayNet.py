@@ -17,6 +17,7 @@ class VidPlayNet(XFileSharingPro):
     __author_name__ = "t4skforce"
     __author_mail__ = "t4skforce1337[AT]gmail[DOT]com"
 
+
     HOSTER_NAME = "vidplay.net"
 
     OFFLINE_PATTERN = r'<b>File Not Found</b><br>\s*<br>'

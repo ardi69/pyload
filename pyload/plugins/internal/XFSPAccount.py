@@ -18,6 +18,7 @@ class XFSPAccount(Account):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     MAIN_PAGE = None
 
     VALID_UNTIL_PATTERN = r'>Premium.[Aa]ccount expire:</TD><TD><b>([^<]+)</b>'

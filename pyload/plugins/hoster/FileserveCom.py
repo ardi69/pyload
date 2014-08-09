@@ -41,6 +41,7 @@ class FileserveCom(Hoster):
     __author_name__ = ("jeix", "mkaay", "Paul King", "zoidberg")
     __author_mail__ = ("jeix@hasnomail.de", "mkaay@mkaay.de", "", "zoidberg@mujmail.cz")
 
+
     URLS = ["http://www.fileserve.com/file/", "http://www.fileserve.com/link-checker.php",
             "http://www.fileserve.com/checkReCaptcha.php"]
     LINKCHECK_TR = r'<tr>\s*(<td>http://www.fileserve\.com/file/.*?)</tr>'

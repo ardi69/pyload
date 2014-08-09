@@ -12,4 +12,5 @@ class Http(Account):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     login_timeout = info_threshold = -1  #: Unlimited

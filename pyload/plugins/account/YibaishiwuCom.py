@@ -14,6 +14,7 @@ class YibaishiwuCom(Account):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     ACCOUNT_INFO_PATTERN = r'var USER_PERMISSION = {(.*?)}'
 
 

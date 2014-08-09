@@ -35,6 +35,7 @@ class FshareVn(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_INFO_PATTERN = r'<p>(?P<N>[^<]+)<\\/p>[\\trn\s]*<p>(?P<S>[0-9,.]+)\s*(?P<U>[kKMG])i?B<\\/p>'
     OFFLINE_PATTERN = r'<div class=\\"f_left file_w\\"|<\\/p>\\t\\t\\t\\t\\r\\n\\t\\t<p><\\/p>\\t\\t\\r\\n\\t\\t<p>0 KB<\\/p>'
 
@@ -66,7 +67,7 @@ class FshareVn(SimpleHoster):
         self.url = self.pyfile.url + action
 
         if not inputs:
-            self.parseError('FORM')
+            self.error("FORM")
         elif 'link_file_pwd_dl' in inputs:
             for password in self.getPassword().splitlines():
                 self.logInfo('Password protected link, trying "%s"' % password)
@@ -86,7 +87,7 @@ class FshareVn(SimpleHoster):
 
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError('FREE DL URL')
+            self.error("FREE DL URL")
         self.url = m.group(1)
         self.logDebug("FREE DL URL: %s" % self.url)
 

@@ -17,6 +17,7 @@ class HugefilesNet(XFileSharingPro):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     HOSTER_NAME = "hugefiles.net"
 
     FILE_SIZE_PATTERN = r'File Size:</span>\s*<span[^>]*>(?P<S>[^<]+)</span></div>'

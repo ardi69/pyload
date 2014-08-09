@@ -47,6 +47,7 @@ class ShareonlineBiz(Hoster):
     __author_name__ = ("spoob", "mkaay", "zoidberg", "Walter Purcaro")
     __author_mail__ = ("spoob@pyload.org", "mkaay@mkaay.de", "zoidberg@mujmail.cz", "vuolter@gmail.com")
 
+
     ERROR_INFO_PATTERN = r'<p class="b">Information:</p>\s*<div>\s*<strong>(.*?)</strong>'
 
 
@@ -130,7 +131,7 @@ class ShareonlineBiz(Hoster):
         download_url = response.decode("base64")
         self.logDebug(download_url)
         if not download_url.startswith("http://"):
-            self.parseError("download url")
+            self.error("download url")
 
         self.wait()
         self.download(download_url)

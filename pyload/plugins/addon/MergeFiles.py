@@ -19,6 +19,7 @@ class MergeFiles(Addon):
     __author_name__ = "and9000"
     __author_mail__ = "me@has-no-mail.com"
 
+
     BUFFER_SIZE = 4096
 
 

@@ -19,6 +19,7 @@ class FlyFilesNet(SimpleHoster):
     __author_name__ = None
     __author_mail__ = None
 
+
     SESSION_PATTERN = r'flyfiles\.net/(.*)/.*'
     FILE_NAME_PATTERN = r'flyfiles\.net/.*/(.*)'
 

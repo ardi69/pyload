@@ -17,6 +17,7 @@ class FileomCom(XFileSharingPro):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     HOSTER_NAME = "fileom.com"
 
     FILE_URL_REPLACEMENTS = [(r'/$', "")]

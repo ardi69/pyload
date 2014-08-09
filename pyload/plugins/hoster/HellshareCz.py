@@ -16,6 +16,7 @@ class HellshareCz(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<h1 id="filename"[^>]*>(?P<N>[^<]+)</h1>'
     FILE_SIZE_PATTERN = r'<strong id="FileSize_master">(?P<S>[0-9.]*)&nbsp;(?P<U>[kKMG])i?B</strong>'
     OFFLINE_PATTERN = r'<h1>File not found.</h1>'
@@ -37,7 +38,7 @@ class HellshareCz(SimpleHoster):
 
         m = re.search(self.SHOW_WINDOW_PATTERN, self.html)
         if m is None:
-            self.parseError('SHOW WINDOW')
+            self.error("SHOW WINDOW")
         self.url = "http://www.hellshare.com" + m.group(1)
         self.logDebug("DOWNLOAD URL: " + self.url)
 

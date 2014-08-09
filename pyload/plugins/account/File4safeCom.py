@@ -12,6 +12,7 @@ class File4safeCom(XFSPAccount):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     MAIN_PAGE = "http://file4safe.com/"
 
     LOGIN_FAIL_PATTERN = r'input_login'

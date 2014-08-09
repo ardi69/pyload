@@ -14,5 +14,6 @@ class FiletramCom(SimpleCrypter):
     __author_name__ = ("igel", "stickell")
     __author_mail__ = ("igelkun@myopera.com", "l.stickell@yahoo.it")
 
+
     LINK_PATTERN = r'\s+(http://.+)'
     TITLE_PATTERN = r'<title>(?P<title>[^<]+) - Free Download[^<]*</title>'

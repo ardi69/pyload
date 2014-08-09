@@ -15,6 +15,7 @@ class LetitbitNetFolder(Crypter):
     __author_name__ = ("DHMH", "z00nx")
     __author_mail__ = ("webmaster@pcProfil.de", "z00nx0@gmail.com")
 
+
     FOLDER_PATTERN = r'<table>(.*)</table>'
     LINK_PATTERN = r'<a href="([^"]+)" target="_blank">'
 
@@ -24,6 +25,6 @@ class LetitbitNetFolder(Crypter):
 
         folder = re.search(self.FOLDER_PATTERN, html, re.DOTALL)
         if folder is None:
-            self.parseError("Folder url not found")
+            self.error("Folder url not found")
 
         self.urls.extend(re.findall(self.LINK_PATTERN, folder.group(0)))

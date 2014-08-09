@@ -18,6 +18,7 @@ class QuickshareCz(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<th width="145px">Název:</th>\s*<td style="word-wrap:break-word;">(?P<N>[^<]+)</td>'
     FILE_SIZE_PATTERN = r'<th>Velikost:</th>\s*<td>(?P<S>[0-9.]+) (?P<U>[kKMG])i?B</td>'
     OFFLINE_PATTERN = r'<script type="text/javascript">location.href=\'/chyba\';</script>'
@@ -65,7 +66,7 @@ class QuickshareCz(SimpleHoster):
 
         m = re.search("Location\s*:\s*(.*)", self.header, re.I)
         if m is None:
-            self.fail('File not found')
+            self.fail("File not found")
         download_url = m.group(1)
         self.logDebug("FREE URL2:" + download_url)
 
@@ -77,7 +78,7 @@ class QuickshareCz(SimpleHoster):
             elif m.group(1) == '2':
                 self.retry(60, 60, "No free slots available")
             else:
-                self.fail('Error %d' % m.group(1))
+                self.error("Error %d" % m.group(1))
 
         # download file
         self.download(download_url)

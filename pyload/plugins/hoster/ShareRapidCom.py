@@ -30,6 +30,7 @@ class ShareRapidCom(SimpleHoster):
     __author_name__ = ("MikyWoW", "zoidberg", "stickell", "Walter Purcaro")
     __author_mail__ = ("mikywow@seznam.cz", "zoidberg@mujmail.cz", "l.stickell@yahoo.it", "vuolter@gmail.com")
 
+
     FILE_NAME_PATTERN = r'<h1[^>]*><span[^>]*>(?:<a[^>]*>)?(?P<N>[^<]+)'
     FILE_SIZE_PATTERN = r'<td class="i">Velikost:</td>\s*<td class="h"><strong>\s*(?P<S>[0-9.]+) (?P<U>[kKMG])i?B</strong></td>'
     OFFLINE_PATTERN = ur'Nastala chyba 404|Soubor byl smazán'

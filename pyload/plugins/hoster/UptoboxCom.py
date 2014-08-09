@@ -20,6 +20,7 @@ class UptoboxCom(XFileSharingPro):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     HOSTER_NAME = "uptobox.com"
 
     FILE_INFO_PATTERN = r'"para_title">(?P<N>.+) \((?P<S>[\d\.]+) (?P<U>\w+)\)'

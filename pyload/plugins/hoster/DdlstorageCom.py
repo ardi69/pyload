@@ -51,6 +51,7 @@ class DdlstorageCom(XFileSharingPro):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     HOSTER_NAME = "ddlstorage.com"
 
     FILE_INFO_PATTERN = r'<p class="sub_title"[^>]*>(?P<N>.+) \((?P<S>[^)]+)\)</p>'

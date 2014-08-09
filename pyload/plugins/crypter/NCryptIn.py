@@ -21,6 +21,7 @@ class NCryptIn(Crypter):
     __author_name__ = ("fragonib", "stickell")
     __author_mail__ = ("fragonib[AT]yahoo[DOT]es", "l.stickell@yahoo.it")
 
+
     JK_KEY = "jk"
     CRYPTED_KEY = "crypted"
 
@@ -193,7 +194,7 @@ class NCryptIn(Crypter):
         elif link_source_type == "web":
             return self.handleWebLinks()
         else:
-            self.fail('unknown source type "%s" (this is probably a bug)' % link_source_type)
+            self.error("Unknown source type \"%s\"" % link_source_type)
 
     def handleSingleLink(self):
 

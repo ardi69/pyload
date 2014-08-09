@@ -15,6 +15,7 @@ class CzshareComFolder(Crypter):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FOLDER_PATTERN = r'<tr class="subdirectory">\s*<td>\s*<table>(.*?)</table>'
     LINK_PATTERN = r'<td class="col2"><a href="([^"]+)">info</a></td>'
 
@@ -24,6 +25,6 @@ class CzshareComFolder(Crypter):
 
         m = re.search(self.FOLDER_PATTERN, html, re.DOTALL)
         if m is None:
-            self.parseError("Folder url not found")
+            self.error("Folder url not found")
 
         self.urls.extend(re.findall(self.LINK_PATTERN, m.group(1)))

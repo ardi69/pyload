@@ -30,7 +30,7 @@ class DeleteFinished(Addon):
             self.addEvent('packageFinished', self.wakeup)
 
     def pluginConfigChanged(self, plugin, name, value):
-        if name == 'interval' and value != self.interval:
+        if name == "interval" and value != self.interval:
             self.interval = value * 3600
             self.initPeriodical()
 

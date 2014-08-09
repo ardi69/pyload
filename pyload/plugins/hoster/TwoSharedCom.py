@@ -16,6 +16,7 @@ class TwoSharedCom(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<h1>(?P<N>.*)</h1>'
     FILE_SIZE_PATTERN = r'<span class="dtitle">File size:</span>\s*(?P<S>[0-9,.]+) (?P<U>[kKMG])i?B'
     OFFLINE_PATTERN = r'The file link that you requested is not valid\.|This file was deleted\.'
@@ -29,7 +30,7 @@ class TwoSharedCom(SimpleHoster):
     def handleFree(self):
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError('Download link')
+            self.error("Download link")
         link = m.group(1)
         self.logDebug("Download URL %s" % link)
 

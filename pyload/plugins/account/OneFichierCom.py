@@ -16,6 +16,7 @@ class OneFichierCom(Account):
     __author_name__ = "Elrick69"
     __author_mail__ = "elrick69[AT]rocketmail[DOT]com"
 
+
     VALID_UNTIL_PATTERN = r'You are a premium user until (?P<d>\d{2})/(?P<m>\d{2})/(?P<y>\d{4})'
 
 

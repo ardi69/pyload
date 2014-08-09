@@ -55,6 +55,7 @@ class MediafireCom(SimpleHoster):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     LINK_PATTERN = r'<div class="download_link"[^>]*(?:z-index:(?P<zindex>\d+))?[^>]*>\s*<a href="(?P<href>http://[^"]+)"'
     JS_KEY_PATTERN = r"DoShow\('mfpromo1'\);[^{]*{((\w+)='';.*?)eval\(\2\);"
     JS_ZMODULO_PATTERN = r"\('z-index'\)\) \% (\d+)\)\);"
@@ -104,7 +105,7 @@ class MediafireCom(SimpleHoster):
 
         m = re.search(r'kNO = r"(http://.*?)";', self.html)
         if m is None:
-            self.parseError("Download URL")
+            self.error("Download URL")
         download_url = m.group(1)
         self.logDebug("DOWNLOAD LINK:", download_url)
 

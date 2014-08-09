@@ -16,6 +16,7 @@ class UploadedToFolder(SimpleCrypter):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     PLAIN_PATTERN = r'<small class="date"><a href="(?P<plain>[\w/]+)" onclick='
     TITLE_PATTERN = r'<title>(?P<title>[^<]+)</title>'
 
@@ -29,7 +30,7 @@ class UploadedToFolder(SimpleCrypter):
         if m:
             plain_link = 'http://uploaded.net/' + m.group('plain')
         else:
-            self.parseError('Unable to find plain url list')
+            self.error("Unable to find plain url list")
 
         self.html = self.load(plain_link)
         package_links = self.html.split('\n')[:-1]

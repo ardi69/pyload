@@ -16,6 +16,7 @@ class EuroshareEu(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_INFO_PATTERN = r'<span style="float: left;"><strong>(?P<N>.+?)</strong> \((?P<S>.+?)\)</span>'
     OFFLINE_PATTERN = ur'<h2>S.bor sa nena.iel</h2>|Požadovaná stránka neexistuje!'
 
@@ -51,7 +52,7 @@ class EuroshareEu(SimpleHoster):
 
         m = re.search(self.FREE_URL_PATTERN, self.html)
         if m is None:
-            self.parseError("Parse error (URL)")
+            self.error("URL")
         parsed_url = "http://euroshare.eu%s" % m.group(1)
         self.logDebug("URL", parsed_url)
         self.download(parsed_url, disposition=True)

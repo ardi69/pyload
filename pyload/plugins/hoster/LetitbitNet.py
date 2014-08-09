@@ -44,6 +44,7 @@ class LetitbitNet(SimpleHoster):
     __author_name__ = ("zoidberg", "z00nx")
     __author_mail__ = ("zoidberg@mujmail.cz", "z00nx0@gmail.com")
 
+
     FILE_URL_REPLACEMENTS = [(r"(?<=http://)([^/]+)", "letitbit.net")]
 
     HOSTER_NAME = "letitbit.net"
@@ -69,7 +70,7 @@ class LetitbitNet(SimpleHoster):
     def handleFree(self):
         action, inputs = self.parseHtmlForm('id="ifree_form"')
         if not action:
-            self.parseError("page 1 / ifree_form")
+            self.error("page 1 / ifree_form")
 
         domain = "http://www." + self.HOSTER_NAME
         self.pyfile.size = float(inputs['sssize'])
@@ -80,7 +81,7 @@ class LetitbitNet(SimpleHoster):
 
         # action, inputs = self.parseHtmlForm('id="d3_form"')
         # if not action:
-        #     self.parseError("page 2 / d3_form")
+        #     self.error("page 2 / d3_form")
         # self.logDebug(action, inputs)
         #
         # self.html = self.load(action, post = inputs, cookies = True)
@@ -92,7 +93,7 @@ class LetitbitNet(SimpleHoster):
         #     self.wait(seconds+1)
         # except Exception, e:
         #     self.logError(e)
-        #     self.parseError("page 3 / js")
+        #     self.error("page 3 / js")
 
         m = re.search(self.SECONDS_PATTERN, self.html)
         seconds = int(m.group(1)) if m else 60
@@ -104,7 +105,7 @@ class LetitbitNet(SimpleHoster):
 
         response = self.load("%s/ajax/download3.php" % domain, post=" ", cookies=True)
         if response != '1':
-            self.parseError('Unknown response - ajax_check_url')
+            self.error("Unknown response - ajax_check_url")
         self.logDebug(response)
 
         recaptcha = ReCaptcha(self)
@@ -128,7 +129,7 @@ class LetitbitNet(SimpleHoster):
         elif response.startswith('http://'):
             urls = [response]
         else:
-            self.parseError("Unknown response - captcha check")
+            self.error("Unknown response - captcha check")
 
         self.correctCaptcha()
 

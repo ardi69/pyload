@@ -20,6 +20,7 @@ class RyushareCom(XFileSharingPro):
     __author_name__ = ("zoidberg", "stickell", "quareevo")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it", "quareevo@arcor.de")
 
+
     HOSTER_NAME = "ryushare.com"
 
     FILE_SIZE_PATTERN = r'You have requested <font color="red">[^<]+</font> \((?P<S>[\d\.]+) (?P<U>\w+)'
@@ -59,7 +60,7 @@ class RyushareCom(XFileSharingPro):
         for _ in xrange(5):
             m = re.search(self.SOLVEMEDIA_PATTERN, self.html)
             if m is None:
-                self.parseError("Error parsing captcha")
+                self.error("Error parsing captcha")
 
             captchaKey = m.group(1)
             captcha = SolveMedia(self)

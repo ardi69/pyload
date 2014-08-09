@@ -19,6 +19,7 @@ class StreamcloudEu(XFileSharingPro):
     __author_name__ = "seoester"
     __author_mail__ = "seoester@googlemail.com"
 
+
     HOSTER_NAME = "streamcloud.eu"
 
     LINK_PATTERN = r'file: "(http://(stor|cdn)\d+\.streamcloud.eu:?\d*/.*/video\.(mp4|flv))",'
@@ -74,7 +75,7 @@ class StreamcloudEu(XFileSharingPro):
                     if self.errmsg:
                         self.retry()
                     else:
-                        self.parseError("Form not found")
+                        self.error("Form not found")
 
             self.logDebug(self.HOSTER_NAME, inputs)
 
@@ -118,7 +119,7 @@ class StreamcloudEu(XFileSharingPro):
                 self.errmsg = None
 
         else:
-            self.parseError('FORM: %s' % (inputs['op'] if 'op' in inputs else 'UNKNOWN'))
+            self.error("FORM: %s' % (inputs['op'] if 'op' in inputs else 'UNKNOWN"))
 
 
 getInfo = create_getInfo(StreamcloudEu)

@@ -18,6 +18,7 @@ class TusfilesNetFolder(SimpleCrypter):
     __author_name__ = ("Walter Purcaro", "stickell")
     __author_mail__ = ("vuolter@gmail.com", "l.stickell@yahoo.it")
 
+
     LINK_PATTERN = r'<TD align=left><a href="(.*?)">'
     TITLE_PATTERN = r'<Title>.*?\: (?P<title>.+) folder</Title>'
     PAGES_PATTERN = r'>\((?P<pages>\d+) \w+\)<'

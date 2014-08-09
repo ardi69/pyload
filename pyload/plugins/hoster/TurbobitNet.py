@@ -25,6 +25,7 @@ class TurbobitNet(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_INFO_PATTERN = r"<span class='file-icon1[^>]*>(?P<N>[^<]+)</span>\s*\((?P<S>[^\)]+)\)\s*</h1>"  #: long filenames are shortened
     FILE_NAME_PATTERN = r'<meta name="keywords" content="\s+(?P<N>[^,]+)'  #: full name but missing on page2
     OFFLINE_PATTERN = r'<h2>File Not Found</h2>|html\(\'File (?:was )?not found'
@@ -64,7 +65,7 @@ class TurbobitNet(SimpleHoster):
 
             action, inputs = self.parseHtmlForm("action='#'")
             if not inputs:
-                self.parseError("captcha form")
+                self.error("captcha form")
             self.logDebug(inputs)
 
             if inputs['captcha_type'] == 'recaptcha':
@@ -76,7 +77,7 @@ class TurbobitNet(SimpleHoster):
             else:
                 m = re.search(self.CAPTCHA_SRC_PATTERN, self.html)
                 if m is None:
-                    self.parseError('captcha')
+                    self.error("captcha")
                 captcha_url = m.group(1)
                 inputs['captcha_response'] = self.decryptCaptcha(captcha_url)
 
@@ -158,7 +159,7 @@ class TurbobitNet(SimpleHoster):
     def downloadFile(self):
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError("download link")
+            self.error("download link")
         self.url = "http://turbobit.net" + m.group('url')
         self.logDebug(self.url)
         self.download(self.url)

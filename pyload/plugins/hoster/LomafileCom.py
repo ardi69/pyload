@@ -16,6 +16,7 @@ class LomafileCom(SimpleHoster):
     __author_name__ = "nath_schwarz"
     __author_mail__ = "nathan.notwhite@gmail.com"
 
+
     FILE_NAME_PATTERN = r'Filename:[^>]*>(?P<N>[\w\.]+)'
     FILE_SIZE_PATTERN = r'\((?P<S>\d+)\s(?P<U>\w+)\)'
     FILE_OFFLINE_PATTERN = r'Software error'
@@ -25,13 +26,13 @@ class LomafileCom(SimpleHoster):
         for _ in xrange(3):
             captcha_id = re.search(r'src="http://lomafile\.com/captchas/(?P<id>\w+)\.jpg"', self.html)
             if not captcha_id:
-                self.parseError("Unable to parse captcha id.")
+                self.error("Unable to parse captcha id.")
             else:
                 captcha_id = captcha_id.group("id")
 
             form_id = re.search(r'name="id" value="(?P<id>\w+)"', self.html)
             if not form_id:
-                self.parseError("Unable to parse form id")
+                self.error("Unable to parse form id")
             else:
                 form_id = form_id.group("id")
 

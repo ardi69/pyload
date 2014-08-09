@@ -72,8 +72,8 @@ class Socket(TSocket):
             buff = self.handle.recv(sz)
         except socket.error, e:
             if (e.args[0] == errno.ECONNRESET and
-                (sys.platform == 'darwin' or sys.platform.startswith('freebsd'))):
-                # freebsd and Mach don't follow POSIX semantic of recv
+                (sys.platform == "darwin" or sys.platform.startswith("freebsd"))):
+                # freebsd and Mac don't follow POSIX semantic of recv
                 # and fail with ECONNRESET if peer performed shutdown.
                 # See corresponding comment and code in TSocket::read()
                 # in lib/cpp/src/transport/TSocket.cpp.

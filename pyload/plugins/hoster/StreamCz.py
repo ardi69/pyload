@@ -31,6 +31,7 @@ class StreamCz(Hoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<link rel="video_src" href="http://www.stream.cz/\w+/(\d+)-([^"]+)" />'
     OFFLINE_PATTERN = r'<h1 class="commonTitle">Str.nku nebylo mo.n. nal.zt \(404\)</h1>'
 
@@ -50,7 +51,7 @@ class StreamCz(Hoster):
 
         m = re.search(self.CDN_PATTERN, self.html)
         if m is None:
-            self.fail("Parse error (CDN)")
+            self.error("CDN")
         cdn = m.groupdict()
         self.logDebug(cdn)
         for cdnkey in ("cdnHD", "cdnHQ", "cdnLQ"):
@@ -62,7 +63,7 @@ class StreamCz(Hoster):
 
         m = re.search(self.FILE_NAME_PATTERN, self.html)
         if m is None:
-            self.fail("Parse error (NAME)")
+            self.error("NAME")
         pyfile.name = "%s-%s.%s.mp4" % (m.group(2), m.group(1), cdnkey[-2:])
 
         download_url = "http://cdn-dispatcher.stream.cz/?id=" + cdnid

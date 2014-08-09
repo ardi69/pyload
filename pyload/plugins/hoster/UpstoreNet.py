@@ -17,6 +17,7 @@ class UpstoreNet(SimpleHoster):
     __author_name__ = "igel"
     __author_mail__ = "igelkun@myopera.com"
 
+
     FILE_INFO_PATTERN = r'<div class="comment">.*?</div>\s*\n<h2 style="margin:0">(?P<N>.*?)</h2>\s*\n<div class="comment">\s*\n\s*(?P<S>[\d.]+) (?P<U>\w+)'
     OFFLINE_PATTERN = r'<span class="error">File not found</span>'
 
@@ -29,7 +30,7 @@ class UpstoreNet(SimpleHoster):
         # STAGE 1: get link to continue
         m = re.search(self.CHASH_PATTERN, self.html)
         if m is None:
-            self.parseError("could not detect hash")
+            self.error("could not detect hash")
         chash = m.group(1)
         self.logDebug("read hash " + chash)
         # continue to stage2
@@ -40,13 +41,13 @@ class UpstoreNet(SimpleHoster):
         # first get the infos we need: recaptcha key and wait time
         recaptcha = ReCaptcha(self)
         if not recaptcha.detect_key(self.html):
-            self.parseError("could not find recaptcha pattern")
+            self.error("could not find recaptcha pattern")
         self.logDebug("using captcha key " + recaptcha.recaptcha_key)
         # try the captcha 5 times
         for _ in xrange(5):
             m = re.search(self.WAIT_PATTERN, self.html)
             if m is None:
-                self.parseError("could not find wait pattern")
+                self.error("could not find wait pattern")
             wait_time = m.group(1)
 
             # then, do the waiting
@@ -65,7 +66,7 @@ class UpstoreNet(SimpleHoster):
                 break
 
         if m is None:
-            self.parseError("could not detect direct link")
+            self.error("could not detect direct link")
 
         direct = m.group(1)
         self.logDebug('found direct link: ' + direct)

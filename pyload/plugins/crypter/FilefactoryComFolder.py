@@ -14,6 +14,7 @@ class FilefactoryComFolder(SimpleCrypter):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     LINK_PATTERN = r'<td><a href="([^"]+)">'
     TITLE_PATTERN = r'<h1>Files in <span>(?P<title>.+)</span></h1>'
     PAGES_PATTERN = r'data-paginator-totalPages="(?P<pages>\d+)"'

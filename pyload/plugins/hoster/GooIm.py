@@ -16,6 +16,7 @@ class GooIm(SimpleHoster):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     FILE_NAME_PATTERN = r'<h3>Filename: (?P<N>.+)</h3>'
     OFFLINE_PATTERN = r'The file you requested was not found'
 
@@ -36,7 +37,7 @@ class GooIm(SimpleHoster):
             self.logDebug("Direct link: " + header['location'])
             self.download(header['location'])
         else:
-            self.parseError("Unable to detect direct download link")
+            self.error("Unable to detect direct download link")
 
 
 getInfo = create_getInfo(GooIm)

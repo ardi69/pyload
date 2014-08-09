@@ -17,6 +17,7 @@ class RarefileNet(XFileSharingPro):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     HOSTER_NAME = "rarefile.net"
 
     FILE_NAME_PATTERN = r'<td><font color="red">(?P<N>.*?)</font></td>'

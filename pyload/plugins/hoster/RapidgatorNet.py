@@ -22,6 +22,7 @@ class RapidgatorNet(SimpleHoster):
     __author_name__ = ("zoidberg", "chrox", "stickell", "Walter Purcaro")
     __author_mail__ = ("zoidberg@mujmail.cz", "", "l.stickell@yahoo.it", "vuolter@gmail.com")
 
+
     API_URL = "http://rapidgator.net/api/file"
 
     FILE_NAME_PATTERN = r'<title>Download file (?P<N>.*)</title>'
@@ -135,7 +136,7 @@ class RapidgatorNet(SimpleHoster):
                 else:
                     self.correctCaptcha()
         else:
-            self.parseError("Download link")
+            self.error("Download link")
 
     def getCaptcha(self):
         m = re.search(self.ADSCAPTCHA_SRC_PATTERN, self.html)
@@ -153,7 +154,7 @@ class RapidgatorNet(SimpleHoster):
                     captcha_key = m.group(1)
                     captcha = SolveMedia(self)
                 else:
-                    self.parseError("Captcha")
+                    self.error("Captcha")
 
         return captcha, captcha_key
 

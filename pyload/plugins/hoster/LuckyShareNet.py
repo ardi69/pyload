@@ -19,6 +19,7 @@ class LuckyShareNet(SimpleHoster):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     FILE_INFO_PATTERN = r"<h1 class='file_name'>(?P<N>\S+)</h1>\s*<span class='file_size'>Filesize: (?P<S>[\d.]+)(?P<U>\w+)</span>"
     OFFLINE_PATTERN = r'There is no such file available'
     RECAPTCHA_KEY = "6LdivsgSAAAAANWh-d7rPE1mus4yVWuSQIJKIYNw"
@@ -33,7 +34,7 @@ class LuckyShareNet(SimpleHoster):
                 self.logDebug('You have to wait %d seconds between free downloads' % waittime)
                 self.retry(wait_time=waittime)
             else:
-                self.parseError('Unable to detect wait time between free downloads')
+                self.error("Unable to detect wait time between free downloads")
         elif 'Hash expired' in rep:
             self.retry(reason="Hash expired")
         return json_loads(rep)
@@ -63,7 +64,7 @@ class LuckyShareNet(SimpleHoster):
                 self.logInfo('Wrong captcha')
                 self.invalidCaptcha()
             else:
-                self.parseError('Unable to get downlaod link')
+                self.error("Unable to get downlaod link")
 
         if not json['link']:
             self.fail("No Download url retrieved/all captcha attempts failed")

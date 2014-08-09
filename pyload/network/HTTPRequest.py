@@ -264,7 +264,7 @@ class HTTPRequest:
 
         try:
             #self.log.debug("Decoded %s" % encoding )
-            if lookup(encoding).name == 'utf-8' and rep.startswith(BOM_UTF8):
+            if lookup(encoding).name == "utf-8" and rep.startswith(BOM_UTF8):
                 encoding = 'utf-8-sig'
 
             decoder = getincrementaldecoder(encoding)("replace")

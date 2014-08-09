@@ -22,6 +22,7 @@ class Keep2shareCC(SimpleHoster):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     FILE_NAME_PATTERN = r'File: <span>(?P<N>.+)</span>'
     FILE_SIZE_PATTERN = r'Size: (?P<S>[^<]+)</div>'
     OFFLINE_PATTERN = r'File not found or deleted|Sorry, this file is blocked or deleted|Error 404'
@@ -68,7 +69,7 @@ class Keep2shareCC(SimpleHoster):
 
             m = re.search(self.LINK_PATTERN, self.html)
             if m is None:
-                self.parseError("Unable to detect direct link")
+                self.error("Unable to detect direct link")
             self.startDownload(m.group(1))
 
     def handleCaptcha(self):

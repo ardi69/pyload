@@ -14,6 +14,7 @@ class IFileWs(XFileSharingPro):
     __author_name__ = "z00nx"
     __author_mail__ = "z00nx0@gmail.com"
 
+
     HOSTER_NAME = "ifile.ws"
 
     FILE_INFO_PATTERN = r'<h1\s+style="display:inline;">(?P<N>[^<]+)</h1>\s+\[(?P<S>[^]]+)\]'

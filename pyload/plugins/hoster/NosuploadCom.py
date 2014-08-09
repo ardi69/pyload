@@ -16,6 +16,7 @@ class NosuploadCom(XFileSharingPro):
     __author_name__ = "igel"
     __author_mail__ = "igelkun@myopera.com"
 
+
     HOSTER_NAME = "nosupload.com"
 
     FILE_SIZE_PATTERN = r'<p><strong>Size:</strong> (?P<S>[0-9\.]+) (?P<U>[kKMG]?B)</p>'

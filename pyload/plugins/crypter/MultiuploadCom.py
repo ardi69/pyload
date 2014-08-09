@@ -20,6 +20,7 @@ class MultiuploadCom(Crypter):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     ML_LINK_PATTERN = r'<div id="downloadbutton_" style=""><a href="([^"]+)"'
 
 

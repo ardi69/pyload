@@ -29,6 +29,7 @@ class XFileSharingPro(SimpleHoster):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     FILE_INFO_PATTERN = r'<tr><td align=right><b>Filename:</b></td><td nowrap>(?P<N>[^<]+)</td></tr>\s*.*?<small>\((?P<S>[^<]+)\)</small>'
     FILE_NAME_PATTERN = r'<input type="hidden" name="fname" value="(?P<N>[^"]+)"'
     FILE_SIZE_PATTERN = r'You have requested .*\((?P<S>[\d\.\,]+) ?(?P<U>\w+)?\)</font>'
@@ -149,7 +150,7 @@ class XFileSharingPro(SimpleHoster):
         self.html = self.load(self.pyfile.url, post=self.getPostParameters())
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError('DIRECT LINK')
+            self.error("DIRECT LINK")
         self.startDownload(m.group(1))
 
     def handleOverriden(self):
@@ -169,7 +170,7 @@ class XFileSharingPro(SimpleHoster):
 
         action, inputs = self.parseHtmlForm('F1')
         if not inputs:
-            self.parseError('TEXTAREA')
+            self.error("TEXTAREA")
         self.logDebug(self.HOSTER_NAME, inputs)
         if inputs['st'] == 'OK':
             self.html = self.load(action, post=inputs)
@@ -181,7 +182,7 @@ class XFileSharingPro(SimpleHoster):
         #get easybytez.com link for uploaded file
         m = re.search(self.OVR_LINK_PATTERN, self.html)
         if m is None:
-            self.parseError('DIRECT LINK (OVR)')
+            self.error("DIRECT LINK (OVR)")
         self.pyfile.url = m.group(1)
         header = self.load(self.pyfile.url, just_header=True)
         if 'location' in header:  # Direct link
@@ -243,7 +244,7 @@ class XFileSharingPro(SimpleHoster):
                     if self.errmsg:
                         self.retry()
                     else:
-                        self.parseError("Form not found")
+                        self.error("Form not found")
 
             self.logDebug(self.HOSTER_NAME, inputs)
 
@@ -286,7 +287,7 @@ class XFileSharingPro(SimpleHoster):
                 self.errmsg = None
 
         else:
-            self.parseError('FORM: %s' % (inputs['op'] if 'op' in inputs else 'UNKNOWN'))
+            self.error("FORM: %s' % (inputs['op'] if 'op' in inputs else 'UNKNOWN"))
 
     def handleCaptcha(self, inputs):
         m = re.search(self.RECAPTCHA_URL_PATTERN, self.html)

@@ -14,6 +14,7 @@ class DuploadOrg(XFileSharingPro):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     HOSTER_NAME = "dupload.org"
 
     FILE_INFO_PATTERN = r'<h3[^>]*>(?P<N>.+) \((?P<S>[\d.]+) (?P<U>\w+)\)</h3>'

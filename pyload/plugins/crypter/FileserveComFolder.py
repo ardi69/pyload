@@ -16,6 +16,7 @@ class FileserveComFolder(Crypter):
     __author_name__ = "fionnc"
     __author_mail__ = "fionnc@gmail.com"
 
+
     FOLDER_PATTERN = r'<table class="file_list">(.*?)</table>'
     LINK_PATTERN = r'<a href="([^"]+)" class="sheet_icon wbold">'
 
@@ -27,7 +28,7 @@ class FileserveComFolder(Crypter):
 
         folder = re.search(self.FOLDER_PATTERN, html, re.DOTALL)
         if folder is None:
-            self.parseError("Folder url not found")
+            self.error("Folder url not found")
 
         new_links.extend(re.findall(self.LINK_PATTERN, folder.group(1)))
 

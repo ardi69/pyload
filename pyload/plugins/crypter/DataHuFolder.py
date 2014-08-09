@@ -16,6 +16,7 @@ class DataHuFolder(SimpleCrypter):
     __author_name__ = ("crash", "stickell")
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     LINK_PATTERN = r"<a href='(http://data\.hu/get/.+)' target='_blank'>\1</a>"
     TITLE_PATTERN = ur'<title>(?P<title>.+) Let\xf6lt\xe9se</title>'
 

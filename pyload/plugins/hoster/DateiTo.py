@@ -17,6 +17,7 @@ class DateiTo(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'Dateiname:</td>\s*<td colspan="2"><strong>(?P<N>.*?)</'
     FILE_SIZE_PATTERN = r'Dateigr&ouml;&szlig;e:</td>\s*<td colspan="2">(?P<S>.*?)</'
     OFFLINE_PATTERN = r'>Datei wurde nicht gefunden<|>Bitte wähle deine Datei aus... <'
@@ -47,7 +48,7 @@ class DateiTo(SimpleHoster):
 
             m = re.search(self.DATA_PATTERN, self.html)
             if m is None:
-                self.parseError('data')
+                self.error("data")
             url = 'http://datei.to/' + m.group(1)
             data = dict(x.split('=') for x in m.group(2).split('&'))
 
@@ -58,7 +59,7 @@ class DateiTo(SimpleHoster):
                 data['recaptcha_challenge_field'], data['recaptcha_response_field'] = recaptcha.challenge(recaptcha_key)
 
         else:
-            self.fail('Too bad...')
+            self.fail("Too bad...")
 
         download_url = self.html
         self.logDebug('Download URL', download_url)

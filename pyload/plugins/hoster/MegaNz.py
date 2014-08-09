@@ -24,6 +24,7 @@ class MegaNz(Hoster):
     __author_name__ = "RaNaN"
     __author_mail__ = "ranan@pyload.org"
 
+
     API_URL = "https://g.api.mega.co.nz/cs?id=%d"
     FILE_SUFFIX = ".crypted"
 

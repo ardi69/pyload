@@ -51,6 +51,7 @@ class YoutubeCom(Hoster):
     __author_name__ = ("spoob", "zoidberg")
     __author_mail__ = ("spoob@pyload.org", "zoidberg@mujmail.cz")
 
+
     FILE_URL_REPLACEMENTS = [(r'youtu\.be/', 'youtube.com/')]
 
     # Invalid characters that must be removed from the file name

@@ -52,6 +52,7 @@ class Checksum(Addon):
     __author_name__ = ("zoidberg", "Walter Purcaro")
     __author_mail__ = ("zoidberg@mujmail.cz", "vuolter@gmail.com")
 
+
     methods = {'sfv': 'crc32', 'crc': 'crc32', 'hash': 'md5'}
     regexps = {'sfv': r'^(?P<name>[^;].+)\s+(?P<hash>[0-9A-Fa-f]{8})$',
                'md5': r'^(?P<name>[0-9A-Fa-f]{32})  (?P<file>.+)$',

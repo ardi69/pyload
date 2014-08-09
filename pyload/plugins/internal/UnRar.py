@@ -20,6 +20,7 @@ class UnRar(AbtractExtractor):
     __author_name__ = "RaNaN"
     __author_mail__ = "RaNaN@pyload.org"
 
+
     CMD = "unrar"
 
     # there are some more uncovered rar formats

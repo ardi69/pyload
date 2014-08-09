@@ -76,6 +76,7 @@ class ExtractArchive(Addon):
     __author_name__ = ("pyLoad Team", "AndroKev")
     __author_mail__ = ("admin@pyload.org", "@pyloadforum")
 
+
     event_list = ["allDownloadsProcessed"]
 
 

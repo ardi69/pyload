@@ -14,6 +14,7 @@ class FilerioCom(XFileSharingPro):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     HOSTER_NAME = "filerio.in"
 
     OFFLINE_PATTERN = r'<b>&quot;File Not Found&quot;</b>|File has been removed due to Copyright Claim'

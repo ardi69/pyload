@@ -17,6 +17,7 @@ class MediafireComFolder(Crypter):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FOLDER_KEY_PATTERN = r"var afI= '(\w+)';"
     FILE_URL_PATTERN = r'<meta property="og:url" content="http://www.mediafire.com/\?(\w+)"/>'
 
@@ -46,7 +47,7 @@ class MediafireComFolder(Crypter):
                         for link in json_resp['response']['folder_info']['files']:
                             self.urls.append("http://www.mediafire.com/file/%s" % link['quickkey'])
                     else:
-                        self.parseError(json_resp['response']['message'])
+                        self.error(json_resp['response']['message'])
         elif result == 1:
             self.offline()
         else:

@@ -15,6 +15,7 @@ class FilejungleCom(Account):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     login_timeout = 60
 
     URL = "http://filejungle.com/"

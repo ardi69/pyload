@@ -103,6 +103,7 @@ class UploadedTo(Hoster):
     __author_mail__ = ("spoob@pyload.org", "mkaay@mkaay.de", "zoidberg@mujmail.cz",
                        "netpok@gmail.com", "l.stickell@yahoo.it")
 
+
     FILE_INFO_PATTERN = r'<a href="file/(?P<ID>\w+)" id="filename">(?P<N>[^<]+)</a> &nbsp;\s*<small[^>]*>(?P<S>[^<]+)</small>'
     OFFLINE_PATTERN = r'<small class="cL">Error: 404</small>'
     DL_LIMIT_PATTERN = r'You have reached the max. number of possible free downloads for this hour'
@@ -133,7 +134,7 @@ class UploadedTo(Hoster):
             elif status == 2:
                 pyfile.name, pyfile.size = name, size
             else:
-                self.fail('Parse error - file info')
+                self.error("file info")
         elif api == 'Access denied':
             self.fail(_("API key invalid"))
 

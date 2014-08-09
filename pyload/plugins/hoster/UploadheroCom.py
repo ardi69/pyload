@@ -19,6 +19,7 @@ class UploadheroCom(SimpleHoster):
     __author_name__ = ("mcmyst", "zoidberg")
     __author_mail__ = ("mcmyst@hotmail.fr", "zoidberg@mujmail.cz")
 
+
     FILE_NAME_PATTERN = r'<div class="nom_de_fichier">(?P<N>.*?)</div>'
     FILE_SIZE_PATTERN = r'Taille du fichier : </span><strong>(?P<S>.*?)</strong>'
     OFFLINE_PATTERN = r'<p class="titre_dl_2">|<div class="raison"><strong>Le lien du fichier ci-dessus n\'existe plus.'
@@ -38,7 +39,7 @@ class UploadheroCom(SimpleHoster):
 
         m = re.search(self.CAPTCHA_PATTERN, self.html)
         if m is None:
-            self.parseError("Captcha URL")
+            self.error("Captcha URL")
         captcha_url = "http://uploadhero.co" + m.group(1)
 
         for _ in xrange(5):

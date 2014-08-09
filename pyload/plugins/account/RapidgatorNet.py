@@ -13,6 +13,7 @@ class RapidgatorNet(Account):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     API_URL = 'http://rapidgator.net/api/user'
 
 

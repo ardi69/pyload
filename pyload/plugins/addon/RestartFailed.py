@@ -15,6 +15,7 @@ class RestartFailed(Addon):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     MIN_INTERVAL = 15 * 60  #: 15m minimum check interval (value is in seconds)
 
     event_list = ["pluginConfigChanged"]

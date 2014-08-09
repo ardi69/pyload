@@ -24,6 +24,7 @@ class RemixshareCom(SimpleHoster):
     __author_name__ = ("zapp-brannigan", "Walter Purcaro")
     __author_mail__ = ("fuerst.reinje@web.de", "vuolter@gmail.com")
 
+
     FILE_INFO_PATTERN = r'title=\'.+?\'>(?P<N>.+?)</span><span class=\'light2\'>&nbsp;\((?P<S>\d+)&nbsp;(?P<U>\w+)\)<'
     OFFLINE_PATTERN = r'<h1>Ooops!<'
 
@@ -39,10 +40,10 @@ class RemixshareCom(SimpleHoster):
     def handleFree(self):
         b = re.search(self.LINK_PATTERN, self.html)
         if not b:
-            self.parseError("Cannot parse download url")
+            self.error("Cannot parse download url")
         c = re.search(self.TOKEN_PATTERN, self.html)
         if not c:
-            self.parseError("Cannot parse file token")
+            self.error("Cannot parse file token")
         dl_url = b.group(1) + c.group(1)
 
         #Check if we have to wait

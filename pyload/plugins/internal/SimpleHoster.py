@@ -150,6 +150,7 @@ class SimpleHoster(Hoster):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     """
     Following patterns should be defined by each hoster:
 
@@ -226,7 +227,7 @@ class SimpleHoster(Hoster):
             self.offline()
         elif status != 2:
             self.logDebug(self.file_info)
-            self.parseError('File info')
+            self.error("File info")
 
         if name:
             self.pyfile.name = name

@@ -17,6 +17,7 @@ class CrockoCom(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<span class="fz24">Download:\s*<strong>(?P<N>.*)'
     FILE_SIZE_PATTERN = r'<span class="tip1"><span class="inner">(?P<S>[^<]+)</span></span>'
     OFFLINE_PATTERN = r"<h1>Sorry,<br />the page you're looking for <br />isn't here.</h1>|File not found"
@@ -45,12 +46,12 @@ class CrockoCom(SimpleHoster):
 
         m = re.search(self.CAPTCHA_KEY_PATTERN, self.html)
         if m is None:
-            self.parseError('Captcha KEY')
+            self.error("Captcha KEY")
         captcha_key = m.group(1)
 
         m = re.search(self.FORM_PATTERN, self.html, re.DOTALL)
         if m is None:
-            self.parseError('ACTION')
+            self.error("ACTION")
         action, form = m.groups()
         inputs = dict(re.findall(self.FORM_INPUT_PATTERN, form))
 
@@ -69,7 +70,7 @@ class CrockoCom(SimpleHoster):
             else:
                 break
         else:
-            self.fail('No valid captcha solution received')
+            self.fail("No valid captcha solution received")
 
 
 getInfo = create_getInfo(CrockoCom)

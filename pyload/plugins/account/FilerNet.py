@@ -16,6 +16,7 @@ class FilerNet(Account):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     TOKEN_PATTERN = r'_csrf_token" value="([^"]+)" />'
     WALID_UNTIL_PATTERN = r"Der Premium-Zugang ist gültig bis (.+)\.\s*</td>"
     TRAFFIC_PATTERN = r'Traffic</th>\s*<td>([^<]+)</td>'
@@ -36,8 +37,7 @@ class FilerNet(Account):
             trafficleft = parseFileSize(traffic.group(1)) / 1024
             return {'premium': True, 'validuntil': validuntil, 'trafficleft': trafficleft}
         else:
-            self.logError('Unable to retrieve account information - Plugin may be out of date')
-            return {'premium': False, 'validuntil': None, 'trafficleft': None}
+            #self.error("Unable to retrieve account information")
 
     def login(self, user, data, req):
         html = req.load("https://filer.net/login")

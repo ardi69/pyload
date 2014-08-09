@@ -28,6 +28,7 @@ class UpdateManager(Addon):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     event_list = ["pluginConfigChanged"]
 
     SERVER_URL = "http://updatemanager.pyload.org"

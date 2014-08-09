@@ -16,6 +16,7 @@ class NetfolderIn(SimpleCrypter):
     __author_name__ = ("RaNaN", "fragonib")
     __author_mail__ = ("RaNaN@pyload.org", "fragonib[AT]yahoo[DOT]es")
 
+
     TITLE_PATTERN = r'<div class="Text">Inhalt des Ordners <span(.*)>(?P<title>.+)</span></div>'
 
 

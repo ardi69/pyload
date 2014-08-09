@@ -19,6 +19,7 @@ class ZDF(Hoster):
     __author_name__ = None
     __author_mail__ = None
 
+
     XML_API = "http://www.zdf.de/ZDFmediathek/xmlservice/web/beitragsDetails?id=%i"
 
 

@@ -16,6 +16,7 @@ class FiredriveCom(SimpleHoster):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     FILE_NAME_PATTERN = r'<b>Name:</b> (?P<N>.+) <br>'
     FILE_SIZE_PATTERN = r'<b>Size:</b> (?P<S>[\d.]+) (?P<U>[a-zA-Z]+) <br>'
     OFFLINE_PATTERN = r'class="sad_face_image"|>No such page here.<'
@@ -45,7 +46,7 @@ class FiredriveCom(SimpleHoster):
             if f:
                 return f.group(1)
             else:
-                self.parseError("Direct download link not found")
+                self.error("Direct download link not found")
 
 
 getInfo = create_getInfo(FiredriveCom)

@@ -16,6 +16,7 @@ class FourSharedCom(SimpleHoster):
     __author_name__ = ("jeix", "zoidberg")
     __author_mail__ = ("jeix@hasnomail.de", "zoidberg@mujmail.cz")
 
+
     FILE_NAME_PATTERN = r'<meta name="title" content="(?P<N>.+?)"'
     FILE_SIZE_PATTERN = r'<span title="Size: (?P<S>[0-9,.]+) (?P<U>[kKMG])i?B">'
     OFFLINE_PATTERN = r'The file link that you requested is not valid\.|This file was deleted.'
@@ -42,7 +43,7 @@ class FourSharedCom(SimpleHoster):
 
         m = re.search(self.DOWNLOAD_URL_PATTERN, self.html)
         if m is None:
-            self.parseError('Download link')
+            self.error("Download link")
         link = m.group(1)
 
         try:

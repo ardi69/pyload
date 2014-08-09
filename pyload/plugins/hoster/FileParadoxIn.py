@@ -16,6 +16,7 @@ class FileParadoxIn(XFileSharingPro):
     __author_name__ = "RazorWing"
     __author_mail__ = "muppetuk1@hotmail.com"
 
+
     HOSTER_NAME = "fileparadox.in"
 
     FILE_SIZE_PATTERN = r'</font>\s*\(\s*(?P<S>[^)]+)\s*\)</font>'

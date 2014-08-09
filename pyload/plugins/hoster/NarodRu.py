@@ -18,6 +18,7 @@ class NarodRu(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<dt class="name">(?:<[^<]*>)*(?P<N>[^<]+)</dt>'
     FILE_SIZE_PATTERN = r'<dd class="size">(?P<S>\d[^<]*)</dd>'
     OFFLINE_PATTERN = r'<title>404</title>|Файл удален с сервиса|Закончился срок хранения файла\.'
@@ -35,7 +36,7 @@ class NarodRu(SimpleHoster):
             self.html = self.load('http://narod.ru/disk/getcapchaxml/?rnd=%d' % int(random() * 777))
             m = re.search(self.CAPTCHA_PATTERN, self.html)
             if m is None:
-                self.parseError('Captcha')
+                self.error("Captcha")
             post_data = {'action': "sendcapcha"}
             captcha_url, post_data['key'] = m.groups()
             post_data['rep'] = self.decryptCaptcha(captcha_url)
@@ -49,7 +50,7 @@ class NarodRu(SimpleHoster):
             elif u'<b class="error-msg"><strong>Ошиблись?</strong>' in self.html:
                 self.invalidCaptcha()
             else:
-                self.parseError('Download link')
+                self.error("Download link")
         else:
             self.fail("No valid captcha code entered")
 

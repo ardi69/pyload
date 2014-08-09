@@ -12,6 +12,7 @@ class RyushareCom(XFSPAccount):
     __author_name__ = ("zoidberg", "trance4us")
     __author_mail__ = ("zoidberg@mujmail.cz", "")
 
+
     MAIN_PAGE = "http://ryushare.com/"
 
 

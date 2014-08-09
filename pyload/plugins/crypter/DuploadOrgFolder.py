@@ -14,4 +14,5 @@ class DuploadOrgFolder(SimpleCrypter):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     LINK_PATTERN = r'<td style="[^"]+"><a href="(http://[^"]+)" target="_blank">[^<]+</a></td>'

@@ -14,4 +14,5 @@ class DdlstorageComFolder(SimpleCrypter):
     __author_name__ = ("godofdream", "stickell")
     __author_mail__ = ("soilfiction@gmail.com", "l.stickell@yahoo.it")
 
+
     LINK_PATTERN = r'<a class="sub_title" style="text-decoration:none;" href="(http://www.ddlstorage.com/.*)">'

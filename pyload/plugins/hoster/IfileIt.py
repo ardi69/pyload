@@ -18,6 +18,7 @@ class IfileIt(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     LINK_PATTERN = r'</span> If it doesn\'t, <a target="_blank" href="([^"]+)">'
     RECAPTCHA_KEY_PATTERN = r"var __recaptcha_public\s*=\s*'([^']+)';"
     FILE_INFO_PATTERN = r'<span style="cursor: default;[^>]*>\s*(?P<N>.*?)\s*&nbsp;\s*<strong>\s*(?P<S>[0-9.]+)\s*(?P<U>[kKMG])i?B\s*</strong>\s*</span>'
@@ -54,7 +55,7 @@ class IfileIt(SimpleHoster):
                 self.fail("Incorrect captcha")
 
         if not "ticket_url" in json_response:
-            self.parseError("Download URL")
+            self.error("Download URL")
 
         self.download(json_response['ticket_url'])
 

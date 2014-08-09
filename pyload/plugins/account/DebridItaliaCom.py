@@ -15,6 +15,7 @@ class DebridItaliaCom(Account):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     WALID_UNTIL_PATTERN = r"Premium valid till: (?P<D>[^|]+) \|"
 
 
@@ -27,7 +28,7 @@ class DebridItaliaCom(Account):
             validuntil = int(time.mktime(time.strptime(m.group('D'), "%d/%m/%Y %H:%M")))
             return {'premium': True, 'validuntil': validuntil, 'trafficleft': -1}
         else:
-            self.logError('Unable to retrieve account information - Plugin may be out of date')
+            #self.error("Unable to retrieve account information")
 
     def login(self, user, data, req):
         self.html = req.load("http://debriditalia.com/login.php",

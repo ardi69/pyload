@@ -14,4 +14,5 @@ class ShareRapidComFolder(SimpleCrypter):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     LINK_PATTERN = r'<td class="soubor"[^>]*><a href="([^"]+)">'

@@ -16,6 +16,7 @@ class EgoFilesCom(Account):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     PREMIUM_ACCOUNT_PATTERN = '<br/>\s*Premium: (?P<P>[^/]*) / Traffic left: (?P<T>[\d.]*) (?P<U>\w*)\s*\\n\s*<br/>'
 
 
@@ -30,7 +31,7 @@ class EgoFilesCom(Account):
             trafficleft = parseFileSize(m.group('T'), m.group('U')) / 1024
             return {'premium': True, 'validuntil': validuntil, 'trafficleft': trafficleft}
         else:
-            self.logError('Unable to retrieve account information - Plugin may be out of date')
+            #self.error("Unable to retrieve account information")
 
     def login(self, user, data, req):
         # Set English language

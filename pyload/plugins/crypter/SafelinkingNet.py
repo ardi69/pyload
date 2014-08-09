@@ -22,6 +22,7 @@ class SafelinkingNet(Crypter):
     __author_name__ = "quareevo"
     __author_mail__ = "quareevo@arcor.de"
 
+
     SOLVEMEDIA_PATTERN = "solvemediaApiKey = '([\w\.\-_]+)';"
 
 
@@ -34,7 +35,7 @@ class SafelinkingNet(Crypter):
             if m:
                 self.urls = [m.group(1)]
             else:
-                self.parseError("Couldn't find forwarded Link")
+                self.error("Couldn't find forwarded Link")
 
         else:
             password = ""

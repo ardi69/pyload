@@ -27,6 +27,7 @@ class Account(Base):
     __author_name__ = "mkaay"
     __author_mail__ = "mkaay@mkaay.de"
 
+
     #: after that time (in minutes) pyload will relogin the account
     login_timeout = 10 * 60
     #: after that time (in minutes) account data will be reloaded
@@ -186,7 +187,7 @@ class Account(Base):
             'premium': True, #useful for free accounts
             'timestamp': 0, #time this info was retrieved
             'type': self.__name__,
-            }
+        }
 
     def getAllAccounts(self, force=False):
         return [self.getAccountInfo(user, force) for user, data in self.accounts.iteritems()]

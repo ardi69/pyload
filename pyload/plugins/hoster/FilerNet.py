@@ -24,6 +24,7 @@ class FilerNet(SimpleHoster):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     FILE_INFO_PATTERN = r'<h1 class="page-header">Free Download (?P<N>\S+) <small>(?P<S>[\w.]+) (?P<U>\w+)</small></h1>'
     OFFLINE_PATTERN = r'Nicht gefunden'
     RECAPTCHA_KEY = "6LcFctISAAAAAAgaeHgyqhNecGJJRnxV1m_vAz3V"
@@ -52,7 +53,7 @@ class FilerNet(SimpleHoster):
 
         inputs = self.parseHtmlForm(input_names='token')[1]
         if 'token' not in inputs:
-            self.parseError('Unable to detect token')
+            self.error("Unable to detect token")
         token = inputs['token']
         self.logDebug('Token: ' + token)
 
@@ -60,7 +61,7 @@ class FilerNet(SimpleHoster):
 
         inputs = self.parseHtmlForm(input_names='hash')[1]
         if 'hash' not in inputs:
-            self.parseError('Unable to detect hash')
+            self.error("Unable to detect hash")
         hash_data = inputs['hash']
         self.logDebug('Hash: ' + hash_data)
 
@@ -99,7 +100,7 @@ class FilerNet(SimpleHoster):
             html = self.load(self.pyfile.url)
             m = re.search(self.LINK_PATTERN, html)
             if m is None:
-                self.parseError("Unable to detect direct link, try to enable 'Direct download' in your user settings")
+                self.error("Unable to detect direct link, try to enable 'Direct download' in your user settings")
             dl = 'http://filer.net' + m.group(1)
 
         self.logDebug('Direct link: ' + dl)

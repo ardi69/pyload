@@ -25,6 +25,7 @@ class ExpertDecoders(Addon):
     __author_name__ = ("RaNaN", "zoidberg")
     __author_mail__ = ("RaNaN@pyload.org", "zoidberg@mujmail.cz")
 
+
     API_URL = "http://www.fasttypers.org/imagepost.ashx"
 
 

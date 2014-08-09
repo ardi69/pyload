@@ -20,6 +20,7 @@ class RelinkUs(Crypter):
     __author_name__ = "fragonib"
     __author_mail__ = "fragonib[AT]yahoo[DOT]es"
 
+
     # Constants
     PREFERRED_LINK_SOURCES = ["cnl2", "dlc", "web"]
 
@@ -170,7 +171,7 @@ class RelinkUs(Crypter):
         elif source == 'web':
             return self.handleWEBLinks()
         else:
-            self.fail('Unknown source [%s] (this is probably a bug)' % source)
+            self.error("Unknown source \"%s\"" % source)
 
     def handleCNL2Links(self):
         self.logDebug("Search for CNL2 links")

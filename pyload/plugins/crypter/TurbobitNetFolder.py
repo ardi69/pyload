@@ -17,6 +17,7 @@ class TurbobitNetFolder(SimpleCrypter):
     __author_name__ = ("stickell", "Walter Purcaro")
     __author_mail__ = ("l.stickell@yahoo.it", "vuolter@gmail.com")
 
+
     TITLE_PATTERN = r"src='/js/lib/grid/icon/folder.png'> <span>(?P<title>.+?)</span>"
 
 

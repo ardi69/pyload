@@ -28,6 +28,7 @@ class FilefactoryCom(SimpleHoster):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     FILE_INFO_PATTERN = r'<div id="file_name"[^>]*>\s*<h2>(?P<N>[^<]+)</h2>\s*<div id="file_info">\s*(?P<S>[\d.]+) (?P<U>\w+) uploaded'
     LINK_PATTERN = r'<a href="(https?://[^"]+)"[^>]*><i[^>]*></i> Download with FileFactory Premium</a>'
     OFFLINE_PATTERN = r'<h2>File Removed</h2>|This file is no longer available'
@@ -57,20 +58,20 @@ class FilefactoryCom(SimpleHoster):
             # Load the page that contains the direct link
             url = re.search(r"document\.location\.host \+\s*'(.+)';", self.html)
             if url is None:
-                self.parseError('Unable to detect free link')
+                self.error("Unable to detect free link")
             url = 'http://www.filefactory.com' + url.group(1)
             self.html = self.load(url, decode=True)
 
             # Free downloads wait time
             waittime = re.search(r'id="startWait" value="(\d+)"', self.html)
             if not waittime:
-                self.parseError('Unable to detect wait time')
+                self.error("Unable to detect wait time")
             self.wait(int(waittime.group(1)))
 
             # Parse the direct link and download it
             direct = re.search(r'data-href(?:-direct)?="(.*)" class="button', self.html)
             if not direct:
-                self.parseError('Unable to detect free direct link')
+                self.error("Unable to detect free direct link")
             direct = direct.group(1)
 
         self.logDebug('DIRECT LINK: ' + direct)
@@ -100,7 +101,7 @@ class FilefactoryCom(SimpleHoster):
             if m:
                 url = m.group(1)
             else:
-                self.parseError('Unable to detect premium direct link')
+                self.error("Unable to detect premium direct link")
 
         self.logDebug('DIRECT PREMIUM LINK: ' + url)
         self.download(url, disposition=True)

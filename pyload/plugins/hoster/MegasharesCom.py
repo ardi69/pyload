@@ -18,6 +18,7 @@ class MegasharesCom(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<h1 class="black xxl"[^>]*title="(?P<N>[^"]+)">'
     FILE_SIZE_PATTERN = r'<strong><span class="black">Filesize:</span></strong> (?P<S>[0-9.]+) (?P<U>[kKMG])i?B<br />'
     OFFLINE_PATTERN = r'<dd class="red">(Invalid Link Request|Link has been deleted)'
@@ -78,7 +79,7 @@ class MegasharesCom(SimpleHoster):
         # Check traffic left on passport
         m = re.search(self.PASSPORT_LEFT_PATTERN, self.html)
         if m is None:
-            self.fail('Passport not found')
+            self.fail("Passport not found")
         self.logInfo("Download passport: %s" % m.group(1))
         data_left = float(m.group(2)) * 1024 ** {'KB': 1, 'MB': 2, 'GB': 3}[m.group(3)]
         self.logInfo("Data left: %s %s (%d MB needed)" % (m.group(2), m.group(3), self.pyfile.size / 1048576))
@@ -95,7 +96,7 @@ class MegasharesCom(SimpleHoster):
         m = re.search(self.LINK_PATTERN % (1 if premium else 2), self.html)
         msg = '%s download URL' % ('Premium' if premium else 'Free')
         if m is None:
-            self.parseError(msg)
+            self.error(msg)
 
         download_url = m.group(1)
         self.logDebug("%s: %s" % (msg, download_url))

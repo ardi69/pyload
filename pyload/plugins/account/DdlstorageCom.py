@@ -20,6 +20,7 @@ class DdlstorageCom(XFSPAccount):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     MAIN_PAGE = "http://ddlstorage.com/"
 
 

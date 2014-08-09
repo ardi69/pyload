@@ -17,6 +17,7 @@ class CatShareNet(SimpleHoster):
     __author_name__ = "z00nx"
     __author_mail__ = "z00nx0@gmail.com"
 
+
     FILE_INFO_PATTERN = r'<h3 class="pull-left"[^>]+>(?P<N>.*)</h3>\s+<h3 class="pull-right"[^>]+>(?P<S>.*)</h3>'
     OFFLINE_PATTERN = r'Podany plik zosta'
 

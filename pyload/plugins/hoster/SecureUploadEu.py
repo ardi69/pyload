@@ -14,6 +14,7 @@ class SecureUploadEu(XFileSharingPro):
     __author_name__ = "z00nx"
     __author_mail__ = "z00nx0@gmail.com"
 
+
     HOSTER_NAME = "secureupload.eu"
 
     FILE_INFO_PATTERN = r'<h3>Downloading (?P<N>[^<]+) \((?P<S>[^<]+)\)</h3>'

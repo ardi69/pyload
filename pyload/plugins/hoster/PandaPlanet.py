@@ -18,6 +18,7 @@ class PandaPlanet(XFileSharingPro):
     __author_name__ = "t4skforce"
     __author_mail__ = "t4skforce1337[AT]gmail[DOT]com"
 
+
     HOSTER_NAME = "pandapla.net"
 
     FILE_SIZE_PATTERN = r'File Size:</b>\s*</td>\s*<td[^>]*>(?P<S>[^<]+)</td>\s*</tr>'

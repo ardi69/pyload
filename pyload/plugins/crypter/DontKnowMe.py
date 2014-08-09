@@ -18,6 +18,7 @@ class DontKnowMe(Crypter):
     __author_name__ = "selaux"
     __author_mail__ = None
 
+
     LINK_PATTERN = r'http://dontknow.me/at/\?(.+)$'
 
 

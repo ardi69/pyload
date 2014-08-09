@@ -14,4 +14,5 @@ class FshareVnFolder(SimpleCrypter):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     LINK_PATTERN = r'<li class="w_80pc"><a href="([^"]+)" target="_blank">'

@@ -14,6 +14,7 @@ class TusfilesNet(XFileSharingPro):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     HOSTER_NAME = "tusfiles.net"
 
     FILE_INFO_PATTERN = r'\](?P<N>.+) - (?P<S>[\d.]+) (?P<U>\w+)\['

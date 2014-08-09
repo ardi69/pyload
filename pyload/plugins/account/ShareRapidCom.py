@@ -15,6 +15,7 @@ class ShareRapidCom(Account):
     __author_name__ = ("MikyWoW", "zoidberg")
     __author_mail__ = ("mikywow@seznam.cz", "zoidberg@mujmail.cz")
 
+
     login_timeout = 60
 
 

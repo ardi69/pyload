@@ -36,6 +36,7 @@ class BypassCaptcha(Addon):
     __author_name__ = ("RaNaN", "Godofdream", "zoidberg")
     __author_mail__ = ("RaNaN@pyload.org", "soilfcition@gmail.com", "zoidberg@mujmail.cz")
 
+
     PYLOAD_KEY = "4f771155b640970d5607f919a615bdefc67e7d32"
 
     SUBMIT_URL = "http://bypasscaptcha.com/upload.php"

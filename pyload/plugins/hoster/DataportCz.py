@@ -14,6 +14,7 @@ class DataportCz(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<span itemprop="name">(?P<N>[^<]+)</span>'
     FILE_SIZE_PATTERN = r'<td class="fil">Velikost</td>\s*<td>(?P<S>[^<]+)</td>'
     OFFLINE_PATTERN = r'<h2>Soubor nebyl nalezen</h2>'
@@ -31,19 +32,19 @@ class DataportCz(SimpleHoster):
             action, inputs = self.parseHtmlForm('free_download_form')
             self.logDebug(action, inputs)
             if not action or not inputs:
-                self.parseError('free_download_form')
+                self.error("free_download_form")
 
             if "captchaId" in inputs and inputs['captchaId'] in captchas:
                 inputs['captchaCode'] = captchas[inputs['captchaId']]
             else:
-                self.parseError('captcha')
+                self.error("captcha")
 
             self.html = self.download("http://www.dataport.cz%s" % action, post=inputs)
 
             check = self.checkDownload({'captcha': 'alert("\u0160patn\u011b opsan\u00fd k\u00f3d z obr\u00e1zu");',
                                         'slot': 'alert("Je n\u00e1m l\u00edto, ale moment\u00e1ln\u011b nejsou'})
             if check == "captcha":
-                self.parseError('invalid captcha')
+                self.error("invalid captcha")
             elif check == "slot":
                 self.logDebug("No free slots - wait 60s and retry")
                 self.wait(60, False)

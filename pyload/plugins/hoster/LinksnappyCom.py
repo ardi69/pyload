@@ -19,6 +19,7 @@ class LinksnappyCom(Hoster):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     SINGLE_CHUNK_HOSTERS = ('easybytez.com')
 
 
@@ -47,7 +48,7 @@ class LinksnappyCom(Hoster):
 
             if j['error']:
                 self.logError('Error converting the link: %s' % j['error'])
-                self.fail('Error converting the link')
+                self.fail("Error converting the link")
 
             pyfile.name = j['filename']
             new_url = j['generated']

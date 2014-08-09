@@ -17,6 +17,7 @@ class NowDownloadEu(SimpleHoster):
     __author_name__ = ("godofdream", "Walter Purcaro")
     __author_mail__ = ("soilfiction@gmail.com", "vuolter@gmail.com")
 
+
     FILE_INFO_PATTERN = r'Downloading</span> <br> (?P<N>.*) (?P<S>[0-9,.]+) (?P<U>[kKMG])i?B </h4>'
     OFFLINE_PATTERN = r'(This file does not exist!)'
 
@@ -36,7 +37,7 @@ class NowDownloadEu(SimpleHoster):
         tokenlink = re.search(self.TOKEN_PATTERN, self.html)
         continuelink = re.search(self.CONTINUE_PATTERN, self.html)
         if tokenlink is None or continuelink is None:
-            self.fail('Plugin out of Date')
+            self.error()
 
         m = re.search(self.WAIT_PATTERN, self.html)
         if m:
@@ -51,10 +52,12 @@ class NowDownloadEu(SimpleHoster):
         self.html = self.load(baseurl + str(continuelink.group(1)))
 
         url = re.search(self.LINK_PATTERN, self.html)
-        if url is None:
-            self.fail('Download Link not Found (Plugin out of Date?)')
-        self.logDebug('Download link: ' + str(url.group(1)))
-        self.download(str(url.group(1)))
+        if url:
+            self.logDebug('Download link: ' + str(url.group(1)))
+            self.download(str(url.group(1)))
+        else:
+            self.error("Download Link not Found")
+        
 
 
 getInfo = create_getInfo(NowDownloadEu)

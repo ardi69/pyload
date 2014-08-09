@@ -16,6 +16,7 @@ class LixIn(Crypter):
     __author_name__ = "spoob"
     __author_mail__ = "spoob@pyload.org"
 
+
     CAPTCHA_PATTERN = r'<img src="(?P<image>captcha_img.php\?.*?)"'
     SUBMIT_PATTERN = r"value='continue.*?'"
     LINK_PATTERN = r'name="ifram" src="(?P<link>.*?)"'
@@ -26,7 +27,7 @@ class LixIn(Crypter):
 
         m = re.match(self.__pattern__, url)
         if m is None:
-            self.parseError("couldn't identify file id")
+            self.error("couldn't identify file id")
 
         id = m.group("id")
         self.logDebug("File id is %s" % id)
@@ -35,7 +36,7 @@ class LixIn(Crypter):
 
         m = re.search(self.SUBMIT_PATTERN, self.html)
         if m is None:
-            self.parseError("link doesn't seem valid")
+            self.error("link doesn't seem valid")
 
         m = re.search(self.CAPTCHA_PATTERN, self.html)
         if m:
@@ -53,7 +54,7 @@ class LixIn(Crypter):
 
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError("can't find destination url")
+            self.error("can't find destination url")
         else:
             self.urls = [m.group("link")]
             self.logDebug("Found link %s, adding to package" % self.urls[0])

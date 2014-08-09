@@ -21,6 +21,7 @@ class LoadTo(SimpleHoster):
     __author_name__ = ("halfman", "stickell")
     __author_mail__ = ("Pulpan3@gmail.com", "l.stickell@yahoo.it")
 
+
     FILE_NAME_PATTERN = r'<head><title>(?P<N>.+) \/\/ Load.to</title>'
     FILE_SIZE_PATTERN = r'<a [^>]+>(?P<Z>.+)</a></h3>\s*Size: (?P<S>.*) (?P<U>[kKmMgG]?i?[bB])'
     OFFLINE_PATTERN = r'Can\'t find file\. Please check URL'
@@ -38,7 +39,7 @@ class LoadTo(SimpleHoster):
         # Search for Download URL
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError("Unable to detect download URL")
+            self.error("Unable to detect download URL")
 
         download_url = m.group(1)
 

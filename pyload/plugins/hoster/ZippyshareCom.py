@@ -19,6 +19,7 @@ class ZippyshareCom(SimpleHoster):
     __author_name__ = ("spoob", "zoidberg", "stickell", "skylab")
     __author_mail__ = ("spoob@pyload.org", "zoidberg@mujmail.cz", "l.stickell@yahoo.it", "development@sky-lab.de")
 
+
     FILE_NAME_PATTERN = r'<title>Zippyshare\.com - (?P<N>[^<]+)</title>'
     FILE_SIZE_PATTERN = r'>Size:</font>\s*<font [^>]*>(?P<S>[0-9.,]+) (?P<U>[kKMG]+)i?B</font><br />'
     FILE_INFO_PATTERN = r'document\.getElementById\(\'dlbutton\'\)\.href = "[^;]*/(?P<N>[^"]+)";'
@@ -52,7 +53,7 @@ class ZippyshareCom(SimpleHoster):
 
             m = re.search(r"((?P<a>\d*)\s%\s(?P<b>\d*)\s\+\s(?P<c>\d*)\s%\s(?P<k>\d*))", self.html)
             if m is None:
-                self.parseError("Unable to detect values to calculate direct link")
+                self.error("Unable to detect values to calculate direct link")
             a = int(m.group("a"))
             b = int(m.group("b"))
             c = int(m.group("c"))

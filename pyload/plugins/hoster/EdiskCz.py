@@ -16,6 +16,7 @@ class EdiskCz(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_INFO_PATTERN = r'<span class="fl" title="(?P<N>[^"]+)">\s*.*?\((?P<S>[0-9.]*) (?P<U>[kKMG])i?B\)</h1></span>'
     OFFLINE_PATTERN = r'<h3>This file does not exist due to one of the following:</h3><ul><li>'
 
@@ -33,7 +34,7 @@ class EdiskCz(SimpleHoster):
 
         m = re.search(self.ACTION_PATTERN, url)
         if m is None:
-            self.parseError("ACTION")
+            self.error("ACTION")
         action = m.group(1)
 
         self.html = self.load(url, decode=True)

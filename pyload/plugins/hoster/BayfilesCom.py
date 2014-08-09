@@ -19,6 +19,7 @@ class BayfilesCom(SimpleHoster):
     __author_name__ = ("zoidberg", "Walter Purcaro")
     __author_mail__ = ("zoidberg@mujmail.cz", "vuolter@gmail.com")
 
+
     FILE_INFO_PATTERN = r'<p title="(?P<N>[^"]+)">[^<]*<strong>(?P<S>[0-9., ]+)(?P<U>[kKMG])i?B</strong></p>'
     OFFLINE_PATTERN = r'(<p>The requested file could not be found.</p>|<title>404 Not Found</title>)'
 
@@ -37,7 +38,7 @@ class BayfilesCom(SimpleHoster):
         # Get download token
         m = re.search(self.VARS_PATTERN, self.html)
         if m is None:
-            self.parseError('VARS')
+            self.error("VARS")
         vfid, delay = m.groups()
 
         response = json_loads(self.load('http://bayfiles.com/ajax_download', get={
@@ -46,7 +47,7 @@ class BayfilesCom(SimpleHoster):
             'vfid': vfid}, decode=True))
 
         if not "token" in response or not response['token']:
-            self.fail('No token')
+            self.fail("No token")
 
         self.wait(int(delay))
 
@@ -58,13 +59,13 @@ class BayfilesCom(SimpleHoster):
         # Get final link and download
         m = re.search(self.FREE_LINK_PATTERN, self.html)
         if m is None:
-            self.parseError("Free link")
+            self.error("Free link")
         self.startDownload(m.group(1))
 
     def handlePremium(self):
         m = re.search(self.PREMIUM_LINK_PATTERN, self.html)
         if m is None:
-            self.parseError("Premium link")
+            self.error("Premium link")
         self.startDownload(m.group(1))
 
     def startDownload(self, url):

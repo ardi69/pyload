@@ -17,6 +17,7 @@ class HundredEightyUploadCom(XFileSharingPro):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     HOSTER_NAME = "180upload.com"
 
     FILE_NAME_PATTERN = r'Filename:</b></td><td nowrap>(?P<N>.+)</td></tr>-->'

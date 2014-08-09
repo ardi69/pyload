@@ -14,6 +14,7 @@ class FastshareCz(Account):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     CREDIT_PATTERN = r'(?:Kredit|Credit)\s*</td>\s*<td[^>]*>([\d. \w]+)&nbsp;'
 
 

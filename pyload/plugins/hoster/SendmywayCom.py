@@ -14,6 +14,7 @@ class SendmywayCom(XFileSharingPro):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     HOSTER_NAME = "sendmyway.com"
 
     FILE_NAME_PATTERN = r'<p class="file-name" ><.*?>\s*(?P<N>.+)'

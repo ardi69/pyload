@@ -21,6 +21,7 @@ class OboomCom(Hoster):
     __author_name__ = "stanley"
     __author_mail__ = "stanley.foerster@gmail.com"
 
+
     RECAPTCHA_KEY = "6LdqpO0SAAAAAJGHXo63HyalP7H4qlRs_vff0kJX"
 
 

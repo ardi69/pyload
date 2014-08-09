@@ -19,6 +19,7 @@ class MegaDebridEu(Hoster):
     __author_name__ = "D.Ducatel"
     __author_mail__ = "dducatel@je-geek.fr"
 
+
     API_URL = "https://www.mega-debrid.eu/api.php"
 
 

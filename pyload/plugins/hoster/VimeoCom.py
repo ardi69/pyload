@@ -18,6 +18,7 @@ class VimeoCom(SimpleHoster):
     __author_name__ = "Walter Purcaro"
     __author_mail__ = "vuolter@gmail.com"
 
+
     FILE_NAME_PATTERN = r'<title>(?P<N>.+) on Vimeo<'
     OFFLINE_PATTERN = r'class="exception_header"'
     TEMP_OFFLINE_PATTERN = r'Please try again in a few minutes.<'

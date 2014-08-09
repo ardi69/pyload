@@ -14,6 +14,7 @@ class MovReelCom(XFileSharingPro):
     __author_name__ = "JorisV83"
     __author_mail__ = "jorisv83-pyload@yahoo.com"
 
+
     HOSTER_NAME = "movreel.com"
 
     FILE_INFO_PATTERN = r'<h3>(?P<N>.+?) <small><sup>(?P<S>[\d.]+) (?P<U>..)</sup> </small></h3>'

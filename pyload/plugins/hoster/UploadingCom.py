@@ -19,6 +19,7 @@ class UploadingCom(SimpleHoster):
     __author_name__ = ("jeix", "mkaay", "zoidberg")
     __author_mail__ = ("jeix@hasnomail.de", "mkaay@mkaay.de", "zoidberg@mujmail.cz")
 
+
     FILE_NAME_PATTERN = r'id="file_title">(?P<N>.+)</'
     FILE_SIZE_PATTERN = r'size tip_container">(?P<S>[\d.]+) (?P<U>\w+)<'
     OFFLINE_PATTERN = r'Page not found!'
@@ -72,21 +73,21 @@ class UploadingCom(SimpleHoster):
             self.logInfo("%s: Waiting %d seconds." % (self.__name__, wait_time))
             self.wait(wait_time)
         else:
-            self.parseError("AJAX/WAIT")
+            self.error("AJAX/WAIT")
 
         response = json_loads(
             self.load(ajax_url, post={'action': 'get_link', 'code': self.file_info['ID'], 'pass': 'false'}))
         if 'answer' in response and 'link' in response['answer']:
             url = response['answer']['link']
         else:
-            self.parseError("AJAX/URL")
+            self.error("AJAX/URL")
 
         self.html = self.load(url)
         m = re.search(r'<form id="file_form" action="(.*?)"', self.html)
         if m:
             url = m.group(1)
         else:
-            self.parseError("URL")
+            self.error("URL")
 
         self.download(url)
 

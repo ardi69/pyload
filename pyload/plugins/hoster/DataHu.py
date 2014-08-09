@@ -19,6 +19,7 @@ class DataHu(SimpleHoster):
     __author_name__ = ("crash", "stickell")
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     FILE_INFO_PATTERN = ur'<title>(?P<N>.*) \((?P<S>[^)]+)\) let\xf6lt\xe9se</title>'
     OFFLINE_PATTERN = ur'Az adott f\xe1jl nem l\xe9tezik'
     LINK_PATTERN = r'<div class="download_box_button"><a href="([^"]+)">'
@@ -33,7 +34,7 @@ class DataHu(SimpleHoster):
             url = m.group(1)
             self.logDebug('Direct link: ' + url)
         else:
-            self.parseError('Unable to get direct link')
+            self.error("Unable to get direct link")
 
         self.download(url, disposition=True)
 

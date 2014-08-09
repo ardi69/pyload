@@ -20,6 +20,7 @@ class CzshareCom(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<div class="tab" id="parameters">\s*<p>\s*Cel. n.zev: <a href=[^>]*>(?P<N>[^<]+)</a>'
     FILE_SIZE_PATTERN = r'<div class="tab" id="category">(?:\s*<p>[^\n]*</p>)*\s*Velikost:\s*(?P<S>[0-9., ]+)(?P<U>[kKMG])i?B\s*</div>'
     OFFLINE_PATTERN = r'<div class="header clearfix">\s*<h2 class="red">'
@@ -78,7 +79,7 @@ class CzshareCom(SimpleHoster):
         # get free url
         m = re.search(self.FREE_URL_PATTERN, self.html)
         if m is None:
-            self.parseError('Free URL')
+            self.error("Free URL")
         parsed_url = "http://sdilej.cz" + m.group(1)
         self.logDebug("PARSED_URL:" + parsed_url)
 
@@ -93,7 +94,7 @@ class CzshareCom(SimpleHoster):
             self.pyfile.size = int(inputs['size'])
         except Exception, e:
             self.logError(e)
-            self.parseError('Form')
+            self.error("Form")
 
         # get and decrypt captcha
         captcha_url = 'http://sdilej.cz/captcha.php'
@@ -117,7 +118,7 @@ class CzshareCom(SimpleHoster):
         self.logDebug("WAIT URL", self.req.lastEffectiveURL)
         m = re.search("free_wait.php\?server=(.*?)&(.*)", self.req.lastEffectiveURL)
         if m is None:
-            self.parseError('Download URL')
+            self.error("Download URL")
 
         url = "http://%s/download.php?%s" % (m.group(1), m.group(2))
 

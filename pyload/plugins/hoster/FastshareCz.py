@@ -21,6 +21,7 @@ class FastshareCz(SimpleHoster):
     __author_name__ = ("zoidberg", "stickell", "Walter Purcaro")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it", "vuolter@gmail.com")
 
+
     FILE_INFO_PATTERN = r'<h1 class="dwp">(?P<N>[^<]+)</h1>\s*<div class="fileinfo">\s*Size\s*: (?P<S>\d+) (?P<U>\w+),'
     OFFLINE_PATTERN = r'>(The file has been deleted|Requested page not found)'
 
@@ -41,7 +42,7 @@ class FastshareCz(SimpleHoster):
         if m:
             action, captcha_src = m.groups()
         else:
-            self.parseError("Free URL")
+            self.error("Free URL")
 
         baseurl = "http://www.fastshare.cz"
         captcha = self.decryptCaptcha(urljoin(baseurl, captcha_src))
@@ -75,7 +76,7 @@ class FastshareCz(SimpleHoster):
                 if m:
                     url = m.group(1)
                 else:
-                    self.parseError("Premium URL")
+                    self.error("Premium URL")
 
         self.logDebug("PREMIUM URL: " + url)
         self.download(url, disposition=True)

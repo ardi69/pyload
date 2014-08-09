@@ -18,6 +18,7 @@ class DuckCryptInfo(Crypter):
     __author_name__ = "godofdream"
     __author_mail__ = "soilfiction@gmail.com"
 
+
     TIMER_PATTERN = r'<span id="timer">(.*)</span>'
 
 
@@ -31,7 +32,7 @@ class DuckCryptInfo(Crypter):
         #    self.setWait(int(m.group(1)) ,False)
         m = re.match(self.__pattern__, url)
         if m is None:
-            self.parseError('Weird error in link')
+            self.error("Weird error in link")
         if str(m.group(1)) == "link":
             self.handleLink(url)
         else:
@@ -46,7 +47,7 @@ class DuckCryptInfo(Crypter):
         cryptlinks = soup.findAll("div", attrs={'class': "folderbox"})
         self.logDebug("Redirectet to " + str(cryptlinks))
         if not cryptlinks:
-            self.parseError('No link found')
+            self.error("No link found")
         for clink in cryptlinks:
             if clink.find("a"):
                 self.handleLink(clink.find("a")['href'])
@@ -55,5 +56,3 @@ class DuckCryptInfo(Crypter):
         src = self.load(url)
         soup = BeautifulSoup(src)
         self.urls = [soup.find("iframe")['src']]
-        if not self.urls:
-            self.logDebug('no links m - (Plugin out of date?)')

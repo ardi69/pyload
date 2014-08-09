@@ -16,6 +16,7 @@ class FilezyNet(XFileSharingPro):
     __author_name__ = None
     __author_mail__ = None
 
+
     HOSTER_NAME = "filezy.net"
 
     FILE_SIZE_PATTERN = r'<span class="plansize">(?P<S>[0-9.]+) (?P<U>[kKMG])i?B</span>'

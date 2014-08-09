@@ -15,6 +15,7 @@ class GooGl(Crypter):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     API_URL = "https://www.googleapis.com/urlshortener/v1/url"
 
 
@@ -26,4 +27,4 @@ class GooGl(Crypter):
         if 'longUrl' in rep:
             self.urls = [rep['longUrl']]
         else:
-            self.parseError('Unable to expand shortened link')
+            self.error("Unable to expand shortened link")

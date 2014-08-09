@@ -18,6 +18,7 @@ class SimpleCrypter(Crypter):
     __author_name__ = ("stickell", "zoidberg", "Walter Purcaro")
     __author_mail__ = ("l.stickell@yahoo.it", "zoidberg@mujmail.cz", "vuolter@gmail.com")
 
+
     """
     Following patterns should be defined by each crypter:
 

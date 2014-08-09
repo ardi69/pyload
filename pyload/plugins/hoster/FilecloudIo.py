@@ -18,6 +18,7 @@ class FilecloudIo(SimpleHoster):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     FILE_SIZE_PATTERN = r'{var __ab1 = (?P<S>\d+);}'
     FILE_NAME_PATTERN = r'id="aliasSpan">(?P<N>.*?)&nbsp;&nbsp;<'
     OFFLINE_PATTERN = r'l10n.(FILES__DOESNT_EXIST|REMOVED)'
@@ -40,7 +41,7 @@ class FilecloudIo(SimpleHoster):
 
         m = re.search(self.AB1_PATTERN, self.html)
         if m is None:
-            self.parseError("__AB1")
+            self.error("__AB1")
         data['__ab1'] = m.group(1)
 
         if not self.account:
@@ -88,7 +89,7 @@ class FilecloudIo(SimpleHoster):
             self.html = self.load('http://filecloud.io/download.html')
             m = re.search(self.LINK_PATTERN % self.file_info['ID'], self.html)
             if m is None:
-                self.parseError("Download URL")
+                self.error("Download URL")
             download_url = m.group(1)
             self.logDebug("Download URL: %s" % download_url)
 

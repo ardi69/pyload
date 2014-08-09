@@ -20,6 +20,7 @@ class ExtabitCom(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<th>File:</th>\s*<td class="col-fileinfo">\s*<div title="(?P<N>[^"]+)">'
     FILE_SIZE_PATTERN = r'<th>Size:</th>\s*<td class="col-fileinfo">(?P<S>[^<]+)</td>'
     OFFLINE_PATTERN = r'>File not found<'
@@ -60,15 +61,15 @@ class ExtabitCom(SimpleHoster):
             else:
                 self.fail("Invalid captcha")
         else:
-            self.parseError('Captcha')
+            self.error("Captcha")
 
         if not "href" in response:
-            self.parseError('JSON')
+            self.error("JSON")
 
         self.html = self.load("http://extabit.com/file/%s%s" % (fileID, response['href']))
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError('Download URL')
+            self.error("Download URL")
         url = m.group(1)
         self.logDebug("Download URL: " + url)
         self.download(url)

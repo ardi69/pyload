@@ -19,6 +19,7 @@ class DepositfilesCom(SimpleHoster):
     __author_name__ = ("spoob", "zoidberg", "Walter Purcaro")
     __author_mail__ = ("spoob@pyload.org", "zoidberg@mujmail.cz", "vuolter@gmail.com")
 
+
     FILE_NAME_PATTERN = r'<script type="text/javascript">eval\( unescape\(\'(?P<N>.*?)\''
     FILE_SIZE_PATTERN = r': <b>(?P<S>[0-9.]+)&nbsp;(?P<U>[kKMG])i?B</b>'
     OFFLINE_PATTERN = r'<span class="html_download_api-not_exists"></span>'
@@ -81,7 +82,7 @@ class DepositfilesCom(SimpleHoster):
 
             if '<input type=button value="Continue" onclick="check_recaptcha' in self.html:
                 if not captcha_key:
-                    self.parseError('Captcha key')
+                    self.error("Captcha key")
                 if 'response' in params:
                     self.invalidCaptcha()
                 params['challenge'], params['response'] = recaptcha.challenge(captcha_key)
@@ -96,9 +97,9 @@ class DepositfilesCom(SimpleHoster):
                 self.logDebug("LINK: %s" % link)
                 break
             else:
-                self.parseError('Download link')
+                self.error("Download link")
         else:
-            self.fail('No valid captcha response received')
+            self.fail("No valid captcha response received")
 
         try:
             self.download(link, disposition=True)
@@ -122,7 +123,7 @@ class DepositfilesCom(SimpleHoster):
             elif mirror:
                 dlink = mirror.group(1)
             else:
-                self.parseError("No direct download link or mirror found")
+                self.error("No direct download link or mirror found")
             self.download(dlink, disposition=True)
 
 

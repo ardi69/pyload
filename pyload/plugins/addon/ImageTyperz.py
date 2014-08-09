@@ -41,6 +41,7 @@ class ImageTyperz(Addon):
     __author_name__ = ("RaNaN", "zoidberg")
     __author_mail__ = ("RaNaN@pyload.org", "zoidberg@mujmail.cz")
 
+
     SUBMIT_URL = "http://captchatypers.com/Forms/UploadFileAndGetTextNEW.ashx"
     RESPOND_URL = "http://captchatypers.com/Forms/SetBadImage.ashx"
     GETCREDITS_URL = "http://captchatypers.com/Forms/RequestBalance.ashx"

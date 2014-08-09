@@ -12,13 +12,14 @@ from pyload.utils import safe_join
 class ExternalScripts(Addon):
     __name__ = "ExternalScripts"
     __type__ = "addon"
-    __version__ = "0.23"
+    __version__ = "0.24"
 
     __config__ = [("activated", "bool", "Activated", True)]
 
     __description__ = """Run external scripts"""
     __author_name__ = ("mkaay", "RaNaN", "spoob")
     __author_mail__ = ("mkaay@mkaay.de", "ranan@pyload.org", "spoob@pyload.org")
+
 
     event_list = ["unrarFinished", "allDownloadsFinished", "allDownloadsProcessed"]
 
@@ -33,7 +34,6 @@ class ExternalScripts(Addon):
         for folder in folders:
             self.scripts[folder] = []
 
-            self.initPluginType(folder, join(pypath, "scripts", folder))
             self.initPluginType(folder, join("scripts", folder))
 
         for script_type, names in self.scripts.iteritems():

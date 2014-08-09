@@ -17,6 +17,7 @@ class EpicShareNet(XFileSharingPro):
     __author_name__ = "t4skforce"
     __author_mail__ = "t4skforce1337[AT]gmail[DOT]com"
 
+
     HOSTER_NAME = "epicshare.net"
 
     OFFLINE_PATTERN = r'<b>File Not Found</b><br><br>'

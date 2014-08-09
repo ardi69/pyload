@@ -18,6 +18,7 @@ class WrzucTo(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'id="file_info">\s*<strong>(?P<N>.*?)</strong>'
     FILE_SIZE_PATTERN = r'class="info">\s*<tr>\s*<td>(?P<S>.*?)</td>'
 
@@ -30,7 +31,7 @@ class WrzucTo(SimpleHoster):
     def handleFree(self):
         data = dict(re.findall(r'(md5|file): "(.*?)"', self.html))
         if len(data) != 2:
-            self.parseError('File ID')
+            self.error("File ID")
 
         self.req.http.c.setopt(HTTPHEADER, ["X-Requested-With: XMLHttpRequest"])
         self.req.http.lastURL = self.pyfile.url
@@ -41,7 +42,7 @@ class WrzucTo(SimpleHoster):
 
         data.update(re.findall(r'"(download_link|server_id)":"(.*?)"', self.html))
         if len(data) != 4:
-            self.parseError('Download URL')
+            self.error("Download URL")
 
         download_url = "http://%s.wrzuc.to/pobierz/%s" % (data['server_id'], data['download_link'])
         self.logDebug("Download URL: %s" % download_url)

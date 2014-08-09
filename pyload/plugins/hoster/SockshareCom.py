@@ -19,6 +19,7 @@ class SockshareCom(SimpleHoster):
     __author_name__ = ("jeix", "stickell", "Walter Purcaro")
     __author_mail__ = ("jeix@hasnomail.de", "l.stickell@yahoo.it", "vuolter@gmail.com")
 
+
     FILE_INFO_PATTERN = r'site-content">\s*<h1>(?P<N>.+)<strong>\( (?P<S>[^)]+) \)</strong></h1>'
     OFFLINE_PATTERN = r'>This file doesn\'t exist, or has been removed.<'
     TEMP_OFFLINE_PATTERN = r'(>This content server has been temporarily disabled for upgrades|Try again soon\\. You can still download it below\\.<)'
@@ -40,7 +41,7 @@ class SockshareCom(SimpleHoster):
     def _getLink(self):
         hash_data = re.search(r'<input type="hidden" value="([a-z0-9]+)" name="hash">', self.html)
         if not hash_data:
-            self.parseError("Unable to detect hash")
+            self.error("Unable to detect hash")
 
         post_data = {'hash': hash_data.group(1), 'confirm': "Continue+as+Free+User"}
         self.html = self.load(self.pyfile.url, post=post_data)
@@ -66,7 +67,7 @@ class SockshareCom(SimpleHoster):
                 if link is None:
                     link = re.search(r'\"(http://media\\-b\\d+\\.sockshare\\.com/download/\\d+/.*?)\"', self.html)
             else:
-                self.parseError('Unable to detect a download link')
+                self.error("Unable to detect a download link")
 
         link = link.group(1).replace("&amp;", "&")
         if link.startswith("http://"):

@@ -18,6 +18,7 @@ class HoerbuchIn(Crypter):
     __author_name__ = ("spoob", "mkaay")
     __author_mail__ = ("spoob@pyload.org", "mkaay@mkaay.de")
 
+
     article = re.compile("http://(?:www\.)?hoerbuch\.in/wp/horbucher/\d+/.+/")
     protection = re.compile("http://(?:www\.)?hoerbuch\.in/protection/folder_\d+.html")
 
@@ -41,7 +42,7 @@ class HoerbuchIn(Crypter):
     def decryptFolder(self, url):
         m = self.protection.search(url)
         if m is None:
-            self.parseError("Bad URL")
+            self.error("Bad URL")
         url = m.group(0)
 
         self.pyfile.url = url

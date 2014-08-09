@@ -20,6 +20,7 @@ class EgoFilesCom(SimpleHoster):
     __author_name__ = "stickell"
     __author_mail__ = "l.stickell@yahoo.it"
 
+
     FILE_INFO_PATTERN = r'<div class="down-file">\s+(?P<N>[^\t]+)\s+<div class="file-properties">\s+(File size|Rozmiar): (?P<S>[\w.]+) (?P<U>\w+) \|'
     OFFLINE_PATTERN = r'(File size|Rozmiar): 0 KB'
     WAIT_TIME_PATTERN = r'For next free download you have to wait <strong>((?P<m>\d*)m)? ?((?P<s>\d+)s)?</strong>'
@@ -63,7 +64,7 @@ class EgoFilesCom(SimpleHoster):
                 self.correctCaptcha()
                 break
             else:
-                self.fail('Unknown error - Plugin may be out of date')
+                self.error()
 
         if not downloadURL:
             self.fail("No Download url retrieved/all captcha attempts failed")
@@ -80,7 +81,7 @@ class EgoFilesCom(SimpleHoster):
             self.getFileInfo()
             m = re.search(r'<a href="(?P<link>[^"]+)">Download ></a>', self.html)
             if m is None:
-                self.parseError('Unable to detect direct download url')
+                self.error("Unable to detect direct download url")
             else:
                 self.logDebug('DIRECT URL from html: ' + m.group('link'))
                 self.download(m.group('link'), disposition=True)

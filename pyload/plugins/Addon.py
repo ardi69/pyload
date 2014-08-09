@@ -32,6 +32,7 @@ class Addon(Base):
     __author_name__ = ("mkaay", "RaNaN")
     __author_mail__ = ("mkaay@mkaay.de", "RaNaN@pyload.org")
 
+
     #: automatically register event listeners for functions, attribute will be deleted dont use it yourself
     event_map = None
 

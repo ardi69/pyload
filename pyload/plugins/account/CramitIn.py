@@ -12,4 +12,5 @@ class CramitIn(XFSPAccount):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     MAIN_PAGE = "http://cramit.in/"

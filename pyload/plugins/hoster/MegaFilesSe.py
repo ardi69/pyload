@@ -14,6 +14,7 @@ class MegaFilesSe(XFileSharingPro):
     __author_name__ = "t4skforce"
     __author_mail__ = "t4skforce1337[AT]gmail[DOT]com"
 
+
     HOSTER_NAME = "megafiles.se"
 
     OFFLINE_PATTERN = r'<b><font[^>]*>File Not Found</font></b><br><br>'

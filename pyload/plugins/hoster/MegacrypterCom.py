@@ -17,6 +17,7 @@ class MegacrypterCom(MegaNz):
     __author_name__ = "GonzaloSR"
     __author_mail__ = "gonzalo@gonzalosr.com"
 
+
     API_URL = "http://megacrypter.com/api"
     FILE_SUFFIX = ".crypted"
 

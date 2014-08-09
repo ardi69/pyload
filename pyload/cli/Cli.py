@@ -3,6 +3,7 @@
 from __future__ import with_statement
 
 import __builtin__
+import os
 import sys
 
 from os.path import abspath, basename, exists, expanduser, isfile, join
@@ -11,7 +12,7 @@ __builtin__.owd = abspath("")  # original working directory
 __builtin__.pypath = abspath(join(__file__, "..", ".."))
 __builtin__.homedir = expanduser("~")
 
-if __builtin__.homedir == "~" and sys.platform == 'nt':
+if __builtin__.homedir == "~" and os.name == "nt":
     import ctypes
 
     CSIDL_APPDATA = 26
@@ -33,15 +34,13 @@ try:
         __builtin__.configdir = f.read().strip()
         f.close()
 except:
-    if sys.platform in ("posix", "linux2"):
+    if os.name == "posix":
         __builtin__.configdir = join(__builtin__.homedir, ".pyload")
     else:
         __builtin__.configdir = join(__builtin__.homedir, "pyload")
 
 sys.path.append(join(pypath, "pyload", "lib"))
 
-
-import os
 
 from codecs import getwriter
 from getopt import GetoptError, getopt

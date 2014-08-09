@@ -14,6 +14,7 @@ class CramitIn(XFileSharingPro):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     HOSTER_NAME = "cramit.in"
 
     FILE_INFO_PATTERN = r'<span class=t2>\s*(?P<N>.*?)</span>.*?<small>\s*\((?P<S>.*?)\)'

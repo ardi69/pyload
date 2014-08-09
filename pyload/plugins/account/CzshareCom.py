@@ -15,6 +15,7 @@ class CzshareCom(Account):
     __author_name__ = ("zoidberg", "stickell")
     __author_mail__ = ("zoidberg@mujmail.cz", "l.stickell@yahoo.it")
 
+
     CREDIT_LEFT_PATTERN = r'<tr class="active">\s*<td>([0-9 ,]+) (KiB|MiB|GiB)</td>\s*<td>([^<]*)</td>\s*</tr>'
 
 

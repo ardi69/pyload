@@ -16,6 +16,7 @@ class UloziskoSk(SimpleHoster):
     __author_name__ = "zoidberg"
     __author_mail__ = "zoidberg@mujmail.cz"
 
+
     FILE_NAME_PATTERN = r'<div class="down1">(?P<N>[^<]+)</div>'
     FILE_SIZE_PATTERN = ur'Veľkosť súboru: <strong>(?P<S>[0-9.]+) (?P<U>[kKMG])i?B</strong><br />'
     OFFLINE_PATTERN = ur'<span class = "red">Zadaný súbor neexistuje z jedného z nasledujúcich dôvodov:</span>'
@@ -40,19 +41,19 @@ class UloziskoSk(SimpleHoster):
     def handleFree(self):
         m = re.search(self.LINK_PATTERN, self.html)
         if m is None:
-            self.parseError('URL')
+            self.error("URL")
         parsed_url = 'http://www.ulozisko.sk' + m.group(1)
 
         m = re.search(self.ID_PATTERN, self.html)
         if m is None:
-            self.parseError('ID')
+            self.error("ID")
         id = m.group(1)
 
         self.logDebug('URL:' + parsed_url + ' ID:' + id)
 
         m = re.search(self.CAPTCHA_PATTERN, self.html)
         if m is None:
-            self.parseError('CAPTCHA')
+            self.error("CAPTCHA")
         captcha_url = 'http://www.ulozisko.sk' + m.group(1)
 
         captcha = self.decryptCaptcha(captcha_url, cookies=True)
