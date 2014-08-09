@@ -2,11 +2,11 @@
 
 from __future__ import with_statement
 
-import logging
 import os
 import subprocess
 
 from PIL import Image, GifImagePlugin, JpegImagePlugin, PngImagePlugin, TiffImagePlugin
+from logging import getLogger
 from os.path import abspath, join
 
 
@@ -21,7 +21,7 @@ class OCR:
 
 
     def __init__(self):
-        self.logger = logging.getLogger("log")
+        self.log = getLogger("log")
 
     def load_image(self, image):
         self.image = Image.open(image)
@@ -43,19 +43,19 @@ class OCR:
         output = popen.stdout.read() + " | " + popen.stderr.read()
         popen.stdout.close()
         popen.stderr.close()
-        self.logger.debug("Tesseract ReturnCode %s Output: %s" % (popen.returncode, output))
+        self.log.debug("Tesseract ReturnCode %s Output: %s" % (popen.returncode, output))
 
     def run_tesser(self, subset=False, digits=True, lowercase=True, uppercase=True):
-        #self.logger.debug("create tmp tif")
+        #self.log.debug("create tmp tif")
         #tmp = tempfile.NamedTemporaryFile(suffix=".tif")
         tmp = open(join("tmp", "tmpTif_%s.tif" % self.__name__), "wb")
         tmp.close()
-        #self.logger.debug("create tmp txt")
+        #self.log.debug("create tmp txt")
         #tmpTxt = tempfile.NamedTemporaryFile(suffix=".txt")
         tmpTxt = open(join("tmp", "tmpTxt_%s.txt" % self.__name__), "wb")
         tmpTxt.close()
 
-        self.logger.debug("save tiff")
+        self.log.debug("save tiff")
         self.image.save(tmp.name, 'TIFF')
 
         if os.name == "nt":
@@ -66,7 +66,7 @@ class OCR:
         tessparams.extend([abspath(tmp.name), abspath(tmpTxt.name).replace(".txt", "")])
 
         if subset and (digits or lowercase or uppercase):
-            #self.logger.debug("create temp subset config")
+            #self.log.debug("create temp subset config")
             #tmpSub = tempfile.NamedTemporaryFile(suffix=".subset")
             tmpSub = open(join("tmp", "tmpSub_%s.subset" % self.__name__), "wb")
             tmpSub.write("tessedit_char_whitelist ")
@@ -81,9 +81,9 @@ class OCR:
             tessparams.append(abspath(tmpSub.name))
             tmpSub.close()
 
-        self.logger.debug("run tesseract")
+        self.log.debug("run tesseract")
         self.run(tessparams)
-        self.logger.debug("read txt")
+        self.log.debug("read txt")
 
         try:
             with open(tmpTxt.name, 'r') as f:
@@ -91,7 +91,7 @@ class OCR:
         except:
             self.result_captcha = ""
 
-        self.logger.debug(self.result_captcha)
+        self.log.debug(self.result_captcha)
         try:
             os.remove(tmp.name)
             os.remove(tmpTxt.name)

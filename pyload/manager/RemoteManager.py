@@ -35,7 +35,7 @@ class BackendBase(Thread):
         try:
             self.serve()
         except Exception, e:
-            self.core.log.error(_("Remote backend error: %s") % e)
+            self.m.log.error(_("Remote backend error: %s") % e)
             if self.core.debug:
                 print_exc()
         finally:
@@ -63,6 +63,7 @@ class RemoteManager:
 
     def __init__(self, core):
         self.core = core
+        self.log = core.log
         self.backends = []
 
         if self.core.remote:
@@ -82,9 +83,9 @@ class RemoteManager:
                 continue
             try:
                 backend.setup(host, port)
-                self.core.log.info(_("Starting %(name)s: %(addr)s:%(port)s") % {'name': b, 'addr': host, 'port': port})
+                self.log.info(_("Starting %(name)s: %(addr)s:%(port)s") % {'name': b, 'addr': host, 'port': port})
             except Exception, e:
-                self.core.log.error(_("Failed loading backend %(name)s | %(error)s") % {'name': b, 'error': str(e)})
+                self.log.error(_("Failed loading backend %(name)s | %(error)s") % {'name': b, 'error': str(e)})
                 if self.core.debug:
                     print_exc()
             else:

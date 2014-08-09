@@ -97,6 +97,7 @@ class Api(Iface):
 
     def __init__(self, core):
         self.core = core
+        self.log = core.log
 
     def _convertPyFile(self, p):
         f = FileData(p['id'], p['url'], p['name'], p['plugin'], p['size'],
@@ -330,7 +331,7 @@ class Api(Iface):
 
         self.core.files.addLinks(links, pid)
 
-        self.core.log.info(_("Added package %(name)s containing %(count)d links") % {'name': name, 'count': len(links)})
+        self.log.info(_("Added package %(name)s containing %(count)d links") % {'name': name, 'count': len(links)})
 
         self.core.files.save()
 
@@ -593,7 +594,7 @@ class Api(Iface):
         """
         self.core.files.addLinks(links, int(pid))
 
-        self.core.log.info(_("Added %(count)d links to package #%(package)d ") % {'count': len(links), 'package': pid})
+        self.log.info(_("Added %(count)d links to package #%(package)d ") % {'count': len(links), 'package': pid})
         self.core.files.save()
 
     @permission(PERMS.MODIFY)

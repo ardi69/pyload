@@ -19,6 +19,7 @@ class AccountManager:
         """Constructor"""
 
         self.core = core
+        self.log = core.log
         self.lock = Lock()
 
         self.initPlugins()
@@ -69,7 +70,7 @@ class AccountManager:
             f = open("accounts.conf", "wb")
             f.write("version: " + str(ACC_VERSION))
             f.close()
-            self.core.log.warning(_("Account settings deleted, due to new config format."))
+            self.log.warning(_("Account settings deleted, due to new config format."))
             return
 
         plugin = ""

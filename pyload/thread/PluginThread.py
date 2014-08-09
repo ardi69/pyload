@@ -32,7 +32,7 @@ from types import MethodType
 from pycurl import error
 
 from pyload.datatype.PyFile import PyFile
-from pyload.plugins.Base import Abort, Fail, Reconnect, Retry, SkipDownload
+from pyload.plugins.Base import Abort, Fail, ParseError, Reconnect, Retry, SkipDownload
 from pyload.utils.packagetools import parseNames
 from pyload.utils import safe_join
 from pyload.Api import OnlineStatus
@@ -86,7 +86,7 @@ class PluginThread(Thread):
             f.write(dump)
             f.close()
 
-        self.m.core.log.info("Debug Report written to %s" % dump_name)
+        self.m.log.info("Debug Report written to %s" % dump_name)
 
     def getDebugDump(self, pyfile):
         dump = "pyLoad %s Debug Report of %s %s \n\nTRACEBACK:\n %s \n\nFRAMESTACK:\n" % (

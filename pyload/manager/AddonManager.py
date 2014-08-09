@@ -64,11 +64,11 @@ class AddonManager:
 
     def __init__(self, core):
         self.core = core
-        self.config = self.core.config
+        self.config = core.config
 
         __builtin__.addonManager = self  #: needed to let addons register themself
 
-        self.log = self.core.log
+        self.log = core.log
         self.plugins = []
         self.pluginMap = {}
         self.methods = {} #dict of names and list of methods usable by rpc

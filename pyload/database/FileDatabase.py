@@ -39,6 +39,7 @@ class FileHandler:
     def __init__(self, core):
         """Constructor"""
         self.core = core
+        self.log = core.log
 
         # translations
         self.statusMsg = [_("finished"), _("offline"), _("online"), _("queued"), _("skipped"), _("waiting"), _("temp. offline"), _("starting"), _("failed"), _("aborted"), _("decrypting"), _("custom"), _("downloading"), _("processing"), _("unknown")]
@@ -372,7 +373,7 @@ class FileHandler:
 
         if not self.getQueueCount(True):
             self.core.addonManager.dispatchEvent("allDownloadsFinished")
-            self.core.log.debug("All downloads finished")
+            self.log.debug("All downloads finished")
             return True
 
         return False
@@ -385,7 +386,7 @@ class FileHandler:
 
         if not self.db.processcount(1, fid):
             self.core.addonManager.dispatchEvent("allDownloadsProcessed")
-            self.core.log.debug("All downloads processed")
+            self.log.debug("All downloads processed")
             return True
 
         return False
@@ -532,7 +533,7 @@ class FileHandler:
         ids = self.db.getUnfinished(pyfile.packageid)
         if not ids or (pyfile.id in ids and len(ids) == 1):
             if not pyfile.package().setFinished:
-                self.core.log.info(_("Package finished: %s") % pyfile.package().name)
+                self.log.info(_("Package finished: %s") % pyfile.package().name)
                 self.core.addonManager.packageFinished(pyfile.package())
                 pyfile.package().setFinished = True
 

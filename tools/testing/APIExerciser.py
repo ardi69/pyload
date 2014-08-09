@@ -43,6 +43,7 @@ class APIExerciser(Thread):
         Thread.__init__(self)
         self.setDaemon(True)
         self.core = core
+        self.log = core.log
         self.count = 0 #number of methods
         self.time = time()
 
@@ -60,7 +61,7 @@ class APIExerciser(Thread):
 
     def run(self):
 
-        self.core.log.info("API Excerciser started %d" % self.id)
+        self.log.info("API Excerciser started %d" % self.id)
 
         out = open("error.log", "ab")
         #core errors are not logged of course
@@ -71,22 +72,22 @@ class APIExerciser(Thread):
             try:
                 self.testAPI()
             except Exception:
-                self.core.log.error("Excerciser %d throw an execption" % self.id)
+                self.log.error("Excerciser %d throw an execption" % self.id)
                 print_exc()
                 out.write(format_exc() + 2 * "\n")
                 out.flush()
 
             if not self.count % 100:
-                self.core.log.info("Exerciser %d tested %d api calls" % (self.id, self.count))
+                self.log.info("Exerciser %d tested %d api calls" % (self.id, self.count))
             if not self.count % 1000:
                 out.flush()
 
             if not sumCalled % 1000: #not thread safe
-                self.core.log.info("Exercisers tested %d api calls" % sumCalled)
+                self.log.info("Exercisers tested %d api calls" % sumCalled)
                 persec = sumCalled / (time() - self.time)
-                self.core.log.info("Approx. %.2f calls per second." % persec)
-                self.core.log.info("Approx. %.2f ms per call." % (1000 / persec))
-                self.core.log.info("Collected garbage: %d" % gc.collect())
+                self.log.info("Approx. %.2f calls per second." % persec)
+                self.log.info("Approx. %.2f ms per call." % (1000 / persec))
+                self.log.info("Collected garbage: %d" % gc.collect())
 
 
                 #sleep(random() / 500)

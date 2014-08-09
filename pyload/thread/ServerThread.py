@@ -3,11 +3,8 @@ from os.path import exists
 
 import os
 import threading
-import logging
 
-core = None
 setup = None
-log = logging.getLogger("log")
 
 
 class WebServer(threading.Thread):
@@ -16,8 +13,8 @@ class WebServer(threading.Thread):
         global core
 
         threading.Thread.__init__(self)
-        self.core = pycore
-        core = pycore
+        self.core = core = pycore
+        self.log = pycore.log
         self.running = True
         self.server = pycore.config['webinterface']['server']
         self.https = pycore.config['webinterface']['https']
@@ -65,7 +62,7 @@ class WebServer(threading.Thread):
                     log.warning(_("Of course you need to be familiar with linux and know how to compile software"))
                     self.server = "builtin"
             else:
-                self.core.log.info(_("Server set to threaded, due to known performance problems on windows."))
+                self.log.info(_("Server set to threaded, due to known performance problems on windows."))
                 self.core.config['webinterface']['server'] = "threaded"
                 self.server = "threaded"
 
@@ -83,23 +80,23 @@ class WebServer(threading.Thread):
         if self.https:
             log.warning(_("This server offers no SSL, please consider using threaded instead"))
 
-        self.core.log.info(_("Starting builtin webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
+        self.log.info(_("Starting builtin webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_simple(host=self.host, port=self.port)
 
 
     def start_threaded(self):
         if self.https:
-            self.core.log.info(_("Starting threaded SSL webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
+            self.log.info(_("Starting threaded SSL webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         else:
             self.cert = ""
             self.key = ""
-            self.core.log.info(_("Starting threaded webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
+            self.log.info(_("Starting threaded webserver: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
 
         webinterface.run_threaded(host=self.host, port=self.port, cert=self.cert, key=self.key)
 
 
     def start_fcgi(self):
-        self.core.log.info(_("Starting fastcgi server: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
+        self.log.info(_("Starting fastcgi server: %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_fcgi(host=self.host, port=self.port)
 
 
@@ -107,7 +104,7 @@ class WebServer(threading.Thread):
         if self.https:
             log.warning(_("This server offers no SSL, please consider using threaded instead"))
 
-        self.core.log.info(_("Starting lightweight webserver (bjoern): %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
+        self.log.info(_("Starting lightweight webserver (bjoern): %(host)s:%(port)d") % {'host': self.host, 'port': self.port})
         webinterface.run_lightweight(host=self.host, port=self.port)
 
 
