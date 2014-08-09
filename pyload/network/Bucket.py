@@ -13,25 +13,32 @@ class Bucket:
         self.rate = 0 # bytes per second, maximum targeted throughput
         self.tokens = 0
         self.timestamp = time()
+        self.lock = Lock()
 
     def __nonzero__(self):
         return False if self.rate < MIN_RATE else True
 
     def setRate(self, rate):
+        self.lock.acquire()
         self.rate = int(rate)
+        self.lock.release()
 
     def consumed(self, amount):
         """ return the time the process has to sleep, after it consumed a specified amount """
         if self.rate < MIN_RATE:
             return 0  #: May become unresponsive otherwise
 
+        self.lock.acquire()
         self.calc_tokens()
         self.tokens -= amount
 
         if self.tokens < 0:
-            return -self.tokens/float(self.rate)
+            time = -self.tokens/float(self.rate)
         else:
-            return 0
+            time = 0
+
+        self.lock.release()
+        return time
 
     def calc_tokens(self):
         if self.tokens < self.rate:
