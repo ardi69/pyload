@@ -12,27 +12,28 @@ from pyload.utils import encode, uniqify
 class JsEngine:
     """ JS Engine superclass """
 
-    def __init__(self, engine=None):  #: engine can be a jse name """string""" or an AbstractEngine """class"""
+    def __init__(self, core, engine=None):  #: engine can be a jse name """string""" or an AbstractEngine """class"""
 
+        self.core = core
         self.engine = None  #: Default engine Instance
 
         if not ENGINES:
-            pycore.log.critical("No JS Engine found!")
+            self.core.log.critical("No JS Engine found!")
             return
 
         if not engine:
-            engine = pycore.config.get("general", "jsengine")
+            engine = self.core.config.get("general", "jsengine")
 
         if engine != "auto" and self.set(engine) is False:
             engine = "auto"
-            pycore.log.warning("JS Engine set to \"auto\" for safely")
+            self.core.log.warning("JS Engine set to \"auto\" for safely")
 
         if engine == "auto":
             for E in self.find():
                 if self.set(E) is True:
                     break
             else:
-                pycore.log.error("No JS Engine available")
+                self.core.log.error("No JS Engine available")
 
 
     @classmethod
@@ -43,7 +44,7 @@ class JsEngine:
 
     def get(self, engine):
         """ Convert engine name (string) to relative JSE class (AbstractEngine extended) """
-        if isinstance(engine, string):
+        if isinstance(engine, basestring):
             engine_name = engine.lower()
             for E in ENGINES:
                 if E.NAME == engine_name:  #: doesn't check if E(NGINE) is available, just convert string to class
@@ -60,7 +61,7 @@ class JsEngine:
 
     def set(self, engine):
         """ Set engine name (string) or JSE class (AbstractEngine extended) as default engine """
-        if isinstance(engine, string):
+        if isinstance(engine, basestring):
             self.set(self.get(engine))
         elif issubclass(engine, AbstractEngine) and engine.find():
             self.engine = engine
@@ -84,20 +85,20 @@ class JsEngine:
 
         results = [out]
 
-        if pycore.config.get("general", "debug"):
+        if self.core.config.get("general", "debug"):
             if err:
-                pycore.log.debug(JSE.NAME + ":", err)
+                self.core.log.debug(JSE.NAME + ":", err)
 
             engines = self.find()
             engines.remove(JSE)
             for E in engines:
                 out, err = E.eval(script)
                 res = err or out
-                pycore.log.debug(E.NAME + ":", res)
+                self.core.log.debug(E.NAME + ":", res)
                 results.append(res)
 
             if len(results) > 1 and len(uniqify(results)) > 1:
-                pycore.log.warning("JS output of two or more engines mismatch")
+                self.core.log.warning("JS output of two or more engines mismatch")
 
         return results[0]
 
@@ -125,7 +126,7 @@ class AbstractEngine:
             except:
                 res = False
             else:
-                res = True if out == "42" else False
+                res = out == "42"
         else:
             res = True
         finally:
@@ -141,7 +142,7 @@ class AbstractEngine:
                                  stderr=subprocess.PIPE,
                                  bufsize=-1)
             return map(lambda x: x.strip(), p.communicate())
-        except e:
+        except Exception, e:
             return None, e
 
 
@@ -161,15 +162,15 @@ class Pyv8Engine(AbstractEngine):
             rt = PyV8.JSContext()
             rt.enter()
             res = rt.eval(script), None  #@TODO: parse stderr
-        except e:
+        except Exception, e:
             res = None, e
         finally:
             return res
 
 
-class MozillaEngine(AbstractEngine):
+class CommonEngine(AbstractEngine):
 
-    NAME = "spidermonkey"
+    NAME = "js"
 
     def setup(self):
         subprocess.Popen(["js", "-v"], bufsize=-1).communicate()
@@ -231,7 +232,7 @@ class JscEngine(AbstractEngine):
 
 
 #@NOTE: Priority ordered
-ENGINES = [MozillaEngine, Pyv8Engine, NodeEngine, RhinoEngine]
+ENGINES = [CommonEngine, Pyv8Engine, NodeEngine, RhinoEngine]
 
 if sys.platform == "darwin":
     ENGINES.insert(JscEngine)
