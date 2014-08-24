@@ -17,7 +17,7 @@ Credits
 
 ### Contributors ###
 
-The list of developers who have kindly contributed to the project pyLoad is constantly updated.
+The list of developers who have kindly contributed to the pyLoad project is constantly updated.
 You can found it here: <https://github.com/pyload/pyload/graphs/contributors>.
 
 
