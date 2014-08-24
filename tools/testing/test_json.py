@@ -4,7 +4,7 @@
 from urllib import urlencode
 from urllib2 import urlopen, HTTPError
 
-from module.utils import json_loads
+from pyload.utils import json_loads
 
 from logging import log
 

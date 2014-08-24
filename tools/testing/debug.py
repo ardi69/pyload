@@ -3,7 +3,7 @@
 
 import re
 
-import module.Core
+import pyload.Core
 
 from os import listdir
 

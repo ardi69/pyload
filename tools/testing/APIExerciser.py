@@ -10,7 +10,7 @@ import gc
 
 from traceback import print_exc, format_exc
 
-from module.remote.thriftbackend.ThriftClient import ThriftClient, Destination
+from pyload.remote.thriftbackend.ThriftClient import ThriftClient, Destination
 
 def createURLs():
     """ create some urls, some may fail """

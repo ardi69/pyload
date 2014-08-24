@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from paver.easy import *
-from paver.setuputils import setup
 from paver.doctools import cog
 
 import os
@@ -20,58 +19,6 @@ from zipfile import ZipFile
 
 pypath = abspath(join(__file__, "..", "..", ".."))
 sys.path.append(pypath)
-
-options = environment.options
-path('pyload').mkdir()
-
-extradeps = []
-if sys.version_info <= (2, 5):
-    extradeps += 'simplejson'
-
-setup(
-    name="pyload",
-    version="0.4.10",
-    description='Fast, lightweight and full featured download manager.',
-    long_description=open(join(pypath, "README.md")).read(),
-    keywords = ('pyload', 'download-manager', 'one-click-hoster', 'download'),
-    url="http://pyload.org",
-    download_url='http://pyload.org/download',
-    license='GPL v3',
-    author="pyLoad Team",
-    author_email="support@pyload.org",
-    platforms = ('Any',),
-    #package_dir={'pyload': 'src'},
-    packages=['pyload'],
-    #package_data=find_package_data(),
-    #data_files=[],
-    include_package_data=True,
-    exclude_package_data={'pyload': ['docs*', 'scripts*', 'tests*']}, #exluced from build but not from sdist
-    # 'bottle >= 0.10.0' not in list, because its small and contain little modifications
-    install_requires=['thrift >= 0.8.0', 'jinja2', 'pycurl', 'Beaker', 'BeautifulSoup >= 3.2, < 3.3'] + extradeps,
-    extras_require={
-        'SSL': ["pyOpenSSL"],
-        'DLC': ['pycrypto'],
-        'lightweight webserver': ['bjoern'],
-        'RSS plugins': ['feedparser'],
-    },
-    #setup_requires=["setuptools_hg"],
-    entry_points={
-        'console_scripts': [
-            'pyLoadCore = pyLoadCore:main',
-            'pyLoadCli = pyLoadCli:main'
-        ]},
-    zip_safe=False,
-    classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Topic :: Internet :: WWW/HTTP",
-        "Environment :: Console",
-        "Environment :: Web Environment",
-        "Intended Audience :: End Users/Desktop",
-        "License :: OSI Approved :: GNU General Public License (GPL)",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 2"
-    ]
-)
 
 options(
     sphinx=Bunch(
@@ -106,7 +53,7 @@ xargs = ["--language=Python", "--add-comments=L10N",
 @needs('cog')
 def html():
     """Build html documentation"""
-    module = path("docs") / "module"
+    module = path("docs") / "pyload"
     module.rmtree()
     call_task('paver.doctools.html')
 
@@ -171,7 +118,7 @@ def thrift(options):
 
     print "add import for TApplicationException manually as long it is not fixed"
 
-    outdir = path("module") / "remote" / "thriftbackend"
+    outdir = path("pyload") / "remote" / "thriftbackend"
     (outdir / "gen-py").rmtree()
 
     cmd = [options.thrift.path, "-strict", "-o", outdir, "--gen", "py:slots, dynamic", outdir / "pyload.thrift"]
@@ -189,14 +136,14 @@ def thrift(options):
     (outdir / "gen-py").move(outdir / "thriftgen")
 
     #create light ttypes
-    from module.remote.socketbackend.create_ttypes import main
+    from pyload.remote.socketbackend.create_ttypes import main
     main()
 
 @task
 def compile_js():
     """ Compile .coffee files to javascript"""
 
-    root = path("module") / "web" / "media" / "js"
+    root = path("pyload") / "web" / "media" / "js"
     for f in root.glob("*.coffee"):
         print "generate", f
         coffee = Popen(["coffee", "-cbs"], stdin=open(f, "rb"), stdout=PIPE)
@@ -213,19 +160,19 @@ def compile_js():
 def generate_locale():
     """ Generates localization files """
 
-    EXCLUDE = ["BeautifulSoup.py", "module/cli", "web/locale", "web/ajax", "web/cnl", "web/pyload",
+    EXCLUDE = ["BeautifulSoup.py", "pyload/cli", "web/locale", "web/ajax", "web/cnl", "web/pyload",
                "Setup.py"]
-    makepot("core", path("module"), EXCLUDE, "./pyload.py\n")
+    makepot("core", path("pyload"), EXCLUDE, "./pyload.py\n")
 
-    makepot("cli", path("module") / "cli", [], includes="./pyload-cli.py\n")
-    makepot("setup", "", [], includes="./module/utils/Setup.py\n")
+    makepot("cli", path("pyload") / "cli", [], includes="./pyload-cli.py\n")
+    makepot("setup", "", [], includes="./pyload/utils/Setup.py\n")
 
     EXCLUDE = ["ServerThread.py", "web/media/default"]
 
     # strings from js files
     strings = set()
 
-    for fi in path("module/web").walkfiles():
+    for fi in path("pyload/web").walkfiles():
         if not fi.name.endswith(".js") and not fi.endswith(".coffee"):
             continue
         with open(fi, "rb") as c:
@@ -234,13 +181,13 @@ def generate_locale():
             strings.update(re.findall(r"_\s*\(\s*\"([^\"]+)", content))
             strings.update(re.findall(r"_\s*\(\s*\'([^\']+)", content))
 
-    trans = path("module") / "web" / "translations.js"
+    trans = path("pyload") / "web" / "translations.js"
 
     with open(trans, "wb") as js:
         for s in strings:
             js.write('_("%s")\n' % s)
 
-    makepot("django", path("module/web"), EXCLUDE, "./%s\n" % trans.relpath(), [".py", ".html"], ["--language=Python"])
+    makepot("django", path("pyload/web"), EXCLUDE, "./%s\n" % trans.relpath(), [".py", ".html"], ["--language=Python"])
 
     trans.remove()
 

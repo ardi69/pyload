@@ -18,7 +18,7 @@ from os.path import abspath, join
 
 pypath = abspath(join(__file__, "..", "..", "..", ".."))
 sys.path.append(pypath)
-sys.path.append(join(pypath, "module", "lib"))
+sys.path.append(join(pypath, "pyload", "lib"))
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
