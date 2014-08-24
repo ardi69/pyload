@@ -5,11 +5,10 @@ import os
 import sys
 
 from getpass import getpass
-from gettext import gettext
 from os import chdir, makedirs, path
 from subprocess import PIPE, call
 
-from pyload.utils import get_console_encoding, safe_join, versiontuple
+from pyload.utils import convert, get_console_encoding, load_translation, safe_join
 
 
 class SetupAssistant:
@@ -26,9 +25,7 @@ class SetupAssistant:
         langs = sorted(self.config.getMetaData("general", "language")['type'].split(";"))
         self.lang = self.ask(u"Choose setup language", "en", langs)
 
-        gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("setup", path.join(pypath, "locale"), languages=[self.lang, "en"], fallback=True)
-        translation.install(True)
+        load_translation("setup", self.lang)
 
         #Input shorthand for yes
         self.yes = _("y")
@@ -239,7 +236,7 @@ class SetupAssistant:
             import jinja2
 
             v = jinja2.__version__
-            if v and versiontuple(v) < (2, 5, 0):
+            if v and convert.version_to_tuple(v) < (2, 5, 0):
                 jinja = False
             else:
                 jinja = True
@@ -260,7 +257,7 @@ class SetupAssistant:
         web = sqlite and beaker
 
         from pyload.manager.JsEngine import JsEngine
-        js = JsEngine.find()
+        js = [E.NAME for E in JsEngine.find()]
         self.print_dep(_("JS engine"), js)
 
         if not python:
@@ -366,10 +363,7 @@ class SetupAssistant:
 
 
     def set_user(self):
-        gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("setup", path.join(pypath, "locale"),
-            languages=[self.config.get("general", "language"), "en"], fallback=True)
-        translation.install(True)
+        load_translation("setup", self.config.get("general", "language"))
 
         from pyload.database import DatabaseBackend
 
@@ -451,14 +445,14 @@ class SetupAssistant:
 
     def print_dep(self, name, value, false="MISSING", true="OK"):
         """ Print Status of dependency """
-        if value and isinstance(value, bool):
-            msg = "%(dep)-12s %(bool)s"
+        if value and isinstance(value, basestring):
+            msg = "%(dep)-12s %(bool)s  (%(info)s)"
         else:
-            msg = "%(dep)-12s %(bool)s  (%(val)s)"
+            msg = "%(dep)-12s %(bool)s"
 
         print msg % {'dep': name + ':',
                      'bool': _(true if value else false).upper(),
-                     'val': ", ".join(value)}
+                     'info': ", ".join(value)}
 
 
     def check_module(self, module):

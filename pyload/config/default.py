@@ -13,9 +13,10 @@ Configuration layout for default base config
 #@TODO: write tooltips and descriptions
 #@TODO: use apis config related classes
 
-def make_config(config=pycore.config):
-    languages = "af;ar;bn;ca;cs;da;de;el;en;eo;es;fa;fi;fr;ga;gl;he;hi;hr;hu;id;it;ja;ko;ms;nl;no;pa;pl;pt;ro;ru;si;sq;sr;sv;te;tr;vi;zh"
-    console_modes = "label;full"
+def make_config(config):
+    languages = "af;ar;bn;ca;cs;da;de;el;en;eo;es;fa;fi;fr;ga;gl;he;hi;hr;hu; \
+                 id;it;ja;ko;ms;nl;no;pa;pl;pt;ro;ru;si;sq;sr;sv;te;tr;vi;zh"  #@TODO: autogen
+    console_modes = "label;full"  #@TODO: autogen
     js_engines = "auto;" + ";".join(map(lambda x: x.NAME, ENGINES))
     webui_themes = ";".join(os.listdir(THEME_DIR))
     web_servers = "auto;builtin;" + ";".join(map(lambda x: x.NAME, SERVERS))

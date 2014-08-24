@@ -4,16 +4,12 @@ from __future__ import with_statement
 
 from os import path
 from gettext import gettext
-from collections import namedtuple, OrderedDict
+from collections import OrderedDict, namedtuple
 
-from pyload.api import Input, InputType
-from pyload.utils import chmod
+from pyload.config import convert, default
+from pyload.utils import chmod, encode
 
-from default import make_config
-from convert import to_configdata, from_string
-
-
-CONF_VERSION = 2
+__all__ = ["ConfigParser", "Section"]
 
 SectionTuple = namedtuple("SectionTuple", "label description explanation config")
 
@@ -26,8 +22,8 @@ class ConfigParser:
     CONFIG = "pyload.conf"
 
     def __init__(self, config=None):
-
-        if config: self.CONFIG = config
+        if config:
+            self.CONFIG = config
 
         # Meta data information
         self.config = OrderedDict()
@@ -39,8 +35,10 @@ class ConfigParser:
         self.loadDefault()
         self.parseValues(self.CONFIG)
 
+
     def loadDefault(self):
-        make_config(self)
+        default.make_config(self)
+
 
     def checkVersion(self):
         """ Determines if config needs to be deleted """
@@ -60,6 +58,7 @@ class ConfigParser:
             f.write("version:" + str(CONF_VERSION))
             f.close()
 
+
     def parseValues(self, filename):
         """ read config values from file """
         f = open(filename, "rb")
@@ -72,7 +71,10 @@ class ConfigParser:
             line = line.strip()
 
             # comment line, different variants
-            if not line or line.startswith("#") or line.startswith("//") or line.startswith(";"): continue
+            if not line or line.startswith("#") \
+                        or line.startswith("//") \
+                        or line.startswith(";"):
+                continue
 
             if line.startswith("["):
                 section = line.replace("[", "").replace("]", "")
@@ -109,11 +111,7 @@ class ConfigParser:
             f.write("[%s]\n" % section)
 
             for option, data in data.config.iteritems():
-                value = self.get(section, option)
-                if type(value) == unicode:
-                    value = value.encode("utf8")
-                else:
-                    value = str(value)
+                value = encode(self.get(section, option))
 
                 f.write('%s = %s\n' % (option, value))
 
@@ -121,13 +119,16 @@ class ConfigParser:
 
         f.close()
 
+
     def __getitem__(self, section):
         """ provides dictionary like access: c['section']['option'] """
         return Section(self, section)
 
+
     def __contains__(self, section):
         """ checks if parser contains section """
         return section in self.config
+
 
     def get(self, section, option):
         """ get value or default """
@@ -136,16 +137,18 @@ class ConfigParser:
         except KeyError:
             return self.config[section].config[option].input.default_value
 
+
     def set(self, section, option, value, sync=True):
         """ set value """
 
         data = self.config[section].config[option]
-        value = from_string(value, data.input.type)
+        value = convert.from_string(value, data.input.type)
         old_value = self.get(section, option)
 
         # only save when different values
         if value != old_value:
-            if section not in self.values: self.values[section] = {}
+            if section not in self.values:
+                self.values[section] = {}
             self.values[section][option] = value
             if sync:
                 self.save()
@@ -153,19 +156,22 @@ class ConfigParser:
 
         return False
 
+
     def getMetaData(self, section, option):
         """ get all config data for an option """
         return self.config[section].config[option]
 
+
     def iterSections(self):
         """ Yields section, config info, values, for all sections """
-
         for name, config in self.config.iteritems():
             yield name, config, self.values[name] if name in self.values else {}
+
 
     def getSection(self, section):
         """ Retrieves single config as tuple (section, values) """
         return self.config[section], self.values[section] if section in self.values else {}
+
 
     def addConfigSection(self, section, label, desc, expl, config):
         """ Adds a section to the config. `config` is a list of config tuple as used in plugin api defined as:
@@ -174,7 +180,7 @@ class ConfigParser:
         d = OrderedDict()
 
         for entry in config:
-            name, data = to_configdata(entry)
+            name, data = convert.to_configdata(entry)
             d[name] = data
 
         data = SectionTuple(gettext(label), gettext(desc), gettext(expl), d)
@@ -189,9 +195,11 @@ class Section:
         self.parser = parser
         self.section = section
 
+
     def __getitem__(self, item):
         """ getitem """
         return self.parser.get(self.section, item)
+
 
     def __setitem__(self, item, value):
         """ setitem """

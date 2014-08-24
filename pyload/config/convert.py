@@ -1,11 +1,53 @@
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
 from gettext import gettext
 
-from collections import namedtuple
-
-from pyload.api import Input, InputType
 from pyload.utils import decode, to_bool
+
+__all__ = ["from_string", "to_configdata", "to_input"]
+
+
+#@TODO: Temp stuff... move to api/apitypes.py #################################
+
+class BaseObject(object):
+    __version__ = (0, 4, 10)
+    __slots__ = []
+
+    def __str__(self):
+        return "<%s %s>" % (self.__class__.__name__, ", ".join("%s=%s" % (k,getattr(self,k)) for k in self.__slots__))
+
+
+class Input(BaseObject):
+    __slots__ = ['type', 'default_value', 'data']
+
+    def __init__(self, type=None, default_value=None, data=None):
+        self.type = type
+        self.default_value = default_value
+        self.data = data
+
+
+class InputType:
+    NA = 0
+    Text = 1
+    Int = 2
+    File = 3
+    Folder = 4
+    Textbox = 5
+    Password = 6
+    Time = 7
+    TimeSpan = 8
+    ByteSize = 9
+    Bool = 10
+    Click = 11
+    Select = 12
+    Multiple = 13
+    List = 14
+    PluginList = 15
+    Table = 16
+
+###############################################################################
+
 
 ConfigData = namedtuple("ConfigData", "label description input")
 
