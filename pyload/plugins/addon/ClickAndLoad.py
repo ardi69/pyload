@@ -20,24 +20,20 @@ class ClickAndLoad(Addon):
 
 
     def activate(self):
-        self.port = int(self.config['webinterface']['port'])
-        if self.config['webinterface']['activated']:
-            try:
-                if self.getConfig("extern"):
-                    ip = "0.0.0.0"
-                else:
-                    ip = "127.0.0.1"
+        try:
+            ip = "0.0.0.0" if self.getConfig("extern") else "127.0.0.1"
+            port = int(self.config.get("webui", "port"))
 
-                thread.start_new_thread(proxy, (self, ip, self.port, 9666))
-            except:
-                self.logError("ClickAndLoad port already in use.")
+            thread.start_new_thread(proxy, (self, ip, port, 9666))
+        except:
+            self.logError("ClickAndLoad port already in use.")
 
 
 def proxy(self, *settings):
     thread.start_new_thread(server, (self,) + settings)
     lock = thread.allocate_lock()
     lock.acquire()
-    lock.acquire()
+    lock.release()
 
 
 def server(self, *settings):

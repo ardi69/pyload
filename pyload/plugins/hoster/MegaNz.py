@@ -60,7 +60,7 @@ class MegaNz(Hoster):
         return json_loads(attr.replace("MEGA", "").rstrip("\0").strip())
 
     def decryptFile(self, key):
-        """  Decrypts the file at lastDownload` """
+        """ Decrypts the file at lastDownload` """
 
         # upper 64 bit of counter start
         n = key[16:24]
@@ -76,7 +76,7 @@ class MegaNz(Hoster):
         f = open(file_crypted, "rb")
         df = open(file_decrypted, "wb")
 
-        # TODO: calculate CBC-MAC for checksum
+        #@TODO: calculate CBC-MAC for checksum
 
         size = 2 ** 15  # buffer size, 32k
         while True:
@@ -118,7 +118,7 @@ class MegaNz(Hoster):
             else:
                 self.fail(_("Error code:") + e)
 
-        # TODO: map other error codes, e.g
+        #@TODO: map other error codes, e.g
         # EACCESS (-11): Access violation (e.g., trying to write to a read-only share)
 
         key = self.b64_decode(key)

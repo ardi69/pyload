@@ -39,7 +39,7 @@ class ZippyshareCom(SimpleHoster):
         self.download(url)
 
     def get_file_url(self):
-        """returns the absolute downloadable filepath"""
+        """ returns the absolute downloadable filepath """
         url_parts = re.search(r'(addthis:url="(http://www(\d+).zippyshare.com/v/(\d*)/file.html))', self.html)
         number = url_parts.group(4)
         check = re.search(r'<script type="text/javascript">([^<]*?)(var a = (\d*);)', self.html)

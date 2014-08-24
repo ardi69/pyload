@@ -103,7 +103,7 @@ class Browser:
         self.http.putHeader(name, value)
 
     def addAuth(self, pwd):
-        """Adds user and pw for http auth
+        """ Adds user and pw for http auth
 
         :param pwd: string, user:password
         """
@@ -116,7 +116,7 @@ class Browser:
         self.renewHTTPRequest()
 
     def setOption(self, name, value):
-        """Adds an option to the request, see HTTPRequest for existing ones"""
+        """ Adds an option to the request, see HTTPRequest for existing ones """
         self.options[name] = value
 
     def deleteOption(self, name):

@@ -31,7 +31,7 @@ pat3 = re.compile("(.+)[\\.\\-_]+$")
 pat4 = re.compile("(.+)\\.\\d+\\.xtm$")
 
 def matchFirst(string, *args):
-    """ matches against list of regexp and returns first match"""
+    """ matches against list of regexp and returns first match """
     for patternlist in args:
         for pattern in patternlist:
             r = pattern.search(string)

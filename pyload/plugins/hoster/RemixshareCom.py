@@ -3,7 +3,7 @@
 # Test links:
 # http://remixshare.com/download/p946u
 #
-# Note:
+#@NOTE:
 # The remixshare.com website is very very slow, so
 # if your download not starts because of pycurl timeouts:
 # Adjust timeouts in /usr/share/pyload/pyload/network/HTTPRequest.py

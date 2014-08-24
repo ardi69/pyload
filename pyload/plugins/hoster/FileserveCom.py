@@ -127,7 +127,7 @@ class FileserveCom(Hoster):
             self.wait()
             self.retry()
 
-        self.thread.m.reconnecting.wait(3)  # Ease issue with later downloads appearing to be in parallel
+        self.thread.manager.reconnecting.wait(3)  # Ease issue with later downloads appearing to be in parallel
 
     def doTimmer(self):
         response = self.load(self.url, post={'downloadLink': "wait"}, decode=True)

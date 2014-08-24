@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
-
 from os.path import exists, join
 import re
 from subprocess import Popen
@@ -34,13 +17,15 @@ from pyload.utils import freeSpace, lock
 
 
 class ThreadManager:
-    """manages the download threads, assign jobs, reconnect etc"""
+    """ manages the download threads, assign jobs, reconnect etc """
 
 
     def __init__(self, core):
-        """Constructor"""
+        """ Constructor """
         self.core = core
+        self.config = core.config
         self.log = core.log
+        self.api = core.api
 
         self.threads = []  # thread list
         self.localThreads = []  #addon+decrypter threads
@@ -67,12 +52,12 @@ class ThreadManager:
 
         pycurl.global_init(pycurl.GLOBAL_DEFAULT)
 
-        for _ in xrange(0, self.core.config.get("download", "max_downloads")):
+        for _ in xrange(0, self.config.get("download", "max_downloads")):
             self.createThread()
 
 
     def createThread(self):
-        """create a download thread"""
+        """ create a download thread """
 
         thread = PluginThread.DownloadThread(self)
         self.threads.append(thread)
@@ -101,7 +86,7 @@ class ThreadManager:
 
     @lock
     def getInfoResult(self, rid):
-        """returns result and clears it"""
+        """ returns result and clears it """
         self.timestamp = time() + 5 * 60
 
         if rid in self.infoResults:
@@ -124,12 +109,12 @@ class ThreadManager:
         return active
 
     def processingIds(self):
-        """get a id list of all pyfiles processed"""
+        """ get a id list of all pyfiles processed """
         return [x.id for x in self.getActiveFiles()]
 
 
     def work(self):
-        """run all task which have to be done (this is for repetivive call by core)"""
+        """ run all task which have to be done (this is for repetivive call by core) """
         try:
             self.tryReconnect()
         except Exception, e:
@@ -157,9 +142,9 @@ class ThreadManager:
 
     #--------------------------------------------------------------------------
     def tryReconnect(self):
-        """checks if reconnect needed"""
+        """ checks if reconnect needed """
 
-        if not (self.core.config['reconnect']['activated'] and self.core.api.isTimeReconnect()):
+        if not (self.config.get("reconnect", "activated") and self.api.isTimeReconnect()):
             return False
 
         active = [x.active.plugin.wantReconnect and x.active.plugin.waiting for x in self.threads if x.active]
@@ -167,11 +152,12 @@ class ThreadManager:
         if not (0 < active.count(True) == len(active)):
             return False
 
-        if not exists(self.core.config['reconnect']['method']):
-            if exists(join(pypath, self.core.config['reconnect']['method'])):
-                self.core.config['reconnect']['method'] = join(pypath, self.core.config['reconnect']['method'])
+        if not exists(self.config.get("reconnect", "method")):
+            if exists(join(pypath, self.config.get("reconnect", "method"))):
+                method = join(pypath, self.config.get("reconnect", "method"))
+                self.config.set("reconnect", "method", method)
             else:
-                self.core.config['reconnect']['activated'] = False
+                self.config.set("reconnect", "activated", False)
                 self.log.warning(_("Reconnect script not found!"))
                 return
 
@@ -190,10 +176,10 @@ class ThreadManager:
         self.log.debug("Old IP: %s" % ip)
 
         try:
-            reconn = Popen(self.core.config['reconnect']['method'], bufsize=-1, shell=True)#, stdout=subprocess.PIPE)
+            reconn = Popen(self.config.get("reconnect", "method"), bufsize=-1, shell=True)#, stdout=subprocess.PIPE)
         except:
             self.log.warning(_("Failed executing reconnect script!"))
-            self.core.config['reconnect']['activated'] = False
+            self.config.get("reconnect", "activated") = False
             self.reconnecting.clear()
             if self.core.debug:
                 print_exc()
@@ -209,7 +195,7 @@ class ThreadManager:
         self.reconnecting.clear()
 
     def getIP(self):
-        """retrieve current ip"""
+        """ retrieve current ip """
         services = [("http://automation.whatismyip.com/n09230945.asp", "(\S+)"),
                     ("http://checkip.dyndns.org/",".*Current IP Address: (\S+)</body>.*")]
 
@@ -228,11 +214,11 @@ class ThreadManager:
 
     #--------------------------------------------------------------------------
     def checkThreadCount(self):
-        """checks if there are need for increasing or reducing thread count"""
+        """ checks if there are need for increasing or reducing thread count """
 
-        if len(self.threads) == self.core.config.get("download", "max_downloads"):
+        if len(self.threads) == self.config.get("download", "max_downloads"):
             return True
-        elif len(self.threads) < self.core.config.get("download", "max_downloads"):
+        elif len(self.threads) < self.config.get("download", "max_downloads"):
             self.createThread()
         else:
             free = [x for x in self.threads if not x.active]
@@ -252,9 +238,9 @@ class ThreadManager:
 
     #--------------------------------------------------------------------------
     def assignJob(self):
-        """assing a job to a thread if possible"""
+        """ assing a job to a thread if possible """
 
-        if self.pause or not self.core.api.isTimeDownload():
+        if self.pause or not self.api.isTimeDownload():
             return
 
         free = [x for x in self.threads if not x.active]
@@ -280,8 +266,8 @@ class ThreadManager:
                 return
 
             if job.plugin.__type__ == "hoster":
-                spaceLeft = freeSpace(self.core.config['general']['download_folder']) / 1024 / 1024
-                if spaceLeft < self.core.config['general']['min_free_space']:
+                spaceLeft = freeSpace(self.config.get("general", "download_folder")) / 1024 / 1024
+                if spaceLeft < self.config.get("general", "min_free_space"):
                     self.log.warning(_("Not enough space left on device"))
                     self.pause = True
 
@@ -311,5 +297,5 @@ class ThreadManager:
         return int(limit)
 
     def cleanup(self):
-        """do global cleanup, should be called when finished with pycurl"""
+        """ do global cleanup, should be called when finished with pycurl """
         pycurl.global_cleanup()

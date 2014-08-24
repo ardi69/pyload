@@ -56,7 +56,7 @@ class ThriftClient:
                     self.socket.setTimeout(10)
 
                 except ImportError:
-                    #@TODO untested
+                    #@TODO: untested
                     raise NoSSL
                 try:
                    self.transport.open()

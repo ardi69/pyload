@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: mkaay
-"""
-
 from threading import Thread
 from traceback import print_exc
 
@@ -25,8 +8,9 @@ class BackendBase(Thread):
 
     def __init__(self, manager):
         Thread.__init__(self)
+
         self.m = manager
-        self.core = manager.core
+
         self.enabled = True
         self.running = False
 
@@ -36,7 +20,7 @@ class BackendBase(Thread):
             self.serve()
         except Exception, e:
             self.m.log.error(_("Remote backend error: %s") % e)
-            if self.core.debug:
+            if self.m.core.debug:
                 print_exc()
         finally:
             self.running = False
@@ -63,6 +47,7 @@ class RemoteManager:
 
     def __init__(self, core):
         self.core = core
+        self.config = core.config
         self.log = core.log
         self.backends = []
 
@@ -73,8 +58,8 @@ class RemoteManager:
 
 
     def startBackends(self):
-        host = self.core.config['remote']['listenaddr']
-        port = self.core.config['remote']['port']
+        host = self.config.get("remote", "host")
+        port = self.config.get("remote", "port")
 
         for b in self.available:
             klass = getattr(__import__("pyload.remote.%s" % b, globals(), locals(), [b], -1), b)

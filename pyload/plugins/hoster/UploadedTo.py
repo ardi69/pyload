@@ -19,7 +19,7 @@ key = "bGhGMkllZXByd2VEZnU5Y2NXbHhYVlZ5cEE1bkEzRUw=".decode('base64')
 
 
 def getID(url):
-    """ returns id from file url"""
+    """ returns id from file url """
     m = re.match(UploadedTo.__pattern__, url)
     return m.group('ID')
 
@@ -121,7 +121,7 @@ class UploadedTo(Hoster):
 
         api = getAPIData([pyfile.url])
 
-        # TODO: fallback to parse from site, because api sometimes delivers wrong status codes
+        #@TODO: fallback to parse from site, because api sometimes delivers wrong status codes
 
         if not api:
             self.logWarning("No response for API call")

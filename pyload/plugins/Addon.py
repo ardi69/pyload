@@ -54,23 +54,23 @@ class Addon(Base):
         self.cb = None
 
         #: `AddonManager`
-        self.manager = manager
+        self.m = manager
 
         #register events
         if self.event_map:
             for event, funcs in self.event_map.iteritems():
                 if type(funcs) in (list, tuple):
                     for f in funcs:
-                        self.manager.addEvent(event, getattr(self,f))
+                        self.m.addEvent(event, getattr(self,f))
                 else:
-                    self.manager.addEvent(event, getattr(self,funcs))
+                    self.m.addEvent(event, getattr(self,funcs))
 
             #delete for various reasons
             self.event_map = None
 
         if self.event_list:
             for f in self.event_list:
-                self.manager.addEvent(f, getattr(self,f))
+                self.m.addEvent(f, getattr(self,f))
 
             self.event_list = None
 
@@ -80,7 +80,7 @@ class Addon(Base):
 
     def initPeriodical(self):
         if self.interval >=1:
-            self.cb = self.core.scheduler.addJob(0, self._periodical, threaded=False)
+            self.cb = self.scheduler.addJob(0, self._periodical, threaded=False)
 
     def _periodical(self):
         try:
@@ -91,7 +91,7 @@ class Addon(Base):
             if self.core.debug:
                 print_exc()
 
-        self.cb = self.core.scheduler.addJob(self.interval, self._periodical, threaded=False)
+        self.cb = self.scheduler.addJob(self.interval, self._periodical, threaded=False)
 
 
     def __repr__(self):
@@ -112,7 +112,7 @@ class Addon(Base):
         pass
 
     def isActivated(self):
-        """ checks if addon is activated"""
+        """ checks if addon is activated """
         return self.config.getPlugin(self.__name__, "activated")
 
 

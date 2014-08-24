@@ -23,5 +23,5 @@ class FilesMailRu(Account):
                         {'Domain': domain, "Login": user, "Password": data['password'],
                          'Page': "http://files.mail.ru/"}, cookies=True)
 
-        if "Неверное имя пользователя или пароль" in page:  # @TODO seems not to work
+        if "Неверное имя пользователя или пароль" in page:  #@TODO: seems not to work
             self.wrongPassword()

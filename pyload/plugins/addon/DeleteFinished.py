@@ -55,15 +55,14 @@ class DeleteFinished(Addon):
 
     ## event managing ##
     def addEvent(self, event, func):
-        """Adds an event listener for event name"""
-        if event in self.m.events:
-            if func in self.m.events[event]:
+        """ Adds an event listener for event name """
+        if event in self.manager.events:
+            if func in self.manager.events[event]:
                 self.logDebug('Function already registered %s' % func)
             else:
-                self.m.events[event].append(func)
+                self.manager.events[event].append(func)
         else:
-            self.m.events[event] = [func]
+            self.manager.events[event] = [func]
 
     def setup(self):
-        self.m = self.manager
-        self.removeEvent = self.m.removeEvent
+        self.removeEvent = self.manager.removeEvent

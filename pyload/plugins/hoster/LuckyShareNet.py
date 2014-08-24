@@ -39,8 +39,8 @@ class LuckyShareNet(SimpleHoster):
             self.retry(reason="Hash expired")
         return json_loads(rep)
 
-    # TODO: There should be a filesize limit for free downloads
-    # TODO: Some files could not be downloaded in free mode
+    #@TODO: There should be a filesize limit for free downloads
+    #@TODO: Some files could not be downloaded in free mode
     def handleFree(self):
         file_id = re.match(self.__pattern__, self.pyfile.url).group('ID')
         self.logDebug('File ID: ' + file_id)

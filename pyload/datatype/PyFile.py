@@ -1,22 +1,6 @@
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
+# -*- coding: utf-8 -*-
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-    @author: mkaay
-"""
-
-from pyload.manager.PullEvents import UpdateEvent
+from pyload.m.PullEvents import UpdateEvent
 from pyload.utils import formatSize, lock
 
 from time import sleep, time
@@ -104,19 +88,19 @@ class PyFile:
 
     @lock
     def hasPlugin(self):
-        """Thread safe way to determine this file has initialized plugin attribute
+        """ Thread safe way to determine this file has initialized plugin attribute
 
         :return:
         """
         return hasattr(self, "plugin") and self.plugin
 
     def package(self):
-        """ return package instance"""
+        """ return package instance """
         return self.m.getPackage(self.packageid)
 
     def setStatus(self, status):
         self.status = statusMap[status]
-        self.sync() #@TODO needed aslong no better job approving exists
+        self.sync() #@TODO: needed aslong no better job approving exists
 
     def setCustomStatus(self, msg, status="processing"):
         self.statusname = msg
@@ -132,12 +116,12 @@ class PyFile:
         return statusMap[status] == self.status
 
     def sync(self):
-        """sync PyFile instance with database"""
+        """ sync PyFile instance with database """
         self.m.updateLink(self)
 
     @lock
     def release(self):
-        """sync and remove from cache"""
+        """ sync and remove from cache """
         # file has valid package
         if self.packageid > 0:
             self.sync()
@@ -149,15 +133,15 @@ class PyFile:
         self.m.releaseLink(self.id)
 
     def delete(self):
-        """delete pyfile from database"""
+        """ delete pyfile from database """
         self.m.deleteLink(self.id)
 
     def toDict(self):
-        """return dict with all information for interface"""
+        """ return dict with all information for interface """
         return self.toDbDict()
 
     def toDbDict(self):
-        """return data as dict for databse
+        """ return data as dict for databse
 
         format:
 
@@ -183,7 +167,7 @@ class PyFile:
         }
 
     def abortDownload(self):
-        """abort pyfile if possible"""
+        """ abort pyfile if possible """
         while self.id in self.m.core.threadManager.processingIds():
             self.abort = True
             if self.plugin and self.plugin.req:
@@ -197,7 +181,7 @@ class PyFile:
         self.release()
 
     def finishIfDone(self):
-        """set status to finish and release file if every thread is finished with it"""
+        """ set status to finish and release file if every thread is finished with it """
 
         if self.id in self.m.core.threadManager.processingIds():
             return False
@@ -244,7 +228,7 @@ class PyFile:
             return 0
 
     def getETA(self):
-        """ gets established time of arrival"""
+        """ gets established time of arrival """
         try:
             return self.getBytesLeft() / self.getSpeed()
         except:

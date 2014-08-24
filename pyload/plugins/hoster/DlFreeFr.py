@@ -94,7 +94,7 @@ class AdYouLike:
         except KeyError:
             self.plugin.fail("No instructions visual")
 
-        #TODO: Supports captcha
+        #@TODO: Supports captcha
 
         if not response:
             self.plugin.fail("AdYouLike result failed")

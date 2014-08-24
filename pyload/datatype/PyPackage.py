@@ -1,22 +1,6 @@
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
+# -*- coding: utf-8 -*-
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-    @author: mkaay
-"""
-
-from pyload.manager.PullEvents import UpdateEvent
+from pyload.m.PullEvents import UpdateEvent
 from pyload.utils import safe_filename
 
 
@@ -60,15 +44,15 @@ class PyPackage:
         }
 
     def getChildren(self):
-        """get information about contained links"""
+        """ get information about contained links """
         return self.m.getPackageData(self.id)['links']
 
     def sync(self):
-        """sync with db"""
+        """ sync with db """
         self.m.updatePackage(self)
 
     def release(self):
-        """sync and delete from cache"""
+        """ sync and delete from cache """
         self.sync()
         self.m.releasePackage(self.id)
 

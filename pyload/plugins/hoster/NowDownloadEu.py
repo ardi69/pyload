@@ -57,7 +57,7 @@ class NowDownloadEu(SimpleHoster):
             self.download(str(url.group(1)))
         else:
             self.error("Download Link not Found")
-        
+
 
 
 getInfo = create_getInfo(NowDownloadEu)

@@ -29,7 +29,7 @@ class MultiHoster(Addon):
         self.new_supported = []
 
     def getConfig(self, option, default=''):
-        """getConfig with default value - sublass may not implements all config options"""
+        """ getConfig with default value - sublass may not implements all config options """
         try:
             return self.getConf(option)
         except KeyError:
@@ -73,7 +73,7 @@ class MultiHoster(Addon):
         return hosters
 
     def getHoster(self):
-        """Load list of supported hoster
+        """ Load list of supported hoster
 
         :return: List of domain names
         """
@@ -81,7 +81,7 @@ class MultiHoster(Addon):
 
     def activate(self):
         if self.cb:
-            self.core.scheduler.removeJob(self.cb)
+            self.scheduler.removeJob(self.cb)
 
         self.setConfig("activated", True)  #: config not in sync after plugin reload
 
@@ -98,7 +98,7 @@ class MultiHoster(Addon):
         pass
 
     def periodical(self):
-        """reload hoster list periodically"""
+        """ reload hoster list periodically """
         self.logInfo("Reloading supported hoster list")
 
         old_supported = self.supported
@@ -172,7 +172,7 @@ class MultiHoster(Addon):
             del dict['new_name']
 
     def deactivate(self):
-        """Remove override for all hosters. Scheduler job is removed by AddonManager"""
+        """ Remove override for all hosters. Scheduler job is removed by AddonManager """
         for hoster in self.supported:
             self.unloadHoster(hoster)
 
@@ -183,7 +183,7 @@ class MultiHoster(Addon):
         dict['re'] = re.compile(dict['pattern'])
 
     def downloadFailed(self, pyfile):
-        """remove plugin override if download fails but not if file is offline/temp.offline"""
+        """ remove plugin override if download fails but not if file is offline/temp.offline """
         if pyfile.hasStatus("failed") and self.getConfig("unloadFailing", True):
             hdict = self.core.pluginManager.hosterPlugins[pyfile.pluginname]
             if "new_name" in hdict and hdict['new_name'] == self.__name__:

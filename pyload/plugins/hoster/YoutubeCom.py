@@ -12,7 +12,7 @@ from pyload.utils import html_unescape
 
 
 def which(program):
-    """Works exactly like the unix command which
+    """ Works exactly like the unix command which
 
     Courtesy of http://stackoverflow.com/a/377028/675646"""
 

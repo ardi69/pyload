@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
-
 import pycurl
 
 from codecs import getincrementaldecoder, lookup, BOM_UTF8
@@ -232,7 +215,7 @@ class HTTPRequest:
         return code
 
     def checkHeader(self):
-        """ check if header indicates failure"""
+        """ check if header indicates failure """
         return int(self.c.getinfo(pycurl.RESPONSE_CODE)) not in bad_headers
 
     def getResponse(self):
@@ -270,7 +253,7 @@ class HTTPRequest:
             decoder = getincrementaldecoder(encoding)("replace")
             rep = decoder.decode(rep, True)
 
-            #TODO: html_unescape as default
+            #@TODO: html_unescape as default
 
         except LookupError:
             self.log.debug("No Decoder foung for %s" % encoding)

@@ -1,21 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
 import re
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from cgi import FieldStorage
@@ -28,20 +12,15 @@ try:
 except:
     pass
 
-from pyload.manager.RemoteManager import BackendBase
-
-
-core = None
-js = None
+from pyload.m.RemoteManager import BackendBase
 
 
 class ClickAndLoadBackend(BackendBase):
 
     def setup(self, host, port):
         self.httpd = HTTPServer((host, port), CNLHandler)
-        global core, js
-        core = self.m.core
-        js = core.js
+        global pycore
+        pycore = self.m.core
 
     def serve(self):
         while self.enabled:
@@ -131,7 +110,7 @@ class CNLHandler(BaseHTTPRequestHandler):
         package = self.get_post('referer', 'ClickAndLoad Package')
         dlc = self.get_post('crypted').replace(" ", "+")
 
-        core.upload_container(package, dlc)
+        pycore.upload_container(package, dlc)
 
     def addcrypted2(self):
         package = self.get_post("source", "ClickAndLoad Package")
@@ -140,7 +119,7 @@ class CNLHandler(BaseHTTPRequestHandler):
 
         crypted = standard_b64decode(unquote(crypted.replace(" ", "+")))
         jk = "%s f()" % jk
-        jk = js.eval(jk)
+        jk = pycore.js.eval(jk)
         Key = unhexlify(jk)
         IV = Key
 

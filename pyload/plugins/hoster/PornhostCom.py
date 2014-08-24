@@ -43,7 +43,7 @@ class PornhostCom(Hoster):
                 url = re.search(r'width: 894px; height: 675px">.*?<img src="(.*?)"', self.html)
                 if url is None:
                     url = re.search(r'"http://file[0-9]+\.pornhost\.com/[0-9]+/.*?"',
-                                    self.html)  # TODO: fix this one since it doesn't match
+                                    self.html)  #@TODO: fix this one since it doesn't match
 
         return url.group(1).strip()
 

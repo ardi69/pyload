@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN, mkaay
-    @interface-version: 0.1
-"""
 import __builtin__
 
 import traceback
@@ -31,7 +14,7 @@ from pyload.utils import lock
 
 
 class AddonManager:
-    """Manages addons, delegates and handles Events.
+    """ Manages addons, delegates and handles Events.
 
         Every plugin can define events, \
         but some very usefull events are called by the Core.
@@ -65,8 +48,6 @@ class AddonManager:
     def __init__(self, core):
         self.core = core
         self.config = core.config
-
-        __builtin__.addonManager = self  #: needed to let addons register themself
 
         self.log = core.log
         self.plugins = []
@@ -266,7 +247,7 @@ class AddonManager:
         return [x for x in self.plugins if x.isActivated()]
 
     def getAllInfo(self):
-        """returns info stored by addon plugins"""
+        """ returns info stored by addon plugins """
         info = {}
         for name, plugin in self.pluginMap.iteritems():
             if plugin.info:
@@ -284,19 +265,19 @@ class AddonManager:
         return info
 
     def addEvent(self, event, func):
-        """Adds an event listener for event name"""
+        """ Adds an event listener for event name """
         if event in self.events:
             self.events[event].append(func)
         else:
             self.events[event] = [func]
 
     def removeEvent(self, event, func):
-        """removes previously added event listener"""
+        """ removes previously added event listener """
         if event in self.events:
             self.events[event].remove(func)
 
     def dispatchEvent(self, event, *args):
-        """dispatches event with args"""
+        """ dispatches event with args """
         if event in self.events:
             for f in self.events[event]:
                 try:

@@ -36,17 +36,17 @@ class AbtractExtractor:
         """
         raise NotImplementedError
 
-    def __init__(self, m, file, out, fullpath, overwrite, excludefiles, renice):
-        """Initialize extractor for specific file
+    def __init__(self, manager, file, out, fullpath, overwrite, excludefiles, renice):
+        """ Initialize extractor for specific file
 
-        :param m: ExtractArchive Addon plugin
+        :param manager: ExtractArchive Addon plugin
         :param file: Absolute filepath
         :param out: Absolute path to destination directory
         :param fullpath: extract to fullpath
         :param overwrite: Overwrite existing archives
         :param renice: Renice value
         """
-        self.m = m
+        self.mananger = mananger
         self.file = file
         self.out = out
         self.fullpath = fullpath
@@ -61,7 +61,7 @@ class AbtractExtractor:
         pass
 
     def checkArchive(self):
-        """Check if password if needed. Raise ArchiveError if integrity is
+        """ Check if password if needed. Raise ArchiveError if integrity is
         questionable.
 
         :return: boolean
@@ -79,7 +79,7 @@ class AbtractExtractor:
         return True
 
     def extract(self, progress, password=None):
-        """Extract the archive. Raise specific errors in case of failure.
+        """ Extract the archive. Raise specific errors in case of failure.
 
         :param progress: Progress function, call this to update status
         :param password password to use
@@ -91,12 +91,12 @@ class AbtractExtractor:
         raise NotImplementedError
 
     def getDeleteFiles(self):
-        """Return list of files to delete, do *not* delete them here.
+        """ Return list of files to delete, do *not* delete them here.
 
         :return: List with paths of files to delete
         """
         raise NotImplementedError
 
     def getExtractedFiles(self):
-        """Populate self.files at some point while extracting"""
+        """ Populate self.files at some point while extracting """
         return self.files

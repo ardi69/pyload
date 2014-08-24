@@ -25,7 +25,7 @@ if sys.version_info < (2, 7) and os.name != "nt":
 
     # unsued timeout option for older python version
     def wait(self, timeout=0):
-        """Wait for child process to terminate.  Returns returncode
+        """ Wait for child process to terminate.  Returns returncode
         attribute."""
         if self.returncode is None:
             try:
@@ -116,7 +116,7 @@ class ExtractArchive(Addon):
 
     @Expose
     def extractPackage(self, id):
-        """ Extract package with given id"""
+        """ Extract package with given id """
         self.manager.startThread(self.extract, [id])
 
     def packageFinished(self, pypack):
@@ -137,7 +137,7 @@ class ExtractArchive(Addon):
         self.reloadPasswords()
 
         # dl folder
-        dl = self.config['general']['download_folder']
+        dl = self.config.get("general", "download_folder")
 
         extracted = []
 
@@ -290,7 +290,7 @@ class ExtractArchive(Addon):
 
     @Expose
     def addPassword(self, pw):
-        """  Adds a password to saved list"""
+        """ Adds a password to saved list """
         pwfile = self.getConfig("passwordfile")
 
         if pw in self.passwords:
@@ -307,15 +307,15 @@ class ExtractArchive(Addon):
             if not exists(f):
                 continue
             try:
-                if self.config['permission']['change_file']:
+                if self.config.get("permission", "change_file"):
                     if isfile(f):
-                        chmod(f, int(self.config['permission']['file'], 8))
+                        chmod(f, int(self.config.get("permission", "file"), 8))
                     elif isdir(f):
-                        chmod(f, int(self.config['permission']['folder'], 8))
+                        chmod(f, int(self.config.get("permission", "folder"), 8))
 
-                if self.config['permission']['change_dl'] and os.name != "nt":
-                    uid = getpwnam(self.config['permission']['user'])[2]
-                    gid = getgrnam(self.config['permission']['group'])[2]
+                if self.config.get("permission", "change_dl") and os.name != "nt":
+                    uid = getpwnam(self.config.get("permission", "user"))[2]
+                    gid = getgrnam(self.config.get("permission", "group"))[2]
                     chown(f, uid, gid)
             except Exception, e:
                 self.logWarning(_("Setting User and Group failed"), e)

@@ -25,7 +25,7 @@ class RestartFailed(Addon):
         if name == "interval":
             interval = value * 60
             if self.MIN_INTERVAL <= interval != self.interval:
-                self.core.scheduler.removeJob(self.cb)
+                self.scheduler.removeJob(self.cb)
                 self.interval = interval
                 self.initPeriodical()
             else:
@@ -36,7 +36,6 @@ class RestartFailed(Addon):
         self.api.restartFailed()
 
     def setup(self):
-        self.api = self.core.api
         self.interval = self.MIN_INTERVAL
 
     def activate(self):

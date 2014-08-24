@@ -73,12 +73,12 @@ class ExternalScripts(Addon):
     def downloadFinished(self, pyfile):
         for script in self.scripts['download_finished']:
             self.callScript(script, pyfile.pluginname, pyfile.url, pyfile.name,
-                            safe_join(self.config['general']['download_folder'],
+                            safe_join(self.config.get("general", "download_folder"),
                                       pyfile.package().folder, pyfile.name), pyfile.id)
 
     def packageFinished(self, pypack):
         for script in self.scripts['package_finished']:
-            folder = self.config['general']['download_folder']
+            folder = self.config.get("general", "download_folder")
             folder = safe_join(folder, pypack.folder)
 
             self.callScript(script, pypack.name, folder, pypack.password, pypack.id)

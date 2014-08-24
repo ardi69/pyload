@@ -37,7 +37,7 @@ class Account(Base):
     def __init__(self, manager, accounts):
         Base.__init__(self, manager.core)
 
-        self.manager = manager
+        self.m = manager
         self.accounts = {}
         self.infos = {} # cache for account information
         self.lock = RLock()
@@ -50,7 +50,7 @@ class Account(Base):
         pass
 
     def login(self, user, data, req):
-        """login into account, the cookies will be saved so user can be recognized
+        """ login into account, the cookies will be saved so user can be recognized
 
         :param user: loginname
         :param data: data dictionary
@@ -129,7 +129,7 @@ class Account(Base):
 
     @lock
     def getAccountInfo(self, name, force=False):
-        """retrieve account infos for an user, do **not** overwrite this method!\\
+        """ retrieve account infos for an user, do **not** overwrite this method!\\
         just use it to retrieve infos in hoster plugins. see `loadAccountInfo`
 
         :param name: username
@@ -169,7 +169,7 @@ class Account(Base):
         return info['premium']
 
     def loadAccountInfo(self, name, req=None):
-        """this should be overwritten in account plugin,\
+        """ this should be overwritten in account plugin,\
         and retrieving account information for user
 
         :param name:
@@ -214,7 +214,7 @@ class Account(Base):
         return self.accounts[user]
 
     def selectAccount(self):
-        """ returns an valid account name and data"""
+        """ returns an valid account name and data """
         usable = []
         for user, data in self.accounts.iteritems():
             if not data['valid']:
@@ -271,7 +271,7 @@ class Account(Base):
     def scheduleRefresh(self, user, time=0, force=True):
         """ add task to refresh account info to sheduler """
         self.logDebug("Scheduled Account refresh for %s in %s seconds." % (user, time))
-        self.core.scheduler.addJob(time, self.getAccountInfo, [user, force])
+        self.scheduler.addJob(time, self.getAccountInfo, [user, force])
 
     @lock
     def checkLogin(self, user):

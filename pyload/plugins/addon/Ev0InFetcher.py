@@ -68,7 +68,7 @@ class Ev0InFetcher(Addon):
                     links = self.filterLinks(item['description'].split("<br />"))
                     packagename = item['title'].encode("utf-8")
                     self.logInfo("Ev0InFetcher: new episode '%s' (matched '%s')" % (packagename, show))
-                    self.core.api.addPackage(packagename, links, 1 if self.getConfig("queue") else 0)
+                    self.api.addPackage(packagename, links, 1 if self.getConfig("queue") else 0)
                     self.setStorage("show_%s_lastfound" % show, int(mktime(item.date_parsed)))
                     found = True
         if not found:

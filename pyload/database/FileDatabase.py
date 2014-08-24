@@ -1,21 +1,4 @@
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-    @author: mkaay
-"""
-
+# -*- coding: utf-8 -*-
 
 from threading import RLock
 from time import time
@@ -33,11 +16,11 @@ except:
 
 
 class FileHandler:
-    """Handles all request made to obtain information,
+    """ Handles all request made to obtain information,
     modify status or other request for links or packages"""
 
     def __init__(self, core):
-        """Constructor"""
+        """ Constructor """
         self.core = core
         self.log = core.log
 
@@ -50,7 +33,7 @@ class FileHandler:
 
         self.jobCache = {}
 
-        self.lock = RLock()  #@TODO should be a Lock w/o R
+        self.lock = RLock()  #@TODO: should be a Lock w/o R
         #self.lock._Verbose__verbose = True
 
         self.filecount = -1 # if an invalid value is set get current value from db
@@ -70,12 +53,12 @@ class FileHandler:
 
     #--------------------------------------------------------------------------
     def save(self):
-        """saves all data to backend"""
+        """ saves all data to backend """
         self.db.commit()
 
     #--------------------------------------------------------------------------
     def syncSave(self):
-        """saves all data to backend and waits until all data are written"""
+        """ saves all data to backend and waits until all data are written """
         pyfiles = self.cache.values()
         for pyfile in pyfiles:
             pyfile.sync()
@@ -88,7 +71,7 @@ class FileHandler:
 
     @lock
     def getCompleteData(self, queue=1):
-        """gets a complete data representation"""
+        """ gets a complete data representation """
 
         data = self.db.getAllLinks(queue)
         packs = self.db.getAllPackages(queue)
@@ -108,7 +91,7 @@ class FileHandler:
 
     @lock
     def getInfoData(self, queue=1):
-        """gets a data representation without links"""
+        """ gets a data representation without links """
 
         packs = self.db.getAllPackages(queue)
         for x in self.packageCache.itervalues():
@@ -121,7 +104,7 @@ class FileHandler:
     @lock
     @change
     def addLinks(self, urls, package):
-        """adds links"""
+        """ adds links """
 
         self.core.addonManager.dispatchEvent("linksAdded", urls, package)
 
@@ -130,14 +113,14 @@ class FileHandler:
         self.db.addLinks(data, package)
         self.core.threadManager.createInfoThread(data, package)
 
-        #@TODO change from reloadAll event to package update event
+        #@TODO: change from reloadAll event to package update event
         self.core.pullManager.addEvent(ReloadAllEvent("collector"))
 
     #--------------------------------------------------------------------------
     @lock
     @change
     def addPackage(self, name, folder, queue=0):
-        """adds a package, default to link collector"""
+        """ adds a package, default to link collector """
         lastID = self.db.addPackage(name, folder, queue)
         p = self.db.getPackage(lastID)
         e = InsertEvent("pack", lastID, p.order, "collector" if not queue else "queue")
@@ -148,7 +131,7 @@ class FileHandler:
     @lock
     @change
     def deletePackage(self, id):
-        """delete package and all contained links"""
+        """ delete package and all contained links """
 
         p = self.getPackage(id)
         if not p:
@@ -185,7 +168,7 @@ class FileHandler:
     @lock
     @change
     def deleteLink(self, id):
-        """deletes links"""
+        """ deletes links """
 
         f = self.getFile(id)
         if not f:
@@ -218,19 +201,19 @@ class FileHandler:
 
     #--------------------------------------------------------------------------
     def releaseLink(self, id):
-        """removes pyfile from cache"""
+        """ removes pyfile from cache """
         if id in self.cache:
             del self.cache[id]
 
     #--------------------------------------------------------------------------
     def releasePackage(self, id):
-        """removes package from cache"""
+        """ removes package from cache """
         if id in self.packageCache:
             del self.packageCache[id]
 
     #--------------------------------------------------------------------------
     def updateLink(self, pyfile):
-        """updates link"""
+        """ updates link """
         self.db.updateLink(pyfile)
 
         e = UpdateEvent("file", pyfile.id, "collector" if not pyfile.package().queue else "queue")
@@ -238,7 +221,7 @@ class FileHandler:
 
     #--------------------------------------------------------------------------
     def updatePackage(self, pypack):
-        """updates a package"""
+        """ updates a package """
         self.db.updatePackage(pypack)
 
         e = UpdateEvent("pack", pypack.id, "collector" if not pypack.queue else "queue")
@@ -246,7 +229,7 @@ class FileHandler:
 
     #--------------------------------------------------------------------------
     def getPackage(self, id):
-        """return package instance"""
+        """ return package instance """
 
         if id in self.packageCache:
             return self.packageCache[id]
@@ -255,7 +238,7 @@ class FileHandler:
 
     #--------------------------------------------------------------------------
     def getPackageData(self, id):
-        """returns dict with package information"""
+        """ returns dict with package information """
         pack = self.getPackage(id)
 
         if not pack:
@@ -279,7 +262,7 @@ class FileHandler:
 
     #--------------------------------------------------------------------------
     def getFileData(self, id):
-        """returns dict with file information"""
+        """ returns dict with file information """
         if id in self.cache:
             return self.cache[id].toDbDict()
 
@@ -287,7 +270,7 @@ class FileHandler:
 
     #--------------------------------------------------------------------------
     def getFile(self, id):
-        """returns pyfile instance"""
+        """ returns pyfile instance """
         if id in self.cache:
             return self.cache[id]
         else:
@@ -296,10 +279,10 @@ class FileHandler:
     #--------------------------------------------------------------------------
     @lock
     def getJob(self, occ):
-        """get suitable job"""
+        """ get suitable job """
 
-        #@TODO clean mess
-        #@TODO improve selection of valid jobs
+        #@TODO: clean mess
+        #@TODO: improve selection of valid jobs
 
         if occ in self.jobCache:
             if self.jobCache[occ]:
@@ -339,7 +322,7 @@ class FileHandler:
 
     @lock
     def getDecryptJob(self):
-        """return job for decrypting"""
+        """ return job for decrypting """
         if "decrypt" in self.jobCache:
             return None
 
@@ -354,7 +337,7 @@ class FileHandler:
             return None
 
     def getFileCount(self):
-        """returns number of files"""
+        """ returns number of files """
 
         if self.filecount == -1:
             self.filecount = self.db.filecount(1)
@@ -362,14 +345,14 @@ class FileHandler:
         return self.filecount
 
     def getQueueCount(self, force=False):
-        """number of files that have to be processed"""
+        """ number of files that have to be processed """
         if self.queuecount == -1 or force:
             self.queuecount = self.db.queuecount(1)
 
         return self.queuecount
 
     def checkAllLinksFinished(self):
-        """checks if all files are finished and dispatch event"""
+        """ checks if all files are finished and dispatch event """
 
         if not self.getQueueCount(True):
             self.core.addonManager.dispatchEvent("allDownloadsFinished")
@@ -379,7 +362,7 @@ class FileHandler:
         return False
 
     def checkAllLinksProcessed(self, fid):
-        """checks if all files was processed and pyload would idle now, needs fid which will be ignored when counting"""
+        """ checks if all files was processed and pyload would idle now, needs fid which will be ignored when counting """
 
         # reset count so statistic will update (this is called when dl was processed)
         self.resetCount()
@@ -397,7 +380,7 @@ class FileHandler:
     @lock
     @change
     def restartPackage(self, id):
-        """restart package"""
+        """ restart package """
         pyfiles = self.cache.values()
         for pyfile in pyfiles:
             if pyfile.packageid == id:
@@ -414,7 +397,7 @@ class FileHandler:
     @lock
     @change
     def restartFile(self, id):
-        """ restart file"""
+        """ restart file """
         if id in self.cache:
             self.cache[id].status = 3
             self.cache[id].name = self.cache[id].url
@@ -430,7 +413,7 @@ class FileHandler:
     @lock
     @change
     def setPackageLocation(self, id, queue):
-        """push package to queue"""
+        """ push package to queue """
 
         p = self.db.getPackage(id)
         oldorder = p.order
@@ -522,7 +505,7 @@ class FileHandler:
 
     @change
     def updateFileInfo(self, data, pid):
-        """ updates file info (name, size, status, url)"""
+        """ updates file info (name, size, status, url) """
         ids = self.db.updateLinkInfo(data)
         e = UpdateEvent("pack", pid, "collector" if not self.getPackage(pid).queue else "queue")
         self.core.pullManager.addEvent(e)
@@ -581,13 +564,13 @@ class FileHandler:
 class FileMethods(object):
     @style.queue
     def filecount(self, queue):
-        """returns number of files in queue"""
+        """ returns number of files in queue """
         self.c.execute("SELECT COUNT(*) FROM links as l INNER JOIN packages as p ON l.package=p.id WHERE p.queue=?", (queue,))
         return self.c.fetchone()[0]
 
     @style.queue
     def queuecount(self, queue):
-        """ number of files in queue not finished yet"""
+        """ number of files in queue not finished yet """
         self.c.execute("SELECT COUNT(*) FROM links as l INNER JOIN packages as p ON l.package=p.id WHERE p.queue=? AND l.status NOT IN (0, 4)", (queue,))
         return self.c.fetchone()[0]
 
@@ -623,7 +606,7 @@ class FileMethods(object):
 
     @style.queue
     def addLinks(self, links, package):
-        """ links is a list of tupels (url, plugin)"""
+        """ links is a list of tupels (url, plugin) """
         order = self._nextFileOrder(package)
         orders = [order + x for x in xrange(len(links))]
         links = [(x[0], x[0], x[1], package, o) for x, o in zip(links, orders)]
@@ -651,7 +634,7 @@ class FileMethods(object):
 
     @style.queue
     def getAllLinks(self, q):
-        """return information about all links in queue q
+        """ return information about all links in queue q
 
         q0 queue
         q1 collector
@@ -684,7 +667,7 @@ class FileMethods(object):
 
     @style.queue
     def getAllPackages(self, q):
-        """return information about packages in queue q
+        """ return information about packages in queue q
         (only useful in get all data)
 
         q0 queue
@@ -721,7 +704,7 @@ class FileMethods(object):
 
     @style.queue
     def getLinkData(self, id):
-        """get link information as dict"""
+        """ get link information as dict """
         self.c.execute('SELECT id, url, name, size, status, error, plugin, package, linkorder FROM links WHERE id=?', (str(id),))
         data = {}
         r = self.c.fetchone()
@@ -745,7 +728,7 @@ class FileMethods(object):
 
     @style.queue
     def getPackageData(self, id):
-        """get data about links for a package"""
+        """ get data about links for a package """
         self.c.execute('SELECT id, url, name, size, status, error, plugin, package, linkorder FROM links WHERE package=? ORDER BY linkorder', (str(id),))
 
         data = {}
@@ -799,7 +782,7 @@ class FileMethods(object):
 
     @style.queue
     def reorderLink(self, f, position):
-        """ reorder link with f as dict for pyfile  """
+        """ reorder link with f as dict for pyfile """
         if f['order'] > position:
             self.c.execute('UPDATE links SET linkorder=linkorder+1 WHERE linkorder >= ? AND linkorder < ? AND package=?', (position, f['order'], f['package']))
         elif f['order'] < position:
@@ -822,7 +805,7 @@ class FileMethods(object):
 
     @style.queue
     def getPackage(self, id):
-        """return package instance from id"""
+        """ return package instance from id """
         self.c.execute("SELECT name, folder, site, password, queue, packageorder FROM packages WHERE id=?", (str(id),))
         r = self.c.fetchone()
         if not r:
@@ -833,7 +816,7 @@ class FileMethods(object):
     #--------------------------------------------------------------------------
     @style.queue
     def getFile(self, id):
-        """return link instance from id"""
+        """ return link instance from id """
         self.c.execute("SELECT url, name, size, status, error, plugin, package, linkorder FROM links WHERE id=?", (str(id),))
         r = self.c.fetchone()
         if not r:
@@ -844,9 +827,9 @@ class FileMethods(object):
 
     @style.queue
     def getJob(self, occ):
-        """return pyfile ids, which are suitable for download and dont use a occupied plugin"""
+        """ return pyfile ids, which are suitable for download and dont use a occupied plugin """
 
-        #@TODO improve this hardcoded method
+        #@TODO: improve this hardcoded method
         pre = "('DLC', 'LinkList', 'SerienjunkiesOrg', 'CCF', 'RSDF')"  #plugins which are processed in collector
 
         cmd = "("
@@ -863,7 +846,7 @@ class FileMethods(object):
 
     @style.queue
     def getPluginJob(self, plugins):
-        """returns pyfile ids with suited plugins"""
+        """ returns pyfile ids with suited plugins """
         cmd = "SELECT l.id FROM links as l INNER JOIN packages as p ON l.package=p.id WHERE l.plugin IN %s AND l.status IN (2, 3, 14) ORDER BY p.packageorder ASC, l.linkorder ASC LIMIT 5" % plugins
 
         self.c.execute(cmd) # very bad!
@@ -872,7 +855,7 @@ class FileMethods(object):
 
     @style.queue
     def getUnfinished(self, pid):
-        """return list of max length 3 ids with pyfiles in package not finished or processed"""
+        """ return list of max length 3 ids with pyfiles in package not finished or processed """
 
         self.c.execute("SELECT id FROM links WHERE package=? AND status NOT IN (0, 4, 13) LIMIT 3", (str(pid),))
         return [r[0] for r in self.c]

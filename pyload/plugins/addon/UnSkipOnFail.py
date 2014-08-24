@@ -45,12 +45,12 @@ class UnSkipOnFail(Addon):
         dups = []
         pyfile_name = fs_encode(basename(pyfile.name))
         # get packages (w/o files, as most file data is useless here)
-        queue = self.core.api.getQueue()
+        queue = self.api.getQueue()
         for package in queue:
             # check if package-folder equals pyfile's package folder
             if fs_encode(package.folder) == fs_encode(pyfile.package().folder):
                 # now get packaged data w/ files/links
-                pdata = self.core.api.getPackageData(package.pid)
+                pdata = self.api.getPackageData(package.pid)
                 if pdata.links:
                     for link in pdata.links:
                         link_name = fs_encode(basename(link.name))

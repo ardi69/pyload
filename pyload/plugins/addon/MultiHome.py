@@ -23,7 +23,7 @@ class MultiHome(Addon):
         self.interfaces = []
         self.parseInterfaces(self.getConfig("interfaces").split(";"))
         if not self.interfaces:
-            self.parseInterfaces([self.config['download']['interface']])
+            self.parseInterfaces([self.config.get("download", "interface")])
             self.setConfig("interfaces", self.toConfig())
 
     def toConfig(self):

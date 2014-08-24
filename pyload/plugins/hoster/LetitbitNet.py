@@ -56,7 +56,7 @@ class LetitbitNet(SimpleHoster):
 
     def setup(self):
         self.resumeDownload = True
-        #TODO confirm that resume works
+        #@TODO: confirm that resume works
 
     def getFileInfo(self):
         api_rep = api_download_info(self.pyfile.url)

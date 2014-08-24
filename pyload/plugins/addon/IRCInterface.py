@@ -10,7 +10,7 @@ from threading import Thread
 from time import sleep
 from traceback import print_exc
 
-from pyload.Api import PackageDoesNotExists, FileDoesNotExists
+from pyload.api import PackageDoesNotExists, FileDoesNotExists
 from pyload.network.RequestFactory import getURL
 from pyload.plugins.Addon import Addon
 from pyload.utils import formatSize
@@ -41,8 +41,6 @@ class IRCInterface(Addon, Thread):
         Thread.__init__(self)
         Addon.__init__(self, core, manager)
         self.setDaemon(True)
-        #   self.sm = core.server_methods
-        self.api = core.api  # todo, only use api
 
     def activate(self):
         self.abort = False
@@ -317,7 +315,7 @@ class IRCInterface(Addon, Thread):
             if not pack:
                 return ["ERROR: Package doesn't exists."]
 
-            #TODO add links
+            #@TODO: add links
 
             return ["INFO: Added %d links to Package %s [#%d]" % (len(links), pack['name'], id)]
 

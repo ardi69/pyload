@@ -1,49 +1,14 @@
 # -*- coding: utf-8 -*-
 
-CURRENT_VERSION = '0.4.10'
-
 import __builtin__
 import os
 import sys
 
-from os.path import abspath, exists, expanduser, isfile, join
-
-__builtin__.owd = abspath("")  # original working directory
-__builtin__.pypath = abspath(join(__file__, "..", ".."))
-__builtin__.homedir = expanduser("~")
-
-if __builtin__.homedir == "~" and os.name == "nt":
-    import ctypes
-
-    CSIDL_APPDATA = 26
-    _SHGetFolderPath = ctypes.windll.shell32.SHGetFolderPathW
-    _SHGetFolderPath.argtypes = [ctypes.wintypes.HWND,
-                                 ctypes.c_int,
-                                 ctypes.wintypes.HANDLE,
-                                 ctypes.wintypes.DWORD, ctypes.wintypes.LPCWSTR]
-
-    path_buf = ctypes.wintypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-    result = _SHGetFolderPath(0, CSIDL_APPDATA, 0, 0, path_buf)
-
-    __builtin__.homedir = path_buf.value
-
-try:
-    p = join(pypath, "pyload", "config", "configdir")
-    if exists(p):
-        f = open(p, "rb")
-        __builtin__.configdir = f.read().strip()
-        f.close()
-except:
-    if os.name == "posix":
-        __builtin__.configdir = join(__builtin__.homedir, ".pyload")
-    else:
-        __builtin__.configdir = join(__builtin__.homedir, "pyload")
-
-sys.path.append(join(pypath, "pyload", "lib"))
+from os.path import exists, isfile, join
 
 
 from getopt import getopt, GetoptError
-import pyload.utils.pylgettext as gettext
+from gettext import gettext
 from imp import find_module
 import logging
 import logging.handlers
@@ -53,6 +18,7 @@ import subprocess
 from time import time, sleep
 from traceback import print_exc
 
+from pyload import __version__
 from pyload.manager.AccountManager import AccountManager
 from pyload.manager.CaptchaManager import CaptchaManager
 from pyload.config.ConfigParser import ConfigParser
@@ -61,7 +27,7 @@ from pyload.manager.PullEvents import PullManager
 from pyload.network.RequestFactory import RequestFactory
 from pyload.thread.ServerThread import WebServer
 from pyload.manager.Scheduler import Scheduler
-from pyload.utils.JsEngine import JsEngine
+from pyload.manager.JsEngine import JsEngine
 from pyload import remote
 from pyload.manager.RemoteManager import RemoteManager
 from pyload.database import DatabaseBackend, FileHandler
@@ -78,7 +44,7 @@ sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
 # - cron job like sheduler
 
 class Core:
-    """pyLoad Core, one tool to rule them all... (the filehosters) :D"""
+    """ pyLoad Core, one tool to rule them all... (the filehosters) :D """
 
     def __init__(self):
         self.doDebug = False
@@ -98,7 +64,7 @@ class Core:
 
                 for option, argument in options:
                     if option in ("-v", "--version"):
-                        print "pyLoad", CURRENT_VERSION
+                        print "pyLoad", __version__
                         sys.exit()
                     elif option in ("-p", "--pidfile"):
                         self.pidfile = argument
@@ -112,24 +78,24 @@ class Core:
                     elif option in ("-d", "--debug"):
                         self.doDebug = True
                     elif option in ("-u", "--user"):
-                        from pyload.utils.Setup import Setup
+                        from pyload.config.Setup import SetupAssistant
 
                         self.config = ConfigParser()
-                        s = Setup(pypath, self.config)
+                        s = SetupAssistant(self.config)
                         s.set_user()
                         sys.exit()
                     elif option in ("-s", "--setup"):
-                        from pyload.utils.Setup import Setup
+                        from pyload.config.Setup import SetupAssistant
 
                         self.config = ConfigParser()
-                        s = Setup(pypath, self.config)
+                        s = SetupAssistant(self.config)
                         s.start()
                         sys.exit()
                     elif option == "--configdir=":
-                        from pyload.utils.Setup import Setup
+                        from pyload.config.Setup import SetupAssistant
 
                         self.config = ConfigParser()
-                        s = Setup(pypath, self.config)
+                        s = SetupAssistant(self.config)
                         s.set_configdir(argument, True if "--changedir" in options else False)
                         sys.exit()
                     elif option in ("-q", "--quit"):
@@ -156,7 +122,7 @@ class Core:
 
     def print_help(self):
         print
-        print "pyLoad v%s     2008-2014 the pyLoad Team" % CURRENT_VERSION
+        print "pyLoad v%s     2008-2014 the pyLoad Team" % __version__
         print
         if sys.argv[0].endswith(".py"):
             print "Usage: python pyload.py [options]"
@@ -207,7 +173,7 @@ class Core:
             os.remove(self.pidfile)
 
     def checkPidFile(self):
-        """ return pid as int or 0"""
+        """ return pid as int or 0 """
         if isfile(self.pidfile):
             f = open(self.pidfile, "rb")
             pid = f.read().strip()
@@ -227,8 +193,8 @@ class Core:
                 os.kill(pid, 0)  # 0 - default signal (does nothing)
             except:
                 return 0
-
-            return pid
+            else:
+                return pid
 
     def quitInstance(self):
         if os.name == "nt":
@@ -275,21 +241,26 @@ class Core:
     def start(self, rpc=True, web=True):
         """ starts the fun :D """
 
-        self.version = CURRENT_VERSION
+        self.version = __version__
 
         if not exists("pyload.conf"):
-            from pyload.utils.Setup import Setup
+            from pyload.config.Setup import SetupAssistant
 
-            print "This is your first start, running configuration assistent now."
+            print
+            print "This is your first start, running setup now..."
+            import setup
+
+            print
+            print "Running configuration assistant now..."
             self.config = ConfigParser()
-            s = Setup(pypath, self.config)
+            s = SetupAssistant(self.config)
             res = False
             try:
                 res = s.start()
             except SystemExit:
                 pass
             except KeyboardInterrupt:
-                print "\nSetup interrupted"
+                print "\nSetup assistant interrupted"
             except:
                 res = False
                 print_exc()
@@ -308,41 +279,41 @@ class Core:
 
         gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
         translation = gettext.translation("pyLoad", self.path("locale"),
-                                          languages=[self.config['general']['language'], "en"], fallback=True)
+                                          languages=[self.config.get("general", "language"), "en"], fallback=True)
         translation.install(True)
 
-        self.debug = self.doDebug or self.config['general']['debug_mode']
-        self.remote &= self.config['remote']['activated']
+        self.debug = self.doDebug or self.config.get("general", "debug")
+        self.remote &= self.config.get("remote", "activated")
 
         pid = self.isAlreadyRunning()
         if pid:
             print _("pyLoad already running with pid %s") % pid
             sys.exit()
 
-        if os.name != "nt" and self.config['general']['renice']:
-            os.system("renice %d %d" % (self.config['general']['renice'], os.getpid()))
+        if os.name != "nt" and self.config.get("general", "renice"):
+            os.system("renice %d %d" % (self.config.get("general", "renice"), os.getpid()))
 
-        if self.config['permission']['change_group']:
+        if self.config.get("permission", "change_group"):
             if os.name != "nt":
                 try:
                     from grp import getgrnam
 
-                    group = getgrnam(self.config['permission']['group'])
+                    group = getgrnam(self.config.get("permission", "group"))
                     os.setgid(group[2])
                 except Exception, e:
                     print _("Failed changing group: %s") % e
 
-        if self.config['permission']['change_user']:
+        if self.config.get("permission", "change_user"):
             if os.name != "nt":
                 try:
                     from pwd import getpwnam
 
-                    user = getpwnam(self.config['permission']['user'])
+                    user = getpwnam(self.config.get("permission", "user"))
                     os.setuid(user[2])
                 except Exception, e:
                     print _("Failed changing user: %s") % e
 
-        self.check_file(self.config['log']['log_folder'], _("folder for logs"), True)
+        self.check_file(self.config.get("log", "log_folder"), _("folder for logs"), True)
 
         if self.debug:
             self.init_logger(logging.DEBUG) # logging level
@@ -353,12 +324,12 @@ class Core:
         self.do_restart = False
         self.shuttedDown = False
 
-        self.log.info(_("Starting") + " pyLoad %s" % CURRENT_VERSION)
+        self.log.info(_("Starting") + " pyLoad %s" % __version__)
         self.log.info(_("Using home directory: %s") % getcwd())
 
         self.writePidFile()
 
-        #@TODO refractor
+        #@TODO: refractor
 
         remote.activated = self.remote
         self.log.debug("Remote activated: %s" % self.remote)
@@ -371,9 +342,9 @@ class Core:
 
         self.captcha = True # checks seems to fail, althoug tesseract is available
 
-        self.check_file(self.config['general']['download_folder'], _("folder for downloads"), True)
+        self.check_file(self.config.get("general", "download_folder"), _("folder for downloads"), True)
 
-        if self.config['ssl']['activated']:
+        if self.config.get("ssl", "activated"):  #@TODO: remove!
             self.check_install("OpenSSL", _("OpenSSL for secure connection"))
 
         self.setupDB()
@@ -388,19 +359,18 @@ class Core:
             self.db.purgeLinks()
 
         self.requestFactory = RequestFactory(self)
-        __builtin__.pyreq = self.requestFactory
 
         self.lastClientConnected = 0
 
         # later imported because they would trigger api import, and remote value not set correctly
-        from pyload import Api
+        from pyload import api as API
         from pyload.manager.AddonManager import AddonManager
         from pyload.manager.ThreadManager import ThreadManager
 
-        if Api.activated != self.remote:
+        if API.activated != self.remote:
             self.log.warning("Import error: API remote status not correct.")
 
-        self.api = Api.Api(self)
+        self.api = API.Api(self)
 
         self.scheduler = Scheduler(self)
 
@@ -423,7 +393,7 @@ class Core:
         if web:
             self.init_webserver()
 
-        spaceLeft = freeSpace(self.config['general']['download_folder'])
+        spaceLeft = freeSpace(self.config.get("general", "download_folder"))
 
         self.log.info(_("Free space: %s") % formatSize(spaceLeft))
 
@@ -467,7 +437,7 @@ class Core:
                 self.shutdown()
                 self.log.info(_("pyLoad quits"))
                 self.removeLogger()
-                _exit(0) #@TODO thrift blocks shutdown
+                _exit(0) #@TODO: thrift blocks shutdown
 
             self.threadManager.work()
             self.scheduler.work()
@@ -480,9 +450,8 @@ class Core:
         self.db.manager = self.files #ugly?
 
     def init_webserver(self):
-        if self.config['webinterface']['activated']:
-            self.webserver = WebServer(self)
-            self.webserver.start()
+        self.webserver = WebServer(self)
+        self.webserver.start()
 
     def init_logger(self, level):
         datefmt = "%Y-%m-%d %H:%M:%S"
@@ -495,16 +464,16 @@ class Core:
         console_frm = fh_frm  #: default formatter don't use colors
 
         # Load file handler formatter
-        if self.config['log']['file_log']:
-            log_folder = self.config['log']['log_folder']
+        if self.config.get("log", "file_log"):
+            log_folder = self.config.get("log", "log_folder")
 
             if not exists(log_folder):
                 makedirs(log_folder, 0700)
 
-            if self.config['log']['log_rotate']:
+            if self.config.get("log", "log_rotate"):
                 file_handler = logging.handlers.RotatingFileHandler(join(log_folder, 'log.txt'),
-                                                                    maxBytes=self.config['log']['log_size'] * 1024,
-                                                                    backupCount=int(self.config['log']['log_count']),
+                                                                    maxBytes=self.config.get("log", "log_size") * 1024,
+                                                                    backupCount=int(self.config.get("log", "log_count")),
                                                                     encoding="utf8")
             else:
                 file_handler = logging.FileHandler(join(log_folder, 'log.txt'), encoding="utf8")
@@ -522,7 +491,7 @@ class Core:
         self.log = logging.getLogger("log")
 
         # Colored console formatter
-        if not self.config['log']['console_color']:
+        if not self.config.get("general", "color_console"):
             return
 
         if os.name == "nt":
@@ -539,7 +508,7 @@ class Core:
         except ImportError:
             self.log.error("Fail setting color log, error importing colorlog")
         else:
-            if self.config['log']['color_mode'] == "label":
+            if self.config.get("general", "color_mode") == "label":
                 cfmt = "%(asctime)s %(log_color)s%(bold)s%(white)s %(levelname)-8s %(reset)s %(message)s"
                 clr = {'DEBUG': "bg_cyan",
                        'INFO': "bg_green",
@@ -561,7 +530,7 @@ class Core:
             h.close()
 
     def check_install(self, check_name, legend, python=True, essential=False):
-        """check wether needed tools are installed"""
+        """ check wether needed tools are installed """
         try:
             if python:
                 find_module(check_name)
@@ -578,7 +547,7 @@ class Core:
             return False
 
     def check_file(self, check_names, description="", folder=False, empty=True, essential=False, quiet=False):
-        """check wether needed files exists"""
+        """ check wether needed files exists """
         tmp_names = []
         if not type(check_names) == list:
             tmp_names.append(check_names)
@@ -633,7 +602,7 @@ class Core:
     def shutdown(self):
         self.log.info(_("shutting down..."))
         try:
-            if self.config['webinterface']['activated'] and hasattr(self, "webserver"):
+            if hasattr(self, "webserver"):
                 self.webserver.quit()
 
             for thread in self.threadManager.threads:
@@ -698,11 +667,12 @@ def deamon():
 
     pyload_core = Core()
     pyload_core.start()
+    return pyload_core
 
 
 def main():
     if "--daemon" in sys.argv:
-            deamon()
+        pyload_core = deamon()
     else:
         pyload_core = Core()
         try:
@@ -712,3 +682,5 @@ def main():
             pyload_core.log.info(_("killed pyLoad from Terminal"))
             pyload_core.removeLogger()
             _exit(1)
+
+    __builtin__.pycore = pyload_core

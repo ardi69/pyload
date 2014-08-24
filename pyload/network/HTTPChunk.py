@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
-
 from os import remove, stat, fsync
 from os.path import exists
 from time import sleep
@@ -210,7 +193,7 @@ class HTTPChunk(HTTPRequest):
 
     def writeHeader(self, buf):
         self.header += buf
-        #@TODO forward headers?, this is possibly unneeeded, when we just parse valid 200 headers
+        #@TODO: forward headers?, this is possibly unneeeded, when we just parse valid 200 headers
         # as first chunk, we will parse the headers
         if not self.range and self.header.endswith("\r\n\r\n"):
             self.parseHeader()
@@ -256,7 +239,7 @@ class HTTPChunk(HTTPRequest):
 
 
     def parseHeader(self):
-        """parse data from recieved header"""
+        """ parse data from recieved header """
         for orgline in self.decodeResponse(self.header).splitlines():
             line = orgline.strip().lower()
             if line.startswith("accept-ranges") and "bytes" in line:
@@ -274,12 +257,12 @@ class HTTPChunk(HTTPRequest):
         self.headerParsed = True
 
     def stop(self):
-        """The download will not proceed after next call of writeBody"""
+        """ The download will not proceed after next call of writeBody """
         self.range = [0, 0]
         self.size = 0
 
     def resetRange(self):
-        """ Reset the range, so the download will load all data available  """
+        """ Reset the range, so the download will load all data available """
         self.range = None
 
     def setRange(self, range):
@@ -287,7 +270,7 @@ class HTTPChunk(HTTPRequest):
         self.size = range[1] - range[0]
 
     def flushFile(self):
-        """  flush and close file """
+        """ flush and close file """
         self.fp.flush()
         fsync(self.fp.fileno()) #make sure everything was written to disk
         self.fp.close() #needs to be closed, or merging chunks will fail

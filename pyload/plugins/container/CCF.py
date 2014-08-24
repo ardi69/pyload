@@ -33,7 +33,7 @@ class CCF(Container):
             'upload': open(infile, "rb")}
         tempdlc_content = opener.open('http://service.jdownloader.net/dlcrypt/getDLC.php', params).read()
 
-        download_folder = self.config['general']['download_folder']
+        download_folder = self.config.get("general", "download_folder")
 
         tempdlc_name = safe_join(download_folder, "tmp_%s.dlc" % pyfile.name)
         tempdlc = open(tempdlc_name, "w")

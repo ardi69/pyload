@@ -112,7 +112,7 @@ class Xdcc(Hoster):
                     sock.send("PRIVMSG %s :xdcc send #%s\r\n" % (bot, pack))
 
             else:
-                if (dl_time + self.timeout) < time.time():  # todo: add in config
+                if (dl_time + self.timeout) < time.time():  #@TODO: add in config
                     sock.send("QUIT :byebye\r\n")
                     sock.close()
                     self.fail("XDCC Bot did not answer")
@@ -186,7 +186,7 @@ class Xdcc(Hoster):
 
         self.pyfile.name = packname
 
-        download_folder = self.config['general']['download_folder']
+        download_folder = self.config.get("general", "download_folder")
         filename = safe_join(download_folder, packname)
 
         self.logInfo("XDCC: Downloading %s from %s:%d" % (packname, ip, port))

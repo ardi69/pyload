@@ -26,7 +26,7 @@ class BasePlugin(Hoster):
         self.resumeDownload = True
 
     def process(self, pyfile):
-        """main function"""
+        """ main function """
 
         #debug part, for api exerciser
         if pyfile.url.startswith("DEBUG_API"):
@@ -41,7 +41,7 @@ class BasePlugin(Hoster):
         # self.decryptCaptcha("http://localhost:9000/captcha")
         #
         # if pyfile.url == "79":
-        #     self.core.api.addPackage("test", [str(i) for i in xrange(80)], 1)
+        #     self.api.addPackage("test", [str(i) for i in xrange(80)], 1)
         #
         # return
         if pyfile.url.startswith("http"):

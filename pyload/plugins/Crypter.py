@@ -30,7 +30,7 @@ class Crypter(Plugin):
 
 
     def preprocessing(self, thread):
-        """prepare"""
+        """ prepare """
         self.setup()
         self.thread = thread
 

@@ -52,24 +52,24 @@ class DownloadScheduler(Addon):
                 self.setDownloadSpeed(last[3])
 
                 next_time = (((24 + next[0] - now[0]) * 60 + next[1] - now[1]) * 60 + next[2] - now[2]) % 86400
-                self.core.scheduler.removeJob(self.cb)
-                self.cb = self.core.scheduler.addJob(next_time, self.updateSchedule, threaded=False)
+                self.scheduler.removeJob(self.cb)
+                self.cb = self.scheduler.addJob(next_time, self.updateSchedule, threaded=False)
 
     def setDownloadSpeed(self, speed):
         if speed == 0:
             abort = self.getConfig("abort")
             self.logInfo("Stopping download server. (Running downloads will %sbe aborted.)" % ('' if abort else 'not '))
-            self.core.api.pauseServer()
+            self.api.pauseServer()
             if abort:
-                self.core.api.stopAllDownloads()
+                self.api.stopAllDownloads()
         else:
-            self.core.api.unpauseServer()
+            self.api.unpauseServer()
 
             if speed > 0:
                 self.logInfo("Setting download speed to %d kB/s" % speed)
-                self.core.api.setConfigValue("download", "limit_speed", 1)
-                self.core.api.setConfigValue("download", "max_speed", speed)
+                self.api.setConfigValue("download", "limit_speed", 1)
+                self.api.setConfigValue("download", "max_speed", speed)
             else:
                 self.logInfo("Setting download speed to FULL")
-                self.core.api.setConfigValue("download", "limit_speed", 0)
-                self.core.api.setConfigValue("download", "max_speed", -1)
+                self.api.setConfigValue("download", "limit_speed", 0)
+                self.api.setConfigValue("download", "max_speed", -1)

@@ -87,7 +87,7 @@ class XMPPInterface(IRCInterface, JabberClient):
             self.logError("pyLoad XMPP: %s" % str(ex))
 
     def stream_state_changed(self, state, arg):
-        """This one is called when the state of stream connecting the component
+        """ This one is called when the state of stream connecting the component
         to a server changes. This will usually be used to let the user
         know what is going on."""
         self.logDebug("pyLoad XMPP: *** State changed: %s %r ***" % (state, arg))
@@ -102,14 +102,14 @@ class XMPPInterface(IRCInterface, JabberClient):
         self.logDebug("pyLoad XMPP: Stream Error: %s" % err)
 
     def get_message_handlers(self):
-        """Return list of (message_type, message_handler) tuples.
+        """ Return list of (message_type, message_handler) tuples.
 
         The handlers returned will be called when matching message is received
         in a client session."""
         return [("normal", self.message)]
 
     def message(self, stanza):
-        """Message handler for the component."""
+        """ Message handler for the component. """
         subject = stanza.get_subject()
         body = stanza.get_body()
         t = stanza.get_type()
@@ -169,7 +169,7 @@ class XMPPInterface(IRCInterface, JabberClient):
         return self.announce(msg)
 
     def announce(self, message):
-        """ send message to all owners"""
+        """ send message to all owners """
         for user in self.getConfig("owners").split(";"):
             self.logDebug("pyLoad XMPP: Send message to %s" % user)
 
@@ -195,7 +195,7 @@ class XMPPInterface(IRCInterface, JabberClient):
 
 
 class VersionHandler:
-    """Provides handler for a version query.
+    """ Provides handler for a version query.
 
     This class will answer version query and announce 'jabber:iq:version' namespace
     in the client's disco#info results."""
@@ -203,25 +203,25 @@ class VersionHandler:
     implements(IIqHandlersProvider, IFeaturesProvider)
 
     def __init__(self, client):
-        """Just remember who created this."""
+        """ Just remember who created this. """
         self.client = client
 
     def get_features(self):
-        """Return namespace which should the client include in its reply to a
+        """ Return namespace which should the client include in its reply to a
         disco#info query."""
         return ["jabber:iq:version"]
 
     def get_iq_get_handlers(self):
-        """Return list of tuples (element_name, namespace, handler) describing
+        """ Return list of tuples (element_name, namespace, handler) describing
         handlers of <iq type='get'/> stanzas"""
         return [("query", "jabber:iq:version", self.get_version)]
 
     def get_iq_set_handlers(self):
-        """Return empty list, as this class provides no <iq type='set'/> stanza handler."""
+        """ Return empty list, as this class provides no <iq type='set'/> stanza handler. """
         return []
 
     def get_version(self, iq):
-        """Handler for jabber:iq:version queries.
+        """ Handler for jabber:iq:version queries.
 
         jabber:iq:version queries are not supported directly by PyXMPP, so the
         XML node is accessed directly through the libxml2 API.  This should be

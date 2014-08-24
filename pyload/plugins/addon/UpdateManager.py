@@ -239,7 +239,7 @@ class UpdateManager(Addon):
 
     @Expose
     def removePlugins(self, type_plugins):
-        """ delete plugins from disk"""
+        """ delete plugins from disk """
 
         if not type_plugins:
             return None
@@ -253,7 +253,7 @@ class UpdateManager(Addon):
             py_file = name + ".py"
             pyc_file = name + ".pyc"
 
-            for root in ("userplugins", join(pypath, "pyload", "plugins")):
+            for root in ("userplugins", join(projectdir, "plugins")):
                 py_filename = safe_join(root, type, py_file)
                 pyc_filename = safe_join(root, type, pyc_file)
 

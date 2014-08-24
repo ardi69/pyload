@@ -56,8 +56,12 @@ class Base:
         self.core = core
         #: logging instance
         self.log = core.log
-        #: core config
+        #: Config instance
         self.config = core.config
+        #: Api instance
+        self.api = core.api
+        #: Scheduler instance
+        self.scheduler = core.scheduler
 
     #log functions
     def logInfo(self, *args):
@@ -127,6 +131,8 @@ class Plugin(Base):
     Base plugin for hoster/crypter.
     Overwrite `process` / `decrypt` in your subclassed plugin.
     """
+    from pyload import __license__ as __pyload_license__
+
     __name__ = "Plugin"
     __type__ = "hoster"
     __version__ = "0.5"
@@ -137,6 +143,7 @@ class Plugin(Base):
     __description__ = """Base plugin"""
     __author_name__ = ("RaNaN", "spoob", "mkaay")
     __author_mail__ = ("RaNaN@pyload.org", "spoob@pyload.org", "mkaay@mkaay.de")
+    __license__ = __pyload_license__
 
 
     def __init__(self, pyfile):
@@ -206,26 +213,23 @@ class Plugin(Base):
         #: some plugins store html code here
         self.html = None
 
-        #: quick caller for API
-        self.api = self.core.api
-
         self.init()
 
     def getChunkCount(self):
         if self.chunkLimit <= 0:
-            return self.config['download']['chunks']
+            return self.config.get("download", "chunks")
         else:
-            return min(self.config['download']['chunks'], self.chunkLimit)
+            return min(self.config.get("download", "chunks"), self.chunkLimit)
 
     def __call__(self):
         return self.__name__
 
     def init(self):
-        """initialize the plugin (in addition to `__init__`)"""
+        """ initialize the plugin (in addition to `__init__`) """
         pass
 
     def setup(self):
-        """ setup for enviroment and other things, called before downloading (possibly more than one time)"""
+        """ setup for enviroment and other things, called before downloading (possibly more than one time) """
         pass
 
     def preprocessing(self, thread):
@@ -245,7 +249,7 @@ class Plugin(Base):
 
 
     def process(self, pyfile):
-        """the 'main' method of every plugin, you **have to** overwrite it"""
+        """ the 'main' method of every plugin, you **have to** overwrite it """
         raise NotImplementedError
 
     def resetAccount(self):
@@ -263,13 +267,13 @@ class Plugin(Base):
         10 - not implemented
         20 - unknown error
         """
-        #@TODO checksum check addon
+        #@TODO: checksum check addon
 
         return True, 10
 
 
     def setWait(self, seconds, reconnect=None):
-        """Set a specific wait time later used with `wait`
+        """ Set a specific wait time later used with `wait`
 
         :param seconds: wait time in seconds
         :param reconnect: True if a reconnect would avoid wait time
@@ -303,11 +307,11 @@ class Plugin(Base):
         self.waiting = False
         self.pyfile.setStatus("starting")
 
-    def parseError(self, reason):
+    def error(self, reason=""):
         """ report bad url parsing reason, not fail """
         raise ParseError(reason)
 
-    def fail(self, reason):
+    def fail(self, reason=""):
         """ fail and give reason """
         raise Fail(reason)
 
@@ -320,7 +324,7 @@ class Plugin(Base):
         raise Fail("temp. offline")
 
     def retry(self, max_tries=3, wait_time=1, reason=""):
-        """Retries and begin again from the beginning
+        """ Retries and begin again from the beginning
 
         :param max_tries: number of maximum retries
         :param wait_time: time to wait in seconds
@@ -417,7 +421,7 @@ class Plugin(Base):
 
 
     def load(self, url, get={}, post={}, ref=True, cookies=True, just_header=False, decode=False):
-        """Load content at url and returns it
+        """ Load content at url and returns it
 
         :param url:
         :param get:
@@ -480,7 +484,7 @@ class Plugin(Base):
         return res
 
     def download(self, url, get={}, post={}, ref=True, cookies=True, disposition=False):
-        """Downloads the content at url to download folder
+        """ Downloads the content at url to download folder
 
         :param url:
         :param get:
@@ -496,17 +500,17 @@ class Plugin(Base):
 
         self.pyfile.setStatus("downloading")
 
-        download_folder = self.config['general']['download_folder']
+        download_folder = self.config.get("general", "download_folder")
 
         location = safe_join(download_folder, self.pyfile.package().folder)
 
         if not exists(location):
-            makedirs(location, int(self.config['permission']['folder'], 8))
+            makedirs(location, int(self.config.get("permission", "folder"), 8))
 
-            if self.config['permission']['change_dl'] and os.name != "nt":
+            if self.config.get("permission", "change_dl") and os.name != "nt":
                 try:
-                    uid = getpwnam(self.config['permission']['user'])[2]
-                    gid = getgrnam(self.config['permission']['group'])[2]
+                    uid = getpwnam(self.config.get("permission", "user"))[2]
+                    gid = getgrnam(self.config.get("permission", "group"))[2]
 
                     chown(location, uid, gid)
                 except Exception, e:
@@ -534,13 +538,13 @@ class Plugin(Base):
 
         fs_filename = fs_encode(filename)
 
-        if self.config['permission']['change_file']:
-            chmod(fs_filename, int(self.config['permission']['file'], 8))
+        if self.config.get("permission", "change_file"):
+            chmod(fs_filename, int(self.config.get("permission", "file"), 8))
 
-        if self.config['permission']['change_dl'] and os.name != "nt":
+        if self.config.get("permission", "change_dl") and os.name != "nt":
             try:
-                uid = getpwnam(self.config['permission']['user'])[2]
-                gid = getgrnam(self.config['permission']['group'])[2]
+                uid = getpwnam(self.config.get("permission", "user"))[2]
+                gid = getgrnam(self.config.get("permission", "group"))[2]
 
                 chown(fs_filename, uid, gid)
             except Exception, e:
@@ -592,7 +596,7 @@ class Plugin(Base):
 
 
     def getPassword(self):
-        """ get the password the user provided in the package"""
+        """ get the password the user provided in the package """
         password = self.pyfile.package().password
         return password if password else ""
 
@@ -614,10 +618,10 @@ class Plugin(Base):
                 5, 7) and starting: #a download is waiting/starting and was appenrently started before
                     raise SkipDownload(pyfile.pluginname)
 
-        download_folder = self.config['general']['download_folder']
+        download_folder = self.config.get("general", "download_folder")
         location = safe_join(download_folder, pack.folder, self.pyfile.name)
 
-        if starting and self.config['download']['skip_existing'] and exists(location):
+        if starting and self.config.get("download", "skip_existing") and exists(location):
             size = os.stat(location).st_size
             if size >= self.pyfile.size:
                 raise SkipDownload("File exists.")

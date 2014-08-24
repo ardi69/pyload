@@ -1,22 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
-
 from os import remove, fsync
 from os.path import dirname
 from time import sleep, time
@@ -244,7 +227,7 @@ class HTTPDownload:
                 if not num_q: # no more infos to get
 
                     # check if init is not finished so we reset download connections
-                    # note that other chunks are closed and downloaded with init too
+                    #@NOTE: Other chunks are closed and downloaded with init too
                     if failed and init not in failed and init.c not in chunksDone:
                         self.log.error(_("Download chunks failed, fallback to single connection | %s" % (str(ex))))
 

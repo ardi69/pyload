@@ -61,7 +61,7 @@ class Checksum(Addon):
 
 
     def activate(self):
-        if not self.config['general']['checksum']:
+        if not self.config.get("general", "checksum"):
             self.logInfo("Checksum validation is disabled in general configuration")
 
     def setup(self):
@@ -90,7 +90,7 @@ class Checksum(Addon):
             self.checkFailed(pyfile, None, "No file downloaded")
 
         local_file = fs_encode(pyfile.plugin.lastDownload)
-        #download_folder = self.config['general']['download_folder']
+        #download_folder = self.config.get("general", "download_folder")
         #local_file = fs_encode(safe_join(download_folder, pyfile.package().folder, pyfile.name))
 
         if not isfile(local_file):
@@ -106,7 +106,7 @@ class Checksum(Addon):
             del data['size']
 
         # validate checksum
-        if data and self.config['general']['checksum']:
+        if data and self.config.get("general", "checksum"):
             if "checksum" in data:
                 data['md5'] = data['checksum']
 
@@ -143,7 +143,7 @@ class Checksum(Addon):
         pyfile.plugin.fail(reason=msg)
 
     def packageFinished(self, pypack):
-        download_folder = safe_join(self.config['general']['download_folder'], pypack.folder, "")
+        download_folder = safe_join(self.config.get("general", "download_folder"), pypack.folder, "")
 
         for link in pypack.getChildren().itervalues():
             file_type = splitext(link['name'])[1][1:].lower()

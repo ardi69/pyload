@@ -167,7 +167,7 @@ class RapidshareCom(Hoster):
         self.api_data['mirror'] = "http://rs%(serverid)s%(shorthost)s.rapidshare.com/files/%(fileid)s/%(filename)s" % self.api_data
 
     def freeWait(self):
-        """downloads html with the important information
+        """ downloads html with the important information
         """
         self.no_download = True
 

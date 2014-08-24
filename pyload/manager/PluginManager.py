@@ -36,7 +36,7 @@ class PluginManager:
 
 
     def createIndex(self):
-        """create information for all plugins available"""
+        """ create information for all plugins available """
 
         sys.path.append(pypath)
 
@@ -77,7 +77,7 @@ class PluginManager:
                 f.close()
 
         else:
-            pfolder = join(pypath, "pyload", "plugins", folder)
+            pfolder = join(projectdir, "plugins", folder)
 
         for f in listdir(pfolder):
             if (isfile(join(pfolder, f)) and f.endswith(".py") or f.endswith("_25.pyc") or f.endswith(
@@ -182,7 +182,7 @@ class PluginManager:
 
 
     def parseUrls(self, urls):
-        """parse plugins for given list of urls"""
+        """ parse plugins for given list of urls """
 
         last = None
         res = [] # tupels of (url, plugin)
@@ -216,7 +216,7 @@ class PluginManager:
         return None, None
 
     def getPlugin(self, name, original=False):
-        """return plugin module from hoster|decrypter|container"""
+        """ return plugin module from hoster|decrypter|container """
         plugin, type = self.findPlugin(name)
 
         if not plugin:
@@ -229,7 +229,7 @@ class PluginManager:
         return self.loadModule(type, name)
 
     def getPluginName(self, name):
-        """ used to obtain new name if other plugin was injected"""
+        """ used to obtain new name if other plugin was injected """
         plugin, type = self.findPlugin(name)
 
         if "new_name" in plugin:
@@ -259,12 +259,12 @@ class PluginManager:
                     print_exc()
 
     def loadClass(self, type, name):
-        """Returns the class of a plugin with the same name"""
+        """ Returns the class of a plugin with the same name """
         module = self.loadModule(type, name)
         return getattr(module, name) if module else None
 
     def getAccountPlugins(self):
-        """return list of account plugin names"""
+        """ return list of account plugin names """
         return self.accountPlugins.keys()
 
     def find_module(self, fullname, path=None):
