@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os.path import join
+from os import path
 from traceback import print_exc
 from shutil import copyfileobj
 
@@ -163,7 +163,7 @@ def add_package():
         if not name or name == "New Package":
             name = f.name
 
-        fpath = join(API.getConfigValue("general", "download_folder"), "tmp_" + f.filename)
+        fpath = path.join(API.getConfigValue("general", "download_folder"), "tmp_" + f.filename)
         destination = open(fpath, 'wb')
         copyfileobj(f.file, destination)
         destination.close()

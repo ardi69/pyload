@@ -6,8 +6,7 @@ import hashlib
 import re
 import zlib
 
-from os import remove
-from os.path import getsize, isfile, splitext
+from os import path, remove
 
 from pyload.plugins.Addon import Addon
 from pyload.utils import safe_join, fs_encode
@@ -93,13 +92,13 @@ class Checksum(Addon):
         #download_folder = self.config.get("general", "download_folder")
         #local_file = fs_encode(safe_join(download_folder, pyfile.package().folder, pyfile.name))
 
-        if not isfile(local_file):
+        if not path.isfile(local_file):
             self.checkFailed(pyfile, None, "File does not exist")
 
             # validate file size
         if "size" in data:
             api_size = int(data['size'])
-            file_size = getsize(local_file)
+            file_size = path.getsize(local_file)
             if api_size != file_size:
                 self.logWarning("File %s has incorrect size: %d B (%d expected)" % (pyfile.name, file_size, api_size))
                 self.checkFailed(pyfile, local_file, "Incorrect file size")
@@ -146,14 +145,14 @@ class Checksum(Addon):
         download_folder = safe_join(self.config.get("general", "download_folder"), pypack.folder, "")
 
         for link in pypack.getChildren().itervalues():
-            file_type = splitext(link['name'])[1][1:].lower()
+            file_type = path.splitext(link['name'])[1][1:].lower()
             #self.logDebug(link, file_type)
 
             if file_type not in self.formats:
                 continue
 
             hash_file = fs_encode(safe_join(download_folder, link['name']))
-            if not isfile(hash_file):
+            if not path.isfile(hash_file):
                 self.logWarning("File not found: %s" % link['name'])
                 continue
 

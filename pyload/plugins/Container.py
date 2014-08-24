@@ -2,8 +2,7 @@
 
 import re
 
-from os import remove
-from os.path import basename, exists
+from os import path, remove
 
 from pyload.plugins.Crypter import Crypter
 from pyload.utils import safe_join
@@ -48,9 +47,9 @@ class Container(Crypter):
             f.close()
 
         else:
-            self.pyfile.name = basename(self.pyfile.url)
-            if not exists(self.pyfile.url):
-                if exists(safe_join(pypath, self.pyfile.url)):
+            self.pyfile.name = path.basename(self.pyfile.url)
+            if not path.exists(self.pyfile.url):
+                if path.exists(safe_join(pypath, self.pyfile.url)):
                     self.pyfile.url = safe_join(pypath, self.pyfile.url)
                 else:
                     self.fail(_("File not exists."))

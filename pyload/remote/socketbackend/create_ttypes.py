@@ -3,7 +3,7 @@
 import inspect
 import sys
 
-from os.path import abspath, join
+from os import path
 
 from pyload.remote.thriftbackend.thriftgen.pyload import ttypes
 from pyload.remote.thriftbackend.thriftgen.pyload.Pyload import Iface
@@ -28,7 +28,7 @@ def main():
             enums.append(klass)
 
 
-    f = open(join(abspath(__file__), "ttypes.py"), "wb")
+    f = open(path.join(path.abspath(__file__), "ttypes.py"), "wb")
 
     f.write(
         """# -*- coding: utf-8 -*-

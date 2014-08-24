@@ -2,7 +2,7 @@
 
 import sys
 from socket import error
-from os.path import join
+from os import path
 from traceback import print_exc
 
 from thrift.transport import TTransport

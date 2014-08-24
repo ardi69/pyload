@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from threading import Thread
-from threading import Event
-from os import remove
-from os.path import exists
+from os import path, remove
 from shutil import move
+from threading import Event, Thread
 
 from Queue import Queue
 from traceback import print_exc
@@ -68,11 +66,10 @@ class DatabaseJob:
 #        self.frame = inspect.currentframe()
 
     def __repr__(self):
-        from os.path import basename
         frame = self.frame.f_back
         output = ""
         for _ in xrange(5):
-            output += "\t%s:%s, %s\n" % (basename(frame.f_code.co_filename), frame.f_lineno, frame.f_code.co_name)
+            output += "\t%s:%s, %s\n" % (path.basename(frame.f_code.co_filename), frame.f_lineno, frame.f_code.co_name)
             frame = frame.f_back
         del frame
         del self.frame

@@ -4,15 +4,12 @@ import __builtin__
 import os
 import sys
 
-from os.path import exists, isfile, join
-
-
 from getopt import getopt, GetoptError
 from gettext import gettext
 from imp import find_module
 import logging
 import logging.handlers
-from os import _exit, execl, getcwd, makedirs, remove, sep, walk, chdir, close
+from os import _exit, execl, getcwd, makedirs, path, remove, sep, walk, chdir, close
 import signal
 import subprocess
 from time import time, sleep
@@ -38,6 +35,7 @@ from codecs import getwriter
 
 enc = get_console_encoding(sys.stdout.encoding)
 sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
+
 
 # TODO List
 # - configurable auth system ldap/mysql
@@ -120,6 +118,7 @@ class Core:
                 self.print_help()
                 sys.exit()
 
+
     def print_help(self):
         print
         print "pyLoad v%s     2008-2014 the pyLoad Team" % __version__
@@ -147,6 +146,7 @@ class Core:
         print "  -h, --help", " " * 13, "Display this help screen"
         print
 
+
     def toggle_pause(self):
         if self.threadManager.pause:
             self.threadManager.pause = False
@@ -155,10 +155,12 @@ class Core:
             self.threadManager.pause = True
             return True
 
+
     def quit(self, a, b):
         self.shutdown()
         self.log.info(_("Received Quit signal"))
         _exit(1)
+
 
     def writePidFile(self):
         self.deletePidFile()
@@ -167,14 +169,16 @@ class Core:
         f.write(str(pid))
         f.close()
 
+
     def deletePidFile(self):
         if self.checkPidFile():
             self.log.debug("Deleting old pidfile %s" % self.pidfile)
             os.remove(self.pidfile)
 
+
     def checkPidFile(self):
         """ return pid as int or 0 """
-        if isfile(self.pidfile):
+        if path.isfile(self.pidfile):
             f = open(self.pidfile, "rb")
             pid = f.read().strip()
             f.close()
@@ -183,6 +187,7 @@ class Core:
                 return pid
 
         return 0
+
 
     def isAlreadyRunning(self):
         pid = self.checkPidFile()
@@ -195,6 +200,7 @@ class Core:
                 return 0
             else:
                 return pid
+
 
     def quitInstance(self):
         if os.name == "nt":
@@ -212,10 +218,10 @@ class Core:
             t = time()
             print "waiting for pyLoad to quit"
 
-            while exists(self.pidfile) and t + 10 > time():
+            while path.exists(self.pidfile) and t + 10 > time():
                 sleep(0.25)
 
-            if not exists(self.pidfile):
+            if not path.exists(self.pidfile):
                 print "pyLoad successfully stopped"
             else:
                 os.kill(pid, 9) #SIGKILL
@@ -235,15 +241,16 @@ class Core:
                 if "_25" in f or "_26" in f or "_27" in f:
                     continue
 
-                print join(path, f)
-                remove(join(path, f))
+                print path.join(path, f)
+                remove(path.join(path, f))
+
 
     def start(self, rpc=True, web=True):
         """ starts the fun :D """
 
         self.version = __version__
 
-        if not exists("pyload.conf"):
+        if not path.exists("pyload.conf"):
             from pyload.config.Setup import SetupAssistant
 
             print
@@ -277,7 +284,7 @@ class Core:
 
         self.config = ConfigParser()
 
-        gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
+        gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
         translation = gettext.translation("pyLoad", self.path("locale"),
                                           languages=[self.config.get("general", "language"), "en"], fallback=True)
         translation.install(True)
@@ -399,16 +406,16 @@ class Core:
 
         self.config.save() #save so config files gets filled
 
-        link_file = join(pypath, "links.txt")
+        link_file = path.join(pypath, "links.txt")
 
-        if exists(link_file):
+        if path.exists(link_file):
             f = open(link_file, "rb")
             if f.read().strip():
                 self.api.addPackage("links.txt", [link_file], 1)
             f.close()
 
         link_file = "links.txt"
-        if exists(link_file):
+        if path.exists(link_file):
             f = open(link_file, "rb")
             if f.read().strip():
                 self.api.addPackage("links.txt", [link_file], 1)
@@ -442,6 +449,7 @@ class Core:
             self.threadManager.work()
             self.scheduler.work()
 
+
     def setupDB(self):
         self.db = DatabaseBackend(self) # the backend
         self.db.setup()
@@ -449,9 +457,11 @@ class Core:
         self.files = FileHandler(self)
         self.db.manager = self.files #ugly?
 
+
     def init_webserver(self):
         self.webserver = WebServer(self)
         self.webserver.start()
+
 
     def init_logger(self, level):
         datefmt = "%Y-%m-%d %H:%M:%S"
@@ -467,16 +477,16 @@ class Core:
         if self.config.get("log", "file_log"):
             log_folder = self.config.get("log", "log_folder")
 
-            if not exists(log_folder):
+            if not path.exists(log_folder):
                 makedirs(log_folder, 0700)
 
             if self.config.get("log", "log_rotate"):
-                file_handler = logging.handlers.RotatingFileHandler(join(log_folder, 'log.txt'),
+                file_handler = logging.handlers.RotatingFileHandler(path.join(log_folder, 'log.txt'),
                                                                     maxBytes=self.config.get("log", "log_size") * 1024,
                                                                     backupCount=int(self.config.get("log", "log_count")),
                                                                     encoding="utf8")
             else:
-                file_handler = logging.FileHandler(join(log_folder, 'log.txt'), encoding="utf8")
+                file_handler = logging.FileHandler(path.join(log_folder, 'log.txt'), encoding="utf8")
 
             file_handler.setFormatter(fh_frm)
             self.log.addHandler(file_handler)
@@ -524,10 +534,12 @@ class Core:
 
             console.setFormatter(ColoredFormatter(cfmt, datefmt, clr))
 
+
     def removeLogger(self):
         for h in list(self.log.handlers):
             self.log.removeHandler(h)
             h.close()
+
 
     def check_install(self, check_name, legend, python=True, essential=False):
         """ check wether needed tools are installed """
@@ -546,6 +558,7 @@ class Core:
 
             return False
 
+
     def check_file(self, check_names, description="", folder=False, empty=True, essential=False, quiet=False):
         """ check wether needed files exists """
         tmp_names = []
@@ -556,7 +569,7 @@ class Core:
         file_created = True
         file_exists = True
         for tmp_name in tmp_names:
-            if not exists(tmp_name):
+            if not path.exists(tmp_name):
                 file_exists = False
                 if empty:
                     try:
@@ -583,8 +596,10 @@ class Core:
                     if essential:
                         sys.exit()
 
+
     def isClientConnected(self):
         return (self.lastClientConnected + 30) > time()
+
 
     def restart(self):
         self.shutdown()
@@ -598,6 +613,7 @@ class Core:
 
         execl(sys.executable, sys.executable, *sys.argv)
         _exit(0)
+
 
     def shutdown(self):
         self.log.info(_("shutting down..."))
@@ -627,10 +643,10 @@ class Core:
 
 
     def path(self, *args):
-        return join(pypath, *args)
+        return path.join(pypath, *args)
 
 
-def deamon():
+def daemonize():
     try:
         pid = os.fork()
         if pid > 0:
@@ -647,7 +663,7 @@ def deamon():
     try:
         pid = os.fork()
         if pid > 0:
-        # sys.exit from second parent, print eventual PID before
+            # sys.exit from second parent, print eventual PID before
             print "Daemon PID %d" % pid
             sys.exit(0)
     except OSError, e:
@@ -658,11 +674,11 @@ def deamon():
     for fd in xrange(0, 3):
         try:
             os.close(fd)
-        except OSError:    # ERROR, fd wasn't open to begin with (ignored)
+        except OSError:  #: ERROR, fd wasn't open to begin with (ignored)
             pass
 
-    os.open(os.devnull, os.O_RDWR)    # standard input (0)
-    os.dup2(0, 1)            # standard output (1)
+    os.open(os.devnull, os.O_RDWR)  #: standard input (0)
+    os.dup2(0, 1)  #: standard output (1)
     os.dup2(0, 2)
 
     pyload_core = Core()

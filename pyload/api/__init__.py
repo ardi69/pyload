@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from base64 import standard_b64encode
-from os.path import join
+from os import path
 from time import time
 import re
 
@@ -246,7 +246,7 @@ class Api(Iface):
         :param offset: line offset
         :return: List of log entries
         """
-        filename = join(self.config.get("log", "log_folder"), 'log.txt')
+        filename = path.join(self.config.get("log", "log_folder"), 'log.txt')
         try:
             fh = open(filename, "r")
             lines = fh.readlines()
@@ -391,7 +391,7 @@ class Api(Iface):
         :param data: file content
         :return: online check
         """
-        th = open(join(self.config.get("general", "download_folder"), "tmp_" + container), "wb")
+        th = open(path.join(self.config.get("general", "download_folder"), "tmp_" + container), "wb")
         th.write(str(data))
         th.close()
 
@@ -684,7 +684,7 @@ class Api(Iface):
         :param filename: filename, extension is important so it can correctly decrypted
         :param data: file content
         """
-        th = open(join(self.config.get("general", "download_folder"), "tmp_" + filename), "wb")
+        th = open(path.join(self.config.get("general", "download_folder"), "tmp_" + filename), "wb")
         th.write(str(data))
         th.close()
 

@@ -5,12 +5,9 @@ from __future__ import with_statement
 import os
 import sys
 
-from os.path import basename, exists, join
-
-
 from codecs import getwriter
 from getopt import GetoptError, getopt
-from os import _exit
+from os import _exit, path
 from threading import Thread, Lock
 from time import sleep
 from traceback import print_exc
@@ -301,16 +298,17 @@ class Cli:
 
 
         elif command == "check_container":
-            path = args[0]
-            if not exists(join(owd, path)):
+            filename = path.join(owd, args[0])
+
+            if not path.exists(filename):
                 print _("File does not exists.")
                 return
 
-            f = open(join(owd, path), "rb")
+            f = open(filename, "rb")
             content = f.read()
             f.close()
 
-            rid = self.client.checkOnlineStatusContainer([], basename(f.name), content).rid
+            rid = self.client.checkOnlineStatusContainer([], path.basename(filename), content).rid
             self.printOnlineCheck(self.client, rid)
 
 
@@ -452,7 +450,7 @@ def print_commands():
 
 def writeConfig(opts):
     try:
-        with open(join(homedir, ".pyload-cli"), "w") as cfgfile:
+        with open(path.join(homedir, ".pyload-cli"), "w") as cfgfile:
             cfgfile.write("[cli]")
             for opt in opts:
                 cfgfile.write("%s=%s\n" % (opt, opts[opt]))
@@ -467,18 +465,18 @@ def main():
     except:
         pass
 
-    if (not exists(join(pypath, "locale", config['language']))) or config['language'] == "":
+    if (not path.exists(path.join(pypath, "locale", config['language']))) or config['language'] == "":
         config['language'] = "en"
 
     configFile = ConfigParser()
-    configFile.read(join(homedir, ".pyload-cli"))
+    configFile.read(path.join(homedir, ".pyload-cli"))
 
     if configFile.has_section("cli"):
         for opt in configFile.items("cli"):
             config[opt[0]] = opt[1]  #@TODO: recheck
 
-    gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-    translation = gettext.translation("Cli", join(pypath, "locale"),
+    gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
+    translation = gettext.translation("Cli", path.join(pypath, "locale"),
         languages=[config['language'], "en"], fallback=True)
     translation.install(unicode=True)
 
@@ -503,8 +501,8 @@ def main():
                 config['port'] = params
             elif option in ("-l", "--language"):
                 config['language'] = params
-                gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-                translation = gettext.translation("Cli", join(pypath, "locale"),
+                gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
+                translation = gettext.translation("Cli", path.join(pypath, "locale"),
                     languages=[config['language'], "en"], fallback=True)
                 translation.install(unicode=True)
             elif option in ("-h", "--help"):

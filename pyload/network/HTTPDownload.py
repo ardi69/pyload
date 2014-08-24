@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os import remove, fsync
-from os.path import dirname
+from os import fsync, path, remove
 from time import sleep, time
 from shutil import move
 from logging import getLogger
@@ -99,7 +98,7 @@ class HTTPDownload:
             fo.close()
 
         if self.nameDisposition and self.disposition:
-            self.filename = safe_join(dirname(self.filename), self.nameDisposition)
+            self.filename = safe_join(path.dirname(self.filename), self.nameDisposition)
 
         move(init, fs_encode(self.filename))
         self.info.remove() #remove info file

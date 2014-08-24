@@ -4,7 +4,7 @@ import os
 import re
 
 from glob import glob
-from os.path import join
+from os import path
 from string import digits
 from subprocess import Popen, PIPE
 
@@ -35,7 +35,7 @@ class UnRar(AbtractExtractor):
     @staticmethod
     def checkDeps():
         if os.name == "nt":
-            UnRar.CMD = join(pypath, "UnRAR.exe")
+            UnRar.CMD = path.join(pypath, "UnRAR.exe")
             p = Popen([UnRar.CMD], stdout=PIPE, stderr=PIPE)
             p.communicate()
         else:

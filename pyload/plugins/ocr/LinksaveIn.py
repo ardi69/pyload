@@ -2,8 +2,7 @@
 
 from PIL import Image
 from glob import glob
-from os import sep
-from os.path import abspath, dirname
+from os import path, sep
 
 from pyload.plugins.OCR import OCR
 
@@ -20,7 +19,7 @@ class LinksaveIn(OCR):
 
     def __init__(self):
         OCR.__init__(self)
-        self.data_dir = dirname(abspath(__file__)) + sep + "LinksaveIn" + sep
+        self.data_dir = path.dirname(path.abspath(__file__)) + sep + "LinksaveIn" + sep
 
     def load_image(self, image):
         im = Image.open(image)

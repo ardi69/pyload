@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os.path import exists
+from os import path
 from shutil import copy
 
 from threading import Lock

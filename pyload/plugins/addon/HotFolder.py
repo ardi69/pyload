@@ -2,8 +2,7 @@
 
 import time
 
-from os import listdir, makedirs
-from os.path import exists, isfile, join
+from os import listdir, makedirs, path
 from shutil import move
 
 from pyload.plugins.Addon import Addon
@@ -29,12 +28,12 @@ class HotFolder(Addon):
         self.interval = 10
 
     def periodical(self):
-        if not exists(join(self.getConfig("folder"), "finished")):
-            makedirs(join(self.getConfig("folder"), "finished"))
+        if not path.exists(path.join(self.getConfig("folder"), "finished")):
+            makedirs(path.join(self.getConfig("folder"), "finished"))
 
         if self.getConfig("watch_file"):
 
-            if not exists(self.getConfig("file")):
+            if not path.exists(self.getConfig("file")):
                 f = open(self.getConfig("file"), "wb")
                 f.close()
 
@@ -46,20 +45,20 @@ class HotFolder(Addon):
             if content:
                 name = "%s_%s.txt" % (self.getConfig("file"), time.strftime("%H-%M-%S_%d%b%Y"))
 
-                f = open(join(self.getConfig("folder"), "finished", name), "wb")
+                f = open(path.join(self.getConfig("folder"), "finished", name), "wb")
                 f.write(content)
                 f.close()
 
                 self.api.addPackage(f.name, [f.name], 1)
 
         for f in listdir(self.getConfig("folder")):
-            path = join(self.getConfig("folder"), f)
+            filename = path.join(self.getConfig("folder"), f)
 
-            if not isfile(path) or f.endswith("~") or f.startswith("#") or f.startswith("."):
+            if not path.isfile(filename) or f.endswith("~") or f.startswith("#") or f.startswith("."):
                 continue
 
-            newpath = join(self.getConfig("folder"), "finished", f if self.getConfig("keep") else "tmp_" + f)
-            move(path, newpath)
+            new_filename = path.join(self.getConfig("folder"), "finished", f if self.getConfig("keep") else "tmp_" + f)
+            move(filename, new_filename)
 
             self.logInfo(_("Added %s from HotFolder") % f)
-            self.api.addPackage(f, [newpath], 1)
+            self.api.addPackage(f, [new_filename], 1)

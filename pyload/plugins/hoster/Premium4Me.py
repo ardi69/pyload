@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os import remove
-from os.path import exists
+from os import path, remove
 from urllib import quote
 
 from pyload.plugins.Hoster import Hoster
@@ -50,7 +49,7 @@ class Premium4Me(Hoster):
             # Custom error code send - fail
             lastDownload = fs_encode(self.lastDownload)
 
-            if exists(lastDownload):
+            if path.exists(lastDownload):
                 f = open(lastDownload, "rb")
                 err = f.read(256).strip()
                 f.close()

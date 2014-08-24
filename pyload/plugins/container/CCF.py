@@ -2,8 +2,7 @@
 
 import re
 
-from os import makedirs
-from os.path import exists
+from os import makedirs, path
 from urllib2 import build_opener
 
 from MultipartPostHandler import MultipartPostHandler

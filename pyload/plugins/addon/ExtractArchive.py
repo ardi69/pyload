@@ -4,8 +4,7 @@ import os
 import sys
 
 from copy import copy
-from os import remove, chmod, makedirs
-from os.path import exists, basename, isfile, isdir
+from os import makedirs, path, remove
 from traceback import print_exc
 
 # monkey patch bug in python 2.6 and lower
@@ -49,7 +48,7 @@ if os.name != "nt":
 
 from pyload.plugins.Addon import Addon, Expose, threaded
 from pyload.plugins.internal.AbstractExtractor import ArchiveError, CRCError, WrongPassword
-from pyload.utils import safe_join, fs_encode
+from pyload.utils import chmod, fs_encode, safe_join
 
 
 class ExtractArchive(Addon):
@@ -160,7 +159,7 @@ class ExtractArchive(Addon):
                 if self.getConfig("subfolder"):
                     out = safe_join(out, fs_encode(p.folder))
 
-                if not exists(out):
+                if not path.exists(out):
                     makedirs(out)
 
             files_ids = [(safe_join(dl, p.folder, x['name']), x['id']) for x in p.getChildren().itervalues()]
@@ -177,7 +176,7 @@ class ExtractArchive(Addon):
                         matched = True
                     for target, fid in targets:
                         if target in extracted:
-                            self.logDebug(basename(target), "skipped")
+                            self.logDebug(path.basename(target), "skipped")
                             continue
                         extracted.append(target)  # prevent extracting same file twice
 
@@ -185,16 +184,16 @@ class ExtractArchive(Addon):
                                        self.getConfig("renice"))
                         klass.init()
 
-                        self.logInfo(basename(target), _("Extract to %s") % out)
+                        self.logInfo(path.basename(target), _("Extract to %s") % out)
                         new_files = self.startExtracting(klass, fid, p.password.strip().splitlines(), thread)
                         self.logDebug("Extracted: %s" % new_files)
                         self.setPermissions(new_files)
 
                         for file in new_files:
-                            if not exists(file):
+                            if not path.exists(file):
                                 self.logDebug("new file %s does not exists" % file)
                                 continue
-                            if self.getConfig("recursive") and isfile(file):
+                            if self.getConfig("recursive") and path.isfile(file):
                                 new_files_ids.append((file, fid))  # append as new target
 
                 files_ids = new_files_ids  # also check extracted files
@@ -218,7 +217,7 @@ class ExtractArchive(Addon):
                 plugin.extract(progress)
                 success = True
             else:
-                self.logInfo(basename(plugin.file), _("Password protected"))
+                self.logInfo(path.basename(plugin.file), _("Password protected"))
                 self.logDebug("Passwords: %s" % str(passwords))
 
                 pwlist = copy(self.getPasswords())
@@ -239,7 +238,7 @@ class ExtractArchive(Addon):
                         self.logDebug("Password was wrong")
 
             if not success:
-                self.logError(basename(plugin.file), _("Wrong password"))
+                self.logError(path.basename(plugin.file), _("Wrong password"))
                 return []
 
             if self.core.debug:
@@ -249,24 +248,24 @@ class ExtractArchive(Addon):
                 files = plugin.getDeleteFiles()
                 self.logInfo(_("Deleting %s files") % len(files))
                 for f in files:
-                    if exists(f):
+                    if path.exists(f):
                         remove(f)
                     else:
                         self.logDebug("%s does not exists" % f)
 
-            self.logInfo(basename(plugin.file), _("Extracting finished"))
+            self.logInfo(path.basename(plugin.file), _("Extracting finished"))
             self.manager.dispatchEvent("unrarFinished", plugin.out, plugin.file)
 
             return plugin.getExtractedFiles()
 
         except ArchiveError, e:
-            self.logError(basename(plugin.file), _("Archive Error"), str(e))
+            self.logError(path.basename(plugin.file), _("Archive Error"), str(e))
         except CRCError:
-            self.logError(basename(plugin.file), _("CRC Mismatch"))
+            self.logError(path.basename(plugin.file), _("CRC Mismatch"))
         except Exception, e:
             if self.core.debug:
                 print_exc()
-            self.logError(basename(plugin.file), _("Unknown Error"), str(e))
+            self.logError(path.basename(plugin.file), _("Unknown Error"), str(e))
 
         return []
 
@@ -277,7 +276,7 @@ class ExtractArchive(Addon):
 
     def reloadPasswords(self):
         pwfile = self.getConfig("passwordfile")
-        if not exists(pwfile):
+        if not path.exists(pwfile):
             open(pwfile, "wb").close()
 
         passwords = []
@@ -304,13 +303,13 @@ class ExtractArchive(Addon):
 
     def setPermissions(self, files):
         for f in files:
-            if not exists(f):
+            if not path.exists(f):
                 continue
             try:
                 if self.config.get("permission", "change_file"):
-                    if isfile(f):
+                    if path.isfile(f):
                         chmod(f, int(self.config.get("permission", "file"), 8))
-                    elif isdir(f):
+                    elif path.isdir(f):
                         chmod(f, int(self.config.get("permission", "folder"), 8))
 
                 if self.config.get("permission", "change_dl") and os.name != "nt":

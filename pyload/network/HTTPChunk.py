@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os import remove, stat, fsync
-from os.path import exists
+from os import fsync, path, remove, stat
 from time import sleep
 from re import search
 from pyload.utils import fs_encode
@@ -64,7 +63,7 @@ class ChunkInfo:
     @staticmethod
     def load(name):
         fs_name = fs_encode("%s.chunks" % name)
-        if not exists(fs_name):
+        if not path.exists(fs_name):
             raise IOError()
         fh = codecs.open(fs_name, "r", "utf_8")
         name = fh.readline()[:-1]
@@ -95,7 +94,7 @@ class ChunkInfo:
 
     def remove(self):
         fs_name = fs_encode("%s.chunks" % self.name)
-        if exists(fs_name):
+        if path.exists(fs_name):
             remove(fs_name)
 
     def getCount(self):

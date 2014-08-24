@@ -2,8 +2,7 @@
 
 import subprocess
 
-from os import listdir, access, X_OK, makedirs
-from os.path import join, exists, basename, abspath
+from os import listdir, access, X_OK, makedirs, path
 
 from pyload.plugins.Addon import Addon
 from pyload.utils import safe_join
@@ -34,14 +33,14 @@ class ExternalScripts(Addon):
         for folder in folders:
             self.scripts[folder] = []
 
-            self.initPluginType(folder, join("scripts", folder))
+            self.initPluginType(folder, path.join("scripts", folder))
 
         for script_type, names in self.scripts.iteritems():
             if names:
-                self.logInfo((_("Installed scripts for %s: ") % script_type) + ", ".join([basename(x) for x in names]))
+                self.logInfo((_("Installed scripts for %s: ") % script_type) + ", ".join([path.basename(x) for x in names]))
 
     def initPluginType(self, folder, path):
-        if not exists(path):
+        if not path.exists(path):
             try:
                 makedirs(path)
             except:
@@ -52,19 +51,19 @@ class ExternalScripts(Addon):
             if f.startswith("#") or f.startswith(".") or f.startswith("_") or f.endswith("~") or f.endswith(".swp"):
                 continue
 
-            if not access(join(path, f), X_OK):
+            if not access(path.join(path, f), X_OK):
                 self.logWarning(_("Script not executable:") + " %s/%s" % (folder, f))
 
-            self.scripts[folder].append(join(path, f))
+            self.scripts[folder].append(path.join(path, f))
 
     def callScript(self, script, *args):
         try:
             cmd = [script] + [str(x) if not isinstance(x, basestring) else x for x in args]
-            self.logDebug("Executing %(script)s: %(cmd)s" % {'script': abspath(script), 'cmd': " ".join(cmd)})
+            self.logDebug("Executing %(script)s: %(cmd)s" % {'script': path.abspath(script), 'cmd': " ".join(cmd)})
             #output goes to pyload
             subprocess.Popen(cmd, bufsize=-1)
         except Exception, e:
-            self.logError(_("Error in %(script)s: %(error)s") % {'script': basename(script), 'error': str(e)})
+            self.logError(_("Error in %(script)s: %(error)s") % {'script': path.basename(script), 'error': str(e)})
 
     def downloadPreparing(self, pyfile):
         for script in self.scripts['download_preparing']:

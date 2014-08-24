@@ -4,8 +4,7 @@ import sys
 
 from Queue import Queue
 from threading import Thread
-from os import listdir, stat
-from os.path import join
+from os import listdir, path, stat
 from time import sleep, time, strftime, gmtime
 from traceback import print_exc, format_exc
 from pprint import pformat
@@ -47,10 +46,10 @@ class PluginThread(Thread):
 
             zip = zipfile.ZipFile(dump_name, "w")
 
-            for f in listdir(join("tmp", pyfile.pluginname)):
+            for f in listdir(path.join("tmp", pyfile.pluginname)):
                 try:
                     # avoid encoding errors
-                    zip.write(join("tmp", pyfile.pluginname, f), safe_join(pyfile.pluginname, f))
+                    zip.write(path.join("tmp", pyfile.pluginname, f), safe_join(pyfile.pluginname, f))
                 except:
                     pass
 

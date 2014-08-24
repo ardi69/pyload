@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from os.path import join
+from os import path
 
 from pyload.remote.thriftbackend.thriftgen.pyload import Pyload
 from pyload.remote.thriftbackend.thriftgen.pyload.ttypes import *

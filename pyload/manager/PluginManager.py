@@ -4,8 +4,7 @@ import re
 import sys
 
 from itertools import chain
-from os import listdir, makedirs
-from os.path import isfile, join, exists
+from os import listdir, makedirs, path
 from traceback import print_exc
 
 from SafeEval import const_eval as literal_eval
@@ -42,8 +41,8 @@ class PluginManager:
 
         if not exists("userplugins"):
             makedirs("userplugins")
-        if not exists(join("userplugins", "__init__.py")):
-            f = open(join("userplugins", "__init__.py"), "wb")
+        if not path.exists(path.join("userplugins", "__init__.py")):
+            f = open(path.join("userplugins", "__init__.py"), "wb")
             f.close()
 
         self.plugins['crypter'] = self.crypterPlugins = self.parse("crypter", pattern=True)
@@ -69,20 +68,20 @@ class PluginManager:
         """
         plugins = {}
         if home:
-            pfolder = join("userplugins", folder)
-            if not exists(pfolder):
+            pfolder = path.join("userplugins", folder)
+            if not path.exists(pfolder):
                 makedirs(pfolder)
-            if not exists(join(pfolder, "__init__.py")):
-                f = open(join(pfolder, "__init__.py"), "wb")
+            if not path.exists(path.join(pfolder, "__init__.py")):
+                f = open(path.join(pfolder, "__init__.py"), "wb")
                 f.close()
 
         else:
-            pfolder = join(projectdir, "plugins", folder)
+            pfolder = path.join(projectdir, "plugins", folder)
 
         for f in listdir(pfolder):
-            if (isfile(join(pfolder, f)) and f.endswith(".py") or f.endswith("_25.pyc") or f.endswith(
+            if (path.isfile(path.join(pfolder, f)) and f.endswith(".py") or f.endswith("_25.pyc") or f.endswith(
                 "_26.pyc") or f.endswith("_27.pyc")) and not f.startswith("_"):
-                data = open(join(pfolder, f))
+                data = open(path.join(pfolder, f))
                 content = data.read()
                 data.close()
 

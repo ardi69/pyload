@@ -9,7 +9,7 @@ import time
 
 from htmlentitydefs import name2codepoint
 from itertools import islice
-from os.path import join
+from os import path
 from string import maketrans
 
 # abstraction layer for json operations
@@ -82,7 +82,7 @@ def save_path(name):
 
 def safe_join(*args):
     """ joins a path, encoding aware """
-    return fs_encode(join(*[x if type(x) == unicode else decode(x) for x in args]))
+    return fs_encode(path.join(*[x if type(x) == unicode else decode(x) for x in args]))
 
 #: Deprecated method
 def save_join(*args):
@@ -161,19 +161,19 @@ def freeSpace(folder):
         return s.f_bsize * s.f_bavail
 
 
-def fs_bsize(path):
+def fs_bsize(folder):
     """ get optimal file system buffer size (in bytes) for I/O calls """
-    path = fs_encode(path)
+    folder = fs_encode(folder)
 
     if os.name == "nt":
         import ctypes
 
-        drive = "%s\\" % os.path.splitdrive(path)[0]
+        drive = "%s\\" % path.splitdrive(folder)[0]
         cluster_sectors, sector_size = ctypes.c_longlong(0)
         ctypes.windll.kernel32.GetDiskFreeSpaceW(ctypes.c_wchar_p(drive), ctypes.pointer(cluster_sectors), ctypes.pointer(sector_size), None, None)
         return cluster_sectors * sector_size
     else:
-        return os.statvfs(path).f_bsize
+        return os.statvfs(folder).f_bsize
 
 
 def uniqify(seq):  #: Originally by Dave Kirby

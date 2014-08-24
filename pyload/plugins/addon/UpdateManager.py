@@ -4,8 +4,7 @@ import re
 import sys
 
 from operator import itemgetter
-from os import remove, stat
-from os.path import isfile, join
+from os import path, remove, stat
 from time import time
 
 from pyload.network.RequestFactory import getURL
@@ -87,7 +86,7 @@ class UpdateManager(Addon):
             id = (type, name)
             if type in self.core.pluginManager.plugins:
                 f = m.__file__.replace(".pyc", ".py")
-                if not isfile(f):
+                if not path.isfile(f):
                     continue
 
                 mtime = stat(f).st_mtime
@@ -253,11 +252,11 @@ class UpdateManager(Addon):
             py_file = name + ".py"
             pyc_file = name + ".pyc"
 
-            for root in ("userplugins", join(projectdir, "plugins")):
+            for root in ("userplugins", path.join(projectdir, "plugins")):
                 py_filename = safe_join(root, type, py_file)
                 pyc_filename = safe_join(root, type, pyc_file)
 
-                if isfile(py_filename):
+                if path.isfile(py_filename):
                     try:
                         remove(py_filename)
                     except Exception, e:
@@ -266,7 +265,7 @@ class UpdateManager(Addon):
                     else:
                         rflag = True
 
-                if isfile(pyc_filename):
+                if path.isfile(pyc_filename):
                     try:
                         if type == "addon":
                             self.manager.deactivateAddon(name)

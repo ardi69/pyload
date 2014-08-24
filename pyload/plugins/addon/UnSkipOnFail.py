@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os.path import basename
+from os import path
 
 from pyload.datatype.PyFile import PyFile
 from pyload.plugins.Addon import Addon
@@ -20,7 +20,7 @@ class UnSkipOnFail(Addon):
 
 
     def downloadFailed(self, pyfile):
-        pyfile_name = basename(pyfile.name)
+        pyfile_name = path.basename(pyfile.name)
         pid = pyfile.package().id
         msg = 'look for skipped duplicates for %s (pid:%s)...'
         self.logInfo(msg % (pyfile_name, pid))
@@ -36,14 +36,14 @@ class UnSkipOnFail(Addon):
         """ Search all packages for duplicate links to "pyfile".
             Duplicates are links that would overwrite "pyfile".
             To test on duplicity the package-folder and link-name
-            of twolinks are compared (basename(link.name)).
+            of twolinks are compared (path.basename(link.name)).
             So this method returns a list of all links with equal
             package-folders and filenames as "pyfile", but except
             the data for "pyfile" iotselöf.
             It does MOT check the link's status.
         """
         dups = []
-        pyfile_name = fs_encode(basename(pyfile.name))
+        pyfile_name = fs_encode(path.basename(pyfile.name))
         # get packages (w/o files, as most file data is useless here)
         queue = self.api.getQueue()
         for package in queue:
@@ -53,7 +53,7 @@ class UnSkipOnFail(Addon):
                 pdata = self.api.getPackageData(package.pid)
                 if pdata.links:
                     for link in pdata.links:
-                        link_name = fs_encode(basename(link.name))
+                        link_name = fs_encode(path.basename(link.name))
                         # check if link name collides with pdata's name
                         if link_name == pyfile_name:
                             # at last check if it is not pyfile itself

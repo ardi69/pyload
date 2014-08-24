@@ -1,27 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
-from os.path import abspath, commonprefix, join
+from os import path
 
 quotechar = "::/"
-
-try:
-    from os.path import relpath
-except:
-    from posixpath import curdir, sep, pardir
-    def relpath(path, start=curdir):
-        """ Return a relative version of a path """
-        if not path:
-            raise ValueError("no path specified")
-        start_list = abspath(start).split(sep)
-        path_list = abspath(path).split(sep)
-        # Work out how much of the filepath is shared by start and path.
-        i = len(commonprefix([start_list, path_list]))
-        rel_list = [pardir] * (len(start_list)-i) + path_list[i:]
-        if not rel_list:
-            return curdir
-        return join(*rel_list)
-
 
 def quotepath(path):
     try:
@@ -40,18 +21,18 @@ def unquotepath(path):
         return ""
 
 def path_make_absolute(path):
-    p = abspath(path)
-    if p[-1] == os.path.sep:
+    p = path.abspath(path)
+    if p[-1] == path.sep:
         return p
     else:
-        return p + os.path.sep
+        return p + path.sep
 
 def path_make_relative(path):
-    p = relpath(path)
-    if p[-1] == os.path.sep:
+    p = path.relpath(path)
+    if p[-1] == path.sep:
         return p
     else:
-        return p + os.path.sep
+        return p + path.sep
 
 def truncate(value, n):
     if (n - len(value)) < 3:

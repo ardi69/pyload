@@ -7,7 +7,7 @@ import subprocess
 
 from PIL import Image, GifImagePlugin, JpegImagePlugin, PngImagePlugin, TiffImagePlugin
 from logging import getLogger
-from os.path import abspath, join
+from os import path
 
 
 class OCR:
@@ -48,27 +48,27 @@ class OCR:
     def run_tesser(self, subset=False, digits=True, lowercase=True, uppercase=True):
         #self.log.debug("create tmp tif")
         #tmp = tempfile.NamedTemporaryFile(suffix=".tif")
-        tmp = open(join("tmp", "tmpTif_%s.tif" % self.__name__), "wb")
+        tmp = open(path.join("tmp", "tmpTif_%s.tif" % self.__name__), "wb")
         tmp.close()
         #self.log.debug("create tmp txt")
         #tmpTxt = tempfile.NamedTemporaryFile(suffix=".txt")
-        tmpTxt = open(join("tmp", "tmpTxt_%s.txt" % self.__name__), "wb")
+        tmpTxt = open(path.join("tmp", "tmpTxt_%s.txt" % self.__name__), "wb")
         tmpTxt.close()
 
         self.log.debug("save tiff")
         self.image.save(tmp.name, 'TIFF')
 
         if os.name == "nt":
-            tessparams = [join(pypath, "tesseract", "tesseract.exe")]
+            tessparams = [path.join(pypath, "tesseract", "tesseract.exe")]
         else:
             tessparams = ['tesseract']
 
-        tessparams.extend([abspath(tmp.name), abspath(tmpTxt.name).replace(".txt", "")])
+        tessparams.extend([path.abspath(tmp.name), path.abspath(tmpTxt.name).replace(".txt", "")])
 
         if subset and (digits or lowercase or uppercase):
             #self.log.debug("create temp subset config")
             #tmpSub = tempfile.NamedTemporaryFile(suffix=".subset")
-            tmpSub = open(join("tmp", "tmpSub_%s.subset" % self.__name__), "wb")
+            tmpSub = open(path.join("tmp", "tmpSub_%s.subset" % self.__name__), "wb")
             tmpSub.write("tessedit_char_whitelist ")
             if digits:
                 tmpSub.write("0123456789")
@@ -78,7 +78,7 @@ class OCR:
                 tmpSub.write("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
             tmpSub.write("\n")
             tessparams.append("nobatch")
-            tessparams.append(abspath(tmpSub.name))
+            tessparams.append(path.abspath(tmpSub.name))
             tmpSub.close()
 
         self.log.debug("run tesseract")

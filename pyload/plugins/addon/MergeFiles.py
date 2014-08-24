@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import os
 import re
 import traceback
+
+from os import path
 
 from pyload.plugins.Addon import Addon, threaded
 from pyload.utils import safe_join, fs_encode
@@ -53,9 +54,9 @@ class MergeFiles(Addon):
                 pyfile = self.core.files.getFile(fid_dict[splitted_file])
                 pyfile.setStatus("processing")
                 try:
-                    s_file = open(os.path.join(download_folder, splitted_file), "rb")
+                    s_file = open(path.join(download_folder, splitted_file), "rb")
                     size_written = 0
-                    s_file_size = int(os.path.getsize(os.path.join(download_folder, splitted_file)))
+                    s_file_size = int(path.getsize(path.join(download_folder, splitted_file)))
                     while True:
                         f_buffer = s_file.read(self.BUFFER_SIZE)
                         if f_buffer:

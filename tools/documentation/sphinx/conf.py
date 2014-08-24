@@ -14,17 +14,17 @@
 
 import sys, os
 
-from os.path import abspath, join
+from os import path
 
-pypath = abspath(join(__file__, "..", "..", "..", ".."))
+pypath = path.abspath(path.join(__file__, "..", "..", "..", ".."))
 sys.path.append(pypath)
-sys.path.append(join(projectdir, "lib"))
+sys.path.append(path.join(projectdir, "lib"))
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+# documentation root, use path.abspath to make it absolute, like shown here.
+#sys.path.insert(0, path.abspath('.'))
 
 # -- General configuration -----------------------------------------------------
 
@@ -130,12 +130,12 @@ html_theme = 'default'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = join(pypath, "docs", "resources", "banner.png")
+html_logo = path.join(pypath, "docs", "resources", "banner.png")
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = join(pypath, "docs", "resources", "icon.ico")
+html_favicon = path.join(pypath, "docs", "resources", "icon.ico")
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

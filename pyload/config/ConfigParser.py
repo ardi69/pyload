@@ -2,7 +2,7 @@
 
 from __future__ import with_statement
 
-from os.path import exists
+from os import path
 from gettext import gettext
 from collections import namedtuple, OrderedDict
 
@@ -44,7 +44,7 @@ class ConfigParser:
 
     def checkVersion(self):
         """ Determines if config needs to be deleted """
-        if exists(self.CONFIG):
+        if path.exists(self.CONFIG):
             f = open(self.CONFIG, "rb")
             v = f.readline()
             f.close()

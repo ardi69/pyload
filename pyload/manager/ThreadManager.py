@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os.path import exists, join
+from os import path
 import re
 from subprocess import Popen
 from threading import Event, Lock
@@ -152,9 +152,9 @@ class ThreadManager:
         if not (0 < active.count(True) == len(active)):
             return False
 
-        if not exists(self.config.get("reconnect", "method")):
-            if exists(join(pypath, self.config.get("reconnect", "method"))):
-                method = join(pypath, self.config.get("reconnect", "method"))
+        if not path.exists(self.config.get("reconnect", "method")):
+            if path.exists(path.join(pypath, self.config.get("reconnect", "method"))):
+                method = path.join(pypath, self.config.get("reconnect", "method"))
                 self.config.set("reconnect", "method", method)
             else:
                 self.config.set("reconnect", "activated", False)

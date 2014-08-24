@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os.path import exists
+from os import path
 
 from pyload.manager.RemoteManager import BackendBase
 
@@ -22,7 +22,7 @@ class ThriftBackend(BackendBase):
         cert = None
 
         if self.config.get("remote", "ssl"):
-            if exists(self.config.get("ssl", "cert")) and exists(self.config.get("ssl", "key")):
+            if path.exists(self.config.get("ssl", "cert")) and path.exists(self.config.get("ssl", "key")):
                 self.log.info(_("Using SSL ThriftBackend"))
                 key = self.config.get("ssl", "key")
                 cert = self.config.get("ssl", "cert")

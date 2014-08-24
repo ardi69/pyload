@@ -6,8 +6,7 @@ import sys
 
 from getpass import getpass
 from gettext import gettext
-from os import chdir, makedirs
-from os.path import abspath, exists, join
+from os import chdir, makedirs, path
 from subprocess import PIPE, call
 
 from pyload.utils import get_console_encoding, safe_join, versiontuple
@@ -27,8 +26,8 @@ class SetupAssistant:
         langs = sorted(self.config.getMetaData("general", "language")['type'].split(";"))
         self.lang = self.ask(u"Choose setup language", "en", langs)
 
-        gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("setup", join(pypath, "locale"), languages=[self.lang, "en"], fallback=True)
+        gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
+        translation = gettext.translation("setup", path.join(pypath, "locale"), languages=[self.lang, "en"], fallback=True)
         translation.install(True)
 
         #Input shorthand for yes
@@ -139,8 +138,8 @@ class SetupAssistant:
         print _("CURRENT CONFIG PATH: %s") % configdir
         print
         print _("NOTE: If you use pyLoad on a server or the home partition lives on an iternal flash it may be a good idea to change it.")
-        path = self.ask(_("Do you want to change the config path?"), self.no, bool=True)
-        if path:
+        confpath = self.ask(_("Do you want to change the config path?"), self.no, bool=True)
+        if confpath:
             print
             self.conf_path()
             print
@@ -226,7 +225,7 @@ class SetupAssistant:
         self.print_dep("py-imaging", pil)
 
         if os.name == "nt":
-            tesser = self.check_prog([join(pypath, "tesseract", "tesseract.exe"), "-v"])
+            tesser = self.check_prog([path.join(pypath, "tesseract", "tesseract.exe"), "-v"])
         else:
             tesser = self.check_prog(["tesseract", "-v"])
 
@@ -367,8 +366,8 @@ class SetupAssistant:
 
 
     def set_user(self):
-        gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("setup", join(pypath, "locale"),
+        gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
+        translation = gettext.translation("setup", path.join(pypath, "locale"),
             languages=[self.config.get("general", "language"), "en"], fallback=True)
         translation.install(True)
 
@@ -418,13 +417,13 @@ class SetupAssistant:
 
 
     def set_configdir(self, configdir, persistent=False):
-        dirname = abspath(configdir)
+        dirname = path.abspath(configdir)
         try:
-            if not exists(dirname):
+            if not path.exists(dirname):
                 makedirs(dirname, 0700)
             if persistent:
-                c = join(projectdir, "config", "configdir")
-                if not exists(c):
+                c = path.join(projectdir, "config", "configdir")
+                if not path.exists(c):
                     makedirs(c, 0700)
                 f = open(c, "wb")
                 f.write(dirname)
@@ -442,10 +441,10 @@ class SetupAssistant:
         print _("NOTE: Current configuration will not be transfered!")
 
         while True:
-            dir = self.ask(_("CONFIG PATH"), configdir)
-            path = self.set_configdir(dir)
+            confdir = self.ask(_("CONFIG PATH"), configdir)
+            confpath = self.set_configdir(confdir)
             print
-            if path:
+            if confpath:
                 print _("pyLoad config path successfully changed.")
                 break
 

@@ -7,19 +7,17 @@ import os
 import sys
 import time
 
-from os import listdir
-from os.path import abspath, dirname, isdir, isfile, join, normpath
+from os import listdir, path
 from urllib import unquote
 
 from bottle import route, static_file, request, response, redirect, HTTPError, error
 
-from pyload.webui import API, ENV, THEME, THEME_DIR
-
-from pyload.webui.app.utils import render_to_response, parse_permissions, parse_userdata, \
-    login_required, get_permission, set_permission, permlist, toDict, set_session
-
 from pyload.utils import formatSize, safe_join, fs_encode, fs_decode
-from pyload.utils.filters import relpath, unquotepath
+from pyload.webui import API, ENV, THEME, THEME_DIR
+from pyload.webui.app.utils import render_to_response, parse_permissions, parse_userdata, \
+                                   login_required, get_permission, set_permission, \
+                                   permlist, toDict, set_session
+from pyload.webui.filters import unquotepath
 
 
 # Helper
@@ -78,10 +76,10 @@ def js_dynamic(tml, file):
     try:
         # static files are not rendered
         if ".static" not in file:
-            path = "%s/js/%s" % (THEME, file)
-            return ENV.get_template(path).render()
+            filename = "%s/js/%s" % (THEME, file)
+            return ENV.get_template(filename).render()
         else:
-            return static_file(file, root=join(THEME_DIR, tml, "js"))
+            return static_file(file, root=path.join(THEME_DIR, tml, "js"))
     except:
         return HTTPError(404, "Not Found")
 
@@ -90,11 +88,11 @@ def server_static(tml, type, file):
     response.headers['Expires'] = time.strftime("%a, %d %b %Y %H:%M:%S GMT",
                                                 time.gmtime(time.time() + 60 * 60 * 24 * 7))
     response.headers['Cache-control'] = "public"
-    return static_file(file, root=join(THEME_DIR, tml, type))
+    return static_file(file, root=path.join(THEME_DIR, tml, type))
 
 @route('/favicon.ico')
 def favicon():
-    return static_file("icon.ico", root=join(pypath, "docs", "resources"))
+    return static_file("icon.ico", root=path.join(pypath, "docs", "resources"))
 
 
 @route('/login', method="GET")
@@ -171,7 +169,7 @@ def collector():
 def downloads():
     root = API.getConfigValue("general", "download_folder")
 
-    if not isdir(root):
+    if not path.isdir(root):
         return base([_('Download directory not found.')])
     data = {
         'folder': [],
@@ -181,7 +179,7 @@ def downloads():
     items = listdir(fs_encode(root))
 
     for item in sorted([fs_decode(x) for x in items]):
-        if isdir(safe_join(root, item)):
+        if path.isdir(safe_join(root, item)):
             folder = {
                 'name': item,
                 'path': item,
@@ -190,13 +188,13 @@ def downloads():
             files = listdir(safe_join(root, item))
             for file in sorted([fs_decode(x) for x in files]):
                 try:
-                    if isfile(safe_join(root, item, file)):
+                    if path.isfile(safe_join(root, item, file)):
                         folder['files'].append(file)
                 except:
                     pass
 
             data['folder'].append(folder)
-        elif isfile(join(root, item)):
+        elif path.isfile(path.join(root, item)):
             data['files'].append(item)
 
     return render_to_response('downloads.html', {'files': data}, [pre_processor])
@@ -204,16 +202,16 @@ def downloads():
 
 @route('/downloads/get/<path:path>')
 @login_required("DOWNLOAD")
-def get_download(path):
-    path = unquote(path).decode("utf8")
+def get_download(filename):
+    filename = unquote(path).decode("utf8")
     #@TODO: some files can not be downloaded
 
     root = API.getConfigValue("general", "download_folder")
 
-    path = path.replace("..", "")
-    try:
-        return static_file(fs_encode(path), fs_encode(root))
+    filename = path.replace("..", "")
 
+    try:
+        return static_file(fs_encode(filename), fs_encode(root))
     except Exception, e:
         print e
         return HTTPError(404, "File not Found.")
@@ -271,30 +269,26 @@ def config():
 @route('/filechooser')
 @route('/pathchooser')
 @route('/filechooser/<file:path>')
-@route('/pathchooser/<path:path>')
+@route('/pathchooser/<item:path>')
 @login_required('STATUS')
-def path(file="", path=""):
-    if file:
-        type = "file"
-    else:
-        type = "folder"
+def path(file="", item=""):  #@TODO: rewrite all!
+    type = "file" if file else "folder"
+    item = path.normpath(unquotepath(item))
 
-    path = normpath(unquotepath(path))
-
-    if isfile(path):
-        oldfile = path
-        path = dirname(path)
+    if path.isfile(item):
+        oldfile = item
+        item = path.dirname(item)
     else:
         oldfile = ''
 
     abs = False
 
-    if isdir(path):
-        if os.path.isabs(path):
-            cwd = abspath(path)
+    if path.isdir(item):
+        if path.isabs(item):
+            cwd = path.abspath(item)
             abs = True
         else:
-            cwd = relpath(path)
+            cwd = path.relpath(item)
     else:
         cwd = os.getcwd()
 
@@ -303,16 +297,16 @@ def path(file="", path=""):
     except:
         pass
 
-    cwd = normpath(abspath(cwd))
-    parentdir = dirname(cwd)
+    cwd = path.normpath(path.abspath(cwd))
+    parentdir = path.dirname(cwd)
     if not abs:
-        if abspath(cwd) == "/":
-            cwd = relpath(cwd)
+        if path.abspath(cwd) == "/":
+            cwd = path.relpath(cwd)
         else:
-            cwd = relpath(cwd) + os.path.sep
-        parentdir = relpath(parentdir) + os.path.sep
+            cwd = path.relpath(cwd) + path.sep
+        parentdir = path.relpath(parentdir) + path.sep
 
-    if abspath(cwd) == "/":
+    if path.abspath(cwd) == "/":
         parentdir = ""
 
     try:
@@ -325,20 +319,20 @@ def path(file="", path=""):
     for f in folders:
         try:
             f = f.decode(sys.getfilesystemencoding())
-            data = {'name': f, 'fullpath': join(cwd, f)}
+            data = {'name': f, 'fullpath': path.join(cwd, f)}
             data['sort'] = data['fullpath'].lower()
-            data['modified'] = datetime.fromtimestamp(int(os.path.getmtime(join(cwd, f))))
-            data['ext'] = os.path.splitext(f)[1]
+            data['modified'] = datetime.fromtimestamp(int(path.getmtime(path.join(cwd, f))))
+            data['ext'] = path.splitext(f)[1]
         except:
             continue
 
-        if isdir(join(cwd, f)):
+        if path.isdir(path.join(cwd, f)):
             data['type'] = 'dir'
         else:
             data['type'] = 'file'
 
-        if isfile(join(cwd, f)):
-            data['size'] = os.path.getsize(join(cwd, f))
+        if path.isfile(path.join(cwd, f)):
+            data['size'] = path.getsize(path.join(cwd, f))
 
             power = 0
             while (data['size'] / 1024) > 0.3:
@@ -497,7 +491,7 @@ def info():
             'version': API.getServerVersion(),
             'folder': pypath,
             'config': owd,
-            'download': abspath(conf['general']['download_folder']['value']),
+            'download': path.abspath(conf['general']['download_folder']['value']),
             'freespace': formatSize(API.freeSpace()),
             'remote': conf['remote']['port']['value'],
             'webif': conf['webui']['port']['value'],

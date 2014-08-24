@@ -6,8 +6,7 @@ import struct
 import sys
 import time
 
-from os import makedirs
-from os.path import exists, join
+from os import makedirs, path
 from select import select
 
 from pyload.plugins.Hoster import Hoster

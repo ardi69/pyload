@@ -3,8 +3,7 @@
 import socket
 import re
 
-from os import remove
-from os.path import exists
+from os import path, remove
 
 from time import time
 
@@ -56,14 +55,14 @@ class XDCCRequest:
         dccsock.settimeout(self.timeout)
         dccsock.connect((ip, port))
 
-        if exists(filename):
+        if path.exists(filename):
             i = 0
             nameParts = filename.rpartition(".")
             while True:
                 newfilename = "%s-%d%s%s" % (nameParts[0], i, nameParts[1], nameParts[2])
                 i += 1
 
-                if not exists(newfilename):
+                if not path.exists(newfilename):
                     filename = newfilename
                     break
 

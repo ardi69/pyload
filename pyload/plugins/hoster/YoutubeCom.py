@@ -4,6 +4,7 @@ import os
 import re
 import subprocess
 
+from os import path
 from urllib import unquote
 
 from pyload.plugins.Hoster import Hoster
@@ -17,16 +18,16 @@ def which(program):
     Courtesy of http://stackoverflow.com/a/377028/675646"""
 
     def is_exe(fpath):
-        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+        return path.isfile(fpath) and os.access(fpath, os.X_OK)
 
-    fpath, fname = os.path.split(program)
+    fpath, fname = path.split(program)
     if fpath:
         if is_exe(program):
             return program
     else:
-        for path in os.environ['PATH'].split(os.pathsep):
-            path = path.strip('"')
-            exe_file = os.path.join(path, program)
+        for dpath in os.environ['PATH'].split(os.pathsep):
+            dpath = path.strip('"')
+            exe_file = path.join(dpath, program)
             if is_exe(exe_file):
                 return exe_file
 

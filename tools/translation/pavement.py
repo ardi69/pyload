@@ -10,14 +10,14 @@ import shutil
 import re
 
 from glob import glob
-from os.path import abspath, isfile, join
+from os import path
 from tempfile import mkdtemp
 from urllib import urlretrieve
 from subprocess import call, Popen, PIPE
 from zipfile import ZipFile
 
 
-pypath = abspath(join(__file__, "..", "..", ".."))
+pypath = path.abspath(path.join(__file__, "..", "..", ".."))
 sys.path.append(pypath)
 
 options(
@@ -207,7 +207,7 @@ def upload_translations(options):
     shutil.copy('locale/crowdin.yaml', tmp)
     os.mkdir(tmp / 'pyLoad')
     for f in glob('locale/*.pot'):
-        if isfile(f):
+        if path.isfile(f):
             shutil.copy(f, tmp / 'pyLoad')
 
     config = tmp / 'crowdin.yaml'
@@ -235,7 +235,7 @@ def download_translations(options):
     shutil.copy('locale/crowdin.yaml', tmp)
     os.mkdir(tmp / 'pyLoad')
     for f in glob('locale/*.pot'):
-        if isfile(f):
+        if path.isfile(f):
             shutil.copy(f, tmp / 'pyLoad')
 
     config = tmp / 'crowdin.yaml'

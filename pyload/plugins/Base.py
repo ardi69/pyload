@@ -2,8 +2,7 @@
 
 import os
 
-from os import chmod, makedirs, remove, stat
-from os.path import exists, join
+from os import makedirs, path, remove, stat
 from random import randint
 from time import time, sleep
 
@@ -12,7 +11,7 @@ if os.name != "nt":
     from os import chown
     from pwd import getpwnam
 
-from pyload.utils import chunks, safe_join, safe_filename, fs_encode, fs_decode
+from pyload.utils import chmod, chunks, safe_join, safe_filename, fs_encode, fs_decode
 
 
 class Abort(Exception):
@@ -370,7 +369,7 @@ class Plugin(Base):
         img = self.load(url, get=get, post=post, cookies=cookies)
 
         id = ("%.2f" % time())[-6:].replace(".", "")
-        temp_file = open(join("tmp", "tmpCaptcha_%s_%s.%s" % (self.__name__, id, imgtype)), "wb")
+        temp_file = open(path.join("tmp", "tmpCaptcha_%s_%s.%s" % (self.__name__, id, imgtype)), "wb")
         temp_file.write(img)
         temp_file.close()
 
@@ -444,11 +443,11 @@ class Plugin(Base):
             from inspect import currentframe
 
             frame = currentframe()
-            if not exists(join("tmp", self.__name__)):
-                makedirs(join("tmp", self.__name__))
+            if not path.exists(path.join("tmp", self.__name__)):
+                makedirs(path.join("tmp", self.__name__))
 
             f = open(
-                join("tmp", self.__name__, "%s_line%s.dump.html" % (frame.f_back.f_code.co_name, frame.f_back.f_lineno))
+                path.join("tmp", self.__name__, "%s_line%s.dump.html" % (frame.f_back.f_code.co_name, frame.f_back.f_lineno))
                 , "wb")
             del frame  #: delete the frame or it wont be cleaned
 
@@ -504,7 +503,7 @@ class Plugin(Base):
 
         location = safe_join(download_folder, self.pyfile.package().folder)
 
-        if not exists(location):
+        if not path.exists(location):
             makedirs(location, int(self.config.get("permission", "folder"), 8))
 
             if self.config.get("permission", "change_dl") and os.name != "nt":
@@ -520,7 +519,7 @@ class Plugin(Base):
         location = fs_decode(location)
         name = safe_filename(self.pyfile.name)
 
-        filename = join(location, name)
+        filename = path.join(location, name)
 
         self.core.addonManager.dispatchEvent("downloadStarts", self.pyfile, url, filename)
 
@@ -534,7 +533,7 @@ class Plugin(Base):
         if disposition and newname and newname != name:  #: triple check, just to be sure
             self.logInfo("%(name)s saved as %(newname)s" % {'name': name, 'newname': newname})
             self.pyfile.name = newname
-            filename = join(location, newname)
+            filename = path.join(location, newname)
 
         fs_filename = fs_encode(filename)
 
@@ -564,7 +563,7 @@ class Plugin(Base):
         :return: dictionary key of the first rule that matched
         """
         lastDownload = fs_encode(self.lastDownload)
-        if not exists(lastDownload):
+        if not path.exists(lastDownload):
             return None
 
         size = stat(lastDownload)
@@ -621,14 +620,14 @@ class Plugin(Base):
         download_folder = self.config.get("general", "download_folder")
         location = safe_join(download_folder, pack.folder, self.pyfile.name)
 
-        if starting and self.config.get("download", "skip_existing") and exists(location):
+        if starting and self.config.get("download", "skip_existing") and path.exists(location):
             size = os.stat(location).st_size
             if size >= self.pyfile.size:
                 raise SkipDownload("File exists.")
 
         pyfile = self.core.db.findDuplicates(self.pyfile.id, self.pyfile.package().folder, self.pyfile.name)
         if pyfile:
-            if exists(location):
+            if path.exists(location):
                 raise SkipDownload(pyfile[0])
 
             self.logDebug("File %s not skipped, because it does not exists." % self.pyfile.name)
