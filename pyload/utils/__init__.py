@@ -7,6 +7,7 @@ import re
 import sys
 import time
 
+from gettext import gettext
 from htmlentitydefs import name2codepoint
 from itertools import islice
 from os import path
@@ -20,6 +21,10 @@ except ImportError:
 
 json_loads = json.loads
 json_dumps = json.dumps
+
+
+from pyload.utils import convert
+from pyload.utils.decorators import *
 
 
 def chunks(iterable, size):
@@ -38,7 +43,7 @@ def chmod(*args):
 
 
 def decode(string):
-    """ decode string to unicode with utf8 """
+    """ Decode string to unicode with utf8 """
     if type(string) == str:
         return string.decode("utf8", "replace")
     else:
@@ -46,7 +51,7 @@ def decode(string):
 
 
 def encode(string):
-    """ decode string to utf8 """
+    """ Decode string to utf8 """
     if type(string) == unicode:
         return string.encode("utf8", "replace")
     else:
@@ -54,7 +59,7 @@ def encode(string):
 
 
 def remove_chars(string, repl):
-    """ removes all chars in repl from string """
+    """ Remove all chars in repl from string """
     if type(repl) == unicode:
         for badc in list(repl):
             string = string.replace(badc, "")
@@ -67,7 +72,7 @@ def remove_chars(string, repl):
 
 
 def safe_filename(name):
-    """ remove bad chars """
+    """ Remove bad chars """
     name = name.encode('ascii', 'replace')  # Non-ASCII chars usually breaks file saving. Replacing.
     if os.name == "nt":
         return remove_chars(name, u'\00\01\02\03\04\05\06\07\10\11\12\13\14\15\16\17\20\21\22\23\24\25\26\27\30\31\32'
@@ -75,24 +80,24 @@ def safe_filename(name):
     else:
         return remove_chars(name, u'\0/\\"')
 
-#: Deprecated method
+@deprecated(by=safe_filename)
 def save_path(name):
-    return safe_filename(name)
+    pass
 
 
 def safe_join(*args):
-    """ joins a path, encoding aware """
+    """ Join a path, encoding aware """
     return fs_encode(path.join(*[x if type(x) == unicode else decode(x) for x in args]))
 
-#: Deprecated method
+@deprecated(by=safe_join)
 def save_join(*args):
-    return safe_join(*args)
+    pass
 
 
 # File System Encoding functions:
 # Use fs_encode before accesing files on disk, it will encode the string properly
 
-if sys.getfilesystemencoding().startswith('ANSI'):
+if sys.getfilesystemencoding().startswith("ANSI"):
     def fs_encode(string):
         try:
             string = string.encode('utf-8')
@@ -107,9 +112,9 @@ else:
 
 def get_console_encoding(enc):
     if os.name == "nt":
-        if enc == "cp65001": # aka UTF-8
-            print "WARNING: Windows codepage 65001 is not supported."
+        if enc == "cp65001":  #: aka UTF-8
             enc = "cp850"
+            print "WARNING: Windows codepage 65001 (UTF-8) is not supported. Used \"%s\" instead." % enc
     else:
         enc = "utf8"
 
@@ -121,35 +126,47 @@ def compare_time(start, end):
     end = map(int, end)
 
     if start == end:
-        return True
-
-    now = list(time.localtime()[3:5])
-    if start < now < end:
-        return True
-    elif start > end and (now > start or now < end):
-        return True
-    elif start < now > end < start:
-        return True
+        res = True
     else:
-        return False
+        now = list(time.localtime()[3:5])
+        if start < now < end:
+            res = True
+        elif start > end and (now > start or now < end):
+            res = True
+        elif start < now > end < start:
+            res = True
+        else:
+            res = False
+
+    return res
 
 
-def formatSize(size):
-    """ formats size of bytes """
+def format_size(size):
+    """ Format size of bytes """
     size = int(size)
     steps = 0
-    sizes = ("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB")
+    sizes = ("B", "KiB", "MiB", "GiB", "TiB")
+
     while size > 1000:
         size /= 1024.0
         steps += 1
+
     return "%.2f %s" % (size, sizes[steps])
 
+@deprecated(by=format_size)
+def formatSize(*args):
+    pass
 
-def formatSpeed(speed):
-    return formatSize(speed) + "/s"
+
+def format_speed(speed):
+    return format_size(speed) + "/s"
+
+@deprecated(by=format_speed)
+def formatSpeed(*args):
+    pass
 
 
-def freeSpace(folder):
+def free_space(folder):
     if os.name == "nt":
         import ctypes
 
@@ -160,9 +177,13 @@ def freeSpace(folder):
         s = os.statvfs(folder)
         return s.f_bsize * s.f_bavail
 
+@deprecated(by=free_space)
+def freeSpace(*args):
+    pass
+
 
 def fs_bsize(folder):
-    """ get optimal file system buffer size (in bytes) for I/O calls """
+    """ Get optimal file system buffer size (in bytes) for I/O calls """
     folder = fs_encode(folder)
 
     if os.name == "nt":
@@ -177,13 +198,13 @@ def fs_bsize(folder):
 
 
 def uniqify(seq):  #: Originally by Dave Kirby
-    """ removes duplicates from list, preserve order """
+    """ Remove duplicates from list, preserve order """
     seen = set()
     seen_add = seen.add
     return [x for x in seq if x not in seen and not seen_add(x)]
 
 
-def parseFileSize(string, unit=None): #returns bytes
+def parse_size(string, unit=None): #returns bytes
     if not unit:
         m = re.match(r"([\d.,]+) *([a-zA-Z]*)", string.strip().lower())
         if m:
@@ -200,32 +221,20 @@ def parseFileSize(string, unit=None): #returns bytes
     #ignore case
     unit = unit.lower().strip()
 
-    if unit in ("eb", "ebyte", "exabyte", "eib", "e"):
-        traffic *= 1 << 60
-    elif unit in ("pb", "pbyte", "petabyte", "pib", "p"):
-        traffic *= 1 << 50
-    elif unit in ("tb", "tbyte", "terabyte", "tib", "t"):
-        traffic *= 1 << 40
+    if unit in ("tb", "tbyte", "terabyte", "tib", "t"):
+        usize = 40
     elif unit in ("gb", "gbyte", "gigabyte", "gib", "g", "gig"):
-        traffic *= 1 << 30
+        usize = 30
     elif unit in ("mb", "mbyte", "megabyte", "mib", "m"):
-        traffic *= 1 << 20
+        usize = 20
     elif unit in ("kb", "kbyte", "kilobyte", "kib", "k"):
-        traffic *= 1 << 10
+        usize = 10
 
-    return traffic
+    return traffic * 1 << usize
 
-
-def lock(func):
-    def new(*args):
-        #print "Handler: %s args: %s" % (func, args[1:])
-        args[0].lock.acquire()
-        try:
-            return func(*args)
-        finally:
-            args[0].lock.release()
-
-    return new
+@deprecated(by=parse_size)
+def parseFileSize(*args):
+    pass
 
 
 def fixup(m):
@@ -234,9 +243,9 @@ def fixup(m):
         # character reference
         try:
             if text[:3] == "&#x":
-                return unichr(int(text[3:-1], 16))
+                text = unichr(int(text[3:-1], 16))
             else:
-                return unichr(int(text[2:-1]))
+                text = unichr(int(text[2:-1]))
         except ValueError:
             pass
     else:
@@ -247,26 +256,27 @@ def fixup(m):
         except KeyError:
             pass
 
-    return text # leave as is
+    return text
 
 
 def has_method(obj, name):
-    """ checks if 'name' was defined in obj, (false if it was inhereted) """
+    """ Check if "name" was defined in obj, (false if it was inhereted) """
     return hasattr(obj, '__dict__') and name in obj.__dict__
 
 
 def html_unescape(text):
-    """ removes HTML or XML character references and entities from a text string """
+    """ Remove HTML or XML character references and entities from a text string """
     return re.sub("&#?\w+;", fixup, text)
 
 
-def versiontuple(v):  #: By kindall (http://stackoverflow.com/a/11887825)
-    """ convert version like string to a tuple of integers """
-    return tuple(map(int, (v.split("."))))
-
-
-def toDict(obj):
-    ret = {}
-    for att in obj.__slots__:
-        ret[att] = getattr(obj, att)
-    return ret
+def load_translation(name, locale, default="en"):
+    """ Load language and return its translation object or None """
+    try:
+        gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
+        translation = gettext.translation(name, self.path("locale"),
+                                          languages=[locale, default], fallback=True)
+    except:
+        return None
+    else:
+        translation.install(True)
+        return translation
