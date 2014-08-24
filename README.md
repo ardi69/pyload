@@ -1,5 +1,5 @@
 [![pyLoad](/docs/resources/banner.png "pyLoad")](http://pyload.org/)
-=============================
+====================================================================
 
 [![Translation Status](http://translate.pyload.org/badges/pyload/localized.png "Translation Status")](http://translate.pyload.org/project/pyload/)
 
@@ -25,33 +25,67 @@ Dependencies
 
 ### Required ###
 
- - **beaker**
+ - **Beaker**
+ - **Getch**
+ - **MultipartPostHandler**
+ - **SafeEval**
+ - **bottle**
  - **jinja2**
+ - **markupsafe**
  - **pycurl** (python-curl)
- - **simplejson** (only for python 2.5)
+ - **rename_process**
+ - **setuptools**
  - **thrift**
+ - **wsgiserver**
 
-Some plugins want additional packages, install them only when needed.
+Some addition features require additional packages.
+
 
 ### Optional ###
 
  - **BeautifulSoup**
- - **bjoern** (<https://github.com/jonashaag/bjoern>) for a better webapp experience
- - **feedparser**
- - **jsengine** (spidermonkey, ossp-js, pyv8, rhino, node.js) needed by several hosters (ex.: ClickNLoad)
- - **pycrypto** for RSDF/CCF/DLC support
- - **pyOpenSSL** for SSL connection support
- - **tesseract**, **python-pil** (python-imaging) for automatic captcha recognition support
+ - **PIL** (python-imaging) *required for captcha recognition support*
+ - **colorama** *required for colored terminal under Windows*
+ - **colorlog** *required for colored log*
+ - **bjoern** (<https://github.com/jonashaag/bjoern>) *required for a better webui experience*
+ - **feedparser** *required for RSS parsing support*
+ - **node.js** or **ossp-js** or **pyv8** or **rhino** or **spidermonkey** (JS Engines) *required by plugins like ClickNLoad to work correctly*
+ - **pyOpenSSL** *required for SSL connection support*
+ - **pycrypto** *required for RSDF/CCF/DLC container decrypting*
+ - **simplejson** *required for JSON speedup*
+ - **tesseract** *required for captcha ocr support*
 
 You can install them using the Python Package Index:
 
     pip install <package-name>
 
-Indeed, pre-built pyLoad packages have all yet included, so manual install is required only when you get pyLoad source code.
+
+### Included ###
+
+ - **Beaker**
+ - **BeautifulSoup**
+ - **Getch**
+ - **MultipartPostHandler**
+ - **SafeEval**
+ - **bottle**
+ - **colorama**
+ - **colorlog**
+ - **feedparser**
+ - **jinja2**
+ - **markupsafe**
+ - **pycurl**
+ - **rename_process**
+ - **setuptools**
+ - **simplejson**
+ - **thrift**
+ - **wsgiserver**
+
+> **Note:**
+Pre-build packages should yet include all.
 
 
 Usage
------------
+-----
 
 ### First start ###
 
