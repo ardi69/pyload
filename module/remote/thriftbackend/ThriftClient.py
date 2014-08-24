@@ -5,11 +5,6 @@ from socket import error
 from os.path import join
 from traceback import print_exc
 
-try:
-    import thrift
-except ImportError:
-    sys.path.append(join(pypath, "module", "lib"))
-
 from thrift.transport import TTransport
 #from thrift.transport.TZlibTransport import TZlibTransport
 from module.remote.thriftbackend.Socket import Socket

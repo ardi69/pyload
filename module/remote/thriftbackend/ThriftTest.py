@@ -3,8 +3,6 @@
 import sys
 from os.path import join
 
-sys.path.append(join(pypath, "module", "lib"))
-
 from module.remote.thriftbackend.thriftgen.pyload import Pyload
 from module.remote.thriftbackend.thriftgen.pyload.ttypes import *
 from module.remote.thriftbackend.Socket import Socket

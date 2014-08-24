@@ -2,10 +2,8 @@
 
 import inspect
 import sys
-from os.path import abspath, join
 
-sys.path.append(join(pypath, "module", "lib"))
-sys.path.append(join(pypath, "module", "remote"))
+from os.path import abspath, join
 
 from module.remote.thriftbackend.thriftgen.pyload import ttypes
 from module.remote.thriftbackend.thriftgen.pyload.Pyload import Iface

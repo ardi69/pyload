@@ -13,8 +13,10 @@
 # serve to show the default.
 
 import sys, os
-from os.path import join
 
+from os.path import abspath, join
+
+pypath = abspath(join(__file__, "..", "..", "..", ".."))
 sys.path.append(pypath)
 sys.path.append(join(pypath, "module", "lib"))
 

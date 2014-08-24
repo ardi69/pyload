@@ -2,18 +2,16 @@
 
 CURRENT_VERSION = '0.4.10'
 
-
 import __builtin__
 import sys
 
-from os.path import abspath, exists, isfile, join
+from os.path import abspath, exists, expanduser, isfile, join
 
 __builtin__.owd = abspath("")  # original working directory
-__builtin__.pypath = abspath(join(__file__, "..", "..", ".."))
+__builtin__.pypath = abspath(join(__file__, "..", ".."))
 __builtin__.homedir = expanduser("~")
 
 if __builtin__.homedir == "~" and sys.platform == 'nt':
-
     import ctypes
 
     CSIDL_APPDATA = 26
@@ -39,6 +37,8 @@ except:
         __builtin__.configdir = join(__builtin__.homedir, ".pyload")
     else:
         __builtin__.configdir = join(__builtin__.homedir, "pyload")
+
+sys.path.append(join(pypath, "module", "lib"))
 
 
 from getopt import getopt, GetoptError
