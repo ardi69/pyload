@@ -13,11 +13,10 @@
 # Common user directories
 .*/
 __pycache__/
-/Downloads/
-/Logs/
-/pyload/
-/tmp/
-/userplugins/
+Downloads/
+Logs/
+tmp/
+userplugins/
 
 # Common user files
 *.backup
@@ -28,8 +27,8 @@ __pycache__/
 /*.txt
 /*.xml
 /*.zip
-/module/config/core.xml
-/module/config/plugin.xml
+/pyload/config/core.xml
+/pyload/config/plugin.xml
 
 # Common MacOS & Windows files
 *.DS_Store
@@ -45,7 +44,7 @@ ssl.key
 *.mo
 *.so
 *.py[cod]
-!/module/plugins/container/DLC_*.py[cod]
+!/pyload/plugins/container/DLC_*.py[cod]
 
 # Installer files
 .installed.cfg
@@ -56,7 +55,7 @@ pip-log.txt
 .tox
 nosetests.xml
 
-# EGG
+# Python Eggs
 *.egg
 *.egg-info
 develop-eggs
@@ -80,5 +79,6 @@ eggs
 *.pydevproject
 *.rej
 /docs/_build/
+/module/
 DLC_*.py
 paver-minilib.zip
