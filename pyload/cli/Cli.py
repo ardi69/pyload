@@ -2,44 +2,10 @@
 
 from __future__ import with_statement
 
-import __builtin__
 import os
 import sys
 
-from os.path import abspath, basename, exists, expanduser, isfile, join
-
-__builtin__.owd = abspath("")  # original working directory
-__builtin__.pypath = abspath(join(__file__, "..", ".."))
-__builtin__.homedir = expanduser("~")
-
-if __builtin__.homedir == "~" and os.name == "nt":
-    import ctypes
-
-    CSIDL_APPDATA = 26
-    _SHGetFolderPath = ctypes.windll.shell32.SHGetFolderPathW
-    _SHGetFolderPath.argtypes = [ctypes.wintypes.HWND,
-                                 ctypes.c_int,
-                                 ctypes.wintypes.HANDLE,
-                                 ctypes.wintypes.DWORD, ctypes.wintypes.LPCWSTR]
-
-    path_buf = ctypes.wintypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-    result = _SHGetFolderPath(0, CSIDL_APPDATA, 0, 0, path_buf)
-
-    __builtin__.homedir = path_buf.value
-
-try:
-    p = join(pypath, "pyload", "config", "configdir")
-    if exists(p):
-        f = open(p, "rb")
-        __builtin__.configdir = f.read().strip()
-        f.close()
-except:
-    if os.name == "posix":
-        __builtin__.configdir = join(__builtin__.homedir, ".pyload")
-    else:
-        __builtin__.configdir = join(__builtin__.homedir, "pyload")
-
-sys.path.append(join(pypath, "pyload", "lib"))
+from os.path import basename, exists, join
 
 
 from codecs import getwriter
@@ -53,9 +19,9 @@ from Getch import Getch
 from rename_process import renameProcess
 
 from pyload.config.ConfigParser import ConfigParser
-import pyload.utils.pylgettext as gettext
+from gettext import gettext
 
-from pyload.Api import Destination
+from pyload.api import Destination
 from pyload.cli import AddPackage, ManageFiles
 from pyload.utils.printer import *
 from pyload.remote.thriftbackend.ThriftClient import ThriftClient, NoConnection, NoSSL, WrongLogin, ConnectionClosed
@@ -144,7 +110,7 @@ class Cli:
 
 
     def refresh(self):
-        """refresh screen"""
+        """ refresh screen """
 
         println(1, blue("py") + yellow("Load") + white(_(" Command Line Interface")))
         println(2, "")
@@ -509,7 +475,7 @@ def main():
 
     if configFile.has_section("cli"):
         for opt in configFile.items("cli"):
-            config[opt[0]] = opt[1]
+            config[opt[0]] = opt[1]  #@TODO: recheck
 
     gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
     translation = gettext.translation("Cli", join(pypath, "locale"),
