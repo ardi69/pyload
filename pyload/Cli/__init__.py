@@ -5,7 +5,6 @@ from __future__ import with_statement
 import os
 import sys
 
-from codecs import getwriter
 from getopt import GetoptError, getopt
 from os import _exit, path
 from threading import Thread, Lock
@@ -16,17 +15,12 @@ from Getch import Getch
 from rename_process import renameProcess
 
 from pyload.config.ConfigParser import ConfigParser
-from gettext import gettext
 
 from pyload.api import Destination
-from pyload.cli import AddPackage, ManageFiles
+from pyload.Cli import AddPackage, ManageFiles
 from pyload.utils.printer import *
 from pyload.remote.thriftbackend.ThriftClient import ThriftClient, NoConnection, NoSSL, WrongLogin, ConnectionClosed
-from pyload.utils import formatSize, decode
-
-
-enc = "cp850" if os.name == "nt" else "utf8"
-sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
+from pyload.utils import decode, format_size, format_speed, get_console_encoding, load_translation
 
 
 class Cli:
@@ -51,8 +45,8 @@ class Cli:
             self.inputHandler = self
 
             os.system("clear")
-            println(1, blue("py") + yellow("Load") + white(_(" Command Line Interface")))
-            println(2, "")
+            overline(1, blue("py") + yellow("Load") + white(_(" Command Line Interface")))
+            overline(2, "")
 
             self.thread = RefreshThread(self)
             self.thread.start()
@@ -73,26 +67,26 @@ class Cli:
             inp = self.getch.impl()
             if ord(inp) == 3:
                 os.system("clear")
-                sys.exit() # ctrl + c
-            elif ord(inp) == 13: #enter
+                sys.exit()  #: ctrl + c
+            elif ord(inp) == 13:  #: enter
                 try:
                     self.lock.acquire()
                     self.inputHandler.onEnter(self.input)
 
                 except Exception, e:
-                    println(2, red(e))
+                    overline(2, red(e))
                 finally:
                     self.lock.release()
 
             elif ord(inp) == 127:
-                self.input = self.input[:-1] #backspace
+                self.input = self.input[:-1]  #: backspace
                 try:
                     self.lock.acquire()
                     self.inputHandler.onBackSpace()
                 finally:
                     self.lock.release()
 
-            elif ord(inp) == 27: #ugly symbol
+            elif ord(inp) == 27:  #: ugly symbol
                 pass
             else:
                 self.input += inp
@@ -109,13 +103,13 @@ class Cli:
     def refresh(self):
         """ refresh screen """
 
-        println(1, blue("py") + yellow("Load") + white(_(" Command Line Interface")))
-        println(2, "")
+        overline(1, blue("py") + yellow("Load") + white(_(" Command Line Interface")))
+        overline(2, "")
 
         self.lock.acquire()
 
         self.menuline = self.headerHandler.renderHeader(3) + 1
-        println(self.menuline - 1, "")
+        overline(self.menuline - 1, "")
         self.inputline = self.bodyHandler.renderBody(self.menuline)
         self.renderFooter(self.inputline)
 
@@ -134,36 +128,36 @@ class Cli:
         """ prints download status """
         #print updated information
         #        print "\033[J" #clear screen
-        #        self.println(1, blue("py") + yellow("Load") + white(_(" Command Line Interface")))
-        #        self.println(2, "")
-        #        self.println(3, white(_("%s Downloads:") % (len(data))))
+        #        self.overline(1, blue("py") + yellow("Load") + white(_(" Command Line Interface")))
+        #        self.overline(2, "")
+        #        self.overline(3, white(_("%s Downloads:") % (len(data))))
 
         data = self.client.statusDownloads()
         speed = 0
 
-        println(line, white(_("%s Downloads:") % (len(data))))
+        overline(line, white(_("%s Downloads:") % (len(data))))
         line += 1
 
         for download in data:
-            if download.status == 12:  # downloading
+            if download.status == 12:  #: downloading
                 percent = download.percent
                 z = percent / 4
                 speed += download.speed
-                println(line, cyan(download.name))
+                overline(line, cyan(download.name))
                 line += 1
-                println(line,
+                overline(line,
                     blue("[") + yellow(z * "#" + (25 - z) * " ") + blue("] ") + green(str(percent) + "%") + _(
-                        " Speed: ") + green(formatSize(download.speed) + "/s") + _(" Size: ") + green(
+                        " Speed: ") + green(format_speed(download.speed)) + _(" Size: ") + green(
                         download.format_size) + _(" Finished in: ") + green(download.format_eta) + _(
                         " ID: ") + green(download.fid))
                 line += 1
             if download.status == 5:
-                println(line, cyan(download.name))
+                overline(line, cyan(download.name))
                 line += 1
-                println(line, _("waiting: ") + green(download.format_wait))
+                overline(line, _("waiting: ") + green(download.format_wait))
                 line += 1
 
-        println(line, "")
+        overline(line, "")
         line += 1
         status = self.client.statusServer()
         if status.pause:
@@ -171,36 +165,36 @@ class Cli:
         else:
             paused = _("Status:") + " " + red(_("running"))
 
-        println(line,"%s %s: %s %s: %s %s: %s" % (
-            paused, _("total Speed"), red(formatSize(speed) + "/s"), _("Files in queue"), red(
+        overline(line,"%s %s: %s %s: %s %s: %s" % (
+            paused, _("total Speed"), red(format_speed(speed)), _("Files in queue"), red(
                 status.queue), _("Total"), red(status.total)))
 
         return line + 1
 
     def renderBody(self, line):
         """ prints initial menu """
-        println(line, white(_("Menu:")))
-        println(line + 1, "")
-        println(line + 2, mag("1.") + _(" Add Links"))
-        println(line + 3, mag("2.") + _(" Manage Queue"))
-        println(line + 4, mag("3.") + _(" Manage Collector"))
-        println(line + 5, mag("4.") + _(" (Un)Pause Server"))
-        println(line + 6, mag("5.") + _(" Kill Server"))
-        println(line + 7, mag("6.") + _(" Quit"))
+        overline(line, white(_("Menu:")))
+        overline(line + 1, "")
+        overline(line + 2, mag("1.") + _(" Add Links"))
+        overline(line + 3, mag("2.") + _(" Manage Queue"))
+        overline(line + 4, mag("3.") + _(" Manage Collector"))
+        overline(line + 5, mag("4.") + _(" (Un)Pause Server"))
+        overline(line + 6, mag("5.") + _(" Kill Server"))
+        overline(line + 7, mag("6.") + _(" Quit"))
 
         return line + 8
 
     def renderFooter(self, line):
         """ prints out the input line with input """
-        println(line, "")
+        overline(line, "")
         line += 1
 
-        println(line, white(" Input: ") + decode(self.input))
+        overline(line, white(" Input: ") + decode(self.input))
 
         #clear old output
         if line < self.lastLowestLine:
             for i in xrange(line + 1, self.lastLowestLine + 1):
-                println(i, "")
+                overline(i, "")
 
         self.lastLowestLine = line
 
@@ -246,10 +240,10 @@ class Cli:
                 print "No downloads running."
 
             for download in files:
-                if download.status == 12:  # downloading
+                if download.status == 12:  #: downloading
                     print print_status(download)
-                    print "\tDownloading: %s @ %s/s\t %s (%s%%)" % (
-                        download.format_eta, formatSize(download.speed), formatSize(download.size - download.bleft),
+                    print "\tDownloading: %s @ %s\t %s (%s%%)" % (
+                        download.format_eta, format_speed(download.speed), format_size(download.size - download.bleft),
                         download.percent)
                 elif download.status == 5:
                     print print_status(download)
@@ -347,7 +341,7 @@ class Cli:
                 else:
                     check = "Unknown"
 
-                print "%-45s %-12s\t %-15s\t %s" % (status.name, formatSize(status.size), status.plugin, check)
+                print "%-45s %-12s\t %-15s\t %s" % (status.name, format_size(status.size), status.plugin, check)
 
             if result.rid == -1:
                 break
@@ -370,31 +364,34 @@ class RefreshThread(Thread):
                 print _("pyLoad was terminated")
                 _exit(0)
             except Exception, e:
-                println(2, red(str(e)))
+                overline(2, red(str(e)))
                 self.cli.reset()
                 print_exc()
 
 
 def print_help(config):
+    options = [
+        ("-i", "--interactive", _("Start in interactive mode")),
+        ("-u", "--username=", _("Specify Username")),
+        ("-x", "--pw=", _("Specify Password")),
+        ("-a", "--address=", _("Specify address (current=%s)") % yellow(config['addr'])),
+        ("-p", "--port=", _("Specify port (current=%s)") % yellow(config['port'])),
+        ("-l", "--language=", _("Set user interface language (current=%s)") % yellow(config['language'])),
+        ("-h", "--help", _("Display this help screen")),
+        ("-c", "--commands", _("List all available commands")),
+    ]
     print
-    print "pyLoad CLI Copyright (c) 2008-2014 the pyLoad Team"
+
+    print "Usage:", red("python"), white("pyload-cli.py"), yellow("[options]"), green("[command]")
     print
-    print "Usage: [python] pyload-cli.py [options] [command]"
-    print
-    print "<Commands>"
+
+    print green("<Commands>")
     print "See pyload-cli.py -c for a complete listing."
     print
-    print "<Options>"
-    print "  -i, --interactive", " Start in interactive mode"
-    print
-    print "  -u, --username=", " " * 2, "Specify Username"
-    print "  --pw=<password>", " " * 2, "Password"
-    print "  -a, --address=", " " * 3, "Specify address (current=%s)" % config['addr']
-    print "  -p, --port", " " * 7, "Specify port (current=%s)" % config['port']
-    print
-    print "  -l, --language", " " * 3, "Set user interface language (current=%s)" % config['language']
-    print "  -h, --help", " " * 7, "Display this help screen"
-    print "  -c, --commands", " " * 3, "List all available commands"
+
+    print yellow("<Options>")
+    for o1, o2, d in options:
+        print "  %-2s %-43s %s" % (white(o1), cyan(o2), d)
     print
 
 
@@ -425,32 +422,35 @@ def print_status(download):
 
 
 def print_commands():
-    commands = [("status", _("Prints server status")),
+    commands = [
+        ("status", _("Prints server status")),
         ("queue", _("Prints downloads in queue")),
         ("collector", _("Prints downloads in collector")),
-        ("add <name> <link1> <link2>...", _("Adds package to queue")),
-        ("add_coll <name> <link1> <link2>...", _("Adds package to collector")),
-        ("del_file <fid> <fid2>...", _("Delete Files from Queue/Collector")),
-        ("del_package <pid> <pid2>...", _("Delete Packages from Queue/Collector")),
-        ("move <pid> <pid2>...", _("Move Packages from Queue to Collector or vice versa")),
-        ("restart_file <fid> <fid2>...", _("Restart files")),
-        ("restart_package <pid> <pid2>...", _("Restart packages")),
+        ("add <name> <link1> <link2> ...", _("Adds package to queue")),
+        ("add_coll <name> <link1> <link2> ...", _("Adds package to collector")),
+        ("del_file <fid> <fid2> ...", _("Delete Files from Queue/Collector")),
+        ("del_package <pid> <pid2> ...", _("Delete Packages from Queue/Collector")),
+        ("move <pid> <pid2> ...", _("Move Packages from Queue to Collector or vice versa")),
+        ("restart_file <fid> <fid2> ...", _("Restart files")),
+        ("restart_package <pid> <pid2> ...", _("Restart packages")),
         ("check <container|url> ...", _("Check online status, works with local container")),
         ("check_container path", _("Checks online status of a container file")),
         ("pause", _("Pause the server")),
-        ("unpause", _("continue downloads")),
+        ("unpause", _("Continue downloads")),
         ("toggle", _("Toggle pause/unpause")),
-        ("kill", _("kill server")), ]
-
-    print _("List of commands:")
+        ("kill", _("Kill server")),
+    ]
     print
-    for c in commands:
-        print "%-35s %s" % c
+
+    print green(_("List of commands:"))
+    for c, d in commands:
+        print "  %-60s %s" % (white(c), d)
+    print
 
 
 def writeConfig(opts):
     try:
-        with open(path.join(homedir, ".pyload-cli"), "w") as cfgfile:
+        with open(path.join(configdir, "cli"), "w") as cfgfile:
             cfgfile.write("[cli]")
             for opt in opts:
                 cfgfile.write("%s=%s\n" % (opt, opts[opt]))
@@ -459,65 +459,67 @@ def writeConfig(opts):
 
 
 def main():
+
     config = {'addr': "127.0.0.1", 'port': "7227", 'language': "en"}
+
     try:
         config['language'] = os.environ['LANG'][0:2]
     except:
         pass
 
-    if (not path.exists(path.join(pypath, "locale", config['language']))) or config['language'] == "":
+    if not config['language'] or not exists(join(pypath, "locale", config['language'])):
         config['language'] = "en"
 
     configFile = ConfigParser()
-    configFile.read(path.join(homedir, ".pyload-cli"))
+    configFile.read(path.join(configdir, "cli"))
 
     if configFile.has_section("cli"):
         for opt in configFile.items("cli"):
             config[opt[0]] = opt[1]  #@TODO: recheck
 
-    gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
-    translation = gettext.translation("Cli", path.join(pypath, "locale"),
-        languages=[config['language'], "en"], fallback=True)
-    translation.install(unicode=True)
+    load_translation("pyload-cli", config['language'])
 
     interactive = False
     command = None
     username = ""
     password = ""
 
-    shortOptions = 'iu:p:a:hcl:'
-    longOptions = ['interactive', "username=", "pw=", "address=", "port=", "help", "commands", "language="]
+    shortOptions = "iu:x:a:p:l:hc"
+    longOptions = ["interactive", "username=", "pw=", "address=", "port=", "help", "commands", "language="]
 
     try:
         opts, extraparams = getopt(sys.argv[1:], shortOptions, longOptions)
-        for option, params in opts:
-            if option in ("-i", "--interactive"):
-                interactive = True
-            elif option in ("-u", "--username"):
-                username = params
-            elif option in ("-a", "--address"):
-                config['addr'] = params
-            elif option in ("-p", "--port"):
-                config['port'] = params
-            elif option in ("-l", "--language"):
-                config['language'] = params
-                gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
-                translation = gettext.translation("Cli", path.join(pypath, "locale"),
-                    languages=[config['language'], "en"], fallback=True)
-                translation.install(unicode=True)
-            elif option in ("-h", "--help"):
-                print_help(config)
-                sys.exit()
-            elif option in ("--pw"):
-                password = params
-            elif option in ("-c", "--comands"):
-                print_commands()
-                sys.exit()
-
     except GetoptError:
         print 'Unknown Argument(s) "%s"' % " ".join(sys.argv[1:])
         print_help(config)
         sys.exit()
+    else:
+        for option, params in opts:
+            if option in ("-i", "--interactive"):
+                interactive = True
+
+            elif option in ("-u", "--username"):
+                username = params
+
+            elif option in ("-a", "--address"):
+                config['addr'] = params
+
+            elif option in ("-p", "--port"):
+                config['port'] = params
+
+            elif option in ("-l", "--language"):
+                load_translation("pyload-cli", config['language'])
+
+            elif option in ("-h", "--help"):
+                print_help(config)
+                sys.exit()
+
+            elif option in ("-x", "--pw"):
+                password = params
+
+            elif option in ("-c", "--comands"):
+                print_commands()
+                sys.exit()
 
     if len(extraparams) >= 1:
         command = extraparams

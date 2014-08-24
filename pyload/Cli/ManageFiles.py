@@ -3,7 +3,7 @@
 from itertools import islice
 from time import time
 
-from pyload.cli.Handler import Handler
+from pyload.Cli.Handler import Handler
 from pyload.utils.printer import *
 
 from pyload.api import Destination, PackageData
@@ -77,24 +77,24 @@ class ManageFiles(Handler):
 
     def renderBody(self, line):
         if self.package < 0:
-            println(line, white(_("Manage Packages:")))
+            overline(line, white(_("Manage Packages:")))
         else:
-            println(line, white((_("Manage Links:"))))
+            overline(line, white((_("Manage Links:"))))
         line += 1
 
         if self.mode:
             if self.mode == "m":
-                println(line, _("What do you want to move?"))
+                overline(line, _("What do you want to move?"))
             elif self.mode == "d":
-                println(line, _("What do you want to delete?"))
+                overline(line, _("What do you want to delete?"))
             elif self.mode == "r":
-                println(line, _("What do you want to restart?"))
+                overline(line, _("What do you want to restart?"))
 
-            println(line + 1, "Enter single number, comma seperated numbers or ranges. eg. 1, 2, 3 or 1-3.")
+            overline(line + 1, "Enter single number, comma seperated numbers or ranges. eg. 1, 2, 3 or 1-3.")
             line += 2
         else:
-            println(line, _("Choose what yout want to do or enter package number."))
-            println(line + 1, ("%s - %%s, %s - %%s, %s - %%s" % (mag("d"), mag("m"), mag("r"))) % (
+            overline(line, _("Choose what yout want to do or enter package number."))
+            overline(line + 1, ("%s - %%s, %s - %%s, %s - %%s" % (mag("d"), mag("m"), mag("r"))) % (
             _("delete"), _("move"), _("restart")))
             line += 2
 
@@ -104,13 +104,13 @@ class ManageFiles(Handler):
             i = 0
             for value in islice(pack, self.pos, self.pos + 5):
                 try:
-                    println(line, mag(str(value.pid)) + ": " + value.name)
+                    overline(line, mag(str(value.pid)) + ": " + value.name)
                     line += 1
                     i += 1
                 except Exception, e:
                     pass
             for _ in xrange(5 - i):
-                println(line, "")
+                overline(line, "")
                 line += 1
         else:
             #print links info
@@ -118,18 +118,18 @@ class ManageFiles(Handler):
             i = 0
             for value in islice(pack.links, self.pos, self.pos + 5):
                 try:
-                    println(line, mag(value.fid) + ": %s | %s | %s" % (
+                    overline(line, mag(value.fid) + ": %s | %s | %s" % (
                     value.name, value.statusmsg, value.plugin))
                     line += 1
                     i += 1
                 except Exception, e:
                     pass
             for _ in xrange(5 - i):
-                println(line, "")
+                overline(line, "")
                 line += 1
 
-        println(line, mag("p") + _(" - previous") + " | " + mag("n") + _(" - next"))
-        println(line + 1, mag("0.") + _(" back to main menu"))
+        overline(line, mag("p") + _(" - previous") + " | " + mag("n") + _(" - next"))
+        overline(line + 1, mag("0.") + _(" back to main menu"))
 
         return line + 2
 

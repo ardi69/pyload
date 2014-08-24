@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pyload.cli.Handler import Handler
+from pyload.Cli.Handler import Handler
 from pyload.utils.printer import *
 
 
@@ -28,22 +28,22 @@ class AddPackage(Handler):
             self.setInput()
 
     def renderBody(self, line):
-        println(line, white(_("Add Package:")))
-        println(line + 1, "")
+        overline(line, white(_("Add Package:")))
+        overline(line + 1, "")
         line += 2
 
         if not self.name:
-            println(line, _("Enter a name for the new package"))
-            println(line + 1, "")
+            overline(line, _("Enter a name for the new package"))
+            overline(line + 1, "")
             line += 2
         else:
-            println(line, _("Package: %s") % self.name)
-            println(line + 1, _("Parse the links you want to add."))
-            println(line + 2, _("Type %s when done.") % mag("END"))
-            println(line + 3, _("Links added: ") + mag(len(self.urls)))
+            overline(line, _("Package: %s") % self.name)
+            overline(line + 1, _("Parse the links you want to add."))
+            overline(line + 2, _("Type %s when done.") % mag("END"))
+            overline(line + 3, _("Links added: ") + mag(len(self.urls)))
             line += 4
 
-        println(line, "")
-        println(line + 1, mag("0.") + _(" back to main menu"))
+        overline(line, "")
+        overline(line + 1, mag("0.") + _(" back to main menu"))
 
         return line + 2
