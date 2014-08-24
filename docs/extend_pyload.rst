@@ -11,3 +11,4 @@ every detail of the pyLoad core. However you should have some basic knowledge of
 
     write_addons.rst
     write_plugins.rst
+    write_scripts.rst

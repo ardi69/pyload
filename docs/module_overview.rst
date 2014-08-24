@@ -1,17 +1,19 @@
+.. _module_overview:
+
 Module Overview
 ===============
 
 You can find an overview of some important classes here:
 
 .. autosummary::
-   :toctree: module
+   :toctree: pyload
 
-   module.Api.Api
-   module.plugins.Base.Base
-   module.plugins.Base.Plugin
-   module.plugins.Crypter.Crypter
-   module.plugins.Account.Account
-   module.plugins.Addon.Addon
-   module.manager.AddonManager.AddonManager
-   module.datatype.PyFile.PyFile
-   module.datatype.PyPackage.PyPackage
+   pyload.Api.Api
+   pyload.plugins.Base.Base
+   pyload.plugins.Base.Plugin
+   pyload.plugins.Crypter.Crypter
+   pyload.plugins.Account.Account
+   pyload.plugins.Addon.Addon
+   pyload.manager.AddonManager.AddonManager
+   pyload.datatype.PyFile.PyFile
+   pyload.datatype.PyPackage.PyPackage
