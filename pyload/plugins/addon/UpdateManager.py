@@ -16,7 +16,7 @@ from pyload.utils import safe_join, versiontuple
 class UpdateManager(Addon):
     __name__ = "UpdateManager"
     __type__ = "addon"
-    __version__ = "0.35"
+    __version__ = "0.36"
 
     __config__ = [("activated", "bool", "Activated", True),
                   ("mode", "pyLoad + plugins;plugins only", "Check updates for", "pyLoad + plugins"),
@@ -52,13 +52,14 @@ class UpdateManager(Addon):
 
     def activate(self):
         self.pluginConfigChanged(self.__name__, "interval", self.getConfig("interval"))
-        self.pluginConfigChanged(self.__name__, "reloadplugins", self.getConfig("reloadplugins"))
+        self.scheduler.addJob(10,
+                              self.pluginConfigChanged(self.__name__, "reloadplugins", self.getConfig("reloadplugins")),
+                              threaded=False)
 
     def deactivate(self):
         self.pluginConfigChanged(self.__name__, "reloadplugins", False)
 
     def setup(self):
-        self.scheduler = self.core.scheduler
         self.cb2 = None
         self.interval = self.MIN_INTERVAL
         self.updating = False
@@ -105,7 +106,7 @@ class UpdateManager(Addon):
 
     def server_request(self):
         try:
-            return getURL(self.SERVER_URL, get={'v': self.core.api.getServerVersion()}).splitlines()
+            return getURL(self.SERVER_URL, get={'v': self.api.getServerVersion()}).splitlines()
         except:
             self.logWarning(_("Unable to contact server to get updates"))
 
@@ -114,7 +115,7 @@ class UpdateManager(Addon):
         self.updating = True
         status = self.update(onlyplugin=True if self.getConfig("mode") == "plugins only" else False)
         if status == 2:
-            self.core.api.restart()
+            self.api.restart()
         else:
             self.updating = False
 
