@@ -2,15 +2,15 @@
 
 from bottle import request, HTTPError, redirect
 
-from pyload.Api import has_permission, PERMS, ROLE
-from pyload.webui.Webui import env, THEME
+from pyload.api import has_permission, PERMS, ROLE
+from pyload.webui import ENV, THEME
 
 
 def render_to_response(file, args={}, proc=[]):
     for p in proc:
         args.update(p())
     path = "%s/tml/%s" % (THEME, file)
-    return env.get_template(path).render(**args)
+    return ENV.get_template(path).render(**args)
 
 
 def parse_permissions(session):
@@ -37,7 +37,7 @@ def permlist():
 
 
 def get_permission(perms, p):
-    """Returns a dict with permission key
+    """ Returns a dict with permission key
 
     :param perms: dictionary
     :param p:  bits
@@ -47,7 +47,7 @@ def get_permission(perms, p):
 
 
 def set_permission(perms):
-    """generates permission bits from dictionary
+    """ generates permission bits from dictionary
 
     :param perms: dict
     """

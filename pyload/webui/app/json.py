@@ -6,10 +6,8 @@ from shutil import copyfileobj
 
 from bottle import route, request, HTTPError
 
-from pyload.webui.Webui import PYLOAD
-
-from pyload.webui.common import login_required, render_to_response
-
+from pyload.webui import API
+from pyload.webui.app.utils import login_required, render_to_response
 from pyload.utils import decode, formatSize, toDict
 
 
@@ -30,8 +28,8 @@ def get_sort_key(item):
 @login_required('LIST')
 def status():
     try:
-        status = toDict(PYLOAD.statusServer())
-        status['captcha'] = PYLOAD.isCaptchaWaiting()
+        status = toDict(API.statusServer())
+        status['captcha'] = API.isCaptchaWaiting()
         return status
     except:
         return HTTPError()
@@ -42,7 +40,7 @@ def status():
 @login_required('LIST')
 def links():
     try:
-        links = [toDict(x) for x in PYLOAD.statusDownloads()]
+        links = [toDict(x) for x in API.statusDownloads()]
         ids = []
         for link in links:
             ids.append(link['fid'])
@@ -69,12 +67,12 @@ def links():
 def packages():
     print "/json/packages"
     try:
-        data = PYLOAD.getQueue()
+        data = API.getQueue()
 
         for package in data:
             package['links'] = []
-            for file in PYLOAD.get_package_files(package['id']):
-                package['links'].append(PYLOAD.get_file_info(file))
+            for file in API.get_package_files(package['id']):
+                package['links'].append(API.get_file_info(file))
 
         return data
 
@@ -86,7 +84,7 @@ def packages():
 @login_required('LIST')
 def package(id):
     try:
-        data = toDict(PYLOAD.getPackageData(id))
+        data = toDict(API.getPackageData(id))
         data['links'] = [toDict(x) for x in data['links']]
 
         for pyfile in data['links']:
@@ -122,7 +120,7 @@ def package(id):
 def package_order(ids):
     try:
         pid, pos = ids.split("|")
-        PYLOAD.orderPackage(int(pid), int(pos))
+        API.orderPackage(int(pid), int(pos))
         return {'response': "success"}
     except:
         return HTTPError()
@@ -132,7 +130,7 @@ def package_order(ids):
 @login_required('DELETE')
 def abort_link(id):
     try:
-        PYLOAD.stopDownloads([id])
+        API.stopDownloads([id])
         return {'response': "success"}
     except:
         return HTTPError()
@@ -143,7 +141,7 @@ def abort_link(id):
 def link_order(ids):
     try:
         pid, pos = ids.split("|")
-        PYLOAD.orderFile(int(pid), int(pos))
+        API.orderFile(int(pid), int(pos))
         return {'response': "success"}
     except:
         return HTTPError()
@@ -165,7 +163,7 @@ def add_package():
         if not name or name == "New Package":
             name = f.name
 
-        fpath = join(PYLOAD.getConfigValue("general", "download_folder"), "tmp_" + f.filename)
+        fpath = join(API.getConfigValue("general", "download_folder"), "tmp_" + f.filename)
         destination = open(fpath, 'wb')
         copyfileobj(f.file, destination)
         destination.close()
@@ -178,18 +176,18 @@ def add_package():
     links = map(lambda x: x.strip(), links)
     links = filter(lambda x: x != "", links)
 
-    pack = PYLOAD.addPackage(name, links, queue)
+    pack = API.addPackage(name, links, queue)
     if pw:
         pw = pw.decode("utf8", "ignore")
         data = {'password': pw}
-        PYLOAD.setPackageData(pack, data)
+        API.setPackageData(pack, data)
 
 
 @route('/json/move_package/<dest:int>/<id:int>')
 @login_required('MODIFY')
 def move_package(dest, id):
     try:
-        PYLOAD.movePackage(dest, id)
+        API.movePackage(dest, id)
         return {'response': "success"}
     except:
         return HTTPError()
@@ -204,7 +202,7 @@ def edit_package():
                 'folder': request.forms.get("pack_folder").decode("utf8", "ignore"),
                 'password': request.forms.get("pack_pws").decode("utf8", "ignore")}
 
-        PYLOAD.setPackageData(id, data)
+        API.setPackageData(id, data)
         return {'response': "success"}
 
     except:
@@ -217,11 +215,11 @@ def edit_package():
 def set_captcha():
     if request.environ.get('REQUEST_METHOD', "GET") == "POST":
         try:
-            PYLOAD.setCaptchaResult(request.forms['cap_id'], request.forms['cap_result'])
+            API.setCaptchaResult(request.forms['cap_id'], request.forms['cap_result'])
         except:
             pass
 
-    task = PYLOAD.getCaptchaTask()
+    task = API.getCaptchaTask()
 
     if task.tid >= 0:
         src = "data:image/%s;base64,%s" % (task.type, task.data)
@@ -236,9 +234,9 @@ def set_captcha():
 def load_config(category, section):
     conf = None
     if category == "general":
-        conf = PYLOAD.getConfigDict()
+        conf = API.getConfigDict()
     elif category == "plugin":
-        conf = PYLOAD.getPluginConfigDict()
+        conf = API.getPluginConfigDict()
 
     for key, option in conf[section].iteritems():
         if key in ("desc", "outline"):
@@ -264,7 +262,7 @@ def save_config(category):
         if category == "general":
             category = "core"
 
-        PYLOAD.setConfigValue(section, option, decode(value), category)
+        API.setConfigValue(section, option, decode(value), category)
 
 
 @route('/json/add_account', method='POST')
@@ -274,7 +272,7 @@ def add_account():
     password = request.POST['account_password']
     type = request.POST['account_type']
 
-    PYLOAD.updateAccount(type, login, password)
+    API.updateAccount(type, login, password)
 
 
 @route('/json/update_accounts', method='POST')
@@ -294,14 +292,14 @@ def update_accounts():
             continue
 
         if action == "password":
-            PYLOAD.updateAccount(plugin, user, value)
+            API.updateAccount(plugin, user, value)
         elif action == "time" and "-" in value:
-            PYLOAD.updateAccount(plugin, user, options={'time': [value]})
+            API.updateAccount(plugin, user, options={'time': [value]})
         elif action == "limitdl" and value.isdigit():
-            PYLOAD.updateAccount(plugin, user, options={'limitDL': [value]})
+            API.updateAccount(plugin, user, options={'limitDL': [value]})
         elif action == "delete":
             deleted.append((plugin,user))
-            PYLOAD.removeAccount(plugin, user)
+            API.removeAccount(plugin, user)
 
 @route('/json/change_password', method='POST')
 def change_password():
@@ -310,6 +308,6 @@ def change_password():
     oldpw = request.POST['login_current_password']
     newpw = request.POST['login_new_password']
 
-    if not PYLOAD.changePassword(user, oldpw, newpw):
+    if not API.changePassword(user, oldpw, newpw):
         print "Wrong password"
         return HTTPError()

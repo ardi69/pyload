@@ -1,21 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,
-    or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, see <http://www.gnu.org/licenses/>.
-
-    @author: RaNaN
-"""
 from datetime import datetime
 from operator import itemgetter, attrgetter
 
@@ -29,17 +13,16 @@ from urllib import unquote
 
 from bottle import route, static_file, request, response, redirect, HTTPError, error
 
-from pyload.webui.Webui import PYLOAD, THEME, THEME_DIR, SETUP, env
+from pyload.webui import API, ENV, THEME, THEME_DIR
 
-from pyload.webui.common import render_to_response, parse_permissions, parse_userdata, \
+from pyload.webui.app.utils import render_to_response, parse_permissions, parse_userdata, \
     login_required, get_permission, set_permission, permlist, toDict, set_session
 
+from pyload.utils import formatSize, safe_join, fs_encode, fs_decode
 from pyload.utils.filters import relpath, unquotepath
 
-from pyload.utils import formatSize, safe_join, fs_encode, fs_decode
 
 # Helper
-
 def pre_processor():
     s = request.environ.get('beaker.session')
     user = parse_userdata(s)
@@ -49,9 +32,9 @@ def pre_processor():
     update = False
     plugins = False
     if user['is_authenticated']:
-        status = PYLOAD.statusServer()
-        info = PYLOAD.getInfoByPlugin("UpdateManager")
-        captcha = PYLOAD.isCaptchaWaiting()
+        status = API.statusServer()
+        info = API.getInfoByPlugin("UpdateManager")
+        captcha = API.isCaptchaWaiting()
 
         # check if update check is available
         if info:
@@ -96,7 +79,7 @@ def js_dynamic(tml, file):
         # static files are not rendered
         if ".static" not in file:
             path = "%s/js/%s" % (THEME, file)
-            return env.get_template(path).render()
+            return ENV.get_template(path).render()
         else:
             return static_file(file, root=join(THEME_DIR, tml, "js"))
     except:
@@ -116,10 +99,7 @@ def favicon():
 
 @route('/login', method="GET")
 def login():
-    if not PYLOAD and SETUP:
-        redirect("/setup")
-    else:
-        return render_to_response("login.html", proc=[pre_processor])
+    return render_to_response("login.html", proc=[pre_processor])
 
 
 @route('/nopermission')
@@ -132,7 +112,7 @@ def login_post():
     user = request.forms.get("username")
     password = request.forms.get("password")
 
-    info = PYLOAD.checkAuth(user, password)
+    info = API.checkAuth(user, password)
 
     if not info:
         return render_to_response("login.html", {'errors': True}, [pre_processor])
@@ -153,7 +133,7 @@ def logout():
 @login_required("LIST")
 def home():
     try:
-        res = [toDict(x) for x in PYLOAD.statusDownloads()]
+        res = [toDict(x) for x in API.statusDownloads()]
     except:
         s = request.environ.get('beaker.session')
         s.delete()
@@ -169,7 +149,7 @@ def home():
 @route('/queue')
 @login_required("LIST")
 def queue():
-    queue = PYLOAD.getQueue()
+    queue = API.getQueue()
 
     queue.sort(key=attrgetter("order"))
 
@@ -179,7 +159,7 @@ def queue():
 @route('/collector')
 @login_required('LIST')
 def collector():
-    queue = PYLOAD.getCollector()
+    queue = API.getCollector()
 
     queue.sort(key=attrgetter("order"))
 
@@ -189,7 +169,7 @@ def collector():
 @route('/downloads')
 @login_required('DOWNLOAD')
 def downloads():
-    root = PYLOAD.getConfigValue("general", "download_folder")
+    root = API.getConfigValue("general", "download_folder")
 
     if not isdir(root):
         return base([_('Download directory not found.')])
@@ -226,9 +206,9 @@ def downloads():
 @login_required("DOWNLOAD")
 def get_download(path):
     path = unquote(path).decode("utf8")
-    #@TODO some files can not be downloaded
+    #@TODO: some files can not be downloaded
 
-    root = PYLOAD.getConfigValue("general", "download_folder")
+    root = API.getConfigValue("general", "download_folder")
 
     path = path.replace("..", "")
     try:
@@ -243,8 +223,8 @@ def get_download(path):
 @route('/settings')
 @login_required('SETTINGS')
 def config():
-    conf = PYLOAD.getConfig()
-    plugin = PYLOAD.getPluginConfig()
+    conf = API.getConfig()
+    plugin = API.getPluginConfig()
 
     conf_menu = []
     plugin_menu = []
@@ -255,7 +235,7 @@ def config():
     for entry in sorted(plugin.keys()):
         plugin_menu.append((entry, plugin[entry].description))
 
-    accs = PYLOAD.getAccounts(False)
+    accs = API.getAccounts(False)
 
     for data in accs:
         if data.trafficleft == -1:
@@ -284,7 +264,7 @@ def config():
             data.options['limitdl'] = "0"
 
     return render_to_response('settings.html',
-            {'conf': {'plugin': plugin_menu, 'general': conf_menu, 'accs': accs}, 'types': PYLOAD.getAccountTypes()},
+            {'conf': {'plugin': plugin_menu, 'general': conf_menu, 'accs': accs}, 'types': API.getAccountTypes()},
         [pre_processor])
 
 
@@ -390,7 +370,7 @@ def logs(item=-1):
     reversed = s.get('reversed', False)
 
     warning = ""
-    conf = PYLOAD.getConfigValue("log", "file_log")
+    conf = API.getConfigValue("log", "file_log")
     if not conf:
         warning = "Warning: File log is disabled, see settings page."
 
@@ -418,7 +398,7 @@ def logs(item=-1):
     except:
         pass
 
-    log = PYLOAD.getLog()
+    log = API.getLog()
     if not perpage:
         item = 0
 
@@ -470,7 +450,7 @@ def logs(item=-1):
 @login_required("ADMIN")
 def admin():
     # convert to dict
-    user = dict([(name, toDict(y)) for name, y in PYLOAD.getAllUserData().iteritems()])
+    user = dict([(name, toDict(y)) for name, y in API.getAllUserData().iteritems()])
     perms = permlist()
 
     for data in user.itervalues():
@@ -498,22 +478,14 @@ def admin():
 
             user[name]['permission'] = set_permission(user[name]['perms'])
 
-            PYLOAD.setUserPermission(name, user[name]['permission'], user[name]['role'])
+            API.setUserPermission(name, user[name]['permission'], user[name]['role'])
 
     return render_to_response("admin.html", {'users': user, 'permlist': perms}, [pre_processor])
 
 
-@route('/setup')
-def setup():
-    if PYLOAD or not SETUP:
-        return base([_("Run pyload.py -s to access the setup.")])
-
-    return render_to_response('setup.html', {'user': False, 'perms': False})
-
-
 @route('/info')
 def info():
-    conf = PYLOAD.getConfigDict()
+    conf = API.getConfigDict()
 
     if hasattr(os, "uname"):
         extra = os.uname()
@@ -522,13 +494,13 @@ def info():
 
     data = {'python': sys.version,
             'os': " ".join((os.name, sys.platform) + extra),
-            'version': PYLOAD.getServerVersion(),
+            'version': API.getServerVersion(),
             'folder': pypath,
             'config': owd,
             'download': abspath(conf['general']['download_folder']['value']),
-            'freespace': formatSize(PYLOAD.freeSpace()),
+            'freespace': formatSize(API.freeSpace()),
             'remote': conf['remote']['port']['value'],
-            'webif': conf['webinterface']['port']['value'],
+            'webif': conf['webui']['port']['value'],
             'language': conf['general']['language']['value']}
 
     return render_to_response("info.html", data, [pre_processor])

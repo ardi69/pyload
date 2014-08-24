@@ -7,10 +7,10 @@ from urllib import unquote
 from bottle import route, request, response, HTTPError
 from SafeEval import const_eval as literal_eval
 
-from pyload.Api import BaseObject
+from pyload.api import BaseObject
 from pyload.utils import json, toDict
-from pyload.webui.Webui import PYLOAD
-from pyload.webui.common import set_session
+from pyload.webui import API
+from pyload.webui.app.utils import set_session
 
 
 # json encoder that accepts TBase objects
@@ -37,7 +37,7 @@ def call_api(func, args=""):
     if not s or not s.get("authenticated", False):
         return HTTPError(403, json.dumps("Forbidden"))
 
-    if not PYLOAD.isAuthorized(func, {'role': s['role'], 'permission': s['perms']}):
+    if not API.isAuthorized(func, {'role': s['role'], 'permission': s['perms']}):
         return HTTPError(401, json.dumps("Unauthorized"))
 
     args = args.split("/")[1:]
@@ -56,11 +56,11 @@ def call_api(func, args=""):
 
 
 def callApi(func, *args, **kwargs):
-    if not hasattr(PYLOAD.EXTERNAL, func) or func.startswith("_"):
+    if not hasattr(API.EXTERNAL, func) or func.startswith("_"):
         print "Invalid API call", func
         return HTTPError(404, json.dumps("Not Found"))
 
-    result = getattr(PYLOAD, func)(*[literal_eval(x) for x in args],
+    result = getattr(API, func)(*[literal_eval(x) for x in args],
                                    **dict([(x, literal_eval(y)) for x, y in kwargs.iteritems()]))
 
     # null is invalid json  response
@@ -79,7 +79,7 @@ def login():
     user = request.forms.get("username")
     password = request.forms.get("password")
 
-    info = PYLOAD.checkAuth(user, password)
+    info = API.checkAuth(user, password)
 
     if not info:
         return json.dumps(False)
