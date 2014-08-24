@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__all__ = ["__status_code__", "__status__", "__version_info__", "__version__", "__license__"]
+__all__ = ["__status_code__", "__status__", "__version_info__", "__version__", "__author_name__", "__author_mail__", "__license__"]
 
 __status_code__ = 4
 __status__ = {1: "Planning",
@@ -14,6 +14,9 @@ __status__ = {1: "Planning",
 __version_info__ = (0, 4, 10)
 __version__ = '.'.join(map(str(v), __version_info__))
 
+__author_name__ = "pyLoad Team"
+__author_mail__ = "admin@pyload.org"
+
 __license__ = "GNU Affero General Public License v3"
 
 
@@ -23,8 +26,16 @@ import __builtin__
 import os
 import sys
 
+from codecs import getwriter
+
+from pyload.utils import get_console_encoding
+
 projectdir = path.abspath(path.join(__file__, ".."))
 homedir = path.expanduser("~")
+enc = get_console_encoding(sys.stdout.encoding)
+
+sys.path.append(path.join(projectdir, "lib"))
+sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
 
 if homedir == "~" and os.name == "nt":
     import ctypes
@@ -52,8 +63,6 @@ except:
         configdir = path.join(homedir, ".pyload")
     else:
         configdir = path.join(homedir, "pyload")
-
-sys.path.append(path.join(projectdir, "lib"))
 
 __builtin__.owd = path.abspath("")  #: original working directory
 __builtin__.pypath = path.abspath(path.join(projectdir, ".."))
