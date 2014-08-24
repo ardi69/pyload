@@ -167,6 +167,7 @@ def formatSpeed(*args):
 
 
 def free_space(folder):
+    """ Return free storing space on device (in bytes) """
     if os.name == "nt":
         import ctypes
 
@@ -198,39 +199,36 @@ def fs_bsize(folder):
 
 
 def uniqify(seq):  #: Originally by Dave Kirby
-    """ Remove duplicates from list, preserve order """
+    """ Remove duplicates from list preserving order """
     seen = set()
     seen_add = seen.add
     return [x for x in seq if x not in seen and not seen_add(x)]
 
 
-def parse_size(string, unit=None): #returns bytes
-    if not unit:
-        m = re.match(r"([\d.,]+) *([a-zA-Z]*)", string.strip().lower())
+def parse_size(string, unit=None, to_unit="byte"):
+    """ Get file size from string and return it properly converted to number """
+    if isinstance(string, basestring):
+        m = re.match(r".*?([\d.,]+)(?: *([a-zA-Z]+))?", string.strip().lower())
         if m:
-            traffic = float(m.group(1).replace(",", "."))
-            unit = m.group(2)
+            value = int(m.group(1).replace(",", "."))  #@TODO: float support
+            if not unit:
+                try:
+                    unit = m.group(2)
+                except:
+                    unit = "byte"
         else:
-            return 0
+            value = None
     else:
-        if isinstance(string, basestring):
-            traffic = float(string.replace(",", "."))
-        else:
-            traffic = string
+        try:
+            value = int(string)  #@TODO: float support
+        except:
+            value = None
 
-    #ignore case
-    unit = unit.lower().strip()
+    if not unit or value is None:
+        return 0
+    else:
+        return convert.size(value, unit, to_unit) or 0
 
-    if unit in ("tb", "tbyte", "terabyte", "tib", "t"):
-        usize = 40
-    elif unit in ("gb", "gbyte", "gigabyte", "gib", "g", "gig"):
-        usize = 30
-    elif unit in ("mb", "mbyte", "megabyte", "mib", "m"):
-        usize = 20
-    elif unit in ("kb", "kbyte", "kilobyte", "kib", "k"):
-        usize = 10
-
-    return traffic * 1 << usize
 
 @deprecated(by=parse_size)
 def parseFileSize(*args):

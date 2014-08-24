@@ -1,5 +1,42 @@
 # -*- coding: utf-8 -*-
 
+sizemap = {}
+
+for i, units in enumerate([("b", "byte"),
+                           ("kb", "kbyte", "kilobyte", "kib", "k"),
+                           ("mb", "mbyte", "megabyte", "mib", "m"),
+                           ("gb", "gbyte", "gigabyte", "gib", "g", "gig"),
+                           ("tb", "tbyte", "terabyte", "tib", "t"),
+                           ("pb", "pbyte", "petabyte", "pib", "p"),
+                           ("eb", "ebyte", "exabyte", "eib", "e")]):
+    w = i * 10
+    for u in units:
+        sizemap[u] = w
+
+
+def size(value, unit, to_unit):  #@TODO: parse float
+    """ Convert file size """
+    #if isinstance(value, float):
+    if not isinstance(value, (int, long)):
+        return None
+
+    unit = unit.strip().lower()
+    to_unit = to_unit.strip().lower()
+
+    if unit.endswith('s'):
+        unit = unit[:-1]
+    if to_unit.endswith('s'):
+        to_unit = to_unit[:-1]
+        
+    if unit == to_unit:
+        return value
+    elif unit in sizemap and to_unit in sizemap:
+        usize = sizemap[unit] - sizemap[to_unit]
+        return int(value << usize if usize >= 0 else value >> usize * -1)
+    else:
+        return None
+
+
 def to_string(value, default=""):
     """ Convert value to string or return default """
     try:
@@ -19,7 +56,7 @@ def to_int(string, default=0):
 def to_bool(value):
     """ Convert value to boolean safely or return False """
     if isinstance(value, basestring):
-        return True if value.lower() in ("1", "true", "on", "an", "yes") else False
+        return value.lower() in ("1", "true", "on", "an", "yes")
     else:
         return True if value else False
 
