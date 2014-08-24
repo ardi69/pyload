@@ -14,6 +14,8 @@ Credits
  - spoob <spoob@gmx.de>
  - zoidberg10 <zoidberg@mujmail.cz>
 
+A special thanks to spoob, sebnapi and RaNaN who conceived and designed pyLoad! 
+
 
 ### Contributors ###
 
@@ -30,7 +32,7 @@ You can see their recent activities here: <http://translate.pyload.org/project/p
 ### Supporters ###
 
 Sadly, is really hard to list all the users who helped the pyLoad Team in these last years testing code, reporting issues,
-opening topic to share tips and advices, fix troubles or simply discuss about this project.
+opening topic to share tips and advices, fix troubles or simply discuss about this project...
 
 
 #### The pyLoad Team can be only forever thankful to all of you for your amazing efforts! ####
