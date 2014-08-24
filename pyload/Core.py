@@ -3,6 +3,7 @@
 CURRENT_VERSION = '0.4.10'
 
 import __builtin__
+import os
 import sys
 
 from os.path import abspath, exists, expanduser, isfile, join
@@ -11,7 +12,7 @@ __builtin__.owd = abspath("")  # original working directory
 __builtin__.pypath = abspath(join(__file__, "..", ".."))
 __builtin__.homedir = expanduser("~")
 
-if __builtin__.homedir == "~" and sys.platform == 'nt':
+if __builtin__.homedir == "~" and os.name == "nt":
     import ctypes
 
     CSIDL_APPDATA = 26
@@ -33,7 +34,7 @@ try:
         __builtin__.configdir = f.read().strip()
         f.close()
 except:
-    if sys.platform in ("posix", "linux2"):
+    if os.name == "posix":
         __builtin__.configdir = join(__builtin__.homedir, ".pyload")
     else:
         __builtin__.configdir = join(__builtin__.homedir, "pyload")
@@ -46,7 +47,6 @@ import pyload.utils.pylgettext as gettext
 from imp import find_module
 import logging
 import logging.handlers
-import os
 from os import _exit, execl, getcwd, makedirs, remove, sep, walk, chdir, close
 import signal
 import subprocess
@@ -485,25 +485,75 @@ class Core:
             self.webserver.start()
 
     def init_logger(self, level):
-        console = logging.StreamHandler(sys.stdout)
-        frm = logging.Formatter("%(asctime)s %(levelname)-8s  %(message)s", "%d.%m.%Y %H:%M:%S")
-        console.setFormatter(frm)
-        self.log = logging.getLogger("log") # settable in config
+        datefmt = "%Y-%m-%d %H:%M:%S"
 
+        # File handler formatter
+        fhfmt = "%(asctime)s %(levelname)-8s  %(message)s"
+        fh_frm = logging.Formatter(fhfmt, datefmt)
+
+        # Console formatter
+        console_frm = fh_frm  #: default formatter don't use colors
+
+        # Load file handler formatter
         if self.config['log']['file_log']:
+            log_folder = self.config['log']['log_folder']
+
+            if not exists(log_folder):
+                makedirs(log_folder, 0700)
+
             if self.config['log']['log_rotate']:
-                file_handler = logging.handlers.RotatingFileHandler(join(self.config['log']['log_folder'], 'log.txt'),
+                file_handler = logging.handlers.RotatingFileHandler(join(log_folder, 'log.txt'),
                                                                     maxBytes=self.config['log']['log_size'] * 1024,
                                                                     backupCount=int(self.config['log']['log_count']),
                                                                     encoding="utf8")
             else:
-                file_handler = logging.FileHandler(join(self.config['log']['log_folder'], 'log.txt'), encoding="utf8")
+                file_handler = logging.FileHandler(join(log_folder, 'log.txt'), encoding="utf8")
 
-            file_handler.setFormatter(frm)
+            file_handler.setFormatter(fh_frm)
             self.log.addHandler(file_handler)
 
-        self.log.addHandler(console) #if console logging
+        # Load console formatter
+        console = logging.StreamHandler(sys.stdout)
+        console.setFormatter(console_frm)
+        self.log.addHandler(console)
         self.log.setLevel(level)
+
+        # Core ref
+        self.log = logging.getLogger("log")
+
+        # Colored console formatter
+        if not self.config['log']['console_color']:
+            return
+
+        if os.name == "nt":
+            try:
+                from colorama import init
+            except ImportError:
+                self.log.error("Fail setting color log, error importing colorama")
+                return
+            else:
+                init()
+
+        try:
+            from colorlog import ColoredFormatter
+        except ImportError:
+            self.log.error("Fail setting color log, error importing colorlog")
+        else:
+            if self.config['log']['color_mode'] == "label":
+                cfmt = "%(asctime)s %(log_color)s%(bold)s%(white)s %(levelname)-8s %(reset)s %(message)s"
+                clr = {'DEBUG': "bg_cyan",
+                       'INFO': "bg_green",
+                       'WARNING': "bg_yellow",
+                       'ERROR': "bg_red",
+                       'CRITICAL': "bg_purple"}
+            else:  #: full mode
+                cfmt = "%(log_color)s%(asctime)s  %(levelname)-8s  %(message)s"
+                clr = {'DEBUG': "cyan",
+                       'WARNING': "yellow",
+                       'ERROR': "red",
+                       'CRITICAL': "purple"}
+
+            console.setFormatter(ColoredFormatter(cfmt, datefmt, clr))
 
     def removeLogger(self):
         for h in list(self.log.handlers):
