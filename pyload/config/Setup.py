@@ -4,9 +4,8 @@ import __builtin__
 import os
 import sys
 
-import pyload.utils.pylgettext as gettext
-
 from getpass import getpass
+from gettext import gettext
 from os import chdir, makedirs
 from os.path import abspath, exists, join
 from subprocess import PIPE, call
@@ -14,13 +13,12 @@ from subprocess import PIPE, call
 from pyload.utils import get_console_encoding, safe_join, versiontuple
 
 
-class Setup:
+class SetupAssistant:
     """ pyLoads initial setup configuration assistant """
 
-    def __init__(self, path, config):
+    def __init__(self, config):
         self.config = config
         self.lang = "en"
-        self.path = path
         self.stdin_encoding = get_console_encoding(sys.stdin.encoding)
 
 
@@ -30,7 +28,7 @@ class Setup:
         self.lang = self.ask(u"Choose setup language", "en", langs)
 
         gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("setup", join(self.path, "locale"), languages=[self.lang, "en"], fallback=True)
+        translation = gettext.translation("setup", join(pypath, "locale"), languages=[self.lang, "en"], fallback=True)
         translation.install(True)
 
         #Input shorthand for yes
@@ -42,16 +40,7 @@ class Setup:
         #        print _("Would you like to configure pyLoad via Webinterface?")
         #        print _("You need a Browser and a connection to this PC for it.")
         #        viaweb = self.ask(_("Start initial webinterface for configuration?"), "y", bool=True)
-        #        if viaweb:
-        #            try:
-        #                from pyload.thread import ServerThread
-        #                ServerThread.setup = self
-        #                from pyload.webui import Webui
-        #                Webui.run_simple()
-        #                return False
-        #            except Exception, e:
-        #                print "Setup failed with this error: ", e
-        #                print "Falling back to commandline setup."
+        #        ...
 
         print
         print
@@ -194,13 +183,14 @@ class Setup:
 
 
     def system_check(self):
-        """ make a systemcheck and return the results"""
+        """ make a systemcheck and return the results """
+        import platform
 
         print _("## System Information ##")
         print
-        print _("Platform:    %s") % sys.platform
-        print _("OS:          %s") % os.name
-        print _("Python:      %s") % sys.version.replace("\n", "")
+        print _("Platform:    ") + platform.platform(aliased=True)
+        print _("OS:          ") + platform.system() or "Unknown"
+        print _("Python:      ") + sys.version.replace("\n", "")
         print
         print
 
@@ -270,8 +260,8 @@ class Setup:
 
         web = sqlite and beaker
 
-        from pyload.utils import JsEngine
-        js = True if JsEngine.ENGINE else False
+        from pyload.manager.JsEngine import JsEngine
+        js = JsEngine.find()
         self.print_dep(_("JS engine"), js)
 
         if not python:
@@ -314,35 +304,34 @@ class Setup:
         print
         print _("External clients (GUI, CLI or other) need remote access to work over the network.")
         print _("However, if you only want to use the webinterface you may disable it to save ram.")
-        self.config['remote']['activated'] = self.ask(_("Enable remote access"), self.no, bool=True)
+        self.config.set("remote", "activated", self.ask(_("Enable remote access"), self.no, bool=True))
 
         print
         langs = sorted(self.config.getMetaData("general", "language")['type'].split(";"))
-        self.config['general']['language'] = self.ask(_("Choose system language"), self.lang, langs)
+        self.config.set("general", "language", self.ask(_("Choose system language"), self.lang, langs))
 
         print
-        self.config['general']['download_folder'] = self.ask(_("Download folder"), "Downloads")
+        self.config.set("general", "download_folder", self.ask(_("Download folder"), "Downloads"))
         print
-        self.config['download']['max_downloads'] = self.ask(_("Max parallel downloads"), "3")
+        self.config.set("download", "max_downloads", self.ask(_("Max parallel downloads"), "3"))
         print
         reconnect = self.ask(_("Use Reconnect?"), self.no, bool=True)
-        self.config['reconnect']['activated'] = reconnect
+        self.config.set("reconnect", "activated", reconnect)
         if reconnect:
-            self.config['reconnect']['method'] = self.ask(_("Reconnect script location"), "./reconnect.sh")
+            self.config.set("reconnect", "method", self.ask(_("Reconnect script location"), "./reconnect.sh"))
 
 
     def conf_web(self):
         print _("## Webinterface Setup ##")
 
         print
-        self.config['webinterface']['activated'] = self.ask(_("Activate webinterface?"), self.yes, bool=True)
-        print
         print _("Listen address, if you use 127.0.0.1 or localhost, the webinterface will only accessible locally.")
-        self.config['webinterface']['host'] = self.ask(_("Address"), "0.0.0.0")
-        self.config['webinterface']['port'] = self.ask(_("Port"), "8000")
+        self.config.set("webui", "host", self.ask(_("Address"), "0.0.0.0"))
+        self.config.set("webui", "port", self.ask(_("Port"), "8000"))
         print
         print _("pyLoad offers several server backends, now following a short explanation.")
-        print "- builtin:", _("Default server; best choice if you plan to use pyLoad just for you.")
+        print "- auto:", _("Automatically choose the best webserver for your platform.")
+        print "- builtin:", _("First choice if you plan to use pyLoad just for you.")
         print "- threaded:", _("Support SSL connection and can serve simultaneously more client flawlessly.")
         print "- fastcgi:", _(
             "Can be used by apache, lighttpd, etc.; needs to be properly configured before.")
@@ -354,13 +343,11 @@ class Setup:
         print _("run this setup assistant again and change the builtin server to the threaded.")
 
         if os.name == "nt":
-            servers = ["builtin", "threaded", "fastcgi"]
-            default = "threaded"
+            servers = ["auto", "builtin", "threaded", "fastcgi"]
         else:
-            servers = ["builtin", "threaded", "fastcgi", "lightweight"]
-            default = "lightweight" if self.check_module("bjoern") else "builtin"
+            servers = ["auto", "builtin", "threaded", "fastcgi", "lightweight"]
 
-        self.config['webinterface']['server'] = self.ask(_("Choose webserver"), default, servers)
+        self.config.set("webui", "server", self.ask(_("Choose webserver"), "auto", servers))
 
 
     def conf_ssl(self):
@@ -374,13 +361,15 @@ class Setup:
         print
         print _("If you're done and everything went fine, you can activate ssl now.")
 
-        self.config['ssl']['activated'] = self.ask(_("Activate SSL?"), self.yes, bool=True)
+        ssl = self.ask(_("Activate SSL?"), self.yes, bool=True)
+        self.config.set("remote", "ssl", ssl)
+        self.config.set("webui", "ssl", ssl)
 
 
     def set_user(self):
         gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("setup", join(self.path, "locale"),
-            languages=[self.config['general']['language'], "en"], fallback=True)
+        translation = gettext.translation("setup", join(pypath, "locale"),
+            languages=[self.config.get("general", "language"), "en"], fallback=True)
         translation.install(True)
 
         from pyload.database import DatabaseBackend
@@ -434,7 +423,7 @@ class Setup:
             if not exists(dirname):
                 makedirs(dirname, 0700)
             if persistent:
-                c = join(pypath, "pyload", "config", "configdir")
+                c = join(projectdir, "config", "configdir")
                 if not exists(c):
                     makedirs(c, 0700)
                 f = open(c, "wb")
@@ -462,8 +451,15 @@ class Setup:
 
 
     def print_dep(self, name, value, false="MISSING", true="OK"):
-        """Print Status of dependency"""
-        print "%-12s %s" % (name + ':', _(true if value else false).upper())
+        """ Print Status of dependency """
+        if value and isinstance(value, bool):
+            msg = "%(dep)-12s %(bool)s"
+        else:
+            msg = "%(dep)-12s %(bool)s  (%(val)s)"
+
+        print msg % {'dep': name + ':',
+                     'bool': _(true if value else false).upper(),
+                     'val': ", ".join(value)}
 
 
     def check_module(self, module):
@@ -484,7 +480,7 @@ class Setup:
 
 
     def ask(self, qst, default, answers=[], bool=False, password=False):
-        """produce one line to asking for input"""
+        """ produce one line to asking for input """
         if answers:
             info = "("
 
