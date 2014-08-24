@@ -38,15 +38,23 @@ def chmod(*args):
 
 
 def decode(string):
-    """ decode string with utf if possible """
-    try:
+    """ decode string to unicode with utf8 """
+    if type(string) == str:
         return string.decode("utf8", "replace")
-    except:
+    else:
+        return string
+
+
+def encode(string):
+    """ decode string to utf8 """
+    if type(string) == unicode:
+        return string.encode("utf8", "replace")
+    else:
         return string
 
 
 def remove_chars(string, repl):
-    """ removes all chars in repl from string"""
+    """ removes all chars in repl from string """
     if type(repl) == unicode:
         for badc in list(repl):
             string = string.replace(badc, "")
@@ -127,7 +135,7 @@ def compare_time(start, end):
 
 
 def formatSize(size):
-    """formats size of bytes"""
+    """ formats size of bytes """
     size = int(size)
     steps = 0
     sizes = ("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB")
