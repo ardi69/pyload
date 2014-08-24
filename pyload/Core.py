@@ -5,7 +5,6 @@ import os
 import sys
 
 from getopt import getopt, GetoptError
-from gettext import gettext
 from imp import find_module
 import logging
 import logging.handlers
@@ -29,12 +28,8 @@ from pyload import remote
 from pyload.manager.RemoteManager import RemoteManager
 from pyload.database import DatabaseBackend, FileHandler
 
-from pyload.utils import freeSpace, formatSize, get_console_encoding
-
-from codecs import getwriter
-
-enc = get_console_encoding(sys.stdout.encoding)
-sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
+from pyload.utils import free_space, format_size, get_console_encoding, load_translation
+from pyload.utils.printer import *
 
 
 # TODO List
@@ -284,10 +279,7 @@ class Core:
 
         self.config = ConfigParser()
 
-        gettext.setpaths([path.join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation("pyLoad", self.path("locale"),
-                                          languages=[self.config.get("general", "language"), "en"], fallback=True)
-        translation.install(True)
+        load_translation("pyload", self.config.get("general", "language"))
 
         self.debug = self.doDebug or self.config.get("general", "debug")
         self.remote &= self.config.get("remote", "activated")
@@ -390,7 +382,7 @@ class Core:
         self.addonManager = AddonManager(self)
         self.remoteManager = RemoteManager(self)
 
-        self.js = JsEngine()
+        self.js = JsEngine(self)
 
         self.log.info(_("Downloadtime: %s") % self.api.isTimeDownload())
 
@@ -400,9 +392,9 @@ class Core:
         if web:
             self.init_webserver()
 
-        spaceLeft = freeSpace(self.config.get("general", "download_folder"))
+        spaceLeft = free_space(self.config.get("general", "download_folder"))
 
-        self.log.info(_("Free space: %s") % formatSize(spaceLeft))
+        self.log.info(_("Free space: %s") % format_size(spaceLeft))
 
         self.config.save() #save so config files gets filled
 
@@ -688,7 +680,7 @@ def daemonize():
 
 def main():
     if "--daemon" in sys.argv:
-        pyload_core = deamon()
+        pyload_core = daemonize()
     else:
         pyload_core = Core()
         try:
