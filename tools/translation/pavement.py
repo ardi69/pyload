@@ -53,7 +53,7 @@ xargs = ["--language=Python", "--add-comments=L10N",
 @needs('cog')
 def html():
     """ Build html documentation """
-    module = path("docs") / "pyload"
+    module = path.join("docs", "pyload")
     module.rmtree()
     call_task('paver.doctools.html')
 
@@ -69,7 +69,7 @@ def get_source(options):
     if options.rev:
         options.url = "https://bitbucket.org/spoob/pyload/get/%s.zip" % options.rev
 
-    pyload = path("pyload")
+    pyload = path.abspath("pyload")
 
     if len(pyload.listdir()) and not options.clean:
         return
@@ -91,11 +91,11 @@ def get_source(options):
         if file.name.endswith(".py"):
             file.chmod(0755)
 
-    (pyload / ".hgtags").remove()
-    (pyload / ".gitignore").remove()
-    #(pyload / "docs").rmtree()
+    path.join(pyload, ".hgtags").remove()
+    path.join(pyload, ".gitignore").remove()
+    #path.join(pyload, "docs").rmtree()
 
-    f = open(pyload / "__init__.py", "wb")
+    f = open(path.join(pyload, "__init__.py"), "wb")
     f.close()
 
     #options.setup.packages = find_packages()
@@ -118,10 +118,10 @@ def thrift(options):
 
     print "add import for TApplicationException manually as long it is not fixed"
 
-    outdir = path("pyload") / "remote" / "thriftbackend"
-    (outdir / "gen-py").rmtree()
+    outdir = path.join("pyload", "remote", "thriftbackend")
+    path.join(outdir, "gen-py").rmtree()
 
-    cmd = [options.thrift.path, "-strict", "-o", outdir, "--gen", "py:slots, dynamic", outdir / "pyload.thrift"]
+    cmd = [options.thrift.path, "-strict", "-o", outdir, "--gen", "py:slots, dynamic", path.join(outdir, "pyload.thrift")]
 
     if options.gen:
         cmd.insert(len(cmd) - 1, "--gen")
@@ -132,8 +132,8 @@ def thrift(options):
     p = Popen(cmd)
     p.communicate()
 
-    (outdir / "thriftgen").rmtree()
-    (outdir / "gen-py").move(outdir / "thriftgen")
+    path.join(outdir, "thriftgen").rmtree()
+    path.join(outdir, "gen-py").move(path.join(outdir, "thriftgen"))
 
     #create light ttypes
     from pyload.remote.socketbackend.create_ttypes import main
@@ -143,14 +143,14 @@ def thrift(options):
 def compile_js():
     """ Compile .coffee files to javascript """
 
-    root = path("pyload") / "web" / "media" / "js"
+    root = path.join("pyload", "web", "media", "js")
     for f in root.glob("*.coffee"):
         print "generate", f
         coffee = Popen(["coffee", "-cbs"], stdin=open(f, "rb"), stdout=PIPE)
         yui = Popen(["yuicompressor", "--type", "js"], stdin=coffee.stdout, stdout=PIPE)
         coffee.stdout.close()
         content = yui.communicate()[0]
-        with open(root / f.name.replace(".coffee", ".js"), "wb") as js:
+        with open(path.join(root, f.name.replace(".coffee", ".js")), "wb") as js:
             js.write("{% autoescape true %}\n")
             js.write(content)
             js.write("\n{% endautoescape %}")
@@ -164,7 +164,7 @@ def generate_locale():
                "Setup.py"]
     makepot("core", path("pyload"), EXCLUDE, "./pyload.py\n")
 
-    makepot("cli", path("pyload") / "cli", [], includes="./pyload-cli.py\n")
+    makepot("cli", path.join("pyload", "cli"), [], includes="./pyload-cli.py\n")
     makepot("setup", "", [], includes="./pyload/utils/Setup.py\n")
 
     EXCLUDE = ["ServerThread.py", "web/media/default"]
@@ -172,7 +172,7 @@ def generate_locale():
     # strings from js files
     strings = set()
 
-    for fi in path("pyload/web").walkfiles():
+    for fi in path(path.join("pyload", "web")).walkfiles():
         if not fi.name.endswith(".js") and not fi.endswith(".coffee"):
             continue
         with open(fi, "rb") as c:
@@ -181,13 +181,13 @@ def generate_locale():
             strings.update(re.findall(r"_\s*\(\s*\"([^\"]+)", content))
             strings.update(re.findall(r"_\s*\(\s*\'([^\']+)", content))
 
-    trans = path("pyload") / "web" / "translations.js"
+    trans = path.join("pyload", "web", "translations.js")
 
     with open(trans, "wb") as js:
         for s in strings:
             js.write('_("%s")\n' % s)
 
-    makepot("django", path("pyload/web"), EXCLUDE, "./%s\n" % trans.relpath(), [".py", ".html"], ["--language=Python"])
+    makepot("django", path(path.join("pyload", "web")), EXCLUDE, "./%s\n" % trans.relpath(), [".py", ".html"], ["--language=Python"])
 
     trans.remove()
 
@@ -205,12 +205,12 @@ def upload_translations(options):
     tmp = path(mkdtemp())
 
     shutil.copy('locale/crowdin.yaml', tmp)
-    os.mkdir(tmp / 'pyLoad')
+    os.mkdir(path.join(tmp, 'pyLoad'))
     for f in glob('locale/*.pot'):
         if path.isfile(f):
-            shutil.copy(f, tmp / 'pyLoad')
+            shutil.copy(f, path.join(tmp, 'pyLoad')
 
-    config = tmp / 'crowdin.yaml'
+    config = path.join(tmp, 'crowdin.yaml')
     content = open(config, 'rb').read()
     content = content.format(key=options.key, tmp=tmp)
     f = open(config, 'wb')
@@ -233,12 +233,12 @@ def download_translations(options):
     tmp = path(mkdtemp())
 
     shutil.copy('locale/crowdin.yaml', tmp)
-    os.mkdir(tmp / 'pyLoad')
+    os.mkdir(path.join(tmp, 'pyLoad'))
     for f in glob('locale/*.pot'):
         if path.isfile(f):
-            shutil.copy(f, tmp / 'pyLoad')
+            shutil.copy(f, path.join(tmp, 'pyLoad')
 
-    config = tmp / 'crowdin.yaml'
+    config = path.join(tmp, 'crowdin.yaml')
     content = open(config, 'rb').read()
     content = content.format(key=options.key, tmp=tmp)
     f = open(config, 'wb')
@@ -247,11 +247,11 @@ def download_translations(options):
 
     call(['crowdin-cli', '-c', config, 'download'])
 
-    for language in (tmp / 'pyLoad').listdir():
+    for language in path.join(tmp, 'pyLoad').listdir():
         if not language.isdir():
             continue
 
-        target = path('locale') / language.basename()
+        target = path.join('locale', language.basename())
         print "Copy language %s" % target
         if target.exists():
             shutil.rmtree(target)
@@ -268,7 +268,7 @@ def compile_translations():
         if not language.isdir():
             continue
 
-        for f in glob(language / 'LC_MESSAGES' / '*.po'):
+        for f in glob(path.join(language, 'LC_MESSAGES', '*.po')):
             print "Compiling %s" % f
             call(['msgfmt', '-o', f.replace('.po', '.mo'), f])
 
@@ -300,7 +300,7 @@ def clean_env():
 def env_install():
     """ Install pyLoad into the virtualenv """
     venv = options.virtualenv
-    call([path(venv.dir) / "bin" / "easy_install", "."])
+    call([path.join(venv.dir, "bin", "easy_install", ".")])
 
 
 @task
