@@ -36,7 +36,7 @@ setup(
     ],
     extras_require={
         'Few plugins dependencies': ["BeautifulSoup >= 3.2, < 3.3"]
-        'Colored terminal (Windows)': ["colorama"]
+        'Colored terminal': ["colorama"]
         'Colored log': ["colorlog"]
         'Lightweight webserver': ["bjoern"]
         'RSS parsing': ["feedparser"]
