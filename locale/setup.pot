@@ -17,463 +17,463 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pyload/utils/Setup.py:33
+#: pyload/config/Setup.py:33
 msgid "y"
 msgstr ""
 
-#: pyload/utils/Setup.py:35
+#: pyload/config/Setup.py:35
 msgid "n"
 msgstr ""
 
-#: pyload/utils/Setup.py:53
+#: pyload/config/Setup.py:53
 msgid "Welcome to the pyLoad Configuration Assistant."
 msgstr ""
 
-#: pyload/utils/Setup.py:54
+#: pyload/config/Setup.py:54
 msgid ""
 "It will check your system and make a basic setup in order to run pyLoad."
 msgstr ""
 
-#: pyload/utils/Setup.py:56
+#: pyload/config/Setup.py:56
 msgid "The value in brackets [] always is the default value,"
 msgstr ""
 
-#: pyload/utils/Setup.py:57
+#: pyload/config/Setup.py:57
 msgid ""
 "in case you don't want to change it or you are unsure what to choose, just "
 "hit enter."
 msgstr ""
 
-#: pyload/utils/Setup.py:59
+#: pyload/config/Setup.py:59
 msgid ""
 "Don't forget: You can always rerun this assistant with --setup or -s "
 "parameter, when you start pyload.py ."
 msgstr ""
 
-#: pyload/utils/Setup.py:60
+#: pyload/config/Setup.py:60
 msgid "If you have any problems with this assistant hit STRG-C,"
 msgstr ""
 
-#: pyload/utils/Setup.py:61
+#: pyload/config/Setup.py:61
 msgid "to abort and don't let him start with pyload.py automatically anymore."
 msgstr ""
 
-#: pyload/utils/Setup.py:63
+#: pyload/config/Setup.py:63
 msgid "When you are ready for system check, hit enter."
 msgstr ""
 
-#: pyload/utils/Setup.py:70
+#: pyload/config/Setup.py:70
 msgid "You need pycurl, sqlite and python 2.5, 2.6 or 2.7 to run pyLoad."
 msgstr ""
 
-#: pyload/utils/Setup.py:71
+#: pyload/config/Setup.py:71
 msgid "Please correct this and re-run pyLoad."
 msgstr ""
 
-#: pyload/utils/Setup.py:72
+#: pyload/config/Setup.py:72
 msgid "Setup will now close."
 msgstr ""
 
-#: pyload/utils/Setup.py:76
+#: pyload/config/Setup.py:76
 msgid "System check finished, hit enter to see your status report."
 msgstr ""
 
-#: pyload/utils/Setup.py:78
+#: pyload/config/Setup.py:78
 msgid "## Status ##"
 msgstr ""
 
-#: pyload/utils/Setup.py:83
+#: pyload/config/Setup.py:83
 msgid "container decrypting"
 msgstr ""
 
-#: pyload/utils/Setup.py:85
+#: pyload/config/Setup.py:85
 msgid "ssl connection"
 msgstr ""
 
-#: pyload/utils/Setup.py:87
+#: pyload/config/Setup.py:87
 msgid "automatic captcha decryption"
 msgstr ""
 
-#: pyload/utils/Setup.py:89
+#: pyload/config/Setup.py:89
 msgid "Webinterface"
 msgstr ""
 
-#: pyload/utils/Setup.py:91
+#: pyload/config/Setup.py:91
 msgid "extended Click'N'Load"
 msgstr ""
 
-#: pyload/utils/Setup.py:98
+#: pyload/config/Setup.py:98
 msgid "Features available:"
 msgstr ""
 
-#: pyload/utils/Setup.py:102
+#: pyload/config/Setup.py:102
 msgid "Featues missing: "
 msgstr ""
 
-#: pyload/utils/Setup.py:106
+#: pyload/config/Setup.py:106
 msgid "no py-crypto available"
 msgstr ""
 
-#: pyload/utils/Setup.py:107
+#: pyload/config/Setup.py:107
 msgid "You need this if you want to decrypt container files."
 msgstr ""
 
-#: pyload/utils/Setup.py:111
+#: pyload/config/Setup.py:111
 msgid "no SSL available"
 msgstr ""
 
-#: pyload/utils/Setup.py:112
+#: pyload/config/Setup.py:112
 msgid ""
 "This is needed if you want to establish a secure connection to core or "
 "webinterface."
 msgstr ""
 
-#: pyload/utils/Setup.py:113
+#: pyload/config/Setup.py:113
 msgid "If you only want to access locally to pyLoad ssl is not usefull."
 msgstr ""
 
-#: pyload/utils/Setup.py:117
+#: pyload/config/Setup.py:117
 msgid "no Captcha Recognition available"
 msgstr ""
 
-#: pyload/utils/Setup.py:118
+#: pyload/config/Setup.py:118
 msgid "Only needed for some hosters and as freeuser."
 msgstr ""
 
-#: pyload/utils/Setup.py:122
+#: pyload/config/Setup.py:122
 msgid "no JavaScript engine found"
 msgstr ""
 
-#: pyload/utils/Setup.py:123
+#: pyload/config/Setup.py:123
 msgid ""
 "You will need this for some Click'N'Load links. Install Spidermonkey, ossp-"
 "js, pyv8 or rhino"
 msgstr ""
 
-#: pyload/utils/Setup.py:125
+#: pyload/config/Setup.py:125
 msgid "You can abort the setup now and fix some dependicies if you want."
 msgstr ""
 
-#: pyload/utils/Setup.py:127
+#: pyload/config/Setup.py:127
 msgid "Continue with setup?"
 msgstr ""
 
-#: pyload/utils/Setup.py:133
+#: pyload/config/Setup.py:133
 #, python-format
 msgid "Do you want to change the config path? Current is %s"
 msgstr ""
 
-#: pyload/utils/Setup.py:135
+#: pyload/config/Setup.py:135
 msgid ""
 "If you use pyLoad on a server or the home partition lives on an iternal "
 "flash it may be a good idea to change it."
 msgstr ""
 
-#: pyload/utils/Setup.py:136
+#: pyload/config/Setup.py:136
 msgid "Change config path?"
 msgstr ""
 
-#: pyload/utils/Setup.py:142
+#: pyload/config/Setup.py:142
 msgid "Do you want to configure login data and basic settings?"
 msgstr ""
 
-#: pyload/utils/Setup.py:143
+#: pyload/config/Setup.py:143
 msgid "This is recommend for first run."
 msgstr ""
 
-#: pyload/utils/Setup.py:144
+#: pyload/config/Setup.py:144
 msgid "Make basic setup?"
 msgstr ""
 
-#: pyload/utils/Setup.py:151
+#: pyload/config/Setup.py:151
 msgid "Do you want to configure ssl?"
 msgstr ""
 
-#: pyload/utils/Setup.py:152
+#: pyload/config/Setup.py:152
 msgid "Configure ssl?"
 msgstr ""
 
-#: pyload/utils/Setup.py:158
+#: pyload/config/Setup.py:158
 msgid "Do you want to configure webinterface?"
 msgstr ""
 
-#: pyload/utils/Setup.py:159
+#: pyload/config/Setup.py:159
 msgid "Configure webinterface?"
 msgstr ""
 
-#: pyload/utils/Setup.py:164
+#: pyload/config/Setup.py:164
 msgid "Setup finished successfully."
 msgstr ""
 
-#: pyload/utils/Setup.py:165
+#: pyload/config/Setup.py:165
 msgid "Hit enter to exit and restart pyLoad"
 msgstr ""
 
-#: pyload/utils/Setup.py:172
+#: pyload/config/Setup.py:172
 msgid "## System Check ##"
 msgstr ""
 
-#: pyload/utils/Setup.py:175
+#: pyload/config/Setup.py:175
 msgid "Your python version is to new, Please use Python 2.6/2.7"
 msgstr ""
 
-#: pyload/utils/Setup.py:178
+#: pyload/config/Setup.py:178
 msgid "Your python version is to old, Please use at least Python 2.5"
 msgstr ""
 
-#: pyload/utils/Setup.py:181
+#: pyload/config/Setup.py:181
 msgid "Python Version: OK"
 msgstr ""
 
-#: pyload/utils/Setup.py:224
+#: pyload/config/Setup.py:224
 #, python-format
 msgid "Your installed jinja2 version %s seems too old."
 msgstr ""
 
-#: pyload/utils/Setup.py:225
+#: pyload/config/Setup.py:225
 msgid "You can safely continue but if the webinterface is not working,"
 msgstr ""
 
-#: pyload/utils/Setup.py:226
+#: pyload/config/Setup.py:226
 msgid ""
 "please upgrade or deinstall it, pyLoad includes a sufficient jinja2 libary."
 msgstr ""
 
-#: pyload/utils/Setup.py:243
+#: pyload/config/Setup.py:243
 msgid "JS engine"
 msgstr ""
 
-#: pyload/utils/Setup.py:250
+#: pyload/config/Setup.py:250
 msgid "## Basic Setup ##"
 msgstr ""
 
-#: pyload/utils/Setup.py:253
+#: pyload/config/Setup.py:253
 msgid "The following logindata is valid for CLI and webinterface."
 msgstr ""
 
-#: pyload/utils/Setup.py:259 pyload/utils/Setup.py:357 pyload/utils/Setup.py:373
+#: pyload/config/Setup.py:259 pyload/config/Setup.py:357 pyload/config/Setup.py:373
 msgid "Username"
 msgstr ""
 
-#: pyload/utils/Setup.py:265
+#: pyload/config/Setup.py:265
 msgid ""
 "External clients (GUI, CLI or other) need remote access to work over the "
 "network."
 msgstr ""
 
-#: pyload/utils/Setup.py:266
+#: pyload/config/Setup.py:266
 msgid ""
 "However, if you only want to use the webinterface you may disable it to save "
 "ram."
 msgstr ""
 
-#: pyload/utils/Setup.py:267
+#: pyload/config/Setup.py:267
 msgid "Enable remote access"
 msgstr ""
 
-#: pyload/utils/Setup.py:271
+#: pyload/config/Setup.py:271
 msgid "Language"
 msgstr ""
 
-#: pyload/utils/Setup.py:273
+#: pyload/config/Setup.py:273
 msgid "Downloadfolder"
 msgstr ""
 
-#: pyload/utils/Setup.py:274
+#: pyload/config/Setup.py:274
 msgid "Max parallel downloads"
 msgstr ""
 
-#: pyload/utils/Setup.py:278
+#: pyload/config/Setup.py:278
 msgid "Use Reconnect?"
 msgstr ""
 
-#: pyload/utils/Setup.py:281
+#: pyload/config/Setup.py:281
 msgid "Reconnect script location"
 msgstr ""
 
-#: pyload/utils/Setup.py:286
+#: pyload/config/Setup.py:286
 msgid "## Webinterface Setup ##"
 msgstr ""
 
-#: pyload/utils/Setup.py:289
+#: pyload/config/Setup.py:289
 msgid "Activate webinterface?"
 msgstr ""
 
-#: pyload/utils/Setup.py:291
+#: pyload/config/Setup.py:291
 msgid ""
 "Listen address, if you use 127.0.0.1 or localhost, the webinterface will "
 "only accessible locally."
 msgstr ""
 
-#: pyload/utils/Setup.py:292
+#: pyload/config/Setup.py:292
 msgid "Address"
 msgstr ""
 
-#: pyload/utils/Setup.py:293
+#: pyload/config/Setup.py:293
 msgid "Port"
 msgstr ""
 
-#: pyload/utils/Setup.py:295
+#: pyload/config/Setup.py:295
 msgid ""
 "pyLoad offers several server backends, now following a short explanation."
 msgstr ""
 
-#: pyload/utils/Setup.py:296
+#: pyload/config/Setup.py:296
 msgid "Default server; best choice if you plan to use pyLoad just for you."
 msgstr ""
 
-#: pyload/utils/Setup.py:297
+#: pyload/config/Setup.py:297
 msgid ""
 "Support SSL connection and can serve simultaneously more client flawlessly."
 msgstr ""
 
-#: pyload/utils/Setup.py:299
+#: pyload/config/Setup.py:299
 msgid ""
 "Can be used by apache, lighttpd, etc.; needs to be properly configured "
 "before."
 msgstr ""
 
-#: pyload/utils/Setup.py:301
+#: pyload/config/Setup.py:301
 msgid "Very fast alternative to builtin; requires libev and bjoern packages."
 msgstr ""
 
-#: pyload/utils/Setup.py:305
+#: pyload/config/Setup.py:305
 msgid ""
 "Attention: In some rare cases the builtin server is not working, if you "
 "notice problems with the webinterface"
 msgstr ""
 
-#: pyload/utils/Setup.py:306
+#: pyload/config/Setup.py:306
 msgid "come back here and change the builtin server to the threaded one here."
 msgstr ""
 
-#: pyload/utils/Setup.py:315
+#: pyload/config/Setup.py:315
 msgid "Server"
 msgstr ""
 
-#: pyload/utils/Setup.py:320
+#: pyload/config/Setup.py:320
 msgid "## SSL Setup ##"
 msgstr ""
 
-#: pyload/utils/Setup.py:322
+#: pyload/config/Setup.py:322
 msgid ""
 "Execute these commands from pyLoad config folder to make ssl certificates:"
 msgstr ""
 
-#: pyload/utils/Setup.py:328
+#: pyload/config/Setup.py:328
 msgid "If you're done and everything went fine, you can activate ssl now."
 msgstr ""
 
-#: pyload/utils/Setup.py:330
+#: pyload/config/Setup.py:330
 msgid "Activate SSL?"
 msgstr ""
 
-#: pyload/utils/Setup.py:347
+#: pyload/config/Setup.py:347
 msgid "Select action"
 msgstr ""
 
-#: pyload/utils/Setup.py:348
+#: pyload/config/Setup.py:348
 msgid "1 - Create/Edit user"
 msgstr ""
 
-#: pyload/utils/Setup.py:349
+#: pyload/config/Setup.py:349
 msgid "2 - List users"
 msgstr ""
 
-#: pyload/utils/Setup.py:350
+#: pyload/config/Setup.py:350
 msgid "3 - Remove user"
 msgstr ""
 
-#: pyload/utils/Setup.py:351
+#: pyload/config/Setup.py:351
 msgid "4 - Quit"
 msgstr ""
 
-#: pyload/utils/Setup.py:363
+#: pyload/config/Setup.py:363
 msgid "Users"
 msgstr ""
 
-#: pyload/utils/Setup.py:391
+#: pyload/config/Setup.py:391
 msgid "Setting new configpath, current configuration will not be transfered!"
 msgstr ""
 
-#: pyload/utils/Setup.py:392
+#: pyload/config/Setup.py:392
 msgid "Configpath"
 msgstr ""
 
-#: pyload/utils/Setup.py:400
+#: pyload/config/Setup.py:400
 msgid "Configpath changed, setup will now close, please restart to go on."
 msgstr ""
 
-#: pyload/utils/Setup.py:401
+#: pyload/config/Setup.py:401
 msgid "Press Enter to exit."
 msgstr ""
 
-#: pyload/utils/Setup.py:405
+#: pyload/config/Setup.py:405
 #, python-format
 msgid "Setting config path failed: %s"
 msgstr ""
 
-#: pyload/utils/Setup.py:411
+#: pyload/config/Setup.py:411
 #, python-format
 msgid "%s: OK"
 msgstr ""
 
-#: pyload/utils/Setup.py:413
+#: pyload/config/Setup.py:413
 #, python-format
 msgid "%s: missing"
 msgstr ""
 
-#: pyload/utils/Setup.py:456
+#: pyload/config/Setup.py:456
 msgid ""
 "Warning: Consider a password of 10 or more symbols if you expect to access "
 "from outside your local network (ex. internet)."
 msgstr ""
 
-#: pyload/utils/Setup.py:457
+#: pyload/config/Setup.py:457
 msgid "Password: "
 msgstr ""
 
-#: pyload/utils/Setup.py:461
+#: pyload/config/Setup.py:461
 #, python-format
 msgid "Password too short! Use at least %s symbols."
 msgstr ""
 
-#: pyload/utils/Setup.py:464
+#: pyload/config/Setup.py:464
 msgid "Password must be alphanumeric."
 msgstr ""
 
-#: pyload/utils/Setup.py:467
+#: pyload/config/Setup.py:467
 msgid "Password (again): "
 msgstr ""
 
-#: pyload/utils/Setup.py:473
+#: pyload/config/Setup.py:473
 msgid "Passwords did not match."
 msgstr ""
 
-#: pyload/utils/Setup.py:489
+#: pyload/config/Setup.py:489
 msgid "yes"
 msgstr ""
 
-#: pyload/utils/Setup.py:489
+#: pyload/config/Setup.py:489
 msgid "true"
 msgstr ""
 
-#: pyload/utils/Setup.py:489
+#: pyload/config/Setup.py:489
 msgid "t"
 msgstr ""
 
-#: pyload/utils/Setup.py:492
+#: pyload/config/Setup.py:492
 msgid "no"
 msgstr ""
 
-#: pyload/utils/Setup.py:492
+#: pyload/config/Setup.py:492
 msgid "false"
 msgstr ""
 
-#: pyload/utils/Setup.py:492
+#: pyload/config/Setup.py:492
 msgid "f"
 msgstr ""
 
-#: pyload/utils/Setup.py:495 pyload/utils/Setup.py:505
+#: pyload/config/Setup.py:495 pyload/config/Setup.py:505
 msgid "Invalid Input"
 msgstr ""

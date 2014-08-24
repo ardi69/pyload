@@ -234,7 +234,7 @@ msgstr "開始 %(name)s：%(addr)s：%(port)s"
 msgid "Failed loading backend %(name)s | %(error)s"
 msgstr " バックエンド %(name)sの読み込みに失敗した |%(error)s"
 
-#: pyload/web/json_app.py:57
+#: pyload/webui/app/json.py:57
 #, python-format
 msgid "waiting %s"
 msgstr "%s を待機中"
@@ -258,7 +258,7 @@ msgid "of course you can still use your existing %s with pyLoads fastcgi server"
 msgstr ""
 
 #: pyload/thread/ServerThread.py:42
-msgid "sample configs are located in the pyload/web/servers directory"
+msgid "sample configs are located in the tools/webserver directory"
 msgstr ""
 
 #: pyload/thread/ServerThread.py:49
@@ -316,23 +316,23 @@ msgstr ""
 msgid "Starting lightweight webserver (bjoern): %(host)s:%(port)d"
 msgstr ""
 
-#: pyload/web/pyload_app.py:125
+#: pyload/webui/app/pyload.py:125
 msgid "You dont have permission to access this page."
 msgstr ""
 
-#: pyload/web/pyload_app.py:193
+#: pyload/webui/app/pyload.py:193
 msgid "Download directory not found."
 msgstr ""
 
-#: pyload/web/pyload_app.py:260 pyload/web/pyload_app.py:267
+#: pyload/webui/app/pyload.py:260 pyload/webui/app/pyload.py:267
 msgid "unlimited"
 msgstr "無制限"
 
-#: pyload/web/pyload_app.py:262 pyload/web/pyload_app.py:269
+#: pyload/webui/app/pyload.py:262 pyload/webui/app/pyload.py:269
 msgid "not available"
 msgstr "利用不可"
 
-#: pyload/web/pyload_app.py:508
+#: pyload/webui/app/pyload.py:508
 msgid "Run pyload.py -s to access the setup."
 msgstr ""
 
@@ -849,17 +849,17 @@ msgstr "ユーザーとグループの設定に失敗しました: %s"
 msgid "No Client connected for captcha decrypting"
 msgstr ""
 
-#: pyload/Api.py:330
+#: pyload/api/__init__.py:330
 #, python-format
 msgid "Added package %(name)s containing %(count)d links"
 msgstr ""
 
-#: pyload/Api.py:593
+#: pyload/api/__init__.py:593
 #, python-format
 msgid "Added %(count)d links to package #%(package)d "
 msgstr ""
 
-#: pyload/utils/JsEngine.py:156
+#: pyload/manager/JsEngine.py:156
 msgid "No js engine detected, please install either Spidermonkey, ossp-js, pyv8 or rhino"
 msgstr ""
 

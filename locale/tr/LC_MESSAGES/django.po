@@ -12,673 +12,673 @@ msgstr "Project-Id-Version: pyload\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.net\n"
 
-#: pyload/web/translations.js:1
+#: pyload/webui/translations.js:1
 msgid "New Captcha Request"
 msgstr "Yeni Captcha İsteği"
 
-#: pyload/web/translations.js:2 pyload/web/templates/default/captcha.html:7
+#: pyload/webui/translations.js:2 pyload/webui/themes/default/tml/captcha.html:7
 msgid "Please read the text on the captcha."
 msgstr "Lütfen captcha üstündeki metni okuyunuz."
 
-#: pyload/web/translations.js:3
+#: pyload/webui/translations.js:3
 msgid "pyLoad restarted"
 msgstr "pyLoad yeniden başlatıldı"
 
-#: pyload/web/translations.js:4
-#: pyload/web/templates/default/settings_item.html:16
-#: pyload/web/templates/default/base.html:123
-#: pyload/web/templates/default/base.html:124
+#: pyload/webui/translations.js:4
+#: pyload/webui/themes/default/tml/settings_item.html:16
+#: pyload/webui/themes/default/tml/base.html:123
+#: pyload/webui/themes/default/tml/base.html:124
 msgid "off"
 msgstr "Kapat"
 
-#: pyload/web/translations.js:5
+#: pyload/webui/translations.js:5
 msgid "Success"
 msgstr "Başarılı"
 
-#: pyload/web/translations.js:6
-#: pyload/web/templates/default/settings_item.html:14
-#: pyload/web/templates/default/base.html:123
-#: pyload/web/templates/default/base.html:124
+#: pyload/webui/translations.js:6
+#: pyload/webui/themes/default/tml/settings_item.html:14
+#: pyload/webui/themes/default/tml/base.html:123
+#: pyload/webui/themes/default/tml/base.html:124
 msgid "on"
 msgstr "Aç"
 
-#: pyload/web/translations.js:7
+#: pyload/webui/translations.js:7
 msgid "You are really sure you want to quit pyLoad?"
 msgstr "pyLoad'dan çıkmak istediğinize emin misiniz?"
 
-#: pyload/web/translations.js:8
+#: pyload/webui/translations.js:8
 msgid "Restart Link"
 msgstr "Bağlantıyı yeniden başlat"
 
-#: pyload/web/translations.js:9
+#: pyload/webui/translations.js:9
 msgid "Delete Link"
 msgstr "Bağlantıyı Sil"
 
-#: pyload/web/translations.js:10
+#: pyload/webui/translations.js:10
 msgid "Please Enter a packagename."
 msgstr "Lütfen paket adını girin."
 
-#: pyload/web/translations.js:11
+#: pyload/webui/translations.js:11
 msgid "Please click on the right captcha position."
 msgstr "Lütfen sağdaki captcha ya tıklatın."
 
-#: pyload/web/translations.js:12
+#: pyload/webui/translations.js:12
 msgid "Error occured."
 msgstr "Bir hata oluştu."
 
-#: pyload/web/translations.js:13
-#: pyload/web/templates/default/filemanager.html:65
-#: pyload/web/templates/default/folder.html:14
+#: pyload/webui/translations.js:13
+#: pyload/webui/themes/default/tml/filemanager.html:65
+#: pyload/webui/themes/default/tml/folder.html:14
 msgid "Folder is empty"
 msgstr "Klasör boş"
 
-#: pyload/web/translations.js:14
+#: pyload/webui/translations.js:14
 msgid "Failed"
 msgstr "Başarısız oldu"
 
-#: pyload/web/translations.js:15
+#: pyload/webui/translations.js:15
 msgid "No Captchas to read."
 msgstr "Okumak için Captcha bulunamadı"
 
-#: pyload/web/translations.js:16
+#: pyload/webui/translations.js:16
 msgid "Passwords did not match."
 msgstr "Parolalar eşleşmedi."
 
-#: pyload/web/translations.js:17
+#: pyload/webui/translations.js:17
 msgid "Settings saved."
 msgstr "Ayarlar kaydedildi."
 
-#: pyload/web/translations.js:18
+#: pyload/webui/translations.js:18
 msgid "New folder"
 msgstr "Yeni klasör"
 
-#: pyload/web/translations.js:19
+#: pyload/webui/translations.js:19
 msgid "Are you sure you want to restart pyLoad?"
 msgstr "pyLoad'u yeniden başlatmak istediğinize emin misiniz?"
 
-#: pyload/web/json_app.py:57
+#: pyload/webui/app/json.py:57
 #, python-format
 msgid "waiting %s"
 msgstr "bekleyen %s"
 
-#: pyload/web/templates/default/home.html:206
+#: pyload/webui/themes/default/tml/home.html:206
 msgid "Active Downloads"
 msgstr "Aktif İndirmeler"
 
-#: pyload/web/templates/default/home.html:211
-#: pyload/web/templates/default/base.html:84
+#: pyload/webui/themes/default/tml/home.html:211
+#: pyload/webui/themes/default/tml/base.html:84
 msgid "Home"
 msgstr "Ev"
 
-#: pyload/web/templates/default/home.html:214
-#: pyload/web/templates/default/queue.html:15
-#: pyload/web/templates/default/window.html:34
-#: pyload/web/templates/default/base.html:87
+#: pyload/webui/themes/default/tml/home.html:214
+#: pyload/webui/themes/default/tml/queue.html:15
+#: pyload/webui/themes/default/tml/window.html:34
+#: pyload/webui/themes/default/tml/base.html:87
 msgid "Queue"
 msgstr ""
 
-#: pyload/web/templates/default/home.html:217
-#: pyload/web/templates/default/queue.html:17
-#: pyload/web/templates/default/window.html:36
-#: pyload/web/templates/default/base.html:90
+#: pyload/webui/themes/default/tml/home.html:217
+#: pyload/webui/themes/default/tml/queue.html:17
+#: pyload/webui/themes/default/tml/window.html:36
+#: pyload/webui/themes/default/tml/base.html:90
 msgid "Collector"
 msgstr ""
 
-#: pyload/web/templates/default/home.html:220
-#: pyload/web/templates/default/downloads.html:6
-#: pyload/web/templates/default/base.html:93
+#: pyload/webui/themes/default/tml/home.html:220
+#: pyload/webui/themes/default/tml/downloads.html:6
+#: pyload/webui/themes/default/tml/base.html:93
 msgid "Downloads"
 msgstr "İndirmeler"
 
-#: pyload/web/templates/default/home.html:226
-#: pyload/web/templates/default/logs.html:3
-#: pyload/web/templates/default/logs.html:4
-#: pyload/web/templates/default/base.html:99
+#: pyload/webui/themes/default/tml/home.html:226
+#: pyload/webui/themes/default/tml/logs.html:3
+#: pyload/webui/themes/default/tml/logs.html:4
+#: pyload/webui/themes/default/tml/base.html:99
 msgid "Logs"
 msgstr "Loglar "
 
-#: pyload/web/templates/default/home.html:229
-#: pyload/web/templates/default/settings.html:3
-#: pyload/web/templates/default/settings.html:4
-#: pyload/web/templates/default/base.html:102
+#: pyload/webui/themes/default/tml/home.html:229
+#: pyload/webui/themes/default/tml/settings.html:3
+#: pyload/webui/themes/default/tml/settings.html:4
+#: pyload/webui/themes/default/tml/base.html:102
 msgid "Config"
 msgstr "Ayarlar"
 
-#: pyload/web/templates/default/home.html:237
-#: pyload/web/templates/default/queue.html:82
-#: pyload/web/templates/default/settings.html:91
-#: pyload/web/templates/default/window.html:7
-#: pyload/web/templates/default/admin.html:25
+#: pyload/webui/themes/default/tml/home.html:237
+#: pyload/webui/themes/default/tml/queue.html:82
+#: pyload/webui/themes/default/tml/settings.html:91
+#: pyload/webui/themes/default/tml/window.html:7
+#: pyload/webui/themes/default/tml/admin.html:25
 msgid "Name"
 msgstr "İsim"
 
-#: pyload/web/templates/default/home.html:238
-#: pyload/web/templates/default/settings.html:93
+#: pyload/webui/themes/default/tml/home.html:238
+#: pyload/webui/themes/default/tml/settings.html:93
 msgid "Status"
 msgstr "Durum"
 
-#: pyload/web/templates/default/home.html:239
-#: pyload/web/templates/default/info.html:14
-#: pyload/web/templates/default/info.html:15
+#: pyload/webui/themes/default/tml/home.html:239
+#: pyload/webui/themes/default/tml/info.html:14
+#: pyload/webui/themes/default/tml/info.html:15
 msgid "Information"
 msgstr "Bilgi"
 
-#: pyload/web/templates/default/home.html:240
+#: pyload/webui/themes/default/tml/home.html:240
 msgid "Size"
 msgstr "Boyut"
 
-#: pyload/web/templates/default/home.html:241
+#: pyload/webui/themes/default/tml/home.html:241
 msgid "Progress"
 msgstr "İlerleme"
 
-#: pyload/web/templates/default/login.html:3
-#: pyload/web/templates/default/settings.html:178
+#: pyload/webui/themes/default/tml/login.html:3
+#: pyload/webui/themes/default/tml/settings.html:178
 msgid "Login"
 msgstr "Oturum açma"
 
-#: pyload/web/templates/default/login.html:14
+#: pyload/webui/themes/default/tml/login.html:14
 msgid "Username"
 msgstr "Kullanıcı Adı"
 
-#: pyload/web/templates/default/login.html:19
-#: pyload/web/templates/default/queue.html:92
-#: pyload/web/templates/default/settings.html:92
-#: pyload/web/templates/default/settings.html:183
-#: pyload/web/templates/default/window.html:21
+#: pyload/webui/themes/default/tml/login.html:19
+#: pyload/webui/themes/default/tml/queue.html:92
+#: pyload/webui/themes/default/tml/settings.html:92
+#: pyload/webui/themes/default/tml/settings.html:183
+#: pyload/webui/themes/default/tml/window.html:21
 msgid "Password"
 msgstr "Şifre"
 
-#: pyload/web/templates/default/login.html:29
+#: pyload/webui/themes/default/tml/login.html:29
 msgid "Your username and password didn't match. Please try again."
 msgstr "Kullanıcı adınız ve parolanız uymuyor. Lütfen tekrar deneyiniz."
 
-#: pyload/web/templates/default/login.html:30
+#: pyload/webui/themes/default/tml/login.html:30
 msgid "To reset your login data or add an user run:"
 msgstr "Hesabınızı sıfırlamak için veya yeni kullanıcı eklemek için çalıştırın:"
 
-#: pyload/web/templates/default/queue.html:25
+#: pyload/webui/themes/default/tml/queue.html:25
 msgid "Delete Finished"
 msgstr "Bitenleri Temizle"
 
-#: pyload/web/templates/default/queue.html:26
+#: pyload/webui/themes/default/tml/queue.html:26
 msgid "Restart Failed"
 msgstr "Başarısızları Tekrar Başlat"
 
-#: pyload/web/templates/default/queue.html:65
+#: pyload/webui/themes/default/tml/queue.html:65
 msgid "Folder:"
 msgstr "Klasör:"
 
-#: pyload/web/templates/default/queue.html:65
+#: pyload/webui/themes/default/tml/queue.html:65
 msgid "Password:"
 msgstr "Şifre:"
 
-#: pyload/web/templates/default/queue.html:79
+#: pyload/webui/themes/default/tml/queue.html:79
 msgid "Edit Package"
 msgstr "Paketi Düzenle"
 
-#: pyload/web/templates/default/queue.html:80
+#: pyload/webui/themes/default/tml/queue.html:80
 msgid "Edit the package detais below."
 msgstr "Aşağıdaki paket detaylarını düzenle."
 
-#: pyload/web/templates/default/queue.html:83
+#: pyload/webui/themes/default/tml/queue.html:83
 msgid "The name of the package."
 msgstr "Paketin adı."
 
-#: pyload/web/templates/default/queue.html:87
+#: pyload/webui/themes/default/tml/queue.html:87
 msgid "Folder"
 msgstr "Klasör"
 
-#: pyload/web/templates/default/queue.html:88
+#: pyload/webui/themes/default/tml/queue.html:88
 msgid "Name of subfolder for these downloads."
 msgstr "Bu indirmeler için alt klasör adı."
 
-#: pyload/web/templates/default/queue.html:93
+#: pyload/webui/themes/default/tml/queue.html:93
 msgid "List of passwords used for unrar."
 msgstr "Unrar için parola listesi."
 
-#: pyload/web/templates/default/queue.html:97
-#: pyload/web/templates/default/settings.html:167
-#: pyload/web/templates/default/captcha.html:33
-#: pyload/web/templates/default/admin.html:61
-#: pyload/web/templates/default/admin.html:91
+#: pyload/webui/themes/default/tml/queue.html:97
+#: pyload/webui/themes/default/tml/settings.html:167
+#: pyload/webui/themes/default/tml/captcha.html:33
+#: pyload/webui/themes/default/tml/admin.html:61
+#: pyload/webui/themes/default/tml/admin.html:91
 msgid "Submit"
 msgstr "Gönder"
 
-#: pyload/web/templates/default/queue.html:98
-#: pyload/web/templates/default/settings.html:198
-#: pyload/web/templates/default/window.html:41
-#: pyload/web/templates/default/admin.html:92
+#: pyload/webui/themes/default/tml/queue.html:98
+#: pyload/webui/themes/default/tml/settings.html:198
+#: pyload/webui/themes/default/tml/window.html:41
+#: pyload/webui/themes/default/tml/admin.html:92
 msgid "Reset"
 msgstr "Sıfırla"
 
-#: pyload/web/templates/default/logout.html:8
+#: pyload/webui/themes/default/tml/logout.html:8
 msgid "You were successfully logged out."
 msgstr "Başarılı şekilde çıkış yaptınız."
 
-#: pyload/web/templates/default/pathchooser.html:39
-#: pyload/web/templates/default/pathchooser.html:41
+#: pyload/webui/themes/default/tml/pathchooser.html:39
+#: pyload/webui/themes/default/tml/pathchooser.html:41
 msgid "Path"
 msgstr "Yol"
 
-#: pyload/web/templates/default/pathchooser.html:39
-#: pyload/web/templates/default/pathchooser.html:41
+#: pyload/webui/themes/default/tml/pathchooser.html:39
+#: pyload/webui/themes/default/tml/pathchooser.html:41
 msgid "absolute"
 msgstr "tam"
 
-#: pyload/web/templates/default/pathchooser.html:39
-#: pyload/web/templates/default/pathchooser.html:41
+#: pyload/webui/themes/default/tml/pathchooser.html:39
+#: pyload/webui/themes/default/tml/pathchooser.html:41
 msgid "relative"
 msgstr "Bağıntılı"
 
-#: pyload/web/templates/default/pathchooser.html:46
+#: pyload/webui/themes/default/tml/pathchooser.html:46
 msgid "name"
 msgstr "isim"
 
-#: pyload/web/templates/default/pathchooser.html:47
+#: pyload/webui/themes/default/tml/pathchooser.html:47
 msgid "size"
 msgstr "boyut"
 
-#: pyload/web/templates/default/pathchooser.html:48
+#: pyload/webui/themes/default/tml/pathchooser.html:48
 msgid "type"
 msgstr "tip"
 
-#: pyload/web/templates/default/pathchooser.html:49
+#: pyload/webui/themes/default/tml/pathchooser.html:49
 msgid "last modified"
 msgstr "son değişimi"
 
-#: pyload/web/templates/default/pathchooser.html:54
+#: pyload/webui/themes/default/tml/pathchooser.html:54
 msgid "parent directory"
 msgstr "ana klasör"
 
-#: pyload/web/templates/default/pathchooser.html:70
+#: pyload/webui/themes/default/tml/pathchooser.html:70
 msgid "no content"
 msgstr "içerik yok"
 
-#: pyload/web/templates/default/settings.html:16
+#: pyload/webui/themes/default/tml/settings.html:16
 msgid "General"
 msgstr "Genel"
 
-#: pyload/web/templates/default/settings.html:17
+#: pyload/webui/themes/default/tml/settings.html:17
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#: pyload/web/templates/default/settings.html:18
+#: pyload/webui/themes/default/tml/settings.html:18
 msgid "Accounts"
 msgstr "Hesaplar"
 
-#: pyload/web/templates/default/settings.html:45
-#: pyload/web/templates/default/settings.html:74
+#: pyload/webui/themes/default/tml/settings.html:45
+#: pyload/webui/themes/default/tml/settings.html:74
 msgid "Choose a section from the menu"
 msgstr "Menüden bir bölüm seçiniz"
 
-#: pyload/web/templates/default/settings.html:90
+#: pyload/webui/themes/default/tml/settings.html:90
 msgid "Plugin"
 msgstr "Eklenti"
 
-#: pyload/web/templates/default/settings.html:94
+#: pyload/webui/themes/default/tml/settings.html:94
 msgid "Premium"
 msgstr ""
 
-#: pyload/web/templates/default/settings.html:95
+#: pyload/webui/themes/default/tml/settings.html:95
 msgid "Valid until"
 msgstr "Son geçerlilik tarihi"
 
-#: pyload/web/templates/default/settings.html:96
+#: pyload/webui/themes/default/tml/settings.html:96
 msgid "Traffic left"
 msgstr "Kalan trafik"
 
-#: pyload/web/templates/default/settings.html:97
+#: pyload/webui/themes/default/tml/settings.html:97
 msgid "Time"
 msgstr "Zaman"
 
-#: pyload/web/templates/default/settings.html:98
+#: pyload/webui/themes/default/tml/settings.html:98
 msgid "Max Parallel"
 msgstr "Maks Paralel"
 
-#: pyload/web/templates/default/settings.html:99
+#: pyload/webui/themes/default/tml/settings.html:99
 msgid "Delete?"
 msgstr "Sil?"
 
-#: pyload/web/templates/default/settings.html:121
+#: pyload/webui/themes/default/tml/settings.html:121
 msgid "valid"
 msgstr "geçerli"
 
-#: pyload/web/templates/default/settings.html:124
+#: pyload/webui/themes/default/tml/settings.html:124
 msgid "not valid"
 msgstr "geçersiz"
 
-#: pyload/web/templates/default/settings.html:131
+#: pyload/webui/themes/default/tml/settings.html:131
 msgid "yes"
 msgstr "evet"
 
-#: pyload/web/templates/default/settings.html:134
+#: pyload/webui/themes/default/tml/settings.html:134
 msgid "no"
 msgstr "hayır"
 
-#: pyload/web/templates/default/settings.html:168
-#: pyload/web/templates/default/settings.html:197
-#: pyload/web/templates/default/base.html:117
+#: pyload/webui/themes/default/tml/settings.html:168
+#: pyload/webui/themes/default/tml/settings.html:197
+#: pyload/webui/themes/default/tml/base.html:117
 msgid "Add"
 msgstr "Ekle"
 
-#: pyload/web/templates/default/settings.html:176
+#: pyload/webui/themes/default/tml/settings.html:176
 msgid "Add Account"
 msgstr "Hesap Ekle"
 
-#: pyload/web/templates/default/settings.html:177
+#: pyload/webui/themes/default/tml/settings.html:177
 msgid "Enter your account data to use premium features."
 msgstr "Premium özelliklerini kullanabilmek için hesap bilgilerini giriniz."
 
-#: pyload/web/templates/default/settings.html:179
-#: pyload/web/templates/default/admin.html:71
+#: pyload/webui/themes/default/tml/settings.html:179
+#: pyload/webui/themes/default/tml/admin.html:71
 msgid "Your username."
 msgstr "Kullanıcı adınız."
 
-#: pyload/web/templates/default/settings.html:184
-#: pyload/web/templates/default/admin.html:76
+#: pyload/webui/themes/default/tml/settings.html:184
+#: pyload/webui/themes/default/tml/admin.html:76
 msgid "The password for this account."
 msgstr "Bu hesap için parola."
 
-#: pyload/web/templates/default/settings.html:188
+#: pyload/webui/themes/default/tml/settings.html:188
 msgid "Type"
 msgstr "Türü"
 
-#: pyload/web/templates/default/settings.html:189
+#: pyload/webui/themes/default/tml/settings.html:189
 msgid "Choose the hoster for your account."
 msgstr "Hesabınız için host seçiniz."
 
-#: pyload/web/templates/default/logs.html:12
-#: pyload/web/templates/default/base.html:114
+#: pyload/webui/themes/default/tml/logs.html:12
+#: pyload/webui/themes/default/tml/base.html:114
 msgid "Start"
 msgstr "Başla"
 
-#: pyload/web/templates/default/logs.html:12
+#: pyload/webui/themes/default/tml/logs.html:12
 msgid "prev"
 msgstr "önceki"
 
-#: pyload/web/templates/default/logs.html:12
+#: pyload/webui/themes/default/tml/logs.html:12
 msgid "next"
 msgstr "sonraki"
 
-#: pyload/web/templates/default/logs.html:12
+#: pyload/webui/themes/default/tml/logs.html:12
 msgid "End"
 msgstr "Son"
 
-#: pyload/web/templates/default/info.html:18
+#: pyload/webui/themes/default/tml/info.html:18
 msgid "News"
 msgstr "Haberler"
 
-#: pyload/web/templates/default/info.html:21
+#: pyload/webui/themes/default/tml/info.html:21
 msgid "Support"
 msgstr "Destek"
 
-#: pyload/web/templates/default/info.html:37
+#: pyload/webui/themes/default/tml/info.html:37
 msgid "System"
 msgstr "Sistem"
 
-#: pyload/web/templates/default/info.html:40
+#: pyload/webui/themes/default/tml/info.html:40
 msgid "Python:"
 msgstr ""
 
-#: pyload/web/templates/default/info.html:44
+#: pyload/webui/themes/default/tml/info.html:44
 msgid "OS:"
 msgstr ""
 
-#: pyload/web/templates/default/info.html:48
+#: pyload/webui/themes/default/tml/info.html:48
 msgid "pyLoad version:"
 msgstr "pyLoad versiyonu:"
 
-#: pyload/web/templates/default/info.html:52
+#: pyload/webui/themes/default/tml/info.html:52
 msgid "Installation Folder:"
 msgstr "Kurulum Klasörü:"
 
-#: pyload/web/templates/default/info.html:56
+#: pyload/webui/themes/default/tml/info.html:56
 msgid "Config Folder:"
 msgstr "Ayar Klasörü:"
 
-#: pyload/web/templates/default/info.html:60
+#: pyload/webui/themes/default/tml/info.html:60
 msgid "Download Folder:"
 msgstr "İndirme Klasörü:"
 
-#: pyload/web/templates/default/info.html:64
+#: pyload/webui/themes/default/tml/info.html:64
 msgid "Free Space:"
 msgstr "Boş Alan:"
 
-#: pyload/web/templates/default/info.html:68
+#: pyload/webui/themes/default/tml/info.html:68
 msgid "Language:"
 msgstr "Dil:"
 
-#: pyload/web/templates/default/info.html:72
+#: pyload/webui/themes/default/tml/info.html:72
 msgid "Webinterface Port:"
 msgstr "Web Arayüz Portu:"
 
-#: pyload/web/templates/default/info.html:76
+#: pyload/webui/themes/default/tml/info.html:76
 msgid "Remote Interface Port:"
 msgstr "Uzak Arayüz Portu:"
 
-#: pyload/web/templates/default/setup.html:3
-#: pyload/web/templates/default/setup.html:4
+#: pyload/webui/themes/default/tml/setup.html:3
+#: pyload/webui/themes/default/tml/setup.html:4
 msgid "Setup"
 msgstr "Kurulum"
 
-#: pyload/web/templates/default/filemanager.html:19
+#: pyload/webui/themes/default/tml/filemanager.html:19
 msgid "FileManager"
 msgstr "Dosya Yöneticisi"
 
-#: pyload/web/templates/default/window.html:5
-#: pyload/web/templates/default/window.html:40
+#: pyload/webui/themes/default/tml/window.html:5
+#: pyload/webui/themes/default/tml/window.html:40
 msgid "Add Package"
 msgstr "Paket Ekle"
 
-#: pyload/web/templates/default/window.html:6
+#: pyload/webui/themes/default/tml/window.html:6
 msgid "Paste your links or upload a container."
 msgstr "Linklerinizi yapıştırın veya taşıyıcı dosyayı yükleyin."
 
-#: pyload/web/templates/default/window.html:8
+#: pyload/webui/themes/default/tml/window.html:8
 msgid "The name of the new package."
 msgstr "Yeni paketin adı."
 
-#: pyload/web/templates/default/window.html:12
+#: pyload/webui/themes/default/tml/window.html:12
 msgid "Links"
 msgstr "Linkler"
 
-#: pyload/web/templates/default/window.html:13
+#: pyload/webui/themes/default/tml/window.html:13
 msgid "Paste your links here or any text and press the filter button."
 msgstr "Linklerinizi veya herhangi bir metni yapıştırıp filitrele butonuna basınız."
 
-#: pyload/web/templates/default/window.html:14
+#: pyload/webui/themes/default/tml/window.html:14
 msgid "Filter urls"
 msgstr "Linkleri filitrele"
 
-#: pyload/web/templates/default/window.html:22
+#: pyload/webui/themes/default/tml/window.html:22
 msgid "Password for RAR-Archive"
 msgstr "RAR-Arşiv dosyaları için parola"
 
-#: pyload/web/templates/default/window.html:26
+#: pyload/webui/themes/default/tml/window.html:26
 msgid "File"
 msgstr "Dosya"
 
-#: pyload/web/templates/default/window.html:27
+#: pyload/webui/themes/default/tml/window.html:27
 msgid "Upload a container."
 msgstr "Taşıyıcı dosyayı yükleyin."
 
-#: pyload/web/templates/default/window.html:31
+#: pyload/webui/themes/default/tml/window.html:31
 msgid "Destination"
 msgstr "Hedef"
 
-#: pyload/web/templates/default/captcha.html:6
+#: pyload/webui/themes/default/tml/captcha.html:6
 msgid "Captcha reading"
 msgstr "Captcha okunuyor"
 
-#: pyload/web/templates/default/captcha.html:13
+#: pyload/webui/themes/default/tml/captcha.html:13
 msgid "Captcha"
 msgstr ""
 
-#: pyload/web/templates/default/captcha.html:14
+#: pyload/webui/themes/default/tml/captcha.html:14
 msgid "The captcha."
 msgstr "Captcha."
 
-#: pyload/web/templates/default/captcha.html:20
+#: pyload/webui/themes/default/tml/captcha.html:20
 msgid "Text"
 msgstr "Metin"
 
-#: pyload/web/templates/default/captcha.html:21
+#: pyload/webui/themes/default/tml/captcha.html:21
 msgid "Input the text on the captcha."
 msgstr "Captcha üstündeki metni giriniz."
 
-#: pyload/web/templates/default/captcha.html:34
+#: pyload/webui/themes/default/tml/captcha.html:34
 msgid "Close"
 msgstr "Kapat"
 
-#: pyload/web/templates/default/base.html:20
-#: pyload/web/templates/default/base.html:139
+#: pyload/webui/themes/default/tml/base.html:20
+#: pyload/webui/themes/default/tml/base.html:139
 msgid "Webinterface"
 msgstr "Web arayüzü"
 
-#: pyload/web/templates/default/base.html:39
+#: pyload/webui/themes/default/tml/base.html:39
 msgid "pyLoad Update available!"
 msgstr "pyLoad Güncelleme mevcut!"
 
-#: pyload/web/templates/default/base.html:46
+#: pyload/webui/themes/default/tml/base.html:46
 msgid "Plugins updated, please restart!"
 msgstr "Eklentiler güncellendi, lütfen yeniden başlatın !"
 
-#: pyload/web/templates/default/base.html:52
+#: pyload/webui/themes/default/tml/base.html:52
 msgid "Captcha waiting"
 msgstr "Captcha bekliyor"
 
-#: pyload/web/templates/default/base.html:57
+#: pyload/webui/themes/default/tml/base.html:57
 msgid "Logout"
 msgstr "Çıkış"
 
-#: pyload/web/templates/default/base.html:59
-#: pyload/web/templates/default/admin.html:8
-#: pyload/web/templates/default/admin.html:9
+#: pyload/webui/themes/default/tml/base.html:59
+#: pyload/webui/themes/default/tml/admin.html:8
+#: pyload/webui/themes/default/tml/admin.html:9
 msgid "Administrate"
 msgstr "Yönet"
 
-#: pyload/web/templates/default/base.html:61
+#: pyload/webui/themes/default/tml/base.html:61
 msgid "Info"
 msgstr "Bilgi"
 
-#: pyload/web/templates/default/base.html:65
+#: pyload/webui/themes/default/tml/base.html:65
 msgid "Please Login!"
 msgstr "Lütfen Giriş Yapın!"
 
-#: pyload/web/templates/default/base.html:115
+#: pyload/webui/themes/default/tml/base.html:115
 msgid "Stop"
 msgstr "Dur"
 
-#: pyload/web/templates/default/base.html:116
+#: pyload/webui/themes/default/tml/base.html:116
 msgid "Cancel"
 msgstr "İptal"
 
-#: pyload/web/templates/default/base.html:123
+#: pyload/webui/themes/default/tml/base.html:123
 msgid "Download:"
 msgstr "İndirme:"
 
-#: pyload/web/templates/default/base.html:124
+#: pyload/webui/themes/default/tml/base.html:124
 msgid "Reconnect:"
 msgstr "Yeniden bağlan:"
 
-#: pyload/web/templates/default/base.html:125
+#: pyload/webui/themes/default/tml/base.html:125
 msgid "Speed:"
 msgstr "Hız:"
 
-#: pyload/web/templates/default/base.html:126
+#: pyload/webui/themes/default/tml/base.html:126
 msgid "Active:"
 msgstr "Aktif:"
 
-#: pyload/web/templates/default/base.html:127
+#: pyload/webui/themes/default/tml/base.html:127
 msgid "Reload page"
 msgstr "Sayfayı yenile"
 
-#: pyload/web/templates/default/base.html:157
+#: pyload/webui/themes/default/tml/base.html:157
 msgid "loading"
 msgstr "yükleniyor"
 
-#: pyload/web/templates/default/base.html:166
+#: pyload/webui/themes/default/tml/base.html:166
 msgid "Back to top"
 msgstr "Sayfa başı"
 
-#: pyload/web/templates/default/admin.html:13
+#: pyload/webui/themes/default/tml/admin.html:13
 msgid "Quit pyLoad"
 msgstr "pyLoad'dan çık"
 
-#: pyload/web/templates/default/admin.html:14
+#: pyload/webui/themes/default/tml/admin.html:14
 msgid "Restart pyLoad"
 msgstr "pyLoad'ı yeniden başlat"
 
-#: pyload/web/templates/default/admin.html:18
+#: pyload/webui/themes/default/tml/admin.html:18
 msgid "To add user or change passwords use:"
 msgstr "Kullanıcı eklemek veya şifre değiştirmek:"
 
-#: pyload/web/templates/default/admin.html:19
+#: pyload/webui/themes/default/tml/admin.html:19
 msgid "Important: Admin user have always all permissions!"
 msgstr "Önemli: Yönetici kullanıcısının her zaman tüm izinleri vardır!"
 
-#: pyload/web/templates/default/admin.html:28
-#: pyload/web/templates/default/admin.html:67
+#: pyload/webui/themes/default/tml/admin.html:28
+#: pyload/webui/themes/default/tml/admin.html:67
 msgid "Change Password"
 msgstr "Parolayı Değiştir"
 
-#: pyload/web/templates/default/admin.html:31
+#: pyload/webui/themes/default/tml/admin.html:31
 msgid "Admin"
 msgstr ""
 
-#: pyload/web/templates/default/admin.html:34
+#: pyload/webui/themes/default/tml/admin.html:34
 msgid "Permissions"
 msgstr "İzinleri"
 
-#: pyload/web/templates/default/admin.html:41
+#: pyload/webui/themes/default/tml/admin.html:41
 msgid "change"
 msgstr "değiştir"
 
-#: pyload/web/templates/default/admin.html:69
+#: pyload/webui/themes/default/tml/admin.html:69
 msgid "Enter your current and desired Password."
 msgstr "Şimdiki parolanızı ve değiştirmek istediğiniz parolayı giriniz."
 
-#: pyload/web/templates/default/admin.html:70
+#: pyload/webui/themes/default/tml/admin.html:70
 msgid "User"
 msgstr "Kullanıcı"
 
-#: pyload/web/templates/default/admin.html:75
+#: pyload/webui/themes/default/tml/admin.html:75
 msgid "Current password"
 msgstr "Parolanız"
 
-#: pyload/web/templates/default/admin.html:80
+#: pyload/webui/themes/default/tml/admin.html:80
 msgid "New password"
 msgstr "Yeni parola"
 
-#: pyload/web/templates/default/admin.html:81
+#: pyload/webui/themes/default/tml/admin.html:81
 msgid "The new password."
 msgstr "Yeni parola."
 
-#: pyload/web/templates/default/admin.html:85
+#: pyload/webui/themes/default/tml/admin.html:85
 msgid "New password (repeat)"
 msgstr "Yeni parola (tekrar)"
 
-#: pyload/web/templates/default/admin.html:86
+#: pyload/webui/themes/default/tml/admin.html:86
 msgid "Please repeat the new password."
 msgstr "Lütfen yeni parolanızı tekrar giriniz."
 
-#: pyload/web/pyload_app.py:125
+#: pyload/webui/app/pyload.py:125
 msgid "You dont have permission to access this page."
 msgstr "Bu sayfaya erişmek için izniniz yok."
 
-#: pyload/web/pyload_app.py:193
+#: pyload/webui/app/pyload.py:193
 msgid "Download directory not found."
 msgstr "İndirme dizini bulunamadı."
 
-#: pyload/web/pyload_app.py:260 pyload/web/pyload_app.py:267
+#: pyload/webui/app/pyload.py:260 pyload/webui/app/pyload.py:267
 msgid "unlimited"
 msgstr "sınırsız"
 
-#: pyload/web/pyload_app.py:262 pyload/web/pyload_app.py:269
+#: pyload/webui/app/pyload.py:262 pyload/webui/app/pyload.py:269
 msgid "not available"
 msgstr "mevcut değil"
 
-#: pyload/web/pyload_app.py:508
+#: pyload/webui/app/pyload.py:508
 msgid "Run pyload.py -s to access the setup."
 msgstr "Ayarlara erişmek için pyload.py -s çalıştırın."
 

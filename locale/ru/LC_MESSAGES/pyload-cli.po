@@ -1,0 +1,295 @@
+msgid ""
+msgstr "Project-Id-Version: pyload\n"
+"Report-Msgid-Bugs-To: 'bugs@pyload.org'\n"
+"POT-Creation-Date: 2014-04-08 15:01+0200\n"
+"PO-Revision-Date: 2014-04-09 05:39-0400\n"
+"Last-Translator: pyloadTeam <team@pyload.org>\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: crowdin.net\n"
+
+#: pyload/Cli/__init__.py:75 pyload/Cli/__init__.py:133
+msgid " Command Line Interface"
+msgstr "Интерфейс командной строки"
+
+#: pyload/Cli/__init__.py:165
+#, python-format
+msgid "%s Downloads:"
+msgstr "%s загрузок:"
+
+#: pyload/Cli/__init__.py:177
+msgid " Speed: "
+msgstr "Скорость: "
+
+#: pyload/Cli/__init__.py:177
+msgid " Size: "
+msgstr "Размер: "
+
+#: pyload/Cli/__init__.py:178
+msgid " Finished in: "
+msgstr "Закончено в: "
+
+#: pyload/Cli/__init__.py:179
+msgid " ID: "
+msgstr "ID: "
+
+#: pyload/Cli/__init__.py:184
+msgid "waiting: "
+msgstr "ожидание: "
+
+#: pyload/Cli/__init__.py:191 pyload/Cli/__init__.py:193
+msgid "Status:"
+msgstr "Состояние:"
+
+#: pyload/Cli/__init__.py:191
+msgid "paused"
+msgstr "приостановлено"
+
+#: pyload/Cli/__init__.py:193
+msgid "running"
+msgstr "в процессе"
+
+#: pyload/Cli/__init__.py:196
+msgid "total Speed"
+msgstr "общая скорость"
+
+#: pyload/Cli/__init__.py:196
+msgid "Files in queue"
+msgstr "Файлов в очереди"
+
+#: pyload/Cli/__init__.py:197
+msgid "Total"
+msgstr "Всего"
+
+#: pyload/Cli/__init__.py:203
+msgid "Menu:"
+msgstr "Меню:"
+
+#: pyload/Cli/__init__.py:205
+msgid " Add Links"
+msgstr "Добавить ссылки"
+
+#: pyload/Cli/__init__.py:206
+msgid " Manage Queue"
+msgstr "Управление очередью"
+
+#: pyload/Cli/__init__.py:207
+msgid " Manage Collector"
+msgstr "Управление коллектором ссылок"
+
+#: pyload/Cli/__init__.py:208
+msgid " (Un)Pause Server"
+msgstr "Запустить/Приостановить сервер"
+
+#: pyload/Cli/__init__.py:209
+msgid " Kill Server"
+msgstr "Остановить сервер"
+
+#: pyload/Cli/__init__.py:210
+msgid " Quit"
+msgstr "Выход"
+
+#: pyload/Cli/__init__.py:289 pyload/Cli/__init__.py:296
+msgid "Please use this syntax: add <Package name> <link> <link2> ..."
+msgstr "Используйте шаблон: add <Имя контейнера> <ссылка1> <ссылка2> ..."
+
+#: pyload/Cli/__init__.py:315
+#, python-format
+msgid "Checking %d links:"
+msgstr "Проверка %d ссылки:"
+
+#: pyload/Cli/__init__.py:324
+msgid "File does not exists."
+msgstr "Файл не найден."
+
+#: pyload/Cli/__init__.py:385
+msgid "pyLoad was terminated"
+msgstr "Работа pyLoad была принудительно завершена"
+
+#: pyload/Cli/__init__.py:443
+msgid "Prints server status"
+msgstr "Показать состояние сервера"
+
+#: pyload/Cli/__init__.py:444
+msgid "Prints downloads in queue"
+msgstr "Показать закачки в очереди"
+
+#: pyload/Cli/__init__.py:445
+msgid "Prints downloads in collector"
+msgstr "Показать закачки в списке коллектора"
+
+#: pyload/Cli/__init__.py:446
+msgid "Adds package to queue"
+msgstr "Добавить контейнер в очередь"
+
+#: pyload/Cli/__init__.py:447
+msgid "Adds package to collector"
+msgstr "Добавляет контейнер в коллектор ссылок"
+
+#: pyload/Cli/__init__.py:448
+msgid "Delete Files from Queue/Collector"
+msgstr "Удалить файлы из очереди/коллектора"
+
+#: pyload/Cli/__init__.py:449
+msgid "Delete Packages from Queue/Collector"
+msgstr "Удалить контейнер из очереди/коллектора"
+
+#: pyload/Cli/__init__.py:450
+msgid "Move Packages from Queue to Collector or vice versa"
+msgstr "Переместить пакет(ы) из очереди в коллектор и наоборот"
+
+#: pyload/Cli/__init__.py:451
+msgid "Restart files"
+msgstr "Перезапустить файлы"
+
+#: pyload/Cli/__init__.py:452
+msgid "Restart packages"
+msgstr "Перезапустить пакеты"
+
+#: pyload/Cli/__init__.py:453
+msgid "Check online status, works with local container"
+msgstr "Проверка статуса связи, действует с местными контейнерами"
+
+#: pyload/Cli/__init__.py:454
+msgid "Checks online status of a container file"
+msgstr "Проверяет состояние файла-контейнера"
+
+#: pyload/Cli/__init__.py:455
+msgid "Pause the server"
+msgstr "Приостановить сервер"
+
+#: pyload/Cli/__init__.py:456
+msgid "continue downloads"
+msgstr "продолжить закачки"
+
+#: pyload/Cli/__init__.py:457
+msgid "Toggle pause/unpause"
+msgstr "Переключить пауза/продолжить"
+
+#: pyload/Cli/__init__.py:458
+msgid "kill server"
+msgstr "остановить сервер"
+
+#: pyload/Cli/__init__.py:460
+msgid "List of commands:"
+msgstr "Список команд: "
+
+#: pyload/Cli/__init__.py:473
+msgid "Couldn't write user config file"
+msgstr "Записать файл конфигурации пользователя не удалось"
+
+#: pyload/Cli/__init__.py:548
+msgid "You need py-openssl to connect to this pyLoad Core."
+msgstr "Для соединения с ядром pyLoad необходим пакет py-openssl."
+
+#: pyload/Cli/__init__.py:555
+msgid "Address: "
+msgstr "Адрес: "
+
+#: pyload/Cli/__init__.py:556
+msgid "Port: "
+msgstr "Порт: "
+
+#: pyload/Cli/__init__.py:557
+msgid "Username: "
+msgstr "Имя пользователя: "
+
+#: pyload/Cli/__init__.py:561
+msgid "Password: "
+msgstr "Пароль: "
+
+#: pyload/Cli/__init__.py:566 pyload/Cli/__init__.py:575
+msgid "Login data is wrong."
+msgstr "Неправильные учётные данные."
+
+#: pyload/Cli/__init__.py:568 pyload/Cli/__init__.py:577
+#, python-format
+msgid "Could not establish connection to %(addr)s:%(port)s."
+msgstr "Невозможно подключиться к %(addr)s:%(port)s."
+
+#: pyload/Cli/__init__.py:580
+msgid "You need py-openssl to connect to this pyLoad core."
+msgstr "Для соединения с ядром pyLoad необходим пакет py-openssl."
+
+#: pyload/Cli/__init__.py:582
+msgid "Interactive mode ignored since you passed some commands."
+msgstr "В связи с тем, что были введены ряд команд, интерактивный режим был прерван."
+
+#: pyload/Cli/AddPackage.py:48
+msgid "Add Package:"
+msgstr "Добавить пакет:"
+
+#: pyload/Cli/AddPackage.py:53
+msgid "Enter a name for the new package"
+msgstr "Введите название пакета"
+
+#: pyload/Cli/AddPackage.py:57
+#, python-format
+msgid "Package: %s"
+msgstr "Контейнер: %s"
+
+#: pyload/Cli/AddPackage.py:58
+msgid "Parse the links you want to add."
+msgstr "Анализ ссылок для добавления."
+
+#: pyload/Cli/AddPackage.py:59
+#, python-format
+msgid "Type %s when done."
+msgstr "Введите %s когда будете готовы."
+
+#: pyload/Cli/AddPackage.py:60
+msgid "Links added: "
+msgstr "Добавлены ссылки: "
+
+#: pyload/Cli/AddPackage.py:64 pyload/Cli/ManageFiles.py:149
+msgid " back to main menu"
+msgstr "назад в главное меню"
+
+#: pyload/Cli/ManageFiles.py:97
+msgid "Manage Packages:"
+msgstr "Управление пакетами:"
+
+#: pyload/Cli/ManageFiles.py:99
+msgid "Manage Links:"
+msgstr "Управление ссылками"
+
+#: pyload/Cli/ManageFiles.py:104
+msgid "What do you want to move?"
+msgstr "Что Вы хотите переместить?"
+
+#: pyload/Cli/ManageFiles.py:106
+msgid "What do you want to delete?"
+msgstr "Что Вы хотите удалить?"
+
+#: pyload/Cli/ManageFiles.py:108
+msgid "What do you want to restart?"
+msgstr "Что Вы хотите перезапустить?"
+
+#: pyload/Cli/ManageFiles.py:113
+msgid "Choose what yout want to do or enter package number."
+msgstr "Выбирайте, что Вы хотите сделать или внесите номер пакета."
+
+#: pyload/Cli/ManageFiles.py:115
+msgid "delete"
+msgstr "удалить"
+
+#: pyload/Cli/ManageFiles.py:115
+msgid "move"
+msgstr "переместить"
+
+#: pyload/Cli/ManageFiles.py:115
+msgid "restart"
+msgstr "перезапустить"
+
+#: pyload/Cli/ManageFiles.py:148
+msgid " - previous"
+msgstr "- предыдущий"
+
+#: pyload/Cli/ManageFiles.py:148
+msgid " - next"
+msgstr "- следующий"
+

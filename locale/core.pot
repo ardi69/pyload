@@ -239,7 +239,7 @@ msgstr ""
 msgid "Failed loading backend %(name)s | %(error)s"
 msgstr ""
 
-#: pyload/web/json_app.py:57
+#: pyload/webui/app/json.py:57
 #, python-format
 msgid "waiting %s"
 msgstr ""
@@ -264,7 +264,7 @@ msgid ""
 msgstr ""
 
 #: pyload/thread/ServerThread.py:43
-msgid "sample configs are located in the pyload/web/servers directory"
+msgid "sample configs are located in the tools/webserver directory"
 msgstr ""
 
 #: pyload/thread/ServerThread.py:49
@@ -324,23 +324,23 @@ msgstr ""
 msgid "Starting lightweight webserver (bjoern): %(host)s:%(port)d"
 msgstr ""
 
-#: pyload/web/pyload_app.py:127
+#: pyload/webui/app/pyload.py:127
 msgid "You dont have permission to access this page."
 msgstr ""
 
-#: pyload/web/pyload_app.py:195
+#: pyload/webui/app/pyload.py:195
 msgid "Download directory not found."
 msgstr ""
 
-#: pyload/web/pyload_app.py:262 pyload/web/pyload_app.py:269
+#: pyload/webui/app/pyload.py:262 pyload/webui/app/pyload.py:269
 msgid "unlimited"
 msgstr ""
 
-#: pyload/web/pyload_app.py:264 pyload/web/pyload_app.py:271
+#: pyload/webui/app/pyload.py:264 pyload/webui/app/pyload.py:271
 msgid "not available"
 msgstr ""
 
-#: pyload/web/pyload_app.py:509
+#: pyload/webui/app/pyload.py:509
 msgid "Run pyload.py -s to access the setup."
 msgstr ""
 
@@ -882,17 +882,17 @@ msgstr ""
 msgid "No Client connected for captcha decrypting"
 msgstr ""
 
-#: pyload/Api.py:330
+#: pyload/api/__init__.py:330
 #, python-format
 msgid "Added package %(name)s containing %(count)d links"
 msgstr ""
 
-#: pyload/Api.py:593
+#: pyload/api/__init__.py:593
 #, python-format
 msgid "Added %(count)d links to package #%(package)d "
 msgstr ""
 
-#: pyload/utils/JsEngine.py:156
+#: pyload/manager/JsEngine.py:156
 msgid ""
 "No js engine detected, please install either Spidermonkey, ossp-js, pyv8 or "
 "rhino"

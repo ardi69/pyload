@@ -12,673 +12,673 @@ msgstr "Project-Id-Version: pyload\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.net\n"
 
-#: pyload/web/translations.js:1
+#: pyload/webui/translations.js:1
 msgid "New Captcha Request"
 msgstr "新しい Captcha をリクエスト"
 
-#: pyload/web/translations.js:2 pyload/web/templates/default/captcha.html:7
+#: pyload/webui/translations.js:2 pyload/webui/themes/default/tml/captcha.html:7
 msgid "Please read the text on the captcha."
 msgstr "Captcha のテキストを読んでください。"
 
-#: pyload/web/translations.js:3
+#: pyload/webui/translations.js:3
 msgid "pyLoad restarted"
 msgstr "pyLoad が再起動しました"
 
-#: pyload/web/translations.js:4
-#: pyload/web/templates/default/settings_item.html:16
-#: pyload/web/templates/default/base.html:123
-#: pyload/web/templates/default/base.html:124
+#: pyload/webui/translations.js:4
+#: pyload/webui/themes/default/tml/settings_item.html:16
+#: pyload/webui/themes/default/tml/base.html:123
+#: pyload/webui/themes/default/tml/base.html:124
 msgid "off"
 msgstr "オフ"
 
-#: pyload/web/translations.js:5
+#: pyload/webui/translations.js:5
 msgid "Success"
 msgstr "成功しました"
 
-#: pyload/web/translations.js:6
-#: pyload/web/templates/default/settings_item.html:14
-#: pyload/web/templates/default/base.html:123
-#: pyload/web/templates/default/base.html:124
+#: pyload/webui/translations.js:6
+#: pyload/webui/themes/default/tml/settings_item.html:14
+#: pyload/webui/themes/default/tml/base.html:123
+#: pyload/webui/themes/default/tml/base.html:124
 msgid "on"
 msgstr "オン"
 
-#: pyload/web/translations.js:7
+#: pyload/webui/translations.js:7
 msgid "You are really sure you want to quit pyLoad?"
 msgstr "pyLoad を本当に終了しますか?"
 
-#: pyload/web/translations.js:8
+#: pyload/webui/translations.js:8
 msgid "Restart Link"
 msgstr "リンクを再起動"
 
-#: pyload/web/translations.js:9
+#: pyload/webui/translations.js:9
 msgid "Delete Link"
 msgstr "リンクを削除"
 
-#: pyload/web/translations.js:10
+#: pyload/webui/translations.js:10
 msgid "Please Enter a packagename."
 msgstr "パッケージ名を入力してください。"
 
-#: pyload/web/translations.js:11
+#: pyload/webui/translations.js:11
 msgid "Please click on the right captcha position."
 msgstr "右の captcha の位置をクリックしてください。"
 
-#: pyload/web/translations.js:12
+#: pyload/webui/translations.js:12
 msgid "Error occured."
 msgstr "エラーが発生しました。"
 
-#: pyload/web/translations.js:13
-#: pyload/web/templates/default/filemanager.html:65
-#: pyload/web/templates/default/folder.html:14
+#: pyload/webui/translations.js:13
+#: pyload/webui/themes/default/tml/filemanager.html:65
+#: pyload/webui/themes/default/tml/folder.html:14
 msgid "Folder is empty"
 msgstr "フォルダが空です"
 
-#: pyload/web/translations.js:14
+#: pyload/webui/translations.js:14
 msgid "Failed"
 msgstr ""
 
-#: pyload/web/translations.js:15
+#: pyload/webui/translations.js:15
 msgid "No Captchas to read."
 msgstr "読み取る Captcha がありません。"
 
-#: pyload/web/translations.js:16
+#: pyload/webui/translations.js:16
 msgid "Passwords did not match."
 msgstr "パスワードが一致しません。"
 
-#: pyload/web/translations.js:17
+#: pyload/webui/translations.js:17
 msgid "Settings saved."
 msgstr "設定が保存されました。"
 
-#: pyload/web/translations.js:18
+#: pyload/webui/translations.js:18
 msgid "New folder"
 msgstr "新規フォルダ"
 
-#: pyload/web/translations.js:19
+#: pyload/webui/translations.js:19
 msgid "Are you sure you want to restart pyLoad?"
 msgstr "pyLoad を本当に再起動しますか?"
 
-#: pyload/web/json_app.py:57
+#: pyload/webui/app/json.py:57
 #, python-format
 msgid "waiting %s"
 msgstr "%s を待機中"
 
-#: pyload/web/templates/default/home.html:206
+#: pyload/webui/themes/default/tml/home.html:206
 msgid "Active Downloads"
 msgstr "アクティブなダウンロード"
 
-#: pyload/web/templates/default/home.html:211
-#: pyload/web/templates/default/base.html:84
+#: pyload/webui/themes/default/tml/home.html:211
+#: pyload/webui/themes/default/tml/base.html:84
 msgid "Home"
 msgstr "ホーム"
 
-#: pyload/web/templates/default/home.html:214
-#: pyload/web/templates/default/queue.html:15
-#: pyload/web/templates/default/window.html:34
-#: pyload/web/templates/default/base.html:87
+#: pyload/webui/themes/default/tml/home.html:214
+#: pyload/webui/themes/default/tml/queue.html:15
+#: pyload/webui/themes/default/tml/window.html:34
+#: pyload/webui/themes/default/tml/base.html:87
 msgid "Queue"
 msgstr "キュー"
 
-#: pyload/web/templates/default/home.html:217
-#: pyload/web/templates/default/queue.html:17
-#: pyload/web/templates/default/window.html:36
-#: pyload/web/templates/default/base.html:90
+#: pyload/webui/themes/default/tml/home.html:217
+#: pyload/webui/themes/default/tml/queue.html:17
+#: pyload/webui/themes/default/tml/window.html:36
+#: pyload/webui/themes/default/tml/base.html:90
 msgid "Collector"
 msgstr "コレクター"
 
-#: pyload/web/templates/default/home.html:220
-#: pyload/web/templates/default/downloads.html:6
-#: pyload/web/templates/default/base.html:93
+#: pyload/webui/themes/default/tml/home.html:220
+#: pyload/webui/themes/default/tml/downloads.html:6
+#: pyload/webui/themes/default/tml/base.html:93
 msgid "Downloads"
 msgstr "ダウンロード"
 
-#: pyload/web/templates/default/home.html:226
-#: pyload/web/templates/default/logs.html:3
-#: pyload/web/templates/default/logs.html:4
-#: pyload/web/templates/default/base.html:99
+#: pyload/webui/themes/default/tml/home.html:226
+#: pyload/webui/themes/default/tml/logs.html:3
+#: pyload/webui/themes/default/tml/logs.html:4
+#: pyload/webui/themes/default/tml/base.html:99
 msgid "Logs"
 msgstr "ログ"
 
-#: pyload/web/templates/default/home.html:229
-#: pyload/web/templates/default/settings.html:3
-#: pyload/web/templates/default/settings.html:4
-#: pyload/web/templates/default/base.html:102
+#: pyload/webui/themes/default/tml/home.html:229
+#: pyload/webui/themes/default/tml/settings.html:3
+#: pyload/webui/themes/default/tml/settings.html:4
+#: pyload/webui/themes/default/tml/base.html:102
 msgid "Config"
 msgstr "設定"
 
-#: pyload/web/templates/default/home.html:237
-#: pyload/web/templates/default/queue.html:82
-#: pyload/web/templates/default/settings.html:91
-#: pyload/web/templates/default/window.html:7
-#: pyload/web/templates/default/admin.html:25
+#: pyload/webui/themes/default/tml/home.html:237
+#: pyload/webui/themes/default/tml/queue.html:82
+#: pyload/webui/themes/default/tml/settings.html:91
+#: pyload/webui/themes/default/tml/window.html:7
+#: pyload/webui/themes/default/tml/admin.html:25
 msgid "Name"
 msgstr "名前"
 
-#: pyload/web/templates/default/home.html:238
-#: pyload/web/templates/default/settings.html:93
+#: pyload/webui/themes/default/tml/home.html:238
+#: pyload/webui/themes/default/tml/settings.html:93
 msgid "Status"
 msgstr "ステータス"
 
-#: pyload/web/templates/default/home.html:239
-#: pyload/web/templates/default/info.html:14
-#: pyload/web/templates/default/info.html:15
+#: pyload/webui/themes/default/tml/home.html:239
+#: pyload/webui/themes/default/tml/info.html:14
+#: pyload/webui/themes/default/tml/info.html:15
 msgid "Information"
 msgstr "情報"
 
-#: pyload/web/templates/default/home.html:240
+#: pyload/webui/themes/default/tml/home.html:240
 msgid "Size"
 msgstr "サイズ:"
 
-#: pyload/web/templates/default/home.html:241
+#: pyload/webui/themes/default/tml/home.html:241
 msgid "Progress"
 msgstr "進捗"
 
-#: pyload/web/templates/default/login.html:3
-#: pyload/web/templates/default/settings.html:178
+#: pyload/webui/themes/default/tml/login.html:3
+#: pyload/webui/themes/default/tml/settings.html:178
 msgid "Login"
 msgstr "ログイン"
 
-#: pyload/web/templates/default/login.html:14
+#: pyload/webui/themes/default/tml/login.html:14
 msgid "Username"
 msgstr "ユーザー名"
 
-#: pyload/web/templates/default/login.html:19
-#: pyload/web/templates/default/queue.html:92
-#: pyload/web/templates/default/settings.html:92
-#: pyload/web/templates/default/settings.html:183
-#: pyload/web/templates/default/window.html:21
+#: pyload/webui/themes/default/tml/login.html:19
+#: pyload/webui/themes/default/tml/queue.html:92
+#: pyload/webui/themes/default/tml/settings.html:92
+#: pyload/webui/themes/default/tml/settings.html:183
+#: pyload/webui/themes/default/tml/window.html:21
 msgid "Password"
 msgstr "パスワード"
 
-#: pyload/web/templates/default/login.html:29
+#: pyload/webui/themes/default/tml/login.html:29
 msgid "Your username and password didn't match. Please try again."
 msgstr "ユーザ名かパスワードが一致しません。再試行してください。"
 
-#: pyload/web/templates/default/login.html:30
+#: pyload/webui/themes/default/tml/login.html:30
 msgid "To reset your login data or add an user run:"
 msgstr "ログイン データをリセットしたりユーザを追加するには以下を実行してください:"
 
-#: pyload/web/templates/default/queue.html:25
+#: pyload/webui/themes/default/tml/queue.html:25
 msgid "Delete Finished"
 msgstr "削除が完了しました"
 
-#: pyload/web/templates/default/queue.html:26
+#: pyload/webui/themes/default/tml/queue.html:26
 msgid "Restart Failed"
 msgstr "再起動に失敗しました"
 
-#: pyload/web/templates/default/queue.html:65
+#: pyload/webui/themes/default/tml/queue.html:65
 msgid "Folder:"
 msgstr "フォルダ:"
 
-#: pyload/web/templates/default/queue.html:65
+#: pyload/webui/themes/default/tml/queue.html:65
 msgid "Password:"
 msgstr "パスワード:"
 
-#: pyload/web/templates/default/queue.html:79
+#: pyload/webui/themes/default/tml/queue.html:79
 msgid "Edit Package"
 msgstr "パッケージを編集"
 
-#: pyload/web/templates/default/queue.html:80
+#: pyload/webui/themes/default/tml/queue.html:80
 msgid "Edit the package detais below."
 msgstr "下のパッケージの詳細を編集します。"
 
-#: pyload/web/templates/default/queue.html:83
+#: pyload/webui/themes/default/tml/queue.html:83
 msgid "The name of the package."
 msgstr "パッケージの名前。"
 
-#: pyload/web/templates/default/queue.html:87
+#: pyload/webui/themes/default/tml/queue.html:87
 msgid "Folder"
 msgstr "フォルダー"
 
-#: pyload/web/templates/default/queue.html:88
+#: pyload/webui/themes/default/tml/queue.html:88
 msgid "Name of subfolder for these downloads."
 msgstr "これらのダウンロードのためのサブフォルダの名前です。"
 
-#: pyload/web/templates/default/queue.html:93
+#: pyload/webui/themes/default/tml/queue.html:93
 msgid "List of passwords used for unrar."
 msgstr "unrar に使われたパスワードの一覧です。"
 
-#: pyload/web/templates/default/queue.html:97
-#: pyload/web/templates/default/settings.html:167
-#: pyload/web/templates/default/captcha.html:33
-#: pyload/web/templates/default/admin.html:61
-#: pyload/web/templates/default/admin.html:91
+#: pyload/webui/themes/default/tml/queue.html:97
+#: pyload/webui/themes/default/tml/settings.html:167
+#: pyload/webui/themes/default/tml/captcha.html:33
+#: pyload/webui/themes/default/tml/admin.html:61
+#: pyload/webui/themes/default/tml/admin.html:91
 msgid "Submit"
 msgstr "送信"
 
-#: pyload/web/templates/default/queue.html:98
-#: pyload/web/templates/default/settings.html:198
-#: pyload/web/templates/default/window.html:41
-#: pyload/web/templates/default/admin.html:92
+#: pyload/webui/themes/default/tml/queue.html:98
+#: pyload/webui/themes/default/tml/settings.html:198
+#: pyload/webui/themes/default/tml/window.html:41
+#: pyload/webui/themes/default/tml/admin.html:92
 msgid "Reset"
 msgstr "リセット"
 
-#: pyload/web/templates/default/logout.html:8
+#: pyload/webui/themes/default/tml/logout.html:8
 msgid "You were successfully logged out."
 msgstr "正常にログアウトしました。"
 
-#: pyload/web/templates/default/pathchooser.html:39
-#: pyload/web/templates/default/pathchooser.html:41
+#: pyload/webui/themes/default/tml/pathchooser.html:39
+#: pyload/webui/themes/default/tml/pathchooser.html:41
 msgid "Path"
 msgstr "パス"
 
-#: pyload/web/templates/default/pathchooser.html:39
-#: pyload/web/templates/default/pathchooser.html:41
+#: pyload/webui/themes/default/tml/pathchooser.html:39
+#: pyload/webui/themes/default/tml/pathchooser.html:41
 msgid "absolute"
 msgstr "絶対的"
 
-#: pyload/web/templates/default/pathchooser.html:39
-#: pyload/web/templates/default/pathchooser.html:41
+#: pyload/webui/themes/default/tml/pathchooser.html:39
+#: pyload/webui/themes/default/tml/pathchooser.html:41
 msgid "relative"
 msgstr "相対的"
 
-#: pyload/web/templates/default/pathchooser.html:46
+#: pyload/webui/themes/default/tml/pathchooser.html:46
 msgid "name"
 msgstr "名前"
 
-#: pyload/web/templates/default/pathchooser.html:47
+#: pyload/webui/themes/default/tml/pathchooser.html:47
 msgid "size"
 msgstr "標本数"
 
-#: pyload/web/templates/default/pathchooser.html:48
+#: pyload/webui/themes/default/tml/pathchooser.html:48
 msgid "type"
 msgstr "種類"
 
-#: pyload/web/templates/default/pathchooser.html:49
+#: pyload/webui/themes/default/tml/pathchooser.html:49
 msgid "last modified"
 msgstr "最終更新"
 
-#: pyload/web/templates/default/pathchooser.html:54
+#: pyload/webui/themes/default/tml/pathchooser.html:54
 msgid "parent directory"
 msgstr "親ディレクトリ"
 
-#: pyload/web/templates/default/pathchooser.html:70
+#: pyload/webui/themes/default/tml/pathchooser.html:70
 msgid "no content"
 msgstr "内容なし"
 
-#: pyload/web/templates/default/settings.html:16
+#: pyload/webui/themes/default/tml/settings.html:16
 msgid "General"
 msgstr "標準"
 
-#: pyload/web/templates/default/settings.html:17
+#: pyload/webui/themes/default/tml/settings.html:17
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: pyload/web/templates/default/settings.html:18
+#: pyload/webui/themes/default/tml/settings.html:18
 msgid "Accounts"
 msgstr "アカウント"
 
-#: pyload/web/templates/default/settings.html:45
-#: pyload/web/templates/default/settings.html:74
+#: pyload/webui/themes/default/tml/settings.html:45
+#: pyload/webui/themes/default/tml/settings.html:74
 msgid "Choose a section from the menu"
 msgstr "メニューからセクションを選択"
 
-#: pyload/web/templates/default/settings.html:90
+#: pyload/webui/themes/default/tml/settings.html:90
 msgid "Plugin"
 msgstr "プラグイン"
 
-#: pyload/web/templates/default/settings.html:94
+#: pyload/webui/themes/default/tml/settings.html:94
 msgid "Premium"
 msgstr "プレミアム"
 
-#: pyload/web/templates/default/settings.html:95
+#: pyload/webui/themes/default/tml/settings.html:95
 msgid "Valid until"
 msgstr "有効期限"
 
-#: pyload/web/templates/default/settings.html:96
+#: pyload/webui/themes/default/tml/settings.html:96
 msgid "Traffic left"
 msgstr "残りトラフィック"
 
-#: pyload/web/templates/default/settings.html:97
+#: pyload/webui/themes/default/tml/settings.html:97
 msgid "Time"
 msgstr "時間"
 
-#: pyload/web/templates/default/settings.html:98
+#: pyload/webui/themes/default/tml/settings.html:98
 msgid "Max Parallel"
 msgstr "最大の並列数"
 
-#: pyload/web/templates/default/settings.html:99
+#: pyload/webui/themes/default/tml/settings.html:99
 msgid "Delete?"
 msgstr "削除しますか?"
 
-#: pyload/web/templates/default/settings.html:121
+#: pyload/webui/themes/default/tml/settings.html:121
 msgid "valid"
 msgstr "有効です"
 
-#: pyload/web/templates/default/settings.html:124
+#: pyload/webui/themes/default/tml/settings.html:124
 msgid "not valid"
 msgstr "無効"
 
-#: pyload/web/templates/default/settings.html:131
+#: pyload/webui/themes/default/tml/settings.html:131
 msgid "yes"
 msgstr "はい"
 
-#: pyload/web/templates/default/settings.html:134
+#: pyload/webui/themes/default/tml/settings.html:134
 msgid "no"
 msgstr "いいえ"
 
-#: pyload/web/templates/default/settings.html:168
-#: pyload/web/templates/default/settings.html:197
-#: pyload/web/templates/default/base.html:117
+#: pyload/webui/themes/default/tml/settings.html:168
+#: pyload/webui/themes/default/tml/settings.html:197
+#: pyload/webui/themes/default/tml/base.html:117
 msgid "Add"
 msgstr "追加"
 
-#: pyload/web/templates/default/settings.html:176
+#: pyload/webui/themes/default/tml/settings.html:176
 msgid "Add Account"
 msgstr ""
 
-#: pyload/web/templates/default/settings.html:177
+#: pyload/webui/themes/default/tml/settings.html:177
 msgid "Enter your account data to use premium features."
 msgstr "プレミアム機能を使うにはアカウント データを入力してください。"
 
-#: pyload/web/templates/default/settings.html:179
-#: pyload/web/templates/default/admin.html:71
+#: pyload/webui/themes/default/tml/settings.html:179
+#: pyload/webui/themes/default/tml/admin.html:71
 msgid "Your username."
 msgstr "あなたのユーザ名です。"
 
-#: pyload/web/templates/default/settings.html:184
-#: pyload/web/templates/default/admin.html:76
+#: pyload/webui/themes/default/tml/settings.html:184
+#: pyload/webui/themes/default/tml/admin.html:76
 msgid "The password for this account."
 msgstr "このアカウントのパスワードです。"
 
-#: pyload/web/templates/default/settings.html:188
+#: pyload/webui/themes/default/tml/settings.html:188
 msgid "Type"
 msgstr ""
 
-#: pyload/web/templates/default/settings.html:189
+#: pyload/webui/themes/default/tml/settings.html:189
 msgid "Choose the hoster for your account."
 msgstr "あなたのアカウントのホスティング会社を選択してください。"
 
-#: pyload/web/templates/default/logs.html:12
-#: pyload/web/templates/default/base.html:114
+#: pyload/webui/themes/default/tml/logs.html:12
+#: pyload/webui/themes/default/tml/base.html:114
 msgid "Start"
 msgstr "開始"
 
-#: pyload/web/templates/default/logs.html:12
+#: pyload/webui/themes/default/tml/logs.html:12
 msgid "prev"
 msgstr "前へ"
 
-#: pyload/web/templates/default/logs.html:12
+#: pyload/webui/themes/default/tml/logs.html:12
 msgid "next"
 msgstr "次へ"
 
-#: pyload/web/templates/default/logs.html:12
+#: pyload/webui/themes/default/tml/logs.html:12
 msgid "End"
 msgstr "終了"
 
-#: pyload/web/templates/default/info.html:18
+#: pyload/webui/themes/default/tml/info.html:18
 msgid "News"
 msgstr "ニュース"
 
-#: pyload/web/templates/default/info.html:21
+#: pyload/webui/themes/default/tml/info.html:21
 msgid "Support"
 msgstr "サポート"
 
-#: pyload/web/templates/default/info.html:37
+#: pyload/webui/themes/default/tml/info.html:37
 msgid "System"
 msgstr ""
 
-#: pyload/web/templates/default/info.html:40
+#: pyload/webui/themes/default/tml/info.html:40
 msgid "Python:"
 msgstr ""
 
-#: pyload/web/templates/default/info.html:44
+#: pyload/webui/themes/default/tml/info.html:44
 msgid "OS:"
 msgstr ""
 
-#: pyload/web/templates/default/info.html:48
+#: pyload/webui/themes/default/tml/info.html:48
 msgid "pyLoad version:"
 msgstr "pyLoad のバージョン:"
 
-#: pyload/web/templates/default/info.html:52
+#: pyload/webui/themes/default/tml/info.html:52
 msgid "Installation Folder:"
 msgstr "インストール フォルダ:"
 
-#: pyload/web/templates/default/info.html:56
+#: pyload/webui/themes/default/tml/info.html:56
 msgid "Config Folder:"
 msgstr "設定フォルダ:"
 
-#: pyload/web/templates/default/info.html:60
+#: pyload/webui/themes/default/tml/info.html:60
 msgid "Download Folder:"
 msgstr "ダウンロード フォルダ:"
 
-#: pyload/web/templates/default/info.html:64
+#: pyload/webui/themes/default/tml/info.html:64
 msgid "Free Space:"
 msgstr "空き領域:"
 
-#: pyload/web/templates/default/info.html:68
+#: pyload/webui/themes/default/tml/info.html:68
 msgid "Language:"
 msgstr "言語:"
 
-#: pyload/web/templates/default/info.html:72
+#: pyload/webui/themes/default/tml/info.html:72
 msgid "Webinterface Port:"
 msgstr "ウェブインタフェースのポート:"
 
-#: pyload/web/templates/default/info.html:76
+#: pyload/webui/themes/default/tml/info.html:76
 msgid "Remote Interface Port:"
 msgstr "リモート インタフェースのポート:"
 
-#: pyload/web/templates/default/setup.html:3
-#: pyload/web/templates/default/setup.html:4
+#: pyload/webui/themes/default/tml/setup.html:3
+#: pyload/webui/themes/default/tml/setup.html:4
 msgid "Setup"
 msgstr ""
 
-#: pyload/web/templates/default/filemanager.html:19
+#: pyload/webui/themes/default/tml/filemanager.html:19
 msgid "FileManager"
 msgstr "ファイルマネージャ"
 
-#: pyload/web/templates/default/window.html:5
-#: pyload/web/templates/default/window.html:40
+#: pyload/webui/themes/default/tml/window.html:5
+#: pyload/webui/themes/default/tml/window.html:40
 msgid "Add Package"
 msgstr "パッケージを追加"
 
-#: pyload/web/templates/default/window.html:6
+#: pyload/webui/themes/default/tml/window.html:6
 msgid "Paste your links or upload a container."
 msgstr "リンクを貼り付けるかコンテナをアップロードしてください。"
 
-#: pyload/web/templates/default/window.html:8
+#: pyload/webui/themes/default/tml/window.html:8
 msgid "The name of the new package."
 msgstr "新しいパッケージの名前。"
 
-#: pyload/web/templates/default/window.html:12
+#: pyload/webui/themes/default/tml/window.html:12
 msgid "Links"
 msgstr "リンク"
 
-#: pyload/web/templates/default/window.html:13
+#: pyload/webui/themes/default/tml/window.html:13
 msgid "Paste your links here or any text and press the filter button."
 msgstr "ここにリンクや任意のテキストを貼り付けるかフィルタ ボタンを押してください。"
 
-#: pyload/web/templates/default/window.html:14
+#: pyload/webui/themes/default/tml/window.html:14
 msgid "Filter urls"
 msgstr "フィルタ URL"
 
-#: pyload/web/templates/default/window.html:22
+#: pyload/webui/themes/default/tml/window.html:22
 msgid "Password for RAR-Archive"
 msgstr "RAR アーカイブのパスワード"
 
-#: pyload/web/templates/default/window.html:26
+#: pyload/webui/themes/default/tml/window.html:26
 msgid "File"
 msgstr "ファイル"
 
-#: pyload/web/templates/default/window.html:27
+#: pyload/webui/themes/default/tml/window.html:27
 msgid "Upload a container."
 msgstr "コンテナをアップロードしてください。"
 
-#: pyload/web/templates/default/window.html:31
+#: pyload/webui/themes/default/tml/window.html:31
 msgid "Destination"
 msgstr "保存先："
 
-#: pyload/web/templates/default/captcha.html:6
+#: pyload/webui/themes/default/tml/captcha.html:6
 msgid "Captcha reading"
 msgstr "Captcha を読み込み中"
 
-#: pyload/web/templates/default/captcha.html:13
+#: pyload/webui/themes/default/tml/captcha.html:13
 msgid "Captcha"
 msgstr ""
 
-#: pyload/web/templates/default/captcha.html:14
+#: pyload/webui/themes/default/tml/captcha.html:14
 msgid "The captcha."
 msgstr "Captcha です。"
 
-#: pyload/web/templates/default/captcha.html:20
+#: pyload/webui/themes/default/tml/captcha.html:20
 msgid "Text"
 msgstr "テキスト"
 
-#: pyload/web/templates/default/captcha.html:21
+#: pyload/webui/themes/default/tml/captcha.html:21
 msgid "Input the text on the captcha."
 msgstr "Captcha のテキストを入力してください。"
 
-#: pyload/web/templates/default/captcha.html:34
+#: pyload/webui/themes/default/tml/captcha.html:34
 msgid "Close"
 msgstr "閉じる"
 
-#: pyload/web/templates/default/base.html:20
-#: pyload/web/templates/default/base.html:139
+#: pyload/webui/themes/default/tml/base.html:20
+#: pyload/webui/themes/default/tml/base.html:139
 msgid "Webinterface"
 msgstr "ウェブインタフェース"
 
-#: pyload/web/templates/default/base.html:39
+#: pyload/webui/themes/default/tml/base.html:39
 msgid "pyLoad Update available!"
 msgstr "pyLoad の更新を利用できます!"
 
-#: pyload/web/templates/default/base.html:46
+#: pyload/webui/themes/default/tml/base.html:46
 msgid "Plugins updated, please restart!"
 msgstr "プラグインが更新されました、再起動してください!"
 
-#: pyload/web/templates/default/base.html:52
+#: pyload/webui/themes/default/tml/base.html:52
 msgid "Captcha waiting"
 msgstr "Captcha を待機中"
 
-#: pyload/web/templates/default/base.html:57
+#: pyload/webui/themes/default/tml/base.html:57
 msgid "Logout"
 msgstr "ログアウト"
 
-#: pyload/web/templates/default/base.html:59
-#: pyload/web/templates/default/admin.html:8
-#: pyload/web/templates/default/admin.html:9
+#: pyload/webui/themes/default/tml/base.html:59
+#: pyload/webui/themes/default/tml/admin.html:8
+#: pyload/webui/themes/default/tml/admin.html:9
 msgid "Administrate"
 msgstr "管理"
 
-#: pyload/web/templates/default/base.html:61
+#: pyload/webui/themes/default/tml/base.html:61
 msgid "Info"
 msgstr "情報"
 
-#: pyload/web/templates/default/base.html:65
+#: pyload/webui/themes/default/tml/base.html:65
 msgid "Please Login!"
 msgstr "ログインしてください!"
 
-#: pyload/web/templates/default/base.html:115
+#: pyload/webui/themes/default/tml/base.html:115
 msgid "Stop"
 msgstr "停止"
 
-#: pyload/web/templates/default/base.html:116
+#: pyload/webui/themes/default/tml/base.html:116
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: pyload/web/templates/default/base.html:123
+#: pyload/webui/themes/default/tml/base.html:123
 msgid "Download:"
 msgstr "ダウンロード:"
 
-#: pyload/web/templates/default/base.html:124
+#: pyload/webui/themes/default/tml/base.html:124
 msgid "Reconnect:"
 msgstr "再接続:"
 
-#: pyload/web/templates/default/base.html:125
+#: pyload/webui/themes/default/tml/base.html:125
 msgid "Speed:"
 msgstr "速度:"
 
-#: pyload/web/templates/default/base.html:126
+#: pyload/webui/themes/default/tml/base.html:126
 msgid "Active:"
 msgstr "アクティブ:"
 
-#: pyload/web/templates/default/base.html:127
+#: pyload/webui/themes/default/tml/base.html:127
 msgid "Reload page"
 msgstr "ページを再読込"
 
-#: pyload/web/templates/default/base.html:157
+#: pyload/webui/themes/default/tml/base.html:157
 msgid "loading"
 msgstr "読み込み中"
 
-#: pyload/web/templates/default/base.html:166
+#: pyload/webui/themes/default/tml/base.html:166
 msgid "Back to top"
 msgstr "トップに戻る"
 
-#: pyload/web/templates/default/admin.html:13
+#: pyload/webui/themes/default/tml/admin.html:13
 msgid "Quit pyLoad"
 msgstr "pyLoad を終了"
 
-#: pyload/web/templates/default/admin.html:14
+#: pyload/webui/themes/default/tml/admin.html:14
 msgid "Restart pyLoad"
 msgstr "pyLoad を再起動"
 
-#: pyload/web/templates/default/admin.html:18
+#: pyload/webui/themes/default/tml/admin.html:18
 msgid "To add user or change passwords use:"
 msgstr "ユーザを追加またはパスワードを変更するには:"
 
-#: pyload/web/templates/default/admin.html:19
+#: pyload/webui/themes/default/tml/admin.html:19
 msgid "Important: Admin user have always all permissions!"
 msgstr "重要: 管理者ユーザには常にすべての権限があります!"
 
-#: pyload/web/templates/default/admin.html:28
-#: pyload/web/templates/default/admin.html:67
+#: pyload/webui/themes/default/tml/admin.html:28
+#: pyload/webui/themes/default/tml/admin.html:67
 msgid "Change Password"
 msgstr "パスワードを変更"
 
-#: pyload/web/templates/default/admin.html:31
+#: pyload/webui/themes/default/tml/admin.html:31
 msgid "Admin"
 msgstr ""
 
-#: pyload/web/templates/default/admin.html:34
+#: pyload/webui/themes/default/tml/admin.html:34
 msgid "Permissions"
 msgstr "権限"
 
-#: pyload/web/templates/default/admin.html:41
+#: pyload/webui/themes/default/tml/admin.html:41
 msgid "change"
 msgstr "変更"
 
-#: pyload/web/templates/default/admin.html:69
+#: pyload/webui/themes/default/tml/admin.html:69
 msgid "Enter your current and desired Password."
 msgstr "現在のパスワードと新しいパスワードを入力してください。"
 
-#: pyload/web/templates/default/admin.html:70
+#: pyload/webui/themes/default/tml/admin.html:70
 msgid "User"
 msgstr "ユーザ"
 
-#: pyload/web/templates/default/admin.html:75
+#: pyload/webui/themes/default/tml/admin.html:75
 msgid "Current password"
 msgstr "現在のパスワード"
 
-#: pyload/web/templates/default/admin.html:80
+#: pyload/webui/themes/default/tml/admin.html:80
 msgid "New password"
 msgstr "新しいパスワード"
 
-#: pyload/web/templates/default/admin.html:81
+#: pyload/webui/themes/default/tml/admin.html:81
 msgid "The new password."
 msgstr "新しいパスワードです。"
 
-#: pyload/web/templates/default/admin.html:85
+#: pyload/webui/themes/default/tml/admin.html:85
 msgid "New password (repeat)"
 msgstr "新しいパスワード (再入力)"
 
-#: pyload/web/templates/default/admin.html:86
+#: pyload/webui/themes/default/tml/admin.html:86
 msgid "Please repeat the new password."
 msgstr "新しいパスワードを繰り返してください。"
 
-#: pyload/web/pyload_app.py:125
+#: pyload/webui/app/pyload.py:125
 msgid "You dont have permission to access this page."
 msgstr ""
 
-#: pyload/web/pyload_app.py:193
+#: pyload/webui/app/pyload.py:193
 msgid "Download directory not found."
 msgstr ""
 
-#: pyload/web/pyload_app.py:260 pyload/web/pyload_app.py:267
+#: pyload/webui/app/pyload.py:260 pyload/webui/app/pyload.py:267
 msgid "unlimited"
 msgstr "無制限"
 
-#: pyload/web/pyload_app.py:262 pyload/web/pyload_app.py:269
+#: pyload/webui/app/pyload.py:262 pyload/webui/app/pyload.py:269
 msgid "not available"
 msgstr "利用不可"
 
-#: pyload/web/pyload_app.py:508
+#: pyload/webui/app/pyload.py:508
 msgid "Run pyload.py -s to access the setup."
 msgstr ""
 
