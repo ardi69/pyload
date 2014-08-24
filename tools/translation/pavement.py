@@ -52,7 +52,7 @@ xargs = ["--language=Python", "--add-comments=L10N",
 @task
 @needs('cog')
 def html():
-    """Build html documentation"""
+    """ Build html documentation """
     module = path("docs") / "pyload"
     module.rmtree()
     call_task('paver.doctools.html')
@@ -65,7 +65,7 @@ def html():
     ("clean", 'c', 'Delete old source folder')
 ])
 def get_source(options):
-    """ Downloads pyload source from bitbucket tip or given rev"""
+    """ Downloads pyload source from bitbucket tip or given rev """
     if options.rev:
         options.url = "https://bitbucket.org/spoob/pyload/get/%s.zip" % options.rev
 
@@ -141,7 +141,7 @@ def thrift(options):
 
 @task
 def compile_js():
-    """ Compile .coffee files to javascript"""
+    """ Compile .coffee files to javascript """
 
     root = path("pyload") / "web" / "media" / "js"
     for f in root.glob("*.coffee"):
@@ -279,7 +279,7 @@ def tests():
 
 @task
 def virtualenv(options):
-    """Setup virtual environment"""
+    """ Setup virtual environment """
     if path(options.dir).exists():
         return
 
@@ -289,7 +289,7 @@ def virtualenv(options):
 
 @task
 def clean_env():
-    """Deletes the virtual environment"""
+    """ Deletes the virtual environment """
     env = path(options.virtualenv.dir)
     if env.exists():
         env.rmtree()
@@ -298,14 +298,14 @@ def clean_env():
 @task
 @needs('generate_setup', 'minilib', 'get_source', 'virtualenv')
 def env_install():
-    """Install pyLoad into the virtualenv"""
+    """ Install pyLoad into the virtualenv """
     venv = options.virtualenv
     call([path(venv.dir) / "bin" / "easy_install", "."])
 
 
 @task
 def clean():
-    """Cleans build directories"""
+    """ Cleans build directories """
     path("build").rmtree()
     path("dist").rmtree()
 
