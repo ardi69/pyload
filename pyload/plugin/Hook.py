@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from pyload.plugin.Addon import Addon, threaded
+from pyload.plugin.Addon import Addon, Hoster, threaded
 
 
-class Hook(Addon):
+class Hook(Addon, Hoster):
     __name    = "Hook"
     __type    = "hook"
-    __version = "0.03"
+    __version = "0.05"
 
     __config = []  #: [("name", "type", "desc", "default")]
 

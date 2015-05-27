@@ -2,10 +2,10 @@
 
 from __future__ import with_statement
 
+import base64
 import re
 
-from base64 import b64encode
-from pycurl import FORM_FILE, LOW_SPEED_TIME
+import pycurl
 
 from pyload.network.RequestFactory import getURL, getRequest
 from pyload.plugin.Hook import Hook, threaded
@@ -70,18 +70,18 @@ class ImageTyperz(Hook):
     def submit(self, captcha, captchaType="file", match=None):
         req = getRequest()
         # raise timeout threshold
-        req.c.setopt(LOW_SPEED_TIME, 80)
+        req.c.setopt(pycurl.LOW_SPEED_TIME, 80)
 
         try:
             #@NOTE: Workaround multipart-post bug in HTTPRequest.py
             if re.match("^\w*$", self.getConfig('passkey')):
                 multipart = True
-                data = (FORM_FILE, captcha)
+                data = (pycurl.FORM_FILE, captcha)
             else:
                 multipart = False
                 with open(captcha, 'rb') as f:
                     data = f.read()
-                data = b64encode(data)
+                data = base64.b64encode(data)
 
             res = req.load(self.SUBMIT_URL,
                            post={'action': "UPLOADCAPTCHA",
@@ -118,16 +118,16 @@ class ImageTyperz(Hook):
 
         if self.getCredits() > 0:
             task.handler.append(self)
-            task.data['service'] = self.getClassName()
+            task.data['service'] = self.__name__
             task.setWaiting(100)
             self._processCaptcha(task)
 
         else:
-            self.logInfo(_("Your %s account has not enough credits") % self.getClassName())
+            self.logInfo(_("Your %s account has not enough credits") % self.__name__)
 
 
     def captchaInvalid(self, task):
-        if task.data['service'] == self.getClassName() and "ticket" in task.data:
+        if task.data['service'] == self.__name__ and "ticket" in task.data:
             res = getURL(self.RESPOND_URL,
                          post={'action': "SETBADIMAGE",
                                'username': self.getConfig('username'),

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urllib import unquote
-from urlparse import urljoin, urlparse
+import urllib
+import urlparse
 
 from pyload.network.HTTPRequest import BadHeader
 from pyload.plugin.internal.SimpleHoster import getFileURL
@@ -13,11 +12,11 @@ from pyload.plugin.Hoster import Hoster
 class BasePlugin(Hoster):
     __name    = "BasePlugin"
     __type    = "hoster"
-    __version = "0.41"
+    __version = "0.43"
 
     __pattern = r'^unmatchable$'
 
-    __description = """Base plugin when any other didnt fit"""
+    __description = """Base hoster plugin (when any other didnt fit)"""
     __license     = "GPLv3"
     __authors     = [("RaNaN", "RaNaN@pyload.org"),
                        ("Walter Purcaro", "vuolter@gmail.com")]
@@ -25,8 +24,8 @@ class BasePlugin(Hoster):
 
     @classmethod
     def getInfo(cls, url="", html=""):  #@TODO: Move to hoster class in 0.4.10
-        url   = unquote(url)
-        url_p = urlparse(url)
+        url   = urllib.unquote(url)
+        url_p = urlparse.urlparse(url)
         return {'name'  : (url_p.path.split('/')[-1]
                            or url_p.query.split('=', 1)[::-1][0].split('&', 1)[0]
                            or url_p.netloc.split('.', 1)[0]),
@@ -39,10 +38,8 @@ class BasePlugin(Hoster):
         self.chunkLimit     = -1
         self.multiDL        = True
         self.resumeDownload = True
-
-
     def process(self, pyfile):
-        """main function"""
+        """Main function"""
 
         pyfile.name = self.getInfo(pyfile.url)['name']
 
@@ -51,7 +48,7 @@ class BasePlugin(Hoster):
 
         for _i in xrange(5):
             try:
-                link = getFileURL(self, unquote(pyfile.url))
+                link = getFileURL(self, urllib.unquote(pyfile.url))
 
                 if link:
                     self.download(link, ref=False, disposition=True)
@@ -67,7 +64,7 @@ class BasePlugin(Hoster):
 
                     account = self.core.accountManager.getAccountPlugin('Http')
                     servers = [x['login'] for x in account.getAllAccounts()]
-                    server  = urlparse(pyfile.url).netloc
+                    server  = urlparse.urlparse(pyfile.url).netloc
 
                     if server in servers:
                         self.logDebug("Logging on to %s" % server)

@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import re
 import time
-
-from random import randrange
-from urllib import unquote
 
 from pyload.utils import json_loads
 from pyload.plugin.internal.MultiHoster import MultiHoster
-from pyload.utils import parseFileSize
+from pyload.utils import parse_size
 
 
 class RealdebridCom(MultiHoster):
@@ -28,7 +24,7 @@ class RealdebridCom(MultiHoster):
         self.chunkLimit = 3
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         data = json_loads(self.load("https://real-debrid.com/ajax/unrestrict.php",
                                     get={'lang'    : "en",
                                          'link'    : pyfile.url,
@@ -46,7 +42,7 @@ class RealdebridCom(MultiHoster):
         else:
             if pyfile.name and pyfile.name.endswith('.tmp') and data['file_name']:
                 pyfile.name = data['file_name']
-            pyfile.size = parseFileSize(data['file_size'])
+            pyfile.size = parse_size(data['file_size'])
             self.link = data['generated_links'][0][-1]
 
         if self.getConfig('ssl'):

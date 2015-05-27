@@ -4,10 +4,8 @@
 #   http://filer.net/get/ivgf5ztw53et3ogd
 #   http://filer.net/get/hgo14gzcng3scbvv
 
-import pycurl
 import re
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
@@ -34,7 +32,7 @@ class FilerNet(SimpleHoster):
     LINK_FREE_PATTERN = LINK_PREMIUM_PATTERN = r'href="([^"]+)">Get download</a>'
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         inputs = self.parseHtmlForm(input_names={'token': re.compile(r'.+')})[1]
         if 'token' not in inputs:
             self.error(_("Unable to detect token"))

@@ -4,18 +4,20 @@
 
 import __builtin__
 
+import threading
 import traceback
-from threading import RLock, Thread
+import types
 
-from types import MethodType
+import SafeEval
 
-from pyload.manager.thread.Addon import AddonThread
-from pyload.manager.Plugin import literal_eval
+from pyload.Thread import AddonThread
 from pyload.utils import lock
+from pyload.utils.decorators import try_catch
 
 
 class AddonManager(object):
-    """Manages addons, delegates and handles Events.
+    """
+    Manages addons, delegates and handles Events.
 
         Every plugin can define events, \
         but some very usefull events are called by the Core.
@@ -55,26 +57,12 @@ class AddonManager(object):
         self.events = {}  #: contains events
 
         # registering callback for config event
-        self.core.config.pluginCB = MethodType(self.dispatchEvent, "pluginConfigChanged", basestring)  #@TODO: Rename event pluginConfigChanged
+        self.core.config.pluginCB = types.MethodType(self.dispatchEvent, "pluginConfigChanged", basestring)  #@TODO: Rename event pluginConfigChanged
 
         self.addEvent("pluginConfigChanged", self.manageAddon)
 
-        self.lock = RLock()
+        self.lock = threading.RLock()
         self.createIndex()
-
-
-    def try_catch(func):
-
-
-        def new(*args):
-            try:
-                return func(*args)
-            except Exception, e:
-                args[0].core.log.error(_("Error executing addon: %s") % e)
-                if args[0].core.debug:
-                    traceback.print_exc()
-
-        return new
 
 
     def addRPC(self, plugin, func, doc):
@@ -91,7 +79,7 @@ class AddonManager(object):
         if not args:
             args = ()
         if parse:
-            args = tuple([literal_eval(x) for x in args])
+            args = tuple([SafeEval.const_eval(x) for x in args])
         plugin = self.pluginMap[plugin]
         f = getattr(plugin, func)
         return f(*args)
@@ -101,30 +89,32 @@ class AddonManager(object):
         plugins  = []
 
         for type in ("addon", "hook"):
-            active   = []
-            deactive = []
+            actived     = []
+            deactivated = []
             for pluginname in getattr(self.core.pluginManager, "%sPlugins" % type):
                 try:
-                    if self.core.config.getPlugin("%s_%s" % (pluginname, type), "activated"):
-                        pluginClass = self.core.pluginManager.loadClass(type, pluginname)
-                        if not pluginClass:
-                            continue
+                    pluginClass = self.core.pluginManager.loadClass(type, pluginname)
+                    if not pluginClass:
+                        continue
 
+                    if self.core.config.getPlugin("%s_%s" % (pluginname, type), "activated"):
                         plugin = pluginClass(self.core, self)
                         plugins.append(plugin)
+
                         self.pluginMap[pluginClass.__name__] = plugin
                         if plugin.isActivated():
-                            active.append(pluginClass.__name__)
+                            actived.append(pluginClass.__name)
+
                     else:
-                        deactive.append(pluginname)
+                        deactivated.append(pluginClass.__name__)
 
                 except Exception:
                     self.core.log.warning(_("Failed activating %(name)s") % {"name": pluginname})
                     if self.core.debug:
                         traceback.print_exc()
 
-            self.core.log.info(_("Activated %ss: %s") % (type, ", ".join(sorted(active))))
-            self.core.log.info(_("Deactivated %ss: %s") % (type, ", ".join(sorted(deactive))))
+            self.core.log.info(_("Activate %ss: %s") % (type, ", ".join(sorted(actived))))
+            self.core.log.info(_("Deactivate %ss: %s") % (type, ", ".join(sorted(deactivated))))
 
         self.plugins = plugins
 
@@ -240,12 +230,12 @@ class AddonManager(object):
 
 
     @lock
-    def afterReconnecting(self, ip):
+    def afterReconnecting(self, ip, oldip):
         for plugin in self.plugins:
             if plugin.isActivated():
-                plugin.afterReconnecting(ip)
+                plugin.afterReconnecting(ip, oldip)
 
-        self.dispatchEvent("afterReconnecting", ip)
+        self.dispatchEvent("afterReconnecting", ip, oldip)
 
 
     def startThread(self, function, *args, **kwargs):
@@ -253,12 +243,12 @@ class AddonManager(object):
 
 
     def activePlugins(self):
-        """ returns all active plugins """
+        """Returns all active plugins"""
         return [x for x in self.plugins if x.isActivated()]
 
 
     def getAllInfo(self):
-        """returns info stored by addon plugins"""
+        """Returns info stored by addon plugins"""
         info = {}
         for name, plugin in self.pluginMap.iteritems():
             if plugin.info:
@@ -285,13 +275,13 @@ class AddonManager(object):
 
 
     def removeEvent(self, event, func):
-        """removes previously added event listener"""
+        """Removes previously added event listener"""
         if event in self.events:
             self.events[event].remove(func)
 
 
     def dispatchEvent(self, event, *args):
-        """dispatches event with args"""
+        """Dispatches event with args"""
         if event in self.events:
             for f in self.events[event]:
                 try:

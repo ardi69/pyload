@@ -3,8 +3,6 @@
 # Test links:
 #   http://forum.xda-developers.com/devdb/project/dl/?id=10885
 
-import re
-
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
 
 
@@ -32,6 +30,6 @@ class XdadevelopersCom(SimpleHoster):
         self.chunkLimit     = 1
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.download(pyfile.url,
                       get={'task': "get"})

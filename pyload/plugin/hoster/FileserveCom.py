@@ -2,13 +2,11 @@
 
 import re
 
-from pyload.utils import json_loads
 from pyload.network.RequestFactory import getURL
 from pyload.plugin.Hoster import Hoster
-from pyload.plugin.Plugin import chunks
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
 from pyload.plugin.internal.SimpleHoster import secondsToMidnight
-from pyload.utils import parseFileSize
+from pyload.utils import chunks, json_loads, parse_size
 
 
 def checkFile(plugin, urls):
@@ -21,7 +19,7 @@ def checkFile(plugin, urls):
             if cols:
                 file_info.append((
                     cols[1] if cols[1] != '--' else cols[0],
-                    parseFileSize(cols[2]) if cols[2] != '--' else 0,
+                    parse_size(cols[2]) if cols[2] != '--' else 0,
                     2 if cols[3].startswith('Available') else 1,
                     cols[0]))
         except Exception, e:
@@ -72,12 +70,12 @@ class FileserveCom(Hoster):
         self.logDebug("File Name: %s Size: %d" % (pyfile.name, pyfile.size))
 
         if self.premium:
-            self.handlePremium(pyfile)
+            self.handle_premium(pyfile)
         else:
-            self.handleFree(pyfile)
+            self.handle_free(pyfile)
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.html = self.load(self.url)
         action = self.load(self.url, post={"checkDownload": "check"}, decode=True)
         action = json_loads(action)
@@ -144,7 +142,7 @@ class FileserveCom(Hoster):
         if "fail" in res:
             self.fail(_("Failed getting wait time"))
 
-        if self.getClassName() == "FilejungleCom":
+        if self.__name__ == "FilejungleCom":
             m = re.search(r'"waitTime":(\d+)', res)
             if m is None:
                 self.fail(_("Cannot get wait time"))
@@ -182,9 +180,9 @@ class FileserveCom(Hoster):
         self.retry()
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         premium_url = None
-        if self.getClassName() == "FileserveCom":
+        if self.__name__ == "FileserveCom":
             # try api download
             res = self.load("http://app.fileserve.com/api/download/premium/",
                             post={"username": self.user,

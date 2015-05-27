@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
-
 from pyload.plugin.internal.MultiHoster import MultiHoster, replace_patterns
 
 
@@ -18,7 +16,7 @@ class SimplydebridCom(MultiHoster):
     __authors     = [("Kagenoshin", "kagenoshin@gmx.ch")]
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         # fix the links for simply-debrid.com!
         self.link = replace_patterns(pyfile.url, [("clz.to", "cloudzer.net/file")
                                                   ("http://share-online", "http://www.share-online")

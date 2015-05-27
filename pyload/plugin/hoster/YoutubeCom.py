@@ -3,8 +3,7 @@
 import os
 import re
 import subprocess
-
-from urllib import unquote
+import urllib
 
 from pyload.plugin.Hoster import Hoster
 from pyload.plugin.internal.SimpleHoster import replace_patterns
@@ -117,7 +116,7 @@ class YoutubeCom(Hoster):
         streams = re.search(r'"url_encoded_fmt_stream_map":"(.+?)",', html).group(1)
         streams = [x.split('\u0026') for x in streams.split(',')]
         streams = [dict((y.split('=', 1)) for y in x) for x in streams]
-        streams = [(int(x['itag']), unquote(x['url'])) for x in streams]
+        streams = [(int(x['itag']), urllib.unquote(x['url'])) for x in streams]
 
         # self.logDebug("Found links: %s" % streams)
 

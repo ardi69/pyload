@@ -6,7 +6,7 @@ Addons
 A Addon is a python file which is located at :file:`pyload/plugin/addon`.
 The :class:`AddonManager <pyload.manager.Addon.AddonManager>` will load it automatically on startup. Only one instance exists
 over the complete lifetime of pyload. Your addon can interact on various events called by the :class:`AddonManager <pyload.manager.Addon.AddonManager>`,
-do something complete autonomic and has full access to the :class:`Api <pyload.api.Api>` and every detail of pyLoad.
+do something complete autonomic and has full access to the :class:`Api <pyload.Api.Api>` and every detail of pyLoad.
 The UpdateManager, CaptchaTrader, UnRar and many more are realised as addon.
 
 Addon header
@@ -50,8 +50,8 @@ The easiest way is to overwrite specific methods defined by the :class:`Addon <p
 The name is indicating when the function gets called.
 See :class:`Addon <pyload.plugin.Addon.Addon>` page for a complete listing.
 
-You should be aware of the arguments the Addon is called with, whether its a :class:`PyFile <pyload.datatype.File.PyFile>`
-or :class:`PyPackage <pyload.datatype.Package.PyPackage>` you should read its related documentation to know how to access her great power and manipulate them.
+You should be aware of the arguments the Addon is called with, whether its a :class:`PyFile <pyload.Datatype.File.PyFile>`
+or :class:`PyPackage <pyload.Datatype.Package.PyPackage>` you should read its related documentation to know how to access her great power and manipulate them.
 
 A basic excerpt would look like: ::
 
@@ -113,7 +113,7 @@ available as event and not accessible through overwriting addon methods. However
 Providing RPC services
 ----------------------
 
-You may noticed that pyLoad has an :class:`Api <pyload.api.Api>`, which can be used internal or called by clients via RPC.
+You may noticed that pyLoad has an :class:`Api <pyload.Api.Api>`, which can be used internal or called by clients via RPC.
 So probably clients want to be able to interact with your addon to request it's state or invoke some action.
 
 Sounds complicated but is very easy to do. Just use the ``Expose`` decorator: ::
@@ -130,7 +130,7 @@ Sounds complicated but is very easy to do. Just use the ``Expose`` decorator: ::
         def invoke(self, arg):
             print "Invoked with", arg
 
-Thats all, it's available via the :class:`Api <pyload.api.Api>` now. If you want to use it read :ref:`access_api`.
+Thats all, it's available via the :class:`Api <pyload.Api.Api>` now. If you want to use it read :ref:`access_api`.
 Here is a basic example: ::
 
     # Assuming client is a ThriftClient or Api object
@@ -140,7 +140,7 @@ Here is a basic example: ::
 
 Providing status information
 ----------------------------
-Your addon can store information in a ``dict`` that can easily be retrievied via the :class:`Api <pyload.api.Api>`.
+Your addon can store information in a ``dict`` that can easily be retrievied via the :class:`Api <pyload.Api.Api>`.
 
 Just store everything in ``self.info``. ::
 

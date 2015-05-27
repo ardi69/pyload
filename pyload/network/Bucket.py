@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # @author: RaNaN
 
-from time import time
-from threading import Lock
+import threading
+import time
+
 
 MIN_RATE = 10240  #: 10kb minimum rate
 
@@ -12,8 +13,8 @@ class Bucket(object):
     def __init__(self):
         self.rate      = 0  #: bytes per second, maximum targeted throughput
         self.tokens    = 0
-        self.timestamp = time()
-        self.lock      = Lock()
+        self.timestamp = time.time()
+        self.lock      = threading.Lock()
 
 
     def __nonzero__(self):
@@ -27,7 +28,7 @@ class Bucket(object):
 
 
     def consumed(self, amount):
-        """ return the time the process has to sleep, after it consumed a specified amount """
+        """Return the time the process has to sleep, after it consumed a specified amount"""
         if self.rate < MIN_RATE:
             return 0  #: May become unresponsive otherwise
 
@@ -43,7 +44,7 @@ class Bucket(object):
 
     def calc_tokens(self):
         if self.tokens < self.rate:
-            now = time()
+            now = time.time()
             delta = self.rate * (now - self.timestamp)
             self.tokens = min(self.rate, self.tokens + delta)
             self.timestamp = now

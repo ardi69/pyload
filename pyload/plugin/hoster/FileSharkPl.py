@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
 
@@ -73,12 +72,12 @@ class FileSharkPl(SimpleHoster):
         self.info.pop('error', None)
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         m = re.search(self.LINK_FREE_PATTERN, self.html)
         if m is None:
             self.error(_("Download url not found"))
 
-        link = urljoin("http://fileshark.pl", m.group(1))
+        link = urlparse.urljoin("http://fileshark.pl", m.group(1))
 
         self.html = self.load(link)
 

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 # @author: RaNaN
 
-from os import remove, stat, fsync
-from os.path import exists
-from time import sleep
-from re import search
-from pyload.utils import fs_encode
 import codecs
-import pycurl
+import os
+import re
+import time
 import urllib
 
+import pycurl
+
 from pyload.network.HTTPRequest import HTTPRequest
+from pyload.utils import fs_encode
 
 
 class WrongFormat(Exception):
@@ -71,7 +71,7 @@ class ChunkInfo(object):
     @staticmethod
     def load(name):
         fs_name = fs_encode("%s.chunks" % name)
-        if not exists(fs_name):
+        if not os.path.exists(fs_name):
             raise IOError()
         fh = codecs.open(fs_name, "r", "utf_8")
         name = fh.readline()[:-1]
@@ -103,7 +103,7 @@ class ChunkInfo(object):
 
     def remove(self):
         fs_name = fs_encode("%s.chunks" % self.name)
-        if exists(fs_name): remove(fs_name)
+        if os.path.exists(fs_name): os.remove(fs_name)
 
 
     def getCount(self):
@@ -159,7 +159,7 @@ class HTTPChunk(HTTPRequest):
 
 
     def getHandle(self):
-        """ returns a Curl handle ready to use for perform/multiperform """
+        """Returns a Curl handle ready to use for perform/multiperform"""
 
         self.setRequestContext(self.p.url, self.p.get, self.p.post, self.p.referer, self.p.cj)
         self.c.setopt(pycurl.WRITEFUNCTION, self.writeBody)
@@ -172,7 +172,7 @@ class HTTPChunk(HTTPRequest):
             self.fp = open(fs_name, "ab")
             self.arrived = self.fp.tell()
             if not self.arrived:
-                self.arrived = stat(fs_name).st_size
+                self.arrived = os.stat(fs_name).st_size
 
             if self.range:
                 # do nothing if chunk already finished
@@ -212,7 +212,7 @@ class HTTPChunk(HTTPRequest):
         if not self.range and self.header.endswith("\r\n\r\n"):
             self.parseHeader()
         elif not self.range and buf.startswith("150") and "data connection" in buf.lower():  #: ftp file size parsing
-            size = search(r"(\d+) bytes", buf)
+            size = re.search(r"(\d+) bytes", buf)
             if size:
                 self.p.size = int(size.group(1))
                 self.p.chunkSupport = True
@@ -234,7 +234,7 @@ class HTTPChunk(HTTPRequest):
         self.fp.write(buf)
 
         if self.p.bucket:
-            sleep(self.p.bucket.consumed(size))
+            time.sleep(self.p.bucket.consumed(size))
         else:
             # Avoid small buffers, increasing sleep time slowly if buffer size gets smaller
             # otherwise reduce sleep time percentual (values are based on tests)
@@ -247,14 +247,14 @@ class HTTPChunk(HTTPRequest):
 
             self.lastSize = size
 
-            sleep(self.sleep)
+            time.sleep(self.sleep)
 
         if self.range and self.arrived > self.size:
             return 0  #: close if we have enough data
 
 
     def parseHeader(self):
-        """parse data from recieved header"""
+        """Parse data from recieved header"""
         for orgline in self.decodeResponse(self.header).splitlines():
             line = orgline.strip().lower()
 
@@ -289,7 +289,7 @@ class HTTPChunk(HTTPRequest):
 
 
     def resetRange(self):
-        """ Reset the range, so the download will load all data available  """
+        """Reset the range, so the download will load all data available"""
         self.range = None
 
 
@@ -299,14 +299,14 @@ class HTTPChunk(HTTPRequest):
 
 
     def flushFile(self):
-        """  flush and close file """
+        """Flush and close file"""
         self.fp.flush()
-        fsync(self.fp.fileno())  #: make sure everything was written to disk
+        os.fsync(self.fp.fileno())  #: make sure everything was written to disk
         self.fp.close()  #: needs to be closed, or merging chunks will fail
 
 
     def close(self):
-        """ closes everything, unusable after this """
+        """Closes everything, unusable after this"""
         if self.fp: self.fp.close()
         self.c.close()
         if hasattr(self, "p"):

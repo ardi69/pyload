@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from traceback import print_exc
+import traceback
 
-from pyload.plugin.Plugin import Base
+from pyload.plugin.Plugin import Plugin
 from pyload.utils import has_method
 
 
 class Expose(object):
-    """ used for decoration to declare rpc services """
+    """Used for decoration to declare rpc services"""
 
     def __new__(cls, f, *args, **kwargs):
         addonManager.addRPC(f.__module__, f.func_name, f.func_doc)
@@ -22,10 +22,10 @@ def threaded(fn):
     return run
 
 
-class Addon(Base):
+class Addon(Plugin):
     __name    = "Addon"
     __type    = "addon"
-    __version = "0.01"
+    __version = "0.03"
 
     __config = []  #: [("name", "type", "desc", "default")]
 
@@ -44,8 +44,6 @@ class Addon(Base):
 
 
     def __init__(self, core, manager):
-        Base.__init__(self, core)
-
         #: Provide information in dict here, usable by API `getInfo`
         self.info = {}
 
@@ -94,33 +92,34 @@ class Addon(Base):
         except Exception, e:
             self.logError(_("Error executing addon: %s") % e)
             if self.core.debug:
-                print_exc()
+                traceback.print_exc()
 
         self.cb = self.core.scheduler.addJob(self.interval, self._periodical, [threaded], threaded=threaded)
 
 
     def __repr__(self):
-        return "<Addon %s>" % self.getClassName()
+        return "<Addon %s>" % self.__name__
 
 
     def setup(self):
-        """ more init stuff if needed """
+        """More init stuff if needed"""
         pass
 
 
     def deactivate(self):
-        """ called when addon was deactivated """
+        """Called when addon was deactivated"""
         if has_method(self.__class__, "unload"):
             self.logWarning(_("Deprecated method `unload`, use `deactivate` instead"))
             self.unload()
 
 
-    def unload(self):  #: Deprecated, use method `deactivate` instead
+    #: Deprecated, use method `deactivate` instead
+    def unload(self):
         pass
 
 
     def isActivated(self):
-        """ checks if addon is activated"""
+        """Checks if addon is activated"""
         return self.getConfig("activated")
 
 
@@ -128,23 +127,25 @@ class Addon(Base):
 
 
     def activate(self):
-        """ called when addon was activated """
+        """Called when addon was activated"""
         if has_method(self.__class__, "coreReady"):
             self.logWarning(_("Deprecated method `coreReady`, use `activate` instead"))
             self.coreReady()
 
 
-    def coreReady(self):  #: Deprecated, use method `activate` instead
+    #: Deprecated, use method `activate` instead
+    def coreReady(self):
         pass
 
 
     def exit(self):
-        """ called by core.shutdown just before pyLoad exit """
+        """Called by core.shutdown just before pyLoad exit"""
         if has_method(self.__class__, "coreExiting"):
             self.coreExiting()
 
 
-    def coreExiting(self):  #: Deprecated, use method `exit` instead
+    #: Deprecated, use method `exit` instead
+    def coreExiting(self):
         pass
 
 
@@ -168,7 +169,7 @@ class Addon(Base):
         pass
 
 
-    def afterReconnecting(self, ip):
+    def afterReconnecting(self, ip, oldip):
         pass
 
 
@@ -177,7 +178,7 @@ class Addon(Base):
 
 
     def captchaTask(self, task):
-        """ new captcha task for the plugin, it MUST set the handler and timeout or will be ignored """
+        """New captcha task for the plugin, it MUST set the handler and timeout or will be ignored"""
         pass
 
 

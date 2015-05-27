@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urlparse import urlparse
+import urlparse
 
 
 endings = ("jdeatme", "3gp", "7zip", "7z", "abr", "ac3", "aiff", "aifc", "aif", "ai",
@@ -46,7 +45,7 @@ pat4 = re.compile(r'(.+)\.\d+\.xtm$')
 
 
 def matchFirst(string, *args):
-    """ matches against list of regexp and returns first match """
+    """Matches against list of regexp and returns first match"""
     for patternlist in args:
         for pattern in patternlist:
             m = pattern.search(string)
@@ -58,7 +57,8 @@ def matchFirst(string, *args):
 
 
 def parseNames(files):
-    """ Generates packages names from name, data lists
+    """
+    Generates packages names from name, data lists
 
     :param files: list of (name, data)
     :return: packagenames mapped to data lists (eg. urls)
@@ -138,7 +138,7 @@ def parseNames(files):
 
         #@NOTE: fallback: package by hoster
         if not name:
-            name = urlparse(file).netloc
+            name = urlparse.urlparse(file).netloc
             if name:
                 name = pat0.sub("", name)
 

@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from urlparse import urlparse
+import urlparse
 
-from pyload.plugin.Plugin import Plugin
+from pyload.plugin.Plugin import Hoster
 from pyload.utils import decode, safe_filename
 
 
-class Crypter(Plugin):
+class Crypter(Hoster):
+    """
+    Base plugin for crypter.
+    Overwrite `decrypt` in your subclassed plugin.
+    """
+
     __name    = "Crypter"
     __type    = "crypter"
-    __version = "0.05"
+    __version = "0.06"
 
     __pattern = r'^unmatchable$'
     __config  = [("use_subfolder", "bool", "Save package to subfolder", True),  #: Overrides core.config.get("general", "folder_per_package")
@@ -24,6 +29,9 @@ class Crypter(Plugin):
 
 
     def __init__(self, pyfile):
+        #: Provide information in dict here
+        self.info = {}
+
         #: Put all packages here. It's a list of tuples like: ( name, [list of links], folder )
         self.packages = []
 
@@ -34,7 +42,7 @@ class Crypter(Plugin):
 
 
     def process(self, pyfile):
-        """ main method """
+        """Main method"""
 
         self.decrypt(pyfile)
 
@@ -52,14 +60,14 @@ class Crypter(Plugin):
 
 
     def generatePackages(self):
-        """ generate new packages from self.urls """
+        """Generate new packages from self.urls"""
 
         packages = map(lambda name, links: (name, links, None), self.core.api.generatePackages(self.urls).iteritems())
         self.packages.extend(packages)
 
 
     def createPackages(self):
-        """ create new packages from self.packages """
+        """Create new packages from self.packages"""
 
         package_folder = self.pyfile.package().folder
         package_password = self.pyfile.package().password
@@ -98,7 +106,7 @@ class Crypter(Plugin):
 
                 elif not folder_per_package or name != folder:
                     if not folder:
-                        folder = urlparse(name).path.split("/")[-1]
+                        folder = urlparse.urlparse(name).path.split("/")[-1]
 
                     setFolder(safe_filename(folder))
                     self.logDebug("Set package %(name)s folder to: %(folder)s" % {"name": name, "folder": folder})

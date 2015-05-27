@@ -2,9 +2,8 @@
 
 import re
 import time
-
-from urllib import unquote
-from urlparse import urlparse
+import urllib
+import urlparse
 
 from pyload.network.RequestFactory import getURL
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
@@ -37,15 +36,13 @@ class ShareonlineBiz(SimpleHoster):
 
 
     @classmethod
-    def getInfo(cls, url="", html=""):
-        info = {'name': urlparse(unquote(url)).path.split('/')[-1] or _("Unknown"), 'size': 0, 'status': 3 if url else 1, 'url': url}
+    def apiInfo(cls, url):
+        info = super(ShareonlineBiz, cls).apiInfo(url)
 
         if url:
-            info['pattern'] = re.match(cls.__pattern, url).groupdict()
-
             field = getURL("http://api.share-online.biz/linkcheck.php",
                            get={'md5': "1"},
-                           post={'links': info['pattern']['ID']},
+                           post={'links': re.match(cls.__pattern__, url).group("ID")},
                            decode=True).split(";")
 
             if field[1] == "OK":
@@ -89,7 +86,7 @@ class ShareonlineBiz(SimpleHoster):
             self.fail(_("No valid captcha solution received"))
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.wait(3)
 
         self.html = self.load("%s/free/" % pyfile.url,
@@ -122,7 +119,7 @@ class ShareonlineBiz(SimpleHoster):
         return super(ShareonlineBiz, self).checkFile(rules)
 
 
-    def handlePremium(self, pyfile):  #: should be working better loading (account) api internally
+    def handle_premium(self, pyfile):  #: should be working better loading (account) api internally
         html = self.load("http://api.share-online.biz/account.php",
                          get={'username': self.user,
                               'password': self.account.getAccountData(self.user)['password'],

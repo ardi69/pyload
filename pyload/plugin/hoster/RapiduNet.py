@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import re
+import pycurl
 import time
-
-from pycurl import HTTPHEADER
 
 from pyload.utils import json_loads
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
@@ -38,9 +36,9 @@ class RapiduNet(SimpleHoster):
         self.multiDL        = self.premium
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.req.http.lastURL = pyfile.url
-        self.req.http.c.setopt(HTTPHEADER, ["X-Requested-With: XMLHttpRequest"])
+        self.req.http.c.setopt(pycurl.HTTPHEADER, ["X-Requested-With: XMLHttpRequest"])
 
         jsvars = self.getJsonResponse("https://rapidu.net/ajax.php",
                                       get={'a': "getLoadTimeToDownload"},

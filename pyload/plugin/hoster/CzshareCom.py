@@ -6,7 +6,7 @@
 import re
 
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
-from pyload.utils import parseFileSize
+from pyload.utils import parse_size
 
 
 class CzshareCom(SimpleHoster):
@@ -51,7 +51,7 @@ class CzshareCom(SimpleHoster):
 
         # check user credit
         try:
-            credit = parseFileSize(m.group(1).replace(' ', ''), m.group(2))
+            credit = parse_size(m.group(1).replace(' ', ''), m.group(2))
             self.logInfo(_("Premium download for %i KiB of Credit") % (self.pyfile.size / 1024))
             self.logInfo(_("User %s has %i KiB left") % (self.user, credit / 1024))
             if credit < self.pyfile.size:
@@ -64,7 +64,7 @@ class CzshareCom(SimpleHoster):
         return True
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
     # parse download link
         try:
             form = re.search(self.PREMIUM_FORM_PATTERN, self.html, re.S).group(1)
@@ -77,7 +77,7 @@ class CzshareCom(SimpleHoster):
         self.download("http://sdilej.cz/profi_down.php", post=inputs, disposition=True)
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         # get free url
         m = re.search(self.FREE_URL_PATTERN, self.html)
         if m is None:

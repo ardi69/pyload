@@ -11,7 +11,7 @@ from pyload.utils import decode, remove_chars
 class MultiHook(Hook):
     __name    = "MultiHook"
     __type    = "hook"
-    __version = "0.44"
+    __version = "0.45"
 
     __config  = [("pluginmode"    , "all;listed;unlisted", "Use for plugins"              , "all"),
                  ("pluginlist"    , "str"                , "Plugin list (comma separated)", ""),
@@ -62,19 +62,22 @@ class MultiHook(Hook):
         self.account      = None
         self.pluginclass  = None
         self.pluginmodule = None
-        self.pluginname   = None
+        self.pluginname   = self.__name__
         self.plugintype   = None
 
         self.initPlugin()
 
 
     def initPlugin(self):
-        self.pluginname         = self.getClassName()
-        plugin, self.plugintype = self.core.pluginManager.findPlugin(("hoster", "crypter", "container"), self.pluginname)
+        for t in ("hoster", "crypter", "container"):
+            if self.pluginname in self.plugins[t]:
+                self.plugintype = t
+                break
 
-        if plugin:
-            self.pluginmodule = self.core.pluginManager.loadModule(self.plugintype, self.pluginname)
-            self.pluginclass  = getattr(self.pluginmodule, self.pluginname)
+        if self.plugintype:
+            self.pluginmodule = self.core.pluginManager.pluginModule(self.plugintype, self.pluginname)
+            self.pluginclass  = self.core.pluginManager.pluginClass(self.plugintype, self.pluginname)
+
         else:
             self.logWarning("Hook plugin will be deactivated due missing plugin reference")
             self.setConfig('activated', False)
@@ -96,7 +99,7 @@ class MultiHook(Hook):
 
 
     def getURL(self, *args, **kwargs):  #@TODO: Remove in 0.4.10
-        """ see HTTPRequest for argument list """
+        """See HTTPRequest for argument list"""
         h = pyreq.getHTTPRequest(timeout=120)
         try:
             if not 'decode' in kwargs:
@@ -108,22 +111,13 @@ class MultiHook(Hook):
         return rep
 
 
-    def getConfig(self, option, default=''):  #@TODO: Remove in 0.4.10
-        """getConfig with default value - sublass may not implements all config options"""
-        try:
-            return self.getConf(option)
-
-        except KeyError:
-            return default
-
-
     def pluginsCached(self):
         if self.plugins:
             return self.plugins
 
         for _i in xrange(2):
             try:
-                pluginset = self._pluginSet(self.getHosters() if self.plugintype == "hoster" else self.getCrypters())
+                pluginset = self._pluginSet(self.getHosters())
                 break
 
             except Exception, e:
@@ -166,15 +160,8 @@ class MultiHook(Hook):
 
 
     def getHosters(self):
-        """Load list of supported hoster
-
-        :return: List of domain names
         """
-        raise NotImplementedError
-
-
-    def getCrypters(self):
-        """Load list of supported crypters
+        Load list of supported hoster
 
         :return: List of domain names
         """
@@ -182,7 +169,7 @@ class MultiHook(Hook):
 
 
     def periodical(self):
-        """reload plugin list periodically"""
+        """Reload plugin list periodically"""
         self.loadAccount()
 
         if self.getConfig('reload', True):

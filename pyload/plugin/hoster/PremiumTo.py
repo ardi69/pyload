@@ -2,7 +2,7 @@
 
 from __future__ import with_statement
 
-from os import remove
+import os
 
 from pyload.plugin.internal.MultiHoster import MultiHoster
 from pyload.utils import fs_encode
@@ -26,7 +26,7 @@ class PremiumTo(MultiHoster):
     CHECK_TRAFFIC = True
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         # raise timeout to 2min
         self.download("http://premium.to/api/getfile.php",
                       get={'username': self.account.username,
@@ -45,7 +45,7 @@ class PremiumTo(MultiHoster):
             file = fs_encode(self.lastDownload)
             with open(file, "rb") as f:
                 err = f.read(256).strip()
-            remove(file)
+            os.remove(file)
 
         if err:
             self.fail(err)

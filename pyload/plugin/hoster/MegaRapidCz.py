@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import pycurl
 import re
-
-from pycurl import HTTPHEADER
 
 from pyload.network.HTTPRequest import BadHeader
 from pyload.network.RequestFactory import getRequest
@@ -11,7 +10,7 @@ from pyload.plugin.internal.SimpleHoster import SimpleHoster, parseFileInfo
 
 def getInfo(urls):
     h = getRequest()
-    h.c.setopt(HTTPHEADER,
+    h.c.setopt(pycurl.HTTPHEADER,
                ["Accept: text/html",
                 "User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0"])
 
@@ -52,7 +51,7 @@ class MegaRapidCz(SimpleHoster):
         self.chunkLimit = 1
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         m = re.search(self.LINK_PREMIUM_PATTERN, self.html)
         if m:
             self.link = m.group(1)

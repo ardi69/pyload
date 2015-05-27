@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.utils import json_loads
 from pyload.plugin.Crypter import Crypter
@@ -31,7 +30,7 @@ class YoutubeComFolder(Crypter):
 
     def api_response(self, ref, req):
         req.update({"key": self.API_KEY})
-        url  = urljoin("https://www.googleapis.com/youtube/v3/", ref)
+        url  = urlparse.urljoin("https://www.googleapis.com/youtube/v3/", ref)
         html = self.load(url, get=req)
         return json_loads(html)
 
@@ -108,7 +107,7 @@ class YoutubeComFolder(Crypter):
                 playlists = self.getPlaylists(channel['id'])
                 self.logDebug("%s playlist\s found on channel \"%s\"" % (len(playlists), channel['title']))
 
-                relatedplaylist = {p_name: self.getPlaylist(p_id) for p_name, p_id in channel['relatedPlaylists'].iteritems()}
+                relatedplaylist = dict((p_name, self.getPlaylist(p_id)) for p_name, p_id in channel['relatedPlaylists'].iteritems())
                 self.logDebug("Channel's related playlists found = %s" % relatedplaylist.keys())
 
                 relatedplaylist['uploads']['title'] = "Unplaylisted videos"

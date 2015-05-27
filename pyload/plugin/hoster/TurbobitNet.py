@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import binascii
+import pycurl
 import random
 import re
 import time
+import urllib
 
-from Crypto.Cipher import ARC4
-from binascii import hexlify, unhexlify
-from pycurl import HTTPHEADER
-from urllib import quote
+import Crypto
 
 from pyload.network.RequestFactory import getURL
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
@@ -42,7 +42,7 @@ class TurbobitNet(SimpleHoster):
     CAPTCHA_PATTERN    = r'<img alt="Captcha" src="(.+?)"'
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.html = self.load("http://turbobit.net/download/free/%s" % self.info['pattern']['ID'],
                               decode=True)
 
@@ -50,11 +50,11 @@ class TurbobitNet(SimpleHoster):
 
         self.solveCaptcha()
 
-        self.req.http.c.setopt(HTTPHEADER, ["X-Requested-With: XMLHttpRequest"])
+        self.req.http.c.setopt(pycurl.HTTPHEADER, ["X-Requested-With: XMLHttpRequest"])
 
         self.html = self.load(self.getDownloadUrl(rtUpdate))
 
-        self.req.http.c.setopt(HTTPHEADER, ["X-Requested-With:"])
+        self.req.http.c.setopt(pycurl.HTTPHEADER, ["X-Requested-With:"])
 
         m = re.search(self.LINK_FREE_PATTERN, self.html)
         if m:
@@ -97,10 +97,10 @@ class TurbobitNet(SimpleHoster):
 
 
     def getRtUpdate(self):
-        rtUpdate = self.getStorage("rtUpdate")
+        rtUpdate = self.retrieve("rtUpdate")
         if not rtUpdate:
-            if self.getStorage("version") != self.__version \
-               or int(self.getStorage("timestamp", 0)) + 86400000 < timestamp():
+            if self.retrieve("version") != self.__version \
+               or int(self.retrieve("timestamp", 0)) + 86400000 < timestamp():
                 # that's right, we are even using jdownloader updates
                 rtUpdate = getURL("http://update0.jdownloader.org/pluginstuff/tbupdate.js")
                 rtUpdate = self.decrypt(rtUpdate.splitlines()[1])
@@ -109,9 +109,9 @@ class TurbobitNet(SimpleHoster):
                                   r'zza=\2;for(var zzi=0;zzi<zza.length;zzi++){\1=zza[zzi];', rtUpdate)
                 rtUpdate = re.sub(r"for\((\w+)=", r"for(var \1=", rtUpdate)
 
-                self.setStorage("rtUpdate", rtUpdate)
-                self.setStorage("timestamp", timestamp())
-                self.setStorage("version", self.__version)
+                self.store("rtUpdate", rtUpdate)
+                self.store("timestamp", timestamp())
+                self.store("version", self.__version)
             else:
                 self.logError(_("Unable to download, wait for update..."))
                 self.tempOffline()
@@ -134,7 +134,7 @@ class TurbobitNet(SimpleHoster):
 
         for b in [1, 3]:
             self.jscode = "var id = \'%s\';var b = %d;var inn = \'%s\';%sout" % (
-                          self.info['pattern']['ID'], b, quote(fun), rtUpdate)
+                          self.info['pattern']['ID'], b, urllib.quote(fun), rtUpdate)
 
             try:
                 out = self.js.eval(self.jscode)
@@ -155,8 +155,8 @@ class TurbobitNet(SimpleHoster):
 
 
     def decrypt(self, data):
-        cipher = ARC4.new(hexlify('E\x15\xa1\x9e\xa3M\xa0\xc6\xa0\x84\xb6H\x83\xa8o\xa0'))
-        return unhexlify(cipher.encrypt(unhexlify(data)))
+        cipher = Crypto.Cipher.ARC4.new(binascii.hexlify('E\x15\xa1\x9e\xa3M\xa0\xc6\xa0\x84\xb6H\x83\xa8o\xa0'))
+        return binascii.unhexlify(cipher.encrypt(binascii.unhexlify(data)))
 
 
     def getLocalTimeString(self):

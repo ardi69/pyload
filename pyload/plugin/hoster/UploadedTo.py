@@ -11,7 +11,7 @@ from pyload.plugin.internal.SimpleHoster import SimpleHoster
 class UploadedTo(SimpleHoster):
     __name    = "UploadedTo"
     __type    = "hoster"
-    __version = "0.86"
+    __version = "0.88"
 
     __pattern = r'https?://(?:www\.)?(uploaded\.(to|net)|ul\.to)(/file/|/?\?id=|.*?&id=|/)(?P<ID>\w+)'
     __config  = [("use_premium", "bool", "Use premium account if available", True)]
@@ -27,6 +27,8 @@ class UploadedTo(SimpleHoster):
 
     URL_REPLACEMENTS = [(__pattern + ".*", r'http://uploaded.net/file/\g<ID>')]
 
+    TEMP_OFFLINE_PATTERN = r'<title>uploaded\.net - Maintenance'
+
     LINK_PREMIUM_PATTERN = r'<div class="tfree".*\s*<form method="post" action="(.+?)"'
 
     WAIT_PATTERN   = r'Current waiting period: <span>(\d+)'
@@ -34,7 +36,7 @@ class UploadedTo(SimpleHoster):
 
 
     @classmethod
-    def apiInfo(cls, url="", get={}, post={}):
+    def apiInfo(cls, url):
         info = super(UploadedTo, cls).apiInfo(url)
 
         for _i in xrange(5):
@@ -88,7 +90,7 @@ class UploadedTo(SimpleHoster):
                 self.wait(m.group(1))
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.load("http://uploaded.net/language/en", just_header=True)
 
         self.html = self.load("http://uploaded.net/js/download.js", decode=True)

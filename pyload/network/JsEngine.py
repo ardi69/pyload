@@ -1,24 +1,23 @@
 # -*- coding: utf-8 -*-
 # @author: vuolter
 
+import os
 import subprocess
 import sys
-
-from os import path
-from urllib import quote
+import urllib
 
 from pyload.utils import encode, decode, uniqify
 
 
 class JsEngine(object):
-    """ JS Engine superclass """
+    """JS Engine superclass"""
 
     def __init__(self, core, engine=None):
         self.core   = core
         self.engine = None  #: Engine Instance
 
         if not engine:
-            engine = self.core.config.get("general", "jsengine")
+            engine = self.core.config.get("download", "jsengine")
 
         if engine != "auto" and self.set(engine) is False:
             engine = "auto"
@@ -34,12 +33,12 @@ class JsEngine(object):
 
     @classmethod
     def find(cls):
-        """ Check if there is any engine available """
+        """Check if there is any engine available"""
         return [E for E in ENGINES if E.find()]
 
 
     def get(self, engine=None):
-        """ Convert engine name (string) to relative JSE class (AbstractEngine extended) """
+        """Convert engine name (string) to relative JSE class (AbstractEngine extended)"""
         if not engine:
             JSE = self.engine
 
@@ -62,7 +61,7 @@ class JsEngine(object):
 
 
     def set(self, engine):
-        """ Set engine name (string) or JSE class (AbstractEngine extended) as default engine """
+        """Set engine name (string) or JSE class (AbstractEngine extended) as default engine"""
         if isinstance(engine, basestring):
             return self.set(self.get(engine))
 
@@ -105,7 +104,7 @@ class JsEngine(object):
 
 
 class AbstractEngine(object):
-    """ JSE base class """
+    """JSE base class"""
 
     _name = ""
 
@@ -121,7 +120,7 @@ class AbstractEngine(object):
 
     @classmethod
     def find(cls):
-        """ Check if the engine is available """
+        """Check if the engine is available"""
         try:
             __import__(cls._name)
         except Exception:
@@ -185,7 +184,7 @@ class CommonEngine(AbstractEngine):
 
 
     def eval(self, script):
-        script = "print(eval(unescape('%s')))" % quote(script)
+        script = "print(eval(unescape('%s')))" % urllib.quote(script)
         args = ["js", "-e", script]
         return self._eval(args)
 
@@ -200,7 +199,7 @@ class NodeEngine(AbstractEngine):
 
 
     def eval(self, script):
-        script = "console.log(eval(unescape('%s')))" % quote(script)
+        script = "console.log(eval(unescape('%s')))" % urllib.quote(script)
         args = ["node", "-e", script]
         return self._eval(args)
 
@@ -214,10 +213,10 @@ class RhinoEngine(AbstractEngine):
         jspath = [
             "/usr/share/java/js.jar",
             "js.jar",
-            path.join(pypath, "js.jar")
+            os.path.join(pypath, "js.jar")
         ]
         for p in jspath:
-            if path.exists(p):
+            if os.path.exists(p):
                 self.path = p
                 break
         else:
@@ -225,7 +224,7 @@ class RhinoEngine(AbstractEngine):
 
 
     def eval(self, script):
-        script = "print(eval(unescape('%s')))" % quote(script)
+        script = "print(eval(unescape('%s')))" % urllib.quote(script)
         args = ["java", "-cp", self.path, "org.mozilla.javascript.tools.shell.Main", "-e", script]
         res = decode(self._eval(args))
         try:
@@ -241,11 +240,11 @@ class JscEngine(AbstractEngine):
 
     def setup(self):
         jspath = "/System/Library/Frameworks/JavaScriptCore.framework/Resources/jsc"
-        self.path = jspath if path.exists(jspath) else ""
+        self.path = jspath if os.path.exists(jspath) else ""
 
 
     def eval(self, script):
-        script = "print(eval(unescape('%s')))" % quote(script)
+        script = "print(eval(unescape('%s')))" % urllib.quote(script)
         args = [self.path, "-e", script]
         return self._eval(args)
 

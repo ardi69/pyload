@@ -7,15 +7,16 @@ from paver.easy import *
 from paver.setuputils import setup
 from paver.doctools import cog
 
+import glob
 import os
-import sys
 import shutil
+import sys
 import re
-from glob import glob
-from tempfile import mkdtemp
-from urllib import urlretrieve
-from subprocess import call, Popen, PIPE
-from zipfile import ZipFile
+import subprocess
+import tempfile
+import urllib
+import zipfile
+
 
 PROJECT_DIR = path(__file__).dirname()
 sys.path.append(PROJECT_DIR)
@@ -51,14 +52,9 @@ setup(
         'SSL': ["pyOpenSSL"],
         'DLC': ['pycrypto'],
         'lightweight webserver': ['bjoern'],
-        'RSS plugins': ['feedparser'],
     },
     # setup_requires=["setuptools_hg"],
-    entry_points={
-        'console_scripts': [
-            'pyLoadCore = pyLoadCore:main',
-            'pyLoadCli = pyLoadCli:main'
-        ]},
+    entry_points={'console_scripts': ['pyLoadCore = pyLoadCore:main']},
     zip_safe=False,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -108,7 +104,7 @@ def html():
     """Build html documentation"""
     module = path("docs") / "pyload"
     pyload.rmtree()
-    call_task('paver.doctools.html')
+    subprocess.call_task('paver.doctools.html')
 
 
 @task
@@ -120,7 +116,7 @@ def html():
 
 
 def get_source(options):
-    """ Downloads pyload source from bitbucket tip or given rev"""
+    """Downloads pyload source from bitbucket tip or given rev"""
     if options.rev: options.url = "https://bitbucket.org/spoob/pyload/get/%s.zip" % options.rev
 
     pyload = path("pyload")
@@ -130,13 +126,13 @@ def get_source(options):
     elif pyload.exists():
         pyload.rmtree()
 
-    urlretrieve(options.src, "pyload_src.zip")
-    zip = ZipFile("pyload_src.zip")
+    urllib.urlretrieve(options.src, "pyload_src.zip")
+    zip = zipfile.ZipFile("pyload_src.zip")
     zip.extractall()
     path("pyload_src.zip").remove()
 
     folder = [x for x in path(".").dirs() if x.name.startswith("spoob-pyload-")][0]
-    folder.move(pyload)
+    folder.shutil.move(pyload)
 
     change_mode(pyload, 0644)
     change_mode(pyload, 0755, folder=True)
@@ -159,7 +155,7 @@ def get_source(options):
 @task
 @needs('clean', 'generate_setup', 'minilib', 'get_source', 'setuptools.command.sdist')
 def sdist():
-    """ Build source code package with distutils """
+    """Build source code package with distutils"""
 
 
 @task
@@ -170,7 +166,7 @@ def sdist():
 
 
 def thrift(options):
-    """ Generate Thrift stubs """
+    """Generate Thrift stubs"""
 
     print "add import for TApplicationException manually as long it is not fixed"
 
@@ -185,11 +181,11 @@ def thrift(options):
 
     print "running", cmd
 
-    p = Popen(cmd)
+    p = subprocess.Popen(cmd)
     p.communicate()
 
     (outdir / "thriftgen").rmtree()
-    (outdir / "gen-py").move(outdir / "thriftgen")
+    (outdir / "gen-py").shutil.move(outdir / "thriftgen")
 
     # create light ttypes
     from pyload.remote.socketbackend.create_ttypes import main
@@ -198,13 +194,13 @@ def thrift(options):
 
 @task
 def compile_js():
-    """ Compile .coffee files to javascript"""
+    """Compile .coffee files to javascript"""
 
     root = path("pyload") / "web" / "media" / "js"
     for f in root.glob("*.coffee"):
         print "generate", f
-        coffee = Popen(["coffee", "-cbs"], stdin=open(f, "rb"), stdout=PIPE)
-        yui = Popen(["yuicompressor", "--type", "js"], stdin=coffee.stdout, stdout=PIPE)
+        coffee = subprocess.Popen(["coffee", "-cbs"], stdin=open(f, "rb"), stdout=PIPE)
+        yui = subprocess.Popen(["yuicompressor", "--type", "js"], stdin=coffee.stdout, stdout=PIPE)
         coffee.stdout.close()
         content = yui.communicate()[0]
         with open(root / f.name.replace(".coffee", ".js"), "wb") as js:
@@ -215,13 +211,12 @@ def compile_js():
 
 @task
 def generate_locale():
-    """ Generates localization files """
+    """Generates localization files"""
 
-    EXCLUDE = ["BeautifulSoup.py", "pyload/cli", "web/locale", "web/ajax", "web/cnl", "web/pyload",
+    EXCLUDE = ["BeautifulSoup.py", "web/locale", "web/ajax", "web/cnl", "web/pyload",
                "setup.py"]
     makepot("core", path("pyload"), EXCLUDE, "./pyload.py\n")
 
-    makepot("cli", path("pyload") / "cli", [], includes="./pyload-cli.py\n")
     makepot("setup", "", [], includes="./pyload/setup.py\n")
 
     EXCLUDE = ["ServerThread.py", "web/media/default"]
@@ -260,14 +255,14 @@ def generate_locale():
 
 
 def upload_translations(options):
-    """ Uploads the locale files to translation server """
-    tmp = path(mkdtemp())
+    """Uploads the locale files to translation server"""
+    tmp = path(tempfile.mkdtemp())
 
-    shutil.copy('locale/crowdin.yaml', tmp)
+    shutil.shutil.copy('locale/crowdin.yaml', tmp)
     os.mkdir(tmp / 'pyLoad')
-    for f in glob('locale/*.pot'):
+    for f in glob.glob('locale/*.pot'):
         if os.path.isfile(f):
-            shutil.copy(f, tmp / 'pyLoad')
+            shutil.shutil.copy(f, tmp / 'pyLoad')
 
     config = tmp / 'crowdin.yaml'
     with open(config, 'rb') as f:
@@ -276,7 +271,7 @@ def upload_translations(options):
     with open(config, 'wb') as f:
         f.write(content)
 
-    call(['crowdin-cli', '-c', config, 'upload', 'source'])
+    subprocess.call(['crowdin-cli', '-c', config, 'upload', 'source'])
 
     shutil.rmtree(tmp)
 
@@ -290,14 +285,14 @@ def upload_translations(options):
 
 
 def download_translations(options):
-    """ Downloads the translated files from translation server """
-    tmp = path(mkdtemp())
+    """Downloads the translated files from translation server"""
+    tmp = path(tempfile.mkdtemp())
 
-    shutil.copy('locale/crowdin.yaml', tmp)
+    shutil.shutil.copy('locale/crowdin.yaml', tmp)
     os.mkdir(tmp / 'pyLoad')
-    for f in glob('locale/*.pot'):
+    for f in glob.glob('locale/*.pot'):
         if os.path.isfile(f):
-            shutil.copy(f, tmp / 'pyLoad')
+            shutil.shutil.copy(f, tmp / 'pyLoad')
 
     config = tmp / 'crowdin.yaml'
     with open(config, 'rb') as f:
@@ -306,7 +301,7 @@ def download_translations(options):
     with open(config, 'wb') as f:
         f.write(content)
 
-    call(['crowdin-cli', '-c', config, 'download'])
+    subprocess.call(['crowdin-cli', '-c', config, 'download'])
 
     for language in (tmp / 'pyLoad').listdir():
         if not language.isdir():
@@ -324,19 +319,19 @@ def download_translations(options):
 
 @task
 def compile_translations():
-    """ Compile PO files to MO """
+    """Compile PO files to MO"""
     for language in path('locale').listdir():
         if not language.isdir():
             continue
 
-        for f in glob(language / 'LC_MESSAGES' / '*.po'):
+        for f in glob.glob(language / 'LC_MESSAGES' / '*.po'):
             print "Compiling %s" % f
-            call(['msgfmt', '-o', f.replace('.po', '.mo'), f])
+            subprocess.call(['msgfmt', '-o', f.replace('.po', '.mo'), f])
 
 
 @task
 def tests():
-    call(["nosetests2"])
+    subprocess.call(["nosetests2"])
 
 
 @task
@@ -345,7 +340,7 @@ def virtualenv(options):
     if path(options.dir).exists():
         return
 
-    call([options.virtual, "--no-site-packages", "--python", options.python, options.dir])
+    subprocess.call([options.virtual, "--no-site-packages", "--python", options.python, options.dir])
     print "$ source %s/bin/activate" % options.dir
 
 
@@ -362,7 +357,7 @@ def clean_env():
 def env_install():
     """Install pyLoad into the virtualenv"""
     venv = options.virtualenv
-    call([path(venv.dir) / "bin" / "easy_install", "."])
+    subprocess.call([path(venv.dir) / "bin" / "easy_install", "."])
 
 
 @task
@@ -402,7 +397,7 @@ def makepot(domain, p, excludes=[], includes="", endings=[".py"], xxargs=[]):
         if p:
             f.write(walk_trans(path(p), excludes, endings))
 
-    call(["xgettext", "--files-from=includes.txt", "--default-domain=%s" % domain] + xargs + xxargs)
+    subprocess.call(["xgettext", "--files-from=includes.txt", "--default-domain=%s" % domain] + xargs + xxargs)
 
     # replace charset und move file
     with open("%s.po" % domain, "rb") as f:

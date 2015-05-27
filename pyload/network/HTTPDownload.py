@@ -3,28 +3,27 @@
 
 from __future__ import with_statement
 
-import pycurl
+import logging
+import os
+import shutil
+import time
+import urllib
 
-from os import remove, fsync
-from os.path import dirname
-from time import sleep, time
-from shutil import move
-from logging import getLogger
+import pycurl
 
 from pyload.network.HTTPChunk import ChunkInfo, HTTPChunk
 from pyload.network.HTTPRequest import BadHeader
-
 from pyload.plugin.Plugin import Abort
-from pyload.utils import fs_join, fs_encode
+from pyload.utils import encode, fs_join, fs_encode
 
 
 class HTTPDownload(object):
-    """ loads a url http + ftp """
+    """Loads a url http + ftp"""
 
     def __init__(self, url, filename, get={}, post={}, referer=None, cj=None, bucket=None,
                  options={}, progress=None, disposition=False):
-        self.url = url
-        self.filename = filename  #: complete file destination, not only name
+        self.url = urllib.unquote(encode(url).strip())
+        self.filename = filename.strip()  #: complete file destination, not only name
         self.get = get
         self.post = post
         self.referer = referer
@@ -40,7 +39,7 @@ class HTTPDownload(object):
 
         self.chunks = []
 
-        self.log = getLogger("log")
+        self.log = logging.getLogger("log")
 
         try:
             self.info = ChunkInfo.load(filename)
@@ -94,20 +93,20 @@ class HTTPDownload(object):
                                 break
                             fo.write(data)
                     if fo.tell() < self.info.getChunkRange(i)[1]:
-                        remove(init)
+                        reshutil.move(init)
                         self.info.remove()  #: there are probably invalid chunks
                         raise Exception("Downloaded content was smaller than expected. Try to reduce download connections.")
-                    remove(fname)  #: remove chunk
+                    reshutil.move(fname)  #: remove chunk
 
         if self.nameDisposition and self.disposition:
-            self.filename = fs_join(dirname(self.filename), self.nameDisposition)
+            self.filename = fs_join(os.path.dirname(self.filename), self.nameDisposition)
 
-        move(init, fs_encode(self.filename))
+        shutil.move(init, fs_encode(self.filename))
         self.info.remove()  #: remove info file
 
 
     def download(self, chunks=1, resume=False):
-        """ returns new filename or None """
+        """Returns new filename or None"""
 
         chunks = max(1, chunks)
         resume = self.info.resume and resume
@@ -189,7 +188,7 @@ class HTTPDownload(object):
                 if ret != pycurl.E_CALL_MULTI_PERFORM:
                     break
 
-            t = time()
+            t = time.time()
 
             # reduce these calls
             while lastFinishCheck + 0.5 < t:
@@ -239,7 +238,7 @@ class HTTPDownload(object):
                         for chunk in to_clean:
                             self.closeChunk(chunk)
                             self.chunks.remove(chunk)
-                            remove(fs_encode(self.info.getChunkName(chunk.id)))
+                            reshutil.move(fs_encode(self.info.getChunkName(chunk.id)))
 
                         # let first chunk load the rest and update the info file
                         init.resetRange()
@@ -276,7 +275,7 @@ class HTTPDownload(object):
             if self.abort:
                 raise Abort
 
-            # sleep(0.003)  #: supress busy waiting - limits dl speed to (1 / x) * buffersize
+            # time.sleep(0.003)  #: supress busy waiting - limits dl speed to (1 / x) * buffersize
             self.m.select(1)
 
         for chunk in self.chunks:
@@ -291,7 +290,7 @@ class HTTPDownload(object):
 
 
     def findChunk(self, handle):
-        """ linear search to find a chunk (should be ok since chunk size is usually low) """
+        """Linear search to find a chunk (should be ok since chunk size is usually low)"""
         for chunk in self.chunks:
             if chunk.c == handle:
                 return chunk
@@ -307,7 +306,7 @@ class HTTPDownload(object):
 
 
     def close(self):
-        """ cleanup """
+        """Cleanup"""
         for chunk in self.chunks:
             self.closeChunk(chunk)
 

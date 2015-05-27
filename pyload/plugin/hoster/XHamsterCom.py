@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urllib import unquote
+import urllib
 
 from pyload.utils import json_loads
 from pyload.plugin.Hoster import Hoster
@@ -48,8 +47,8 @@ class XHamsterCom(Hoster):
 
 
     def get_file_url(self):
-        """ returns the absolute downloadable filepath
-        """
+        """Returns the absolute downloadable filepath"""
+
         if not self.html:
             self.download_html()
 
@@ -83,7 +82,7 @@ class XHamsterCom(Hoster):
             self.logDebug("long_url = " + long_url)
         else:
             if flashvars['file']:
-                file_url = unquote(flashvars['file'])
+                file_url = urllib.unquote(flashvars['file'])
             else:
                 self.error(_("file_url not found"))
 
@@ -119,8 +118,6 @@ class XHamsterCom(Hoster):
 
 
     def file_exists(self):
-        """ returns True or False
-        """
         if not self.html:
             self.download_html()
         if re.search(r"(.*Video not found.*)", self.html):

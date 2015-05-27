@@ -7,8 +7,7 @@
 #   http://letitbit.net/download/07874.0b5709a7d3beee2408bb1f2eefce/random.bin.html
 
 import re
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.utils import json_loads, json_dumps
 from pyload.network.RequestFactory import getURL
@@ -57,7 +56,7 @@ class LetitbitNet(SimpleHoster):
         self.resumeDownload = True
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         action, inputs = self.parseHtmlForm('id="ifree_form"')
         if not action:
             self.error(_("ifree_form"))
@@ -66,7 +65,7 @@ class LetitbitNet(SimpleHoster):
         self.logDebug(action, inputs)
         inputs['desc'] = ""
 
-        self.html = self.load(urljoin("http://letitbit.net/", action), post=inputs)
+        self.html = self.load(urlparse.urljoin("http://letitbit.net/", action), post=inputs)
 
         m = re.search(self.SECONDS_PATTERN, self.html)
         seconds = int(m.group(1)) if m else 60
@@ -122,7 +121,7 @@ class LetitbitNet(SimpleHoster):
         self.link = urls[0]
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         api_key = self.user
         premium_key = self.account.getAccountData(self.user)['password']
 

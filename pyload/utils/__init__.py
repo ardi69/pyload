@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 # @author: vuolter
 
-""" Store all useful functions here """
+"""Store all useful functions here"""
 
+from __future__ import with_statement
+
+import __builtin__
+import bitmath
+import htmlentitydefs
 import os
 import re
-import sys
+import string
+import subprocess
 import time
+import traceback
 
-# from gettext import gettext
-import pylgettext as gettext
-from htmlentitydefs import name2codepoint
-from os.path import join
-from string import maketrans
-from urllib import unquote
+from pyload.utils import convert, pylgettext as gettext
+from pyload.utils.encoding import *
 
 # abstraction layer for json operations
 try:
@@ -21,130 +24,35 @@ try:
 except ImportError:
     import json
 
-json_loads = json.loads
-json_dumps = json.dumps
-
-
-def chmod(*args):
-    try:
-        os.chmod(*args)
-    except Exception:
-        pass
-
-
-def decode(string):
-    """ Decode string to unicode with utf8 """
-    if type(string) == str:
-        return string.decode("utf8", "replace")
-    else:
-        return string
-
-
-def encode(string):
-    """ Decode string to utf8 """
-    if type(string) == unicode:
-        return string.encode("utf8", "replace")
-    else:
-        return string
-
-
-def remove_chars(string, repl):
-    """ removes all chars in repl from string"""
-    if type(repl) == unicode:
-        for badc in list(repl):
-            string = string.replace(badc, "")
-        return string
-    else:
-        if type(string) == str:
-            return string.translate(maketrans("", ""), repl)
-        elif type(string) == unicode:
-            return string.translate(dict((ord(s), None) for s in repl))
-
-
-def safe_filename(name):
-    """ remove bad chars """
-    name = unquote(name).encode('ascii', 'replace')  #: Non-ASCII chars usually breaks file saving. Replacing.
-    if os.name == 'nt':
-        return remove_chars(name, u'\00\01\02\03\04\05\06\07\10\11\12\13\14\15\16\17\20\21\22\23\24\25\26\27\30\31\32'
-                                  u'\33\34\35\36\37/?%*|"<>')
-    else:
-        return remove_chars(name, u'\0\\"')
-
-
-#: Deprecated method
-def save_path(name):
-    return safe_filename(name)
-
-
-def fs_join(*args):
-    """ joins a path, encoding aware """
-    return fs_encode(join(*[x if type(x) == unicode else decode(x) for x in args]))
-
-
-#: Deprecated method
-def save_join(*args):
-    return fs_join(*args)
-
-
-# File System Encoding functions:
-# Use fs_encode before accesing files on disk, it will encode the string properly
-
-if sys.getfilesystemencoding().startswith('ANSI'):
-
-
-    def fs_encode(string):
-        return safe_filename(encode(string))
-
-    fs_decode = decode  #: decode utf8
-
-else:
-    fs_encode = fs_decode = lambda x: x  #: do nothing
-
-
-def get_console_encoding(enc):
-    if os.name == "nt":
-        if enc == "cp65001":  #: aka UTF-8
-            print "WARNING: Windows codepage 65001 is not supported."
-            enc = "cp850"
-    else:
-        enc = "utf8"
-
-    return enc
+from bottle import json_loads, json_dumps
 
 
 def compare_time(start, end):
     start = map(int, start)
-    end = map(int, end)
+    end   = map(int, end)
 
     if start == end:
         return True
 
     now = list(time.localtime()[3:5])
-    if start < now < end:
+    if start < now < end \
+       or start < now > end < start \
+       or start > end and (now > start or now < end):
         return True
-    elif start > end and (now > start or now < end):
-        return True
-    elif start < now > end < start:
-        return True
+
     return False
 
 
-def formatSize(size):
-    """formats size of bytes"""
-    size = int(size)
-    steps = 0
-    sizes = ("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB")
-    while size > 1000:
-        size /= 1024.0
-        steps += 1
-    return "%.2f %s" % (size, sizes[steps])
+def format_size(size):
+    """Formats size of bytes"""
+    return bitmath.Byte(int(size)).best_prefix()
 
 
-def formatSpeed(speed):
-    return formatSize(speed) + "/s"
+def format_speed(speed):
+    return format_size(speed) + "/s"
 
 
-def freeSpace(folder):
+def free_space(folder):
     if os.name == "nt":
         import ctypes
 
@@ -157,7 +65,7 @@ def freeSpace(folder):
 
 
 def fs_bsize(path):
-    """ get optimal file system buffer size (in bytes) for I/O calls """
+    """Get optimal file system buffer size (in bytes) for I/O calls"""
     path = fs_encode(path)
 
     if os.name == "nt":
@@ -172,13 +80,13 @@ def fs_bsize(path):
 
 
 def uniqify(seq):  #: Originally by Dave Kirby
-    """ Remove duplicates from list preserving order """
-    seen = set()
+    """Remove duplicates from list preserving order"""
+    seen     = set()
     seen_add = seen.add
     return [x for x in seq if x not in seen and not seen_add(x)]
 
 
-def parseFileSize(string, unit=None):  #: returns bytes
+def parse_size(string, unit=None):  #: returns bytes
     if not unit:
         m = re.match(r"([\d.,]+) *([a-zA-Z]*)", string.strip().lower())
         if m:
@@ -192,37 +100,12 @@ def parseFileSize(string, unit=None):  #: returns bytes
         else:
             traffic = string
 
-    # ignore case
-    unit = unit.lower().strip()
-
-    if unit in ("eb", "ebyte", "exabyte", "eib", "e"):
-        traffic *= 1 << 60
-    elif unit in ("pb", "pbyte", "petabyte", "pib", "p"):
-        traffic *= 1 << 50
-    elif unit in ("tb", "tbyte", "terabyte", "tib", "t"):
-        traffic *= 1 << 40
-    elif unit in ("gb", "gbyte", "gigabyte", "gib", "g", "gig"):
-        traffic *= 1 << 30
-    elif unit in ("mb", "mbyte", "megabyte", "mib", "m"):
-        traffic *= 1 << 20
-    elif unit in ("kb", "kbyte", "kilobyte", "kib", "k"):
-        traffic *= 1 << 10
-
-    return traffic
+    return convert.size(traffic, unit.lower().strip(), "byte")
 
 
-def lock(func):
-
-
-    def new(*args):
-        # print "Handler: %s args: %s" % (func, args[1:])
-        args[0].lock.acquire()
-        try:
-            return func(*args)
-        finally:
-            args[0].lock.release()
-
-    return new
+def bits_set(bits, compare):
+    """Checks if all bits are set in compare, or bits is 0"""
+    return bits == (bits & compare)
 
 
 def fixup(m):
@@ -240,7 +123,7 @@ def fixup(m):
         # named entity
         try:
             name = text[1:-1]
-            text = unichr(name2codepoint[name])
+            text = unichr(htmlentitydefs.name2codepoint[name])
         except KeyError:
             pass
 
@@ -248,8 +131,32 @@ def fixup(m):
 
 
 def has_method(obj, name):
-    """ Check if "name" was defined in obj, (false if it was inhereted) """
+    """Check if "name" was defined in obj, (false if it was inhereted)"""
     return hasattr(obj, '__dict__') and name in obj.__dict__
+
+
+def accumulate(it, inv_map=None):
+    """Accumulate (key, value) data to {value : [keylist]} dictionary"""
+    if inv_map is None:
+        inv_map = {}
+
+    for key, value in it:
+        if value in inv_map:
+            inv_map[value].append(key)
+        else:
+            inv_map[value] = [key]
+
+    return inv_map
+
+
+def get_index(l, value):
+    """.index method that also works on tuple and python 2.5"""
+    for pos, t in enumerate(l):
+        if t == value:
+            return pos
+
+    # Matches behavior of list.index
+    raise ValueError("list.index(x): x not in list")
 
 
 def html_unescape(text):
@@ -257,21 +164,67 @@ def html_unescape(text):
     return re.sub("&#?\w+;", fixup, text)
 
 
-def versiontuple(v):  #: By kindall (http://stackoverflow.com/a/11887825)
-    return tuple(map(int, (v.split("."))))
-
-
 def load_translation(name, locale, default="en"):
-    """ Load language and return its translation object or None """
-    from traceback import print_exc
-    from os.path import join
+    """Load language and return its translation object or None"""
+
     try:
-        gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
-        translation = gettext.translation(name, join(pypath, "locale"),
+        gettext.setpaths([os.path.join(os.sep, "usr", "share", "pyload", "locale"), None])
+        translation = gettext.translation(name, os.path.join(pypath, "locale"),
                                           languages=[locale, default], fallback=True)
     except Exception:
-        print_exc()
+        traceback.print_exc()
         return None
     else:
         translation.install(True)
         return translation
+
+
+def chunks(iterable, size):
+    it   = iter(iterable)
+    item = list(itertools.islice(it, size))
+    while item:
+        yield item
+        item = list(itertools.islice(it, size))
+
+
+def set_configdir(self, configdir, persistent=False):
+    dirname = os.path.abspath(configdir)
+    try:
+        if not os.path.exists(os.path.dirname):
+            os.makedirs(os.path.dirname, 0700)
+
+        os.chdir(os.path.dirname)
+
+        if persistent:
+            c = os.path.join(rootdir, "config", "configdir")
+            if not os.path.exists(c):
+                os.makedirs(c, 0700)
+
+            with open(c, "wb") as f:
+                f.write(os.path.dirname)
+
+    except IOError:
+        return False
+
+    else:
+        __builtin__.configdir = dirname
+        return dirname  #: return always abspath
+
+
+def check_module(self, module):
+    try:
+        __import__(module)
+        return True
+
+    except Exception:
+        return False
+
+
+def check_prog(self, command):
+    pipe = subprocess.PIPE
+    try:
+        subprocess.call(command, stdout=pipe, stderr=pipe)
+        return True
+
+    except Exception:
+        return False

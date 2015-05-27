@@ -2,17 +2,13 @@
 
 from __future__ import with_statement
 
+import os
 import re
 import sys
+import traceback
+import urllib
 
-from itertools import chain
-from os import listdir, makedirs
-from os.path import isdir, isfile, join, exists, abspath
-from sys import version_info
-from traceback import print_exc
-from urllib import unquote
-
-from SafeEval import const_eval as literal_eval
+import SafeEval
 
 
 class PluginManager(object):
@@ -37,11 +33,11 @@ class PluginManager(object):
 
 
     def loadTypes(self):
-        rootdir = join(pypath, "pyload", "plugin")
+        rootdir = os.path.join(pypath, "pyload", "plugin")
         userdir = "userplugins"
 
-        types = set().union(*[[d for d in listdir(p) if isdir(join(p, d))]
-                              for p in (rootdir, userdir) if exists(p)])
+        types = set().union(*[[d for d in os.listdir(p) if os.path.isdir(os.path.join(p, d))]
+                              for p in (rootdir, userdir) if os.path.exists(p)])
 
         if not types:
             self.core.log.critical(_("No plugins found!"))
@@ -50,9 +46,9 @@ class PluginManager(object):
 
 
     def createIndex(self):
-        """create information for all plugins available"""
+        """Create information for all plugins available"""
 
-        sys.path.append(abspath(""))
+        sys.path.append(os.path.abspath(""))
 
         self.loadTypes()
 
@@ -78,13 +74,13 @@ class PluginManager(object):
 
         if rootplugins:
             try:
-                pfolder = join("userplugins", folder)
-                if not exists(pfolder):
-                    makedirs(pfolder)
+                pfolder = os.path.join("userplugins", folder)
+                if not os.path.exists(pfolder):
+                    os.makedirs(pfolder)
 
-                for ifile in (join("userplugins", "__init__.py"),
-                              join(pfolder, "__init__.py")):
-                    if not exists(ifile):
+                for ifile in (os.path.join("userplugins", "__init__.py"),
+                              os.path.join(pfolder, "__init__.py")):
+                    if not os.path.exists(ifile):
                         f = open(ifile, "wb")
                         f.close()
 
@@ -93,13 +89,13 @@ class PluginManager(object):
                 return rootplugins
 
         else:
-            pfolder = join(pypath, "pyload", "plugin", folder)
+            pfolder = os.path.join(pypath, "pyload", "plugin", folder)
 
-        for f in listdir(pfolder):
-            if isfile(join(pfolder, f)) and f.endswith(".py") and not f.startswith("_"):
+        for f in os.listdir(pfolder):
+            if os.path.isfile(os.path.join(pfolder, f)) and f.endswith(".py") and not f.startswith("_"):
 
                 try:
-                    with open(join(pfolder, f)) as data:
+                    with open(os.path.join(pfolder, f)) as data:
                         content = data.read()
 
                 except IOError, e:
@@ -111,7 +107,7 @@ class PluginManager(object):
                     name = name[:-4]
 
                 if not re.search("class\\s+%s\\(" % name, content):
-                    self.core.log.error(_("invalid classname: %s ignored") % join(pfolder, f))
+                    self.core.log.error(_("invalid classname: %s ignored") % os.path.join(pfolder, f))
 
                 version = self.VERSION.findall(content)
                 if version:
@@ -155,7 +151,7 @@ class PluginManager(object):
                 config = self.CONFIG.findall(content)
                 if config:
                     try:
-                        config = literal_eval(config[0].strip().replace("\n", "").replace("\r", ""))
+                        config = SafeEval.const_eval(config[0].strip().replace("\n", "").replace("\r", ""))
                         desc = self.DESC.findall(content)
                         desc = desc[0][1] if desc else ""
 
@@ -188,7 +184,7 @@ class PluginManager(object):
 
 
     def parseUrls(self, urls):
-        """parse plugins for given list of urls"""
+        """Parse plugins for given list of urls"""
 
         last = None
         res  = []  #: tupels of (url, plugintype, pluginname)
@@ -197,7 +193,7 @@ class PluginManager(object):
             if type(url) not in (str, unicode, buffer):
                 continue
 
-            url = unquote(url)
+            url = urllib.unquote(url)
 
             if last and last[2]['re'].match(url):
                 res.append((url, last[0], last[1]))
@@ -226,49 +222,29 @@ class PluginManager(object):
         return res
 
 
-    def findPlugin(self, type, name):
-        if isinstance(type, tuple):
-            for typ in type:
-                if name in self.plugins[typ]:
-                    return (self.plugins[typ][name], typ)
-
-        if isinstance(type, tuple) or type not in self.plugins or name not in self.plugins[type]:
+    def pluginClass(self, type, name):
+        """Return plugin class"""
+        if name in self.plugins[type]:
+            return self.loadClass(type, name)
+        else:
             self.core.log.warning(_("Plugin [%(type)s] %(name)s not found | Using plugin: [internal] BasePlugin")
                                   % {'name': name, 'type': type})
-            return self.internalPlugins['BasePlugin']
-
-        else:
-            return self.plugins[type][name]
+            return self.loadClass("internal", "BasePlugin")
 
 
-    def getPlugin(self, type, name, original=False):
-        """return plugin module from hoster|decrypter|container"""
-        plugin = self.findPlugin(type, name)
-
-        if plugin is None:
-            return {}
-
-        if "new_module" in plugin and not original:
-            return plugin['new_module']
-        else:
+    def pluginModule(self, type, name):
+        """Return plugin module"""
+        if name in self.plugins[type]:
             return self.loadModule(type, name)
-
-
-    def getPluginName(self, type, name):
-        """ used to obtain new name if other plugin was injected"""
-        plugin = self.findPlugin(type, name)
-
-        if plugin is None:
-            return ""
-
-        if "new_name" in plugin:
-            return plugin['new_name']
-
-        return name
+        else:
+            self.core.log.warning(_("Plugin [%(type)s] %(name)s not found | Using plugin: [internal] BasePlugin")
+                                  % {'name': name, 'type': type})
+            return self.loadModule("internal", "BasePlugin")
 
 
     def loadModule(self, type, name):
-        """ Returns loaded module for plugin
+        """
+        Returns loaded module for plugin
 
         :param type: plugin type, subfolder of pyload.plugins
         :param name:
@@ -287,7 +263,7 @@ class PluginManager(object):
                 self.core.log.error(_("Error importing plugin: [%(type)s] %(name)s (v%(version).2f) | %(errmsg)s")
                                     % {'name': name, 'type': type, 'version': plugins[name]['version'], "errmsg": str(e)})
                 if self.core.debug:
-                    print_exc()
+                    traceback.print_exc()
 
             else:
                 plugins[name]['module'] = module  # : cache import, maybe unneeded
@@ -300,14 +276,16 @@ class PluginManager(object):
     def loadClass(self, type, name):
         """Returns the class of a plugin with the same name"""
         module = self.loadModule(type, name)
-        if module:
+        try:
             return getattr(module, name)
-        else:
-            return None
+
+        except Exception, e:
+            self.core.log.error(_("Error importing plugin: [%(type)s] %(name)s (v%(version).2f) | %(errmsg)s")
+                                % {'name': name, 'type': type, 'version': plugins[name]['version'], "errmsg": str(e)})
 
 
     def getAccountPlugins(self):
-        """return list of account plugin names"""
+        """Return list of account plugin names"""
         return self.accountPlugins.keys()
 
 
@@ -354,7 +332,7 @@ class PluginManager(object):
 
 
     def reloadPlugins(self, type_plugins):
-        """ reload and reindex plugins """
+        """Reload and reindex plugins"""
         if not type_plugins:
             return None
 
@@ -400,5 +378,5 @@ class PluginManager(object):
 
 
     def reloadPlugin(self, type_plugin):
-        """ reload and reindex ONE plugin """
+        """Reload and reindex ONE plugin"""
         return bool(self.reloadPlugins(type_plugin))

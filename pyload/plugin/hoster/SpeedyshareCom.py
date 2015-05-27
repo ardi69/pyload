@@ -5,8 +5,6 @@
 
 import re
 
-from urlparse import urljoin
-
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
 
 
@@ -36,7 +34,7 @@ class SpeedyshareCom(SimpleHoster):
         self.chunkLimit = 1
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         m = re.search(self.LINK_FREE_PATTERN, self.html)
         if m is None:
             self.link = m.group(1)

@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
-
-from urllib import unquote_plus
-
 from pyload.utils import json_loads
 from pyload.plugin.internal.MultiHoster import MultiHoster
 
@@ -41,7 +37,7 @@ class MegaDebridEu(MultiHoster):
             return False
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         """
         Debrid a link
         Return The debrided link if succeed or original link if fail

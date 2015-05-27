@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
 
@@ -47,7 +46,7 @@ class FastshareCz(SimpleHoster):
         self.info.pop('error', None)
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         m = re.search(self.FREE_URL_PATTERN, self.html)
         if m:
             action, captcha_src = m.groups()
@@ -55,8 +54,8 @@ class FastshareCz(SimpleHoster):
             self.error(_("FREE_URL_PATTERN not found"))
 
         baseurl = "http://www.fastshare.cz"
-        captcha = self.decryptCaptcha(urljoin(baseurl, captcha_src))
-        self.download(urljoin(baseurl, action), post={'code': captcha, 'btn.x': 77, 'btn.y': 18})
+        captcha = self.decryptCaptcha(urlparse.urljoin(baseurl, captcha_src))
+        self.download(urlparse.urljoin(baseurl, action), post={'code': captcha, 'btn.x': 77, 'btn.y': 18})
 
 
     def checkFile(self, rules={}):

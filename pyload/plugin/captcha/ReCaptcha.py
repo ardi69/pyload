@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import base64
+import random
 import re
 import time
-
-from base64 import b64encode
-from random import randint
-from urlparse import urljoin, urlparse
+import urlparse
 
 from pyload.plugin.Captcha import Captcha
 
@@ -122,7 +121,7 @@ class ReCaptcha(Captcha):
 
         self.logDebug("Time: %s" % millis)
 
-        rand = randint(1, 99999999)
+        rand = random.randint(1, 99999999)
         a    = "0.%s" % str(rand * 2147483647)
         rpc  = int(100000000 * float(a))
 
@@ -134,7 +133,7 @@ class ReCaptcha(Captcha):
     def _challenge_v2(self, key, parent=None):
         if parent is None:
             try:
-                parent = urljoin("http://", urlparse(self.plugin.pyfile.url).netloc)
+                parent = urlparse.urljoin("http://", urlparse.urlparse(self.plugin.pyfile.url).netloc)
 
             except Exception:
                 parent = ""
@@ -176,12 +175,12 @@ class ReCaptcha(Captcha):
                                                             get={'c':token3.group(1), 'k':key},
                                                             cookies=True,
                                                             forceUser=True)
-        response               = b64encode('{"response":"%s"}' % captcha_response)
+        response               = base64.b64encode('{"response":"%s"}' % captcha_response)
 
         self.logDebug("Result: %s" % response)
 
         timeToSolve     = int(round(time.time() * 1000)) - millis_captcha_loading
-        timeToSolveMore = timeToSolve + int(float("0." + str(randint(1, 99999999))) * 500)
+        timeToSolveMore = timeToSolve + int(float("0." + str(random.randint(1, 99999999))) * 500)
 
         html = self.plugin.req.load("https://www.google.com/recaptcha/api2/userverify",
                                     post={'k'       : key,

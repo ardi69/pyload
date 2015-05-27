@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pycurl import FORM_FILE, LOW_SPEED_TIME
+import pycurl
 
 from pyload.network.HTTPRequest import BadHeader
 from pyload.network.RequestFactory import getURL, getRequest
@@ -58,14 +58,14 @@ class BypassCaptcha(Hook):
         req = getRequest()
 
         # raise timeout threshold
-        req.c.setopt(LOW_SPEED_TIME, 80)
+        req.c.setopt(pycurl.LOW_SPEED_TIME, 80)
 
         try:
             res = req.load(self.SUBMIT_URL,
                            post={'vendor_key': self.PYLOAD_KEY,
                                  'key': self.getConfig('passkey'),
                                  'gen_task_id': "1",
-                                 'file': (FORM_FILE, captcha)},
+                                 'file': (pycurl.FORM_FILE, captcha)},
                            multipart=True)
         finally:
             req.close()
@@ -104,21 +104,21 @@ class BypassCaptcha(Hook):
 
         if self.getCredits() > 0:
             task.handler.append(self)
-            task.data['service'] = self.getClassName()
+            task.data['service'] = self.__name__
             task.setWaiting(100)
             self._processCaptcha(task)
 
         else:
-            self.logInfo(_("Your %s account has not enough credits") % self.getClassName())
+            self.logInfo(_("Your %s account has not enough credits") % self.__name__)
 
 
     def captchaCorrect(self, task):
-        if task.data['service'] == self.getClassName() and "ticket" in task.data:
+        if task.data['service'] == self.__name__ and "ticket" in task.data:
             self.respond(task.data['ticket'], True)
 
 
     def captchaInvalid(self, task):
-        if task.data['service'] == self.getClassName() and "ticket" in task.data:
+        if task.data['service'] == self.__name__ and "ticket" in task.data:
             self.respond(task.data['ticket'], False)
 
 

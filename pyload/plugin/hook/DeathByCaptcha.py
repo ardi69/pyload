@@ -2,11 +2,11 @@
 
 from __future__ import with_statement
 
+import base64
 import re
 import time
 
-from base64 import b64encode
-from pycurl import FORM_FILE, HTTPHEADER
+import pycurl
 
 from pyload.utils import json_loads
 from pyload.network.HTTPRequest import BadHeader
@@ -73,7 +73,7 @@ class DeathByCaptcha(Hook):
 
     def api_response(self, api="captcha", post=False, multipart=False):
         req = getRequest()
-        req.c.setopt(HTTPHEADER, ["Accept: application/json", "User-Agent: pyLoad %s" % self.core.version])
+        req.c.setopt(pycurl.HTTPHEADER, ["Accept: application/json", "User-Agent: pyLoad %s" % self.core.version])
 
         if post:
             if not isinstance(post, dict):
@@ -134,12 +134,12 @@ class DeathByCaptcha(Hook):
         #@NOTE: Workaround multipart-post bug in HTTPRequest.py
         if re.match("^\w*$", self.getConfig('passkey')):
             multipart = True
-            data = (FORM_FILE, captcha)
+            data = (pycurl.FORM_FILE, captcha)
         else:
             multipart = False
             with open(captcha, 'rb') as f:
                 data = f.read()
-            data = "base64:" + b64encode(data)
+            data = "base64:" + base64.b64encode(data)
 
         res = self.api_response("captcha", {"captchafile": data}, multipart)
 
@@ -188,13 +188,13 @@ class DeathByCaptcha(Hook):
 
         if balance > rate:
             task.handler.append(self)
-            task.data['service'] = self.getClassName()
+            task.data['service'] = self.__name__
             task.setWaiting(180)
             self._processCaptcha(task)
 
 
     def captchaInvalid(self, task):
-        if task.data['service'] == self.getClassName() and "ticket" in task.data:
+        if task.data['service'] == self.__name__ and "ticket" in task.data:
             try:
                 res = self.api_response("captcha/%d/report" % task.data['ticket'], True)
 

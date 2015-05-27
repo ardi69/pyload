@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from urlparse import urljoin
-
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
 
 

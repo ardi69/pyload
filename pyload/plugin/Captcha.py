@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import re
-
-from pyload.plugin.Plugin import Base
+from pyload.plugin.Plugin import Plugin
 
 
 #@TODO: Extend Plugin class; remove all `html` args
-class Captcha(Base):
+class Captcha(Plugin):
     __name    = "Captcha"
     __type    = "captcha"
-    __version = "0.25"
+    __version = "0.26"
 
     __description = """Base captcha service plugin"""
     __license     = "GPLv3"

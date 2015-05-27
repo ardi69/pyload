@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import re
-
-from random import randrange
-from urllib import unquote
-
 from pyload.utils import json_loads
 from pyload.plugin.internal.MultiHoster import MultiHoster
-from pyload.utils import parseFileSize
+from pyload.utils import parse_size
 
 
 class AlldebridCom(MultiHoster):
@@ -27,7 +22,7 @@ class AlldebridCom(MultiHoster):
         self.chunkLimit = 16
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         password = self.getPassword()
 
         data = json_loads(self.load("http://www.alldebrid.com/service.php",
@@ -44,7 +39,7 @@ class AlldebridCom(MultiHoster):
         else:
             if pyfile.name and not pyfile.name.endswith('.tmp'):
                 pyfile.name = data['filename']
-            pyfile.size = parseFileSize(data['filesize'])
+            pyfile.size = parse_size(data['filesize'])
             self.link = data['link']
 
         if self.getConfig('ssl'):

@@ -6,8 +6,6 @@ import os
 import sys
 import traceback
 
-from copy import copy
-
 # monkey patch bug in python 2.6 and lower
 # http://bugs.python.org/issue6122, http://bugs.python.org/issue1236, http://bugs.python.org/issue1731717
 if sys.version_info < (2, 7) and os.name != "nt":
@@ -48,9 +46,14 @@ if sys.version_info < (2, 7) and os.name != "nt":
 
     subprocess.Popen.wait = wait
 
+try:
+    import send2trash
+except ImportError:
+    pass
+
 if os.name != "nt":
-    from grp import getgrnam
-    from pwd import getpwnam
+    import grp
+    import pwd
 
 from pyload.plugin.Addon import Addon, threaded, Expose
 from pyload.plugin.Extractor import ArchiveError, CRCError, PasswordError
@@ -67,7 +70,7 @@ class ArchiveQueue(object):
 
     def get(self):
         try:
-            return [int(pid) for pid in self.plugin.getStorage("ExtractArchive:%s" % self.storage, "").decode('base64').split()]
+            return [int(pid) for pid in self.plugin.retrieve("ExtractArchive:%s" % self.storage, "").decode('base64').split()]
         except Exception:
             return []
 
@@ -77,7 +80,7 @@ class ArchiveQueue(object):
             item = str(value)[1:-1].replace(' ', '').replace(',', ' ')
         else:
             item = str(value).strip()
-        return self.plugin.setStorage("ExtractArchive:%s" % self.storage, item.encode('base64')[:-1])
+        return self.plugin.store("ExtractArchive:%s" % self.storage, item.encode('base64')[:-1])
 
 
     def delete(self):
@@ -109,7 +112,7 @@ class ArchiveQueue(object):
 class ExtractArchive(Addon):
     __name    = "ExtractArchive"
     __type    = "addon"
-    __version = "1.41"
+    __version = "1.44"
 
     __config = [("activated"      , "bool"              , "Activated"                                 , True),
                 ("fullpath"       , "bool"              , "Extract with full paths"                   , True),
@@ -141,7 +144,7 @@ class ExtractArchive(Addon):
 
 
     def setup(self):
-        self.queue  = ArchiveQueue(self, "Queue")
+        self.queue  = ArchiveQueue(self, "Queue.Queue")
         self.failed = ArchiveQueue(self, "Failed")
 
         self.interval    = 60
@@ -150,16 +153,6 @@ class ExtractArchive(Addon):
         self.extractors  = []
         self.passwords   = []
         self.repair      = False
-
-        try:
-            import send2trash
-
-        except ImportError:
-            self.logDebug("Send2Trash lib not found")
-            self.trashable = False
-
-        else:
-            self.trashable = True
 
 
     def activate(self):
@@ -194,6 +187,11 @@ class ExtractArchive(Addon):
 
     @threaded
     def extractQueued(self, thread):
+        if self.extracting:  #@NOTE: doing the check here for safty (called by coreReady)
+            return
+
+        self.extracting = True
+
         packages = self.queue.get()
         while packages:
             if self.lastPackage:  #: called from allDownloadsProcessed
@@ -207,10 +205,12 @@ class ExtractArchive(Addon):
 
             packages = self.queue.get()  #: check for packages added during extraction
 
+        self.extracting = False
+
 
     @Expose
     def extractPackage(self, *ids):
-        """ Extract packages with given id"""
+        """Extract packages with given id"""
         for id in ids:
             self.queue.add(id)
         if not self.getConfig('waitall') and not self.extracting:
@@ -229,7 +229,7 @@ class ExtractArchive(Addon):
 
     def allDownloadsProcessed(self):
         self.lastPackage = True
-        if not self.extracting:
+        if self.getConfig('waitall') and not self.extracting:
             self.extractQueued()
 
 
@@ -237,8 +237,6 @@ class ExtractArchive(Addon):
     def extract(self, ids, thread=None):  #@TODO: Use pypack, not pid to improve method usability
         if not ids:
             return False
-
-        self.extracting = True
 
         processed = []
         extracted = []
@@ -381,7 +379,6 @@ class ExtractArchive(Addon):
 
             self.queue.remove(pid)
 
-        self.extracting = False
         return True if not failed else False
 
 
@@ -475,11 +472,18 @@ class ExtractArchive(Addon):
                     if not deltotrash:
                         os.remove(file)
 
-                    elif self.trashable:
-                        send2trash.send2trash(file)
-
                     else:
-                        self.logWarning(_("Unable to move %s to trash") % os.path.basename(f))
+                        try:
+                            send2trash.send2trash(file)
+
+                        except NameError:
+                            self.logWarning(_("Unable to move %s to trash: Send2Trash lib not found") % os.path.basename(f))
+
+                        except Exception, e:
+                            self.logWarning(_("Unable to move %s to trash: %s") % (os.path.basename(f), e.message))
+
+                        else:
+                            self.logDebug(_("Successfully moved %s to trash") % os.path.basename(f))
 
             self.logInfo(name, _("Extracting finished"))
             extracted_files = archive.files or archive.list()
@@ -507,7 +511,7 @@ class ExtractArchive(Addon):
 
     @Expose
     def getPasswords(self, reload=True):
-        """ List of saved passwords """
+        """List of saved passwords"""
         if reload:
             self.reloadPasswords()
 
@@ -532,7 +536,7 @@ class ExtractArchive(Addon):
 
     @Expose
     def addPassword(self, password):
-        """  Adds a password to saved list"""
+        """Adds a password to saved list"""
         try:
             self.passwords = uniqify([password] + self.passwords)
 
@@ -559,8 +563,8 @@ class ExtractArchive(Addon):
                         os.chmod(f, int(self.config.get("permission", "folder"), 8))
 
                 if self.config.get("permission", "change_dl") and os.name != "nt":
-                    uid = getpwnam(self.config.get("permission", "user"))[2]
-                    gid = getgrnam(self.config.get("permission", "group"))[2]
+                    uid = pwd.getpwnam(self.config.get("permission", "user"))[2]
+                    gid = grp.getgrnam(self.config.get("permission", "group"))[2]
                     os.chown(f, uid, gid)
 
             except Exception, e:

@@ -1,41 +1,32 @@
 # -*- coding: utf-8 -*-
 
+import getpass
 import os
 import platform
 import sys
+import time
+import xmlrpclib
 
-if "64" in platform.machine():
-    sys.path.append(os.path.join(pypath, "lib64"))
-sys.path.append(os.path.join(pypath, "lib", "Python", "Lib"))
+import thrift
 
-
+from pyload.remote.thriftbackend.Protocol import Protocol
+from pyload.remote.thriftbackend.Socket import Socket
 from pyload.remote.thriftbackend.thriftgen.pyload import Pyload
 from pyload.remote.thriftbackend.thriftgen.pyload.ttypes import *
-from Socket import Socket
-
-from thrift import Thrift
-from thrift.transport import TTransport
-
-from Protocol import Protocol
-
-from time import time
-
-import xmlrpclib
 
 
 def bench(f, *args, **kwargs):
-    s = time()
+    s = time.time()
     ret = [f(*args, **kwargs) for _i in xrange(0, 100)]
-    e = time()
+    e = time.time()
     try:
         print "%s: %f s" % (f._Method__name, e-s)
     except Exception:
         print "%s: %f s" % (f.__name__, e-s)
     return ret
 
-from getpass import getpass
 user = raw_input("user ")
-passwd = getpass("password ")
+passwd = getpass.getpass("password ")
 
 server_url = "http%s://%s:%s@%s:%s/" % (
   "",
@@ -58,7 +49,7 @@ try:
     transport = Socket('localhost', 7228, False)
 
     # Buffering is critical. Raw sockets are very slow
-    transport = TTransport.TBufferedTransport(transport)
+    transport = thrift.transport.TTransport.TBufferedTransport(transport)
 
     # Wrap in a protocol
     protocol = Protocol(transport)
@@ -91,5 +82,5 @@ try:
     # Close!
     transport.close()
 
-except Thrift.TException, tx:
+except thrift.Thrift.TException, tx:
     print 'ThriftExpection: %s' % tx.message

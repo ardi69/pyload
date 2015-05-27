@@ -2,14 +2,13 @@
 # @author: RaNaN
 
 import Cookie
-
-from datetime import datetime, timedelta
-from time import time
+import datetime
+import time
 
 
 # monkey patch for 32 bit systems
 def _getdate(future=0, weekdayname=Cookie._weekdayname, monthname=Cookie._monthname):
-    dt = datetime.now() + timedelta(seconds=int(future))
+    dt = datetime.datetime.now() + datetime.timedelta(seconds=int(future))
     return "%s, %02d %3s %4d %02d:%02d:%02d GMT" % \
            (weekdayname[dt.weekday()], dt.day, monthname[dt.month], dt.year, dt.hour, dt.minute, dt.second)
 
@@ -30,7 +29,7 @@ class CookieJar(Cookie.SimpleCookie):
         # Value of expires should be integer if possible
         # otherwise the cookie won't be used
         if not exp:
-            expires = time() + 3600 * 24 * 180
+            expires = time.time() + 3600 * 24 * 180
         else:
             try:
                 expires = int(exp)

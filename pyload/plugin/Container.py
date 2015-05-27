@@ -2,12 +2,10 @@
 
 from __future__ import with_statement
 
+import os
 import re
 
-from os import remove
-from os.path import basename, exists
-
-from pyload.plugin.internal.Crypter import Crypter
+from pyload.plugin.Crypter import Crypter
 from pyload.utils import fs_join
 
 
@@ -25,7 +23,7 @@ class Container(Crypter):
 
 
     def preprocessing(self, thread):
-        """prepare"""
+        """Prepare"""
 
         self.setup()
         self.thread = thread
@@ -39,7 +37,7 @@ class Container(Crypter):
 
 
     def loadToDisk(self):
-        """loads container to disk if its stored remotely and overwrite url,
+        """Loads container to disk if its stored remotely and overwrite url,
         or check existent on several places at disk"""
 
         if self.pyfile.url.startswith("http"):
@@ -53,9 +51,9 @@ class Container(Crypter):
                 self.fail(str(e))
 
         else:
-            self.pyfile.name = basename(self.pyfile.url)
-            if not exists(self.pyfile.url):
-                if exists(fs_join(pypath, self.pyfile.url)):
+            self.pyfile.name = os.path.basename(self.pyfile.url)
+            if not os.path.exists(self.pyfile.url):
+                if os.path.exists(fs_join(pypath, self.pyfile.url)):
                     self.pyfile.url = fs_join(pypath, self.pyfile.url)
                 else:
                     self.fail(_("File not exists"))
@@ -63,4 +61,4 @@ class Container(Crypter):
 
     def deleteTmp(self):
         if self.pyfile.name.startswith("tmp_"):
-            remove(self.pyfile.url)
+            os.remove(self.pyfile.url)

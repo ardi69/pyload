@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
@@ -66,7 +65,7 @@ class Keep2ShareCc(SimpleHoster):
         self.info.pop('error', None)
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.fid  = re.search(r'<input type="hidden" name="slow_id" value="(.+?)">', self.html).group(1)
         self.html = self.load(pyfile.url, post={'yt0': '', 'slow_id': self.fid})
 
@@ -100,7 +99,7 @@ class Keep2ShareCc(SimpleHoster):
         m = re.search(self.CAPTCHA_PATTERN, self.html)
         self.logDebug("CAPTCHA_PATTERN found %s" % m)
         if m:
-            captcha_url = urljoin("http://keep2s.cc/", m.group(1))
+            captcha_url = urlparse.urljoin("http://keep2s.cc/", m.group(1))
             post_data['CaptchaForm[code]'] = self.decryptCaptcha(captcha_url)
         else:
             recaptcha = ReCaptcha(self)

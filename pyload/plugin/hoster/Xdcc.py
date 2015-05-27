@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import re
+import select
 import socket
 import struct
 import sys
 import time
-
-from os import makedirs
-from os.path import exists, join
-from select import select
 
 from pyload.plugin.Hoster import Hoster
 from pyload.utils import fs_join
@@ -36,7 +33,7 @@ class Xdcc(Hoster):
 
     def process(self, pyfile):
         # change request type
-        self.req = pyfile.m.core.requestFactory.getRequest(self.getClassName(), type="XDCC")
+        self.req = pyfile.m.core.requestFactory.getRequest(self.__name__, type="XDCC")
 
         self.pyfile = pyfile
         for _i in xrange(0, 3):
@@ -122,7 +119,7 @@ class Xdcc(Hoster):
                     sock.close()
                     self.fail(_("XDCC Bot did not answer"))
 
-            fdset = select([sock], [], [], 0)
+            fdset = select.select([sock], [], [], 0)
             if sock not in fdset[0]:
                 continue
 

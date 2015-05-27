@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # @author: RaNaN, mkaay
 
-from time import time
-from traceback import print_exc
-from threading import Lock
+import threading
+import time
+import traceback
 
 from pyload.utils import encode
 
@@ -11,7 +11,7 @@ from pyload.utils import encode
 class CaptchaManager(object):
 
     def __init__(self, core):
-        self.lock = Lock()
+        self.lock = threading.Lock()
         self.core = core
         self.tasks = []  #: task store, for outgoing tasks only
         self.ids = 0  #: only for internal purpose
@@ -61,7 +61,7 @@ class CaptchaManager(object):
                 plugin.captchaTask(task)
             except Exception:
                 if self.core.debug:
-                    print_exc()
+                    traceback.print_exc()
 
         if task.handler or cli:  #: the captcha was handled
             self.tasks.append(task)
@@ -110,8 +110,8 @@ class CaptchaTask(object):
 
 
     def setWaiting(self, sec):
-        """ let the captcha wait secs for the solution """
-        self.waitUntil = max(time() + sec, self.waitUntil)
+        """Let the captcha wait secs for the solution"""
+        self.waitUntil = max(time.time() + sec, self.waitUntil)
         self.status = "waiting"
 
 
@@ -123,12 +123,12 @@ class CaptchaTask(object):
 
 
     def isTextual(self):
-        """ returns if text is written on the captcha """
+        """Returns if text is written on the captcha"""
         return self.captchaResultType == 'textual'
 
 
     def isPositional(self):
-        """ returns if user have to click a specific region on the captcha """
+        """Returns if user have to click a specific region on the captcha"""
         return self.captchaResultType == 'positional'
 
 
@@ -140,11 +140,11 @@ class CaptchaTask(object):
 
 
     def timedOut(self):
-        return time() > self.waitUntil
+        return time.time() > self.waitUntil
 
 
     def invalid(self):
-        """ indicates the captcha was not correct """
+        """Indicates the captcha was not correct"""
         for x in self.handler:
             x.captchaInvalid(self)
 

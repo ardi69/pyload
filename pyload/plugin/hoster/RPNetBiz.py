@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
-
 from pyload.plugin.internal.MultiHoster import MultiHoster
 from pyload.utils import json_loads
 
@@ -23,7 +21,7 @@ class RPNetBiz(MultiHoster):
         self.chunkLimit = -1
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         user, data = self.account.selectAccount()
 
         # Get the download link

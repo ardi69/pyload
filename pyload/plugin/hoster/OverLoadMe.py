@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import re
-
-from random import randrange
-from urllib import unquote
-
 from pyload.utils import json_loads
 from pyload.plugin.internal.MultiHoster import MultiHoster
-from pyload.utils import parseFileSize
+from pyload.utils import parse_size
 
 
 class OverLoadMe(MultiHoster):
@@ -27,7 +22,7 @@ class OverLoadMe(MultiHoster):
         self.chunkLimit = 5
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         https = "https" if self.getConfig('ssl') else "http"
         data  = self.account.getAccountData(self.user)
         page  = self.load(https + "://api.over-load.me/getdownload.php",
@@ -44,7 +39,7 @@ class OverLoadMe(MultiHoster):
         else:
             if pyfile.name and pyfile.name.endswith('.tmp') and data['filename']:
                 pyfile.name = data['filename']
-                pyfile.size = parseFileSize(data['filesize'])
+                pyfile.size = parse_size(data['filesize'])
 
             http_repl = ["http://", "https://"]
             self.link = data['downloadlink'].replace(*http_repl if self.getConfig('ssl') else http_repl[::-1])

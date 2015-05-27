@@ -59,7 +59,7 @@ class RapideoPl(MultiHoster):
         return self.load(self.API_URL, post=query)
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         try:
             data = self.runFileQuery(pyfile.url, 'fileinfo')
 
@@ -79,7 +79,7 @@ class RapideoPl(MultiHoster):
         if "errno" in parsed.keys():
             if parsed['errno'] in self.ERROR_CODES:
                 # error code in known
-                self.fail(self.ERROR_CODES[parsed['errno']] % self.getClassName())
+                self.fail(self.ERROR_CODES[parsed['errno']] % self.__name__)
             else:
                 # error code isn't yet added to plugin
                 self.fail(

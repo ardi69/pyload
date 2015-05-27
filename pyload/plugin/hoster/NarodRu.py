@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import random
 import re
-
-from random import random
 
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
 
@@ -32,9 +31,9 @@ class NarodRu(SimpleHoster):
     LINK_FREE_PATTERN = r'<a class="h-link" rel="yandex_bar" href="(.+?)">'
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         for _i in xrange(5):
-            self.html = self.load('http://narod.ru/disk/getcapchaxml/?rnd=%d' % int(random() * 777))
+            self.html = self.load('http://narod.ru/disk/getcapchaxml/?rnd=%d' % int(random.random() * 777))
 
             m = re.search(self.CAPTCHA_PATTERN, self.html)
             if m is None:

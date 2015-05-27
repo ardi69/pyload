@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 # @author: jeix
 
+import os
+import select
 import socket
 import struct
-
-from os import remove
-from os.path import exists
-from select import select
-from time import time
+import time
 
 from pyload.plugin.Plugin import Abort
 
@@ -49,7 +47,7 @@ class XDCCRequest(object):
     def download(self, ip, port, filename, irc, progress=None):
 
         ircbuffer = ""
-        lastUpdate = time()
+        lastUpdate = time.time()
         cumRecvLen = 0
 
         dccsock = self.createSocket()
@@ -57,14 +55,14 @@ class XDCCRequest(object):
         dccsock.settimeout(self.timeout)
         dccsock.connect((ip, port))
 
-        if exists(filename):
+        if os.path.exists(filename):
             i = 0
             nameParts = filename.rpartition(".")
             while True:
                 newfilename = "%s-%d%s%s" % (nameParts[0], i, nameParts[1], nameParts[2])
                 i += 1
 
-                if not exists(newfilename):
+                if not os.path.exists(newfilename):
                     filename = newfilename
                     break
 
@@ -75,7 +73,7 @@ class XDCCRequest(object):
             if self.abort:
                 dccsock.close()
                 fh.close()
-                remove(filename)
+                os.remove(filename)
                 raise Abort
 
             self._keepAlive(irc, ircbuffer)
@@ -86,7 +84,7 @@ class XDCCRequest(object):
 
             cumRecvLen += dataLen
 
-            now = time()
+            now = time.time()
             timespan = now - lastUpdate
             if timespan > 1:
                 self.speed = cumRecvLen / timespan
@@ -111,7 +109,7 @@ class XDCCRequest(object):
 
 
     def _keepAlive(self, sock, *readbuffer):
-        fdset = select([sock], [], [], 0)
+        fdset = select.select([sock], [], [], 0)
         if sock not in fdset[0]:
             return
 

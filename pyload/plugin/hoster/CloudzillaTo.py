@@ -8,7 +8,7 @@ from pyload.plugin.internal.SimpleHoster import SimpleHoster
 class CloudzillaTo(SimpleHoster):
     __name    = "CloudzillaTo"
     __type    = "hoster"
-    __version = "0.06"
+    __version = "0.07"
 
     __pattern = r'http://(?:www\.)?cloudzilla\.to/share/file/(?P<ID>[\w^_]+)'
     __config  = [("use_premium", "bool", "Use premium account if available", True)]
@@ -25,15 +25,20 @@ class CloudzillaTo(SimpleHoster):
 
 
     def checkErrors(self):
-        m = re.search(self.PASSWORD_PATTERN, self.html)
-        if m:
-            self.html = self.load(self.pyfile.url, get={'key': self.getPassword()})
+        if re.search(self.PASSWORD_PATTERN, self.html):
+            pw = self.getPassword()
+            if pw:
+                self.html = self.load(self.pyfile.url, get={'key': pw})
+            else:
+                self.fail(_("Missing password"))
 
         if re.search(self.PASSWORD_PATTERN, self.html):
             self.retry(reason="Wrong password")
+        else:
+            return super(CloudzillaTo, self).checkErrors()
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         self.html = self.load("http://www.cloudzilla.to/generateticket/",
                               post={'file_id': self.info['pattern']['ID'], 'key': self.getPassword()})
 
@@ -55,5 +60,5 @@ class CloudzillaTo(SimpleHoster):
                                                                               'ticket_id': ticket['ticket_id']}
 
 
-    def handlePremium(self, pyfile):
-        return self.handleFree(pyfile)
+    def handle_premium(self, pyfile):
+        return self.handle_free(pyfile)

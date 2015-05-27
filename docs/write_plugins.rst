@@ -46,9 +46,7 @@ An example ``process`` function could look like this ::
 
 
         class MyFileHoster(Hoster):
-            """
-                plugin code
-            """
+            """Plugin code"""
 
             def process(self, pyfile):
                 html = self.load(pyfile.url)  #: load the content of the orginal pyfile.url to html
@@ -60,7 +58,7 @@ An example ``process`` function could look like this ::
                 # download the file, destination is determined by pyLoad
                 self.download(parsed_url)
 
-You need to know about the :class:`PyFile <pyload.datatype.File.PyFile>` class, since an instance of it is given as parameter to every pyfile.
+You need to know about the :class:`PyFile <pyload.Datatype.File.PyFile>` class, since an instance of it is given as parameter to every pyfile.
 Some tasks your plugin should handle:  proof if file is online, get filename, wait if needed, download the file, etc..
 
 Wait times
@@ -87,9 +85,7 @@ Example: ::
 
 
     class MyFileCrypter(Crypter):
-        """
-            plugin code
-        """
+        """Plugin code"""
 
         def decrypt(self, pyfile):
 

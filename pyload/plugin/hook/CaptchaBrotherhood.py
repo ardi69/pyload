@@ -5,13 +5,12 @@ from __future__ import with_statement
 import StringIO
 import pycurl
 import time
+import urllib
 
 try:
     from PIL import Image
 except ImportError:
     import Image
-
-from urllib import urlencode
 
 from pyload.network.RequestFactory import getURL, getRequest
 from pyload.plugin.Hook import Hook, threaded
@@ -89,10 +88,10 @@ class CaptchaBrotherhood(Hook):
         req = getRequest()
 
         url = "%ssendNewCaptcha.aspx?%s" % (self.API_URL,
-                                            urlencode({'username'     : self.getConfig('username'),
-                                                       'password'     : self.getConfig('passkey'),
-                                                       'captchaSource': "pyLoad",
-                                                       'timeout'      : "80"}))
+                                            urllib.urlencode({'username'     : self.getConfig('username'),
+                                                              'password'     : self.getConfig('passkey'),
+                                                              'captchaSource': "pyLoad",
+                                                              'timeout'      : "80"}))
 
         req.c.setopt(pycurl.URL, url)
         req.c.setopt(pycurl.POST, 1)
@@ -147,7 +146,7 @@ class CaptchaBrotherhood(Hook):
 
         if self.getCredits() > 10:
             task.handler.append(self)
-            task.data['service'] = self.getClassName()
+            task.data['service'] = self.__name__
             task.setWaiting(100)
             self._processCaptcha(task)
         else:
@@ -155,7 +154,7 @@ class CaptchaBrotherhood(Hook):
 
 
     def captchaInvalid(self, task):
-        if task.data['service'] == self.getClassName() and "ticket" in task.data:
+        if task.data['service'] == self.__name__ and "ticket" in task.data:
             res = self.api_response("complainCaptcha", task.data['ticket'])
 
 

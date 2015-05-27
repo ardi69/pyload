@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+import setuptools
 import sys
 
 import pyload
 
-from os import path
-from setuptools import setup
 
+PROJECT_DIR = os.path.abspath(path.join(__file__, ".."))
 
-PROJECT_DIR = path.abspath(path.join(__file__, ".."))
-
-setup(
+setuptools.setup(
     name="pyload",
 
     version=pyload.__version__,
@@ -48,29 +47,28 @@ setup(
 
     install_requires=[
         "Beaker >= 1.6",
+        "Getch",
+        "MultipartPostHandler",
+        "SafeEval",
         "bitmath",
         "bottle >= 0.10.0",
         "colorama",
-        "Getch",
         "jinja2",
         "markupsafe",
-        "MultipartPostHandler",
+        "pycrypto",
         "pycurl",
         "rename_process",
-        "SafeEval",
         "thrift >= 0.8.0",
         "wsgiserver"
     ],
 
     extras_require={
         'Few plugins dependencies': ["BeautifulSoup >= 3.2, < 3.3"],
-        'Captcha recognition'     : ["PIL"],
+        'Captcha recognition'     : ["Pillow"],
         'Trash support'           : ["Send2Trash"],
         'Colored log'             : ["colorlog"],
         'Lightweight webserver'   : ["bjoern"],
-        'RSS support'             : ["feedparser"],
         'SSL support'             : ["pyOpenSSL"],
-        'RSDF/CCF/DLC support'    : ["pycrypto"],
         'JSON speedup'            : ["simplejson"]
     },
 
@@ -80,12 +78,7 @@ setup(
 
     # tests_require=['nose', 'websocket-client >= 0.8.0', 'requests >= 1.2.2'],
 
-    entry_points={
-        'console_scripts': [
-            'pyload = pyload.Core:main',
-            'pyload-cli = pyload.Cli:main'
-        ]
-    },
+    entry_points={'console_scripts': ['pyload = pyload.Core:main']},
 
     zip_safe=False,
 

@@ -2,8 +2,6 @@
 
 import re
 
-from urlparse import urljoin
-
 from pyload.plugin.internal.SimpleCrypter import SimpleCrypter
 
 

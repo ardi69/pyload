@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
-
-from random import randrange
-from urllib import unquote
-
 from pyload.utils import json_loads
 from pyload.plugin.internal.MultiHoster import MultiHoster
 
@@ -26,7 +21,7 @@ class FastixRu(MultiHoster):
         self.chunkLimit = 3
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         api_key = self.account.getAccountData(self.user)
         api_key = api_key['api']
 

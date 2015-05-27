@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from types import MethodType
-from urllib import unquote
-from urlparse import urlparse
+import urllib
+import urlparse
+import types
 
 from pyload.datatype.File import PyFile
 from pyload.plugin.Addon import Addon
@@ -14,7 +13,7 @@ from pyload.plugin.Plugin import SkipDownload
 class SkipRev(Addon):
     __name    = "SkipRev"
     __type    = "addon"
-    __version = "0.29"
+    __version = "0.30"
 
     __config = [("mode"     , "Auto;Manual", "Choose recovery archives to skip"               , "Auto"),
                   ("revtokeep", "int"        , "Number of recovery archives to keep for package", 0     )]
@@ -32,11 +31,12 @@ class SkipRev(Addon):
 
 
     def _name(self, pyfile):
-        if hasattr(pyfile.pluginmodule, "getInfo"):  #@NOTE: getInfo is deprecated in 0.4.10
-            return pyfile.pluginmodule.getInfo([pyfile.url]).next()[0]
-        else:
-            self.logWarning("Unable to grab file name")
-            return urlparse(unquote(pyfile.url)).path.split('/')[-1]
+        try:
+            return pyfile.pluginclass.getInfo(pyfile.url)['name']
+
+        except Exception, e:
+            self.logWarning("Unable to grab file name", e)
+            return urlparse.urlparse(urllib.unquote(pyfile.url)).path.split('/')[-1]
 
 
     def _pyfile(self, link):
@@ -75,7 +75,7 @@ class SkipRev(Addon):
         if not hasattr(pyfile.plugin, "_setup"):
             # Work-around: inject status checker inside the preprocessing routine of the plugin
             pyfile.plugin._setup = pyfile.plugin.setup
-            pyfile.plugin.setup  = MethodType(self._setup, pyfile.plugin)
+            pyfile.plugin.setup  = types.MethodType(self._setup, pyfile.plugin)
 
 
     def downloadFailed(self, pyfile):

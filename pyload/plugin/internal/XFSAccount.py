@@ -2,8 +2,7 @@
 
 import re
 import time
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.plugin.Account import Account
 from pyload.plugin.internal.SimpleHoster import parseHtmlForm, set_cookies
@@ -12,7 +11,7 @@ from pyload.plugin.internal.SimpleHoster import parseHtmlForm, set_cookies
 class XFSAccount(Account):
     __name    = "XFSAccount"
     __type    = "account"
-    __version = "0.36"
+    __version = "0.37"
 
     __description = """XFileSharing account plugin"""
     __license     = "GPLv3"
@@ -155,7 +154,7 @@ class XFSAccount(Account):
             raise Exception(_("Missing HOSTER_DOMAIN"))
 
         if not self.LOGIN_URL:
-            self.LOGIN_URL  = urljoin(self.HOSTER_URL, "login.html")
+            self.LOGIN_URL  = urlparse.urljoin(self.HOSTER_URL, "login.html")
         html = req.load(self.LOGIN_URL, decode=True)
 
         action, inputs = parseHtmlForm('name="FL"', html)
@@ -166,9 +165,12 @@ class XFSAccount(Account):
         inputs.update({'login'   : user,
                        'password': data['password']})
 
-        if not action:
-            action = self.HOSTER_URL
-        html = req.load(action, post=inputs, decode=True)
+        if action:
+            url = urlparse.urljoin("http://", action)
+        else:
+            url = self.HOSTER_URL
+
+        html = req.load(url, post=inputs, decode=True)
 
         if re.search(self.LOGIN_FAIL_PATTERN, html):
             self.wrongPassword()

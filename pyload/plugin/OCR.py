@@ -13,14 +13,14 @@ import os
 import subprocess
 # import tempfile
 
-from pyload.plugin.Plugin import Base
+from pyload.plugin.Plugin import Plugin
 from pyload.utils import fs_join
 
 
-class OCR(Base):
+class OCR(Plugin):
     __name    = "OCR"
     __type    = "ocr"
-    __version = "0.12"
+    __version = "0.13"
 
     __description = """OCR base plugin"""
     __license     = "GPLv3"
@@ -38,7 +38,7 @@ class OCR(Base):
 
 
     def deactivate(self):
-        """delete all tmp images"""
+        """Delete all tmp images"""
         pass
 
 
@@ -60,11 +60,11 @@ class OCR(Base):
     def run_tesser(self, subset=False, digits=True, lowercase=True, uppercase=True, pagesegmode=None):
         # tmpTif = tempfile.NamedTemporaryFile(suffix=".tif")
         try:
-            tmpTif = open(fs_join("tmp", "tmpTif_%s.tif" % self.getClassName()), "wb")
+            tmpTif = open(fs_join("tmp", "tmpTif_%s.tif" % self.__name__), "wb")
             tmpTif.close()
 
             # tmpTxt = tempfile.NamedTemporaryFile(suffix=".txt")
-            tmpTxt = open(fs_join("tmp", "tmpTxt_%s.txt" % self.getClassName()), "wb")
+            tmpTxt = open(fs_join("tmp", "tmpTxt_%s.txt" % self.__name__), "wb")
             tmpTxt.close()
 
         except IOError, e:
@@ -86,7 +86,7 @@ class OCR(Base):
 
         if subset and (digits or lowercase or uppercase):
             # tmpSub = tempfile.NamedTemporaryFile(suffix=".subset")
-            with open(fs_join("tmp", "tmpSub_%s.subset" % self.getClassName()), "wb") as tmpSub:
+            with open(fs_join("tmp", "tmpSub_%s.subset" % self.__name__), "wb") as tmpSub:
                 tmpSub.write("tessedit_char_whitelist ")
 
                 if digits:
@@ -189,7 +189,7 @@ class OCR(Base):
 
 
     def derotate_by_average(self):
-        """rotate by checking each angle and guess most suitable"""
+        """Rotate by checking each angle and guess most suitable"""
 
         w, h = self.image.size
         pixels = self.pixels

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
-
 from pyload.utils import json_loads
 from pyload.plugin.internal.MultiHoster import MultiHoster
 
@@ -23,7 +21,7 @@ class MyfastfileCom(MultiHoster):
         self.chunkLimit = -1
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         self.html = self.load('http://myfastfile.com/api.php',
                          get={'user': self.user, 'pass': self.account.getAccountData(self.user)['password'],
                               'link': pyfile.url})

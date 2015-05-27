@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urlparse import urlsplit
+import urlparse
 
 from pyload.utils import json_loads, json_dumps
 from pyload.plugin.internal.MultiHoster import MultiHoster
@@ -24,7 +23,7 @@ class LinksnappyCom(MultiHoster):
     SINGLE_CHUNK_HOSTERS = ["easybytez.com"]
 
 
-    def handlePremium(self, pyfile):
+    def handle_premium(self, pyfile):
         host        = self._get_host(pyfile.url)
         json_params = json_dumps({'link'    : pyfile.url,
                                   'type'    : host,
@@ -52,5 +51,5 @@ class LinksnappyCom(MultiHoster):
 
     @staticmethod
     def _get_host(url):
-        host = urlsplit(url).netloc
+        host = urlparse.urlsplit(url).netloc
         return re.search(r'[\w-]+\.\w+$', host).group(0)

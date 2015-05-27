@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from urlparse import urljoin, urlparse
+import urlparse
 
 from pyload.plugin.Crypter import Crypter
 from pyload.plugin.internal.SimpleHoster import SimpleHoster, replace_patterns, set_cookies
@@ -66,8 +65,6 @@ class SimpleCrypter(Crypter, SimpleHoster):
 
 
     def prepare(self):
-        self.pyfile.error = ""  #@TODO: Remove in 0.4.10
-
         self.info  = {}
         self.html  = ""
         self.links = []  #@TODO: Move to hoster class in 0.4.10
@@ -95,7 +92,7 @@ class SimpleCrypter(Crypter, SimpleHoster):
         self.links = self.getLinks()
 
         if hasattr(self, 'PAGES_PATTERN') and hasattr(self, 'loadPage'):
-            self.handlePages(pyfile)
+            self.handle_pages(pyfile)
 
         self.logDebug("Package has %d links" % len(self.links))
 
@@ -136,14 +133,14 @@ class SimpleCrypter(Crypter, SimpleHoster):
         Returns the links extracted from self.html
         You should override this only if it's impossible to extract links using only the LINK_PATTERN.
         """
-        url_p   = urlparse(self.pyfile.url)
+        url_p   = urlparse.urlparse(self.pyfile.url)
         baseurl = "%s://%s" % (url_p.scheme, url_p.netloc)
 
-        return [urljoin(baseurl, link) if not urlparse(link).scheme else link \
+        return [urlparse.urljoin(baseurl, link) if not urlparse.urlparse(link).scheme else link \
                 for link in re.findall(self.LINK_PATTERN, self.html)]
 
 
-    def handlePages(self, pyfile):
+    def handle_pages(self, pyfile):
         try:
             pages = int(re.search(self.PAGES_PATTERN, self.html).group(1))
         except Exception:

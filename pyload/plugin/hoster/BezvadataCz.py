@@ -8,7 +8,7 @@ from pyload.plugin.internal.SimpleHoster import SimpleHoster
 class BezvadataCz(SimpleHoster):
     __name    = "BezvadataCz"
     __type    = "hoster"
-    __version = "0.26"
+    __version = "0.27"
 
     __pattern = r'http://(?:www\.)?bezvadata\.cz/stahnout/.+'
     __config  = [("use_premium", "bool", "Use premium account if available", True)]
@@ -28,7 +28,7 @@ class BezvadataCz(SimpleHoster):
         self.multiDL        = True
 
 
-    def handleFree(self, pyfile):
+    def handle_free(self, pyfile):
         # download button
         m = re.search(r'<a class="stahnoutSoubor".*?href="(.*?)"', self.html)
         if m is None:
@@ -84,8 +84,8 @@ class BezvadataCz(SimpleHoster):
             self.longWait(5 * 60, 24)  #: parallel dl limit
         elif '<div class="infobox' in self.html:
             self.tempOffline()
-
-        self.info.pop('error', None)
+        else:
+            return super(BezvadataCz, self).checkErrors()
 
 
     def loadcaptcha(self, data, *args, **kwargs):

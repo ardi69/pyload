@@ -2,13 +2,12 @@
 
 import re
 import time
-
-from urlparse import urljoin
+import urlparse
 
 from pyload.network.RequestFactory import getURL
 from pyload.plugin.Hoster import Hoster
-from pyload.plugin.Plugin import chunks
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
+from pyload.utils import chunks
 
 
 def getInfo(urls):
@@ -230,7 +229,7 @@ class NetloadIn(Hoster):
                 page = None
 
             else:
-                url_captcha_html = urljoin("http://netload.in/", url_captcha_html)
+                url_captcha_html = urlparse.urljoin("http://netload.in/", url_captcha_html)
                 break
 
         self.html = self.load(url_captcha_html)

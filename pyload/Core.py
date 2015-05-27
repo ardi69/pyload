@@ -4,43 +4,35 @@
 
 from __future__ import with_statement
 
-import pyload
 import __builtin__
-
-from getopt import getopt, GetoptError
-import pyload.utils.pylgettext as gettext
-from imp import find_module
+import codecs
+import getopt
+import imp
 import logging
 import logging.handlers
 import os
-from os import _exit, execl, getcwd, makedirs, remove, sep, walk, chdir, close
-from os.path import exists, join
 import signal
 import subprocess
 import sys
-from sys import argv, executable, exit
-from time import time, sleep
-from traceback import print_exc
+import time
+import traceback
 
+import pyload
+from pyload.utils import pylgettext as gettext
+
+from pyload import remote
+from pyload.Database import DatabaseBackend, FileHandler
+from pyload.config.Parser import ConfigParser
 from pyload.manager.Account import AccountManager
 from pyload.manager.Captcha import CaptchaManager
-from pyload.config.Parser import ConfigParser
-from pyload.manager.Plugin import PluginManager
 from pyload.manager.Event import PullManager
-from pyload.network.RequestFactory import RequestFactory
-from pyload.manager.thread.Server import WebServer
-from pyload.manager.event.Scheduler import Scheduler
-from pyload.network.JsEngine import JsEngine
-from pyload import remote
+from pyload.manager.Plugin import PluginManager
 from pyload.manager.Remote import RemoteManager
-from pyload.database import DatabaseBackend, FileHandler
-
-from pyload.utils import freeSpace, formatSize, get_console_encoding
-
-from codecs import getwriter
-
-enc = get_console_encoding(sys.stdout.encoding)
-sys.stdout = getwriter(enc)(sys.stdout, errors="replace")
+from pyload.manager.Scheduler import Scheduler
+from pyload.Thread.Server import WebServer
+from pyload.network.JsEngine import JsEngine
+from pyload.network.RequestFactory import RequestFactory
+from pyload.utils import free_space, format_size
 
 
 # TODO List
@@ -59,9 +51,9 @@ class Core(object):
         self.pidfile = "pyload.pid"
         self.deleteLinks = False  #: will delete links on startup
 
-        if len(argv) > 1:
+        if len(sys.argv) > 1:
             try:
-                options, args = getopt(argv[1:], 'vchdusqp:',
+                options, args = getopt.getopt(sys.argv[1:], 'vchdusqp:',
                     ["version", "clear", "clean", "help", "debug", "user",
                      "setup", "configdir=", "changedir", "daemon",
                      "quit", "status", "no-remote","pidfile="])
@@ -69,7 +61,7 @@ class Core(object):
                 for option, argument in options:
                     if option in ("-v", "--version"):
                         print "pyLoad", pyload.__version__
-                        exit()
+                        sys.exit()
                     elif option in ("-p", "--pidfile"):
                         self.pidfile = argument
                     elif option == "--daemon":
@@ -78,51 +70,30 @@ class Core(object):
                         self.deleteLinks = True
                     elif option in ("-h", "--help"):
                         self.print_help()
-                        exit()
+                        sys.exit()
                     elif option in ("-d", "--debug"):
                         self.doDebug = True
-                    elif option in ("-u", "--user"):
-                        from pyload.config.Setup import SetupAssistant as Setup
-
-                        self.config = ConfigParser()
-                        s = Setup(self.config)
-                        s.set_user()
-                        exit()
-                    elif option in ("-s", "--setup"):
-                        from pyload.config.Setup import SetupAssistant as Setup
-
-                        self.config = ConfigParser()
-                        s = Setup(self.config)
-                        s.start()
-                        exit()
-                    elif option == "--changedir":
-                        from pyload.config.Setup import SetupAssistant as Setup
-
-                        self.config = ConfigParser()
-                        s = Setup(self.config)
-                        s.conf_path(True)
-                        exit()
                     elif option in ("-q", "--quit"):
                         self.quitInstance()
-                        exit()
+                        sys.exit()
                     elif option == "--status":
                         pid = self.isAlreadyRunning()
                         if self.isAlreadyRunning():
                             print pid
-                            exit(0)
+                            sys.exit(0)
                         else:
                             print "false"
-                            exit(1)
+                            sys.exit(1)
                     elif option == "--clean":
                         self.cleanTree()
-                        exit()
+                        sys.exit()
                     elif option == "--no-remote":
                         self.remote = False
 
-            except GetoptError:
-                print 'Unknown Argument(s) "%s"' % " ".join(argv[1:])
+            except getopt.GetoptError:
+                print 'Unknown Argument(s) "%s"' % " ".join(sys.argv[1:])
                 self.print_help()
-                exit()
+                sys.exit()
 
 
     def print_help(self):
@@ -138,12 +109,9 @@ class Core(object):
         print "  -v, --version", " " * 10, "Print version to terminal"
         print "  -c, --clear", " " * 12, "Delete all saved packages/links"
         # print "  -a, --add=<link/list>", " " * 2, "Add the specified links"
-        print "  -u, --user", " " * 13, "Manages users"
         print "  -d, --debug", " " * 12, "Enable debug mode"
-        print "  -s, --setup", " " * 12, "Run Setup Assistant"
         print "  --configdir=<dir>", " " * 6, "Run with <dir> as config directory"
         print "  -p, --pidfile=<file>", " " * 3, "Set pidfile to <file>"
-        print "  --changedir", " " * 12, "Change config dir permanently"
         print "  --daemon", " " * 15, "Daemonmize after start"
         print "  --no-remote", " " * 12, "Disable remote access (saves RAM)"
         print "  --status", " " * 15, "Display pid if running or False"
@@ -165,7 +133,7 @@ class Core(object):
     def quit(self, a, b):
         self.shutdown()
         self.log.info(_("Received Quit signal"))
-        _exit(1)
+        os._exit(1)
 
 
     def writePidFile(self):
@@ -182,7 +150,7 @@ class Core(object):
 
 
     def checkPidFile(self):
-        """ return pid as int or 0"""
+        """Return pid as int or 0"""
         if os.path.isfile(self.pidfile):
             with open(self.pidfile, "rb") as f:
                 pid = f.read().strip()
@@ -218,13 +186,13 @@ class Core(object):
         try:
             os.kill(pid, 3)  #: SIGUIT
 
-            t = time()
+            t = time.time()
             print "waiting for pyLoad to quit"
 
-            while exists(self.pidfile) and t + 10 > time():
-                sleep(0.25)
+            while os.path.exists(self.pidfile) and t + 10 > time.time():
+                time.sleep(0.25)
 
-            if not exists(self.pidfile):
+            if not os.path.exists(self.pidfile):
                 print "pyLoad successfully stopped"
             else:
                 os.kill(pid, 9)  #: SIGKILL
@@ -236,7 +204,7 @@ class Core(object):
 
 
     def cleanTree(self):
-        for path, dirs, files in walk(self.path("")):
+        for path, dirs, files in os.walk(self.path("")):
             for f in files:
                 if not f.endswith(".pyo") and not f.endswith(".pyc"):
                     continue
@@ -244,36 +212,20 @@ class Core(object):
                 if "_25" in f or "_26" in f or "_27" in f:
                     continue
 
-                print join(path, f)
-                remove(join(path, f))
+                print os.path.join(path, f)
+                reshutil.move(os.path.join(path, f))
 
 
     def start(self, rpc=True, web=True):
-        """ starts the fun :D """
+        """Starts the fun :D"""
 
         self.version = pyload.__version__
 
-        if not exists("pyload.conf"):
-            from pyload.config.Setup import SetupAssistant as Setup
-
-            print "This is your first start, running configuration assistent now."
-            self.config = ConfigParser()
-            s = Setup(self.config)
-            res = False
-            try:
-                res = s.start()
-            except SystemExit:
-                pass
-            except KeyboardInterrupt:
-                print "\nSetup interrupted"
-            except Exception:
-                res = False
-                print_exc()
-                print "Setup failed"
-            if not res:
-                remove("pyload.conf")
-
-            exit()
+        if not os.path.exists("pyload.conf"):
+            first_start = True
+            print "This is your first start (default login credentials are admin:pyload)"
+        else:
+            first_start = False
 
         try: signal.signal(signal.SIGQUIT, self.quit)
         except Exception:
@@ -281,7 +233,7 @@ class Core(object):
 
         self.config = ConfigParser()
 
-        gettext.setpaths([join(os.sep, "usr", "share", "pyload", "locale"), None])
+        gettext.setpaths([os.path.join(os.sep, "usr", "share", "pyload", "locale"), None])
         translation = gettext.translation("pyLoad", self.path("locale"),
                                           languages=[self.config.get("general", "language"), "en"], fallback=True)
         translation.install(True)
@@ -292,7 +244,7 @@ class Core(object):
         pid = self.isAlreadyRunning()
         if pid:
             print _("pyLoad already running with pid %s") % pid
-            exit()
+            sys.exit()
 
         if os.name != "nt" and self.config.get("general", "renice"):
             os.system("renice %d %d" % (self.config.get("general", "renice"), os.getpid()))
@@ -300,19 +252,20 @@ class Core(object):
         if self.config.get("permission", "change_group"):
             if os.name != "nt":
                 try:
-                    from grp import getgrnam
+                    import grp
 
-                    group = getgrnam(self.config.get("permission", "group"))
+                    group = grp.getgrnam(self.config.get("permission", "group"))
                     os.setgid(group[2])
+
                 except Exception, e:
                     print _("Failed changing group: %s") % e
 
         if self.config.get("permission", "change_user"):
             if os.name != "nt":
                 try:
-                    from pwd import getpwnam
+                    import pwd
 
-                    user = getpwnam(self.config.get("permission", "user"))
+                    user = pwd.getpwnam(self.config.get("permission", "user"))
                     os.setuid(user[2])
                 except Exception, e:
                     print _("Failed changing user: %s") % e
@@ -329,7 +282,7 @@ class Core(object):
         self.shuttedDown = False
 
         self.log.info(_("Starting") + " pyLoad %s" % pyload.__version__)
-        self.log.info(_("Using home directory: %s") % getcwd())
+        self.log.info(_("Using home directory: %s") % os.getcwd())
 
         self.writePidFile()
 
@@ -352,7 +305,11 @@ class Core(object):
             self.check_install("OpenSSL", _("OpenSSL for secure connection"))
 
         self.setupDB()
-        if self.config.oldRemoteData:
+
+        if first_start:
+            self.db.addUser("admin", "pyload")
+
+        elif self.config.oldRemoteData:
             self.log.info(_("Moving old user config to DB"))
             self.db.addUser(self.config.oldRemoteData['username'], self.config.oldRemoteData['password'])
 
@@ -368,14 +325,14 @@ class Core(object):
         self.lastClientConnected = 0
 
         # later imported because they would trigger api import, and remote value not set correctly
-        from pyload import api
+        from pyload.Api import Api
         from pyload.manager.Addon import AddonManager
         from pyload.manager.Thread import ThreadManager
 
-        if api.activated != self.remote:
+        if pyload.Api.activated != self.remote:
             self.log.warning("Import error: API remote status not correct.")
 
-        self.api = api.Api(self)
+        self.api = Api(self)
 
         self.scheduler = Scheduler(self)
 
@@ -398,21 +355,21 @@ class Core(object):
         if web:
             self.init_webserver()
 
-        spaceLeft = freeSpace(self.config.get("general", "download_folder"))
+        spaceLeft = free_space(self.config.get("general", "download_folder"))
 
-        self.log.info(_("Free space: %s") % formatSize(spaceLeft))
+        self.log.info(_("Free space: %s") % format_size(spaceLeft))
 
         self.config.save()  #: save so config files gets filled
 
-        link_file = join(pypath, "links.txt")
+        link_file = os.path.join(pypath, "links.txt")
 
-        if exists(link_file):
+        if os.path.exists(link_file):
             with open(link_file, "rb") as f:
                 if f.read().strip():
                     self.api.addPackage("links.txt", [link_file], 1)
 
         link_file = "links.txt"
-        if exists(link_file):
+        if os.path.exists(link_file):
             with open(link_file, "rb") as f:
                 if f.read().strip():
                     self.api.addPackage("links.txt", [link_file], 1)
@@ -432,7 +389,7 @@ class Core(object):
         locals().clear()
 
         while True:
-            sleep(2)
+            time.sleep(2)
             if self.do_restart:
                 self.log.info(_("restarting pyLoad"))
                 self.restart()
@@ -440,7 +397,7 @@ class Core(object):
                 self.shutdown()
                 self.log.info(_("pyLoad quits"))
                 self.removeLogger()
-                _exit(0)  #@TODO thrift blocks shutdown
+                os._exit(0)  #@TODO thrift blocks shutdown
 
             self.threadManager.work()
             self.scheduler.work()
@@ -455,90 +412,68 @@ class Core(object):
 
 
     def init_webserver(self):
-        if self.config.get("webui", "activated"):
-            self.webserver = WebServer(self)
-            self.webserver.start()
+        self.webserver = WebServer(self)
+        self.webserver.start()
 
 
     def init_logger(self, level):
         self.log = logging.getLogger("log")
         self.log.setLevel(level)
 
-        date_fmt = "%Y-%m-%d %H:%M:%S"
-        fh_fmt   = "%(asctime)s %(levelname)-8s  %(message)s"
-
-        fh_frm      = logging.Formatter(fh_fmt, date_fmt)  #: file handler formatter
-        console_frm = fh_frm  #: console formatter did not use colors as default
+        format  = "%(asctime)s  %(levelname)-8s  %(message)s"
+        datefmt = "%Y-%m-%d  %H:%M:%S"
+        console_formatter = logging.Formatter(format, datefmt)  #: console formatter did not use colors as default
 
         # Console formatter with colors
         if self.config.get("log", "color_console"):
             import colorlog
 
-            color_template = self.config.get("log", "color_template")
-            extra_clr = {}
+            format  = "%(log_color)s%(asctime)s%(reset)s  %(label_log_color)s %(levelname)-8s %(reset)s  %(log_color)s%(message)s"
+            datefmt = "%Y-%m-%d  %H:%M:%S"
 
-            if color_template is "mixed":
-                c_fmt = "%(log_color)s%(asctime)s %(label_log_color)s%(bold)s%(white)s %(levelname)-8s%(reset)s  %(log_color)s%(message)s"
-                clr = {
-                    'DEBUG'   : "cyan"  ,
-                    'WARNING' : "yellow",
-                    'ERROR'   : "red"   ,
-                    'CRITICAL': "purple",
+            log_color = {
+                'DEBUG'   : "bold,cyan"  ,
+                'WARNING' : "bold,yellow",
+                'ERROR'   : "bold,red"   ,
+                'CRITICAL': "bold,purple",
+            }
+            secondary_log_colors = {
+                'label': {
+                    'DEBUG'   : "bold,white,bg_cyan"  ,
+                    'INFO'    : "bold,white,bg_green" ,
+                    'WARNING' : "bold,white,bg_yellow",
+                    'ERROR'   : "bold,white,bg_red"   ,
+                    'CRITICAL': "bold,white,bg_purple",
                 }
-                extra_clr = {
-                    'label': {
-                        'DEBUG'   : "bg_cyan"  ,
-                        'INFO'    : "bg_green" ,
-                        'WARNING' : "bg_yellow",
-                        'ERROR'   : "bg_red"   ,
-                        'CRITICAL': "bg_purple",
-                    }
-                }
+            }
 
-            elif color_template is "label":
-                c_fmt = "%(asctime)s %(log_color)s%(bold)s%(white)s %(levelname)-8s%(reset)s  %(message)s"
-                clr = {
-                    'DEBUG'   : "bg_cyan"  ,
-                    'INFO'    : "bg_green" ,
-                    'WARNING' : "bg_yellow",
-                    'ERROR'   : "bg_red"   ,
-                    'CRITICAL': "bg_purple",
-                }
-
-            else:
-                c_fmt = "%(log_color)s%(asctime)s  %(levelname)-8s  %(message)s"
-                clr = {
-                    'DEBUG'   : "cyan"  ,
-                    'WARNING' : "yellow",
-                    'ERROR'   : "red"   ,
-                    'CRITICAL': "purple"
-                }
-
-            console_frm = colorlog.ColoredFormatter(fmt=c_fmt,
-                                                    datefmt=date_fmt,
-                                                    log_colors=clr,
-                                                    secondary_log_colors=extra_clr)
+            console_formatter = colorlog.ColoredFormatter(format,
+                                                          datefmt,
+                                                          log_color,
+                                                          secondary_log_colors=secondary_log_colors)
 
         # Set console formatter
         console = logging.StreamHandler(sys.stdout)
-        console.setFormatter(console_frm)
+        console.setFormatter(console_formatter)
         self.log.addHandler(console)
 
         log_folder = self.config.get("log", "log_folder")
-        if not exists(log_folder):
-            makedirs(log_folder, 0700)
+        if not os.path.exists(log_folder):
+            os.makedirs(log_folder, 0700)
 
         # Set file handler formatter
         if self.config.get("log", "file_log"):
+            file_handler_formatter = console_formatter
+
             if self.config.get("log", "log_rotate"):
-                file_handler = logging.handlers.RotatingFileHandler(join(log_folder, 'log.txt'),
+                file_handler = logging.handlers.RotatingFileHandler(os.path.join(log_folder, 'log.txt'),
                                                                     maxBytes=self.config.get("log", "log_size") * 1024,
                                                                     backupCount=int(self.config.get("log", "log_count")),
                                                                     encoding="utf8")
             else:
-                file_handler = logging.FileHandler(join(log_folder, 'log.txt'), encoding="utf8")
+                file_handler = logging.FileHandler(os.path.join(log_folder, 'log.txt'), encoding="utf8")
 
-            file_handler.setFormatter(fh_frm)
+            file_handler.setFormatter(file_handler_formatter)
             self.log.addHandler(file_handler)
 
 
@@ -549,10 +484,10 @@ class Core(object):
 
 
     def check_install(self, check_name, legend, python=True, essential=False):
-        """check wether needed tools are installed"""
+        """Check wether needed tools are installed"""
         try:
             if python:
-                find_module(check_name)
+                imp.find_module(check_name)
             else:
                 pipe = subprocess.PIPE
                 subprocess.Popen(check_name, stdout=pipe, stderr=pipe)
@@ -561,13 +496,13 @@ class Core(object):
         except Exception:
             if essential:
                 self.log.info(_("Install %s") % legend)
-                exit()
+                sys.exit()
 
             return False
 
 
     def check_file(self, check_names, description="", folder=False, empty=True, essential=False, quiet=False):
-        """check wether needed files exists"""
+        """Check wether needed files exists"""
         tmp_names = []
         if not type(check_names) == list:
             tmp_names.append(check_names)
@@ -576,13 +511,13 @@ class Core(object):
         file_created = True
         file_exists = True
         for tmp_name in tmp_names:
-            if not exists(tmp_name):
+            if not os.path.exists(tmp_name):
                 file_exists = False
                 if empty:
                     try:
                         if folder:
                             tmp_name = tmp_name.replace("/", sep)
-                            makedirs(tmp_name)
+                            os.makedirs(tmp_name)
                         else:
                             open(tmp_name, "w")
                     except Exception:
@@ -601,31 +536,31 @@ class Core(object):
                     else:
                         print _("could not create %(desc)s: %(name)s") % {"desc": description, "name": tmp_name}
                     if essential:
-                        exit()
+                        sys.exit()
 
 
     def isClientConnected(self):
-        return (self.lastClientConnected + 30) > time()
+        return (self.lastClientConnected + 30) > time.time()
 
 
     def restart(self):
         self.shutdown()
-        chdir(owd)
+        os.chdir(owd)
         # close some open fds
         for i in xrange(3, 50):
             try:
-                close(i)
+                os.close(i)
             except Exception:
                 pass
 
-        execl(executable, executable, *sys.argv)
-        _exit(0)
+        os.execl(executable, executable, *sys.argv)
+        os._exit(0)
 
 
     def shutdown(self):
         self.log.info(_("shutting down..."))
         try:
-            if self.config.get("webui", "activated") and hasattr(self, "webserver"):
+            if hasattr(self, "webserver"):
                 self.webserver.quit()
 
             for thread in list(self.threadManager.threads):
@@ -639,7 +574,7 @@ class Core(object):
 
         except Exception:
             if self.debug:
-                print_exc()
+                traceback.print_exc()
             self.log.info(_("error while shutting down"))
 
         finally:
@@ -650,7 +585,7 @@ class Core(object):
 
 
     def path(self, *args):
-        return join(pypath, *args)
+        return os.path.join(pypath, *args)
 
 
 def deamon():
@@ -703,7 +638,7 @@ def main():
             pyload_core.shutdown()
             pyload_core.log.info(_("killed pyLoad from Terminal"))
             pyload_core.removeLogger()
-            _exit(1)
+            os._exit(1)
 
 # And so it begins...
 if __name__ == "__main__":

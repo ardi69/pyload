@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import re
+import select
 import socket
 import ssl
 import time
+import threading
 import traceback
 
-from pycurl import FORM_FILE
-from select import select
-from threading import Thread
+import pycurl
 
-from pyload.api import PackageDoesNotExists, FileDoesNotExists
+from pyload.Api import PackageDoesNotExists, FileDoesNotExists
 from pyload.network.RequestFactory import getURL
 from pyload.plugin.Addon import Addon
-from pyload.utils import formatSize
+from pyload.utils import format_size
 
 
 class IRCInterface(Thread, Addon):
@@ -38,7 +38,7 @@ class IRCInterface(Thread, Addon):
 
 
     def __init__(self, core, manager):
-        Thread.__init__(self)
+        threading.Thread.__init__(self)
         Addon.__init__(self, core, manager)
         self.setDaemon(True)
 
@@ -74,7 +74,7 @@ class IRCInterface(Thread, Addon):
             task.setWaiting(60)
 
             html = getURL("http://www.freeimagehosting.net/upload.php",
-                          post={"attached": (FORM_FILE, task.captchaFile)}, multipart=True)
+                          post={"attached": (pycurl.FORM_FILE, task.captchaFile)}, multipart=True)
 
             url = re.search(r"\[img\]([^\[]+)\[/img\]\[/url\]", html).group(1)
             self.response(_("New Captcha Request: %s") % url)
@@ -111,7 +111,7 @@ class IRCInterface(Thread, Addon):
         readbuffer = ""
         while True:
             time.sleep(1)
-            fdset = select([self.sock], [], [], 0)
+            fdset = select.select([self.sock], [], [], 0)
             if self.sock not in fdset[0]:
                 continue
 
@@ -223,7 +223,7 @@ class IRCInterface(Thread, Addon):
                              data.fid,
                              data.name,
                              data.statusmsg,
-                             "%s/s" % formatSize(data.speed),
+                             "%s/s" % format_size(data.speed),
                              "%s" % data.format_eta,
                              temp_progress
                          ))
@@ -391,7 +391,7 @@ class IRCInterface(Thread, Addon):
 
 
     def event_c(self, args):
-        """ captcha answer """
+        """Captcha answer"""
         if not args:
             return ["ERROR: Captcha ID missing."]
 
