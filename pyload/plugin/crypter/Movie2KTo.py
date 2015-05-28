@@ -9,7 +9,7 @@ class Movie2KTo(DeadCrypter):
     __version = "0.51"
 
     __pattern = r'http://(?:www\.)?movie2k\.to/(.+)\.html'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Movie2k.to decrypter plugin"""
     __license     = "GPLv3"

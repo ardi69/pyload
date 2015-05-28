@@ -9,7 +9,7 @@ class PandaplaNet(DeadHoster):
     __version = "0.03"
 
     __pattern = r'http://(?:www\.)?pandapla\.net/\w{12}'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Pandapla.net hoster plugin"""
     __license     = "GPLv3"

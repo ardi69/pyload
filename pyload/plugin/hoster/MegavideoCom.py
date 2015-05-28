@@ -9,7 +9,7 @@ class MegavideoCom(DeadHoster):
     __version = "0.21"
 
     __pattern = r'http://(?:www\.)?megavideo\.com/\?.*&?(d|v)=\w+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Megavideo.com hoster plugin"""
     __license     = "GPLv3"

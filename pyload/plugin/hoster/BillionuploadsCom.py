@@ -9,6 +9,7 @@ class BillionuploadsCom(DeadHoster):
     __version = "0.06"
 
     __pattern = r'http://(?:www\.)?billionuploads\.com/\w{12}'
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Billionuploads.com hoster plugin"""
     __license     = "GPLv3"

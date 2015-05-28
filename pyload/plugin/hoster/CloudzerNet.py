@@ -9,7 +9,7 @@ class CloudzerNet(DeadHoster):
     __version = "0.05"
 
     __pattern = r'https?://(?:www\.)?(cloudzer\.net/file/|clz\.to/(file/)?)\w+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Cloudzer.net hoster plugin"""
     __license     = "GPLv3"

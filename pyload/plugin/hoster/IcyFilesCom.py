@@ -9,7 +9,7 @@ class IcyFilesCom(DeadHoster):
     __version = "0.06"
 
     __pattern = r'http://(?:www\.)?icyfiles\.com/(.+)'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """IcyFiles.com hoster plugin"""
     __license     = "GPLv3"

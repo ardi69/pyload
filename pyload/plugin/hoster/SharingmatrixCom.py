@@ -9,7 +9,7 @@ class SharingmatrixCom(DeadHoster):
     __version = "0.01"
 
     __pattern = r'http://(?:www\.)?sharingmatrix\.com/file/\w+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Sharingmatrix.com hoster plugin"""
     __license     = "GPLv3"

@@ -9,7 +9,7 @@ class SharingmatrixCom(DeadCrypter):
     __version = "0.01"
 
     __pattern = r'http://(?:www\.)?sharingmatrix\.com/folder/\w+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Sharingmatrix.com folder decrypter plugin"""
     __license     = "GPLv3"

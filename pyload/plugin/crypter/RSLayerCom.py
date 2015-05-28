@@ -9,7 +9,7 @@ class RSLayerCom(DeadCrypter):
     __version = "0.21"
 
     __pattern = r'http://(?:www\.)?rs-layer\.com/directory-'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """RS-Layer.com decrypter plugin"""
     __license     = "GPLv3"

@@ -9,7 +9,7 @@ class DodanePl(DeadHoster):
     __version = "0.03"
 
     __pattern = r'http://(?:www\.)?dodane\.pl/file/\d+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Dodane.pl hoster plugin"""
     __license     = "GPLv3"

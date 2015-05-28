@@ -9,7 +9,7 @@ from pyload.plugin.internal.SimpleHoster import SimpleHoster
 class NitroflareCom(SimpleHoster):
     __name    = "NitroflareCom"
     __type    = "hoster"
-    __version = "0.10"
+    __version = "0.12"
 
     __pattern = r'https?://(?:www\.)?nitroflare\.com/view/(?P<ID>[\w^_]+)'
     __config  = [("use_premium", "bool", "Use premium account if available", True)]
@@ -27,11 +27,10 @@ class NitroflareCom(SimpleHoster):
 
     LINK_FREE_PATTERN = r'(https?://[\w\-]+\.nitroflare\.com/.+?)"'
 
-    RECAPTCHA_KEY = "6Lenx_USAAAAAF5L1pmTWvWcH73dipAEzNnmNLgy"
-
+    RECAPTCHA_KEY        = "6Lenx_USAAAAAF5L1pmTWvWcH73dipAEzNnmNLgy"
     PREMIUM_ONLY_PATTERN = r'This file is available with Premium only'
-    WAIT_PATTERN         = r'You have to wait .+?<'
-    ERROR_PATTERN        = r'downloading is not possible'
+    WAIT_PATTERN         = r'You have to wait (\d+ minutes)'
+    # ERROR_PATTERN        = r'downloading is not possible'
 
 
     def handle_free(self, pyfile):
@@ -70,8 +69,4 @@ class NitroflareCom(SimpleHoster):
             self.logWarning("Captcha unfilled")
             return
 
-        m = re.search(self.LINK_FREE_PATTERN, self.html)
-        if m:
-            self.link = m.group(1)
-        else:
-            self.logError("Unable to detect direct link")
+        return super(NitroflareCom, self).handleFree(pyfile)

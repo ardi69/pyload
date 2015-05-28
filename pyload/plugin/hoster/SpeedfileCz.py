@@ -9,7 +9,7 @@ class SpeedfileCz(DeadHoster):
     __version = "0.32"
 
     __pattern = r'http://(?:www\.)?speedfile\.cz/.+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Speedfile.cz hoster plugin"""
     __license     = "GPLv3"

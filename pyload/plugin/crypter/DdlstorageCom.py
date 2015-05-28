@@ -9,7 +9,7 @@ class DdlstorageCom(DeadCrypter):
     __version = "0.03"
 
     __pattern = r'https?://(?:www\.)?ddlstorage\.com/folder/\w+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """DDLStorage.com folder decrypter plugin"""
     __license     = "GPLv3"

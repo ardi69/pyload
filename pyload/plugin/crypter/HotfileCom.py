@@ -9,7 +9,7 @@ class HotfileCom(DeadCrypter):
     __version = "0.30"
 
     __pattern = r'https?://(?:www\.)?hotfile\.com/list/\w+/\w+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Hotfile.com folder decrypter plugin"""
     __license     = "GPLv3"

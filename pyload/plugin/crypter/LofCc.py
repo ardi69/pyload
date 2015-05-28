@@ -9,7 +9,7 @@ class LofCc(DeadCrypter):
     __version = "0.21"
 
     __pattern = r'http://(?:www\.)?lof\.cc/(.+)'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Lof.cc decrypter plugin"""
     __license     = "GPLv3"

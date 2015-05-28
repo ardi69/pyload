@@ -9,7 +9,7 @@ class MegaFilesSe(DeadHoster):
     __version = "0.02"
 
     __pattern = r'http://(?:www\.)?megafiles\.se/\w{12}'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """MegaFiles.se hoster plugin"""
     __license     = "GPLv3"

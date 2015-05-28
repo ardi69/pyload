@@ -9,7 +9,7 @@ class ShragleCom(DeadHoster):
     __version = "0.22"
 
     __pattern = r'http://(?:www\.)?(cloudnator|shragle)\.com/files/(?P<ID>.+?)/'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Cloudnator.com (Shragle.com) hoster plugin"""
     __license     = "GPLv3"

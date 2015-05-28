@@ -9,7 +9,7 @@ class CryptItCom(DeadCrypter):
     __version = "0.11"
 
     __pattern = r'http://(?:www\.)?crypt-it\.com/(s|e|d|c)/\w+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Crypt-it.com decrypter plugin"""
     __license     = "GPLv3"

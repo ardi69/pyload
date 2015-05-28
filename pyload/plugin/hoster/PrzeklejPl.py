@@ -9,7 +9,7 @@ class PrzeklejPl(DeadHoster):
     __version = "0.11"
 
     __pattern = r'http://(?:www\.)?przeklej\.pl/plik/.+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Przeklej.pl hoster plugin"""
     __license     = "GPLv3"

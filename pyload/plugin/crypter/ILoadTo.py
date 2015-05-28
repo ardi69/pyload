@@ -9,7 +9,7 @@ class ILoadTo(DeadCrypter):
     __version = "0.11"
 
     __pattern = r'http://(?:www\.)?iload\.to/go/\d+-[\w.-]+/'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Iload.to decrypter plugin"""
     __license     = "GPLv3"

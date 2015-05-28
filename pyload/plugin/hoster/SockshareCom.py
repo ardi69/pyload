@@ -9,7 +9,7 @@ class SockshareCom(DeadHoster):
     __version = "0.05"
 
     __pattern = r'http://(?:www\.)?sockshare\.com/(mobile/)?(file|embed)/(?P<ID>\w+)'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Sockshare.com hoster plugin"""
     __license     = "GPLv3"

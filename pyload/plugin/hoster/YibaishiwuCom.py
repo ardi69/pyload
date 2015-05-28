@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import urlparse
 
 from pyload.utils import json_loads
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
@@ -35,7 +36,7 @@ class YibaishiwuCom(SimpleHoster):
 
         self.logDebug(('FREEUSER' if m.group(2) == 'download' else 'GUEST') + ' URL', url)
 
-        res = json_loads(self.load("http://115.com" + url, decode=False))
+        res = json_loads(self.load(urlparse.urljoin("http://115.com", url), decode=False))
         if "urls" in res:
             mirrors = res['urls']
 

@@ -9,7 +9,7 @@ class UploadkingCom(DeadHoster):
     __version = "0.14"
 
     __pattern = r'http://(?:www\.)?uploadking\.com/\w{10}'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """UploadKing.com hoster plugin"""
     __license     = "GPLv3"

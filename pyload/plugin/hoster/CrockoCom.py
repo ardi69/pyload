@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import urlparse
 
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
@@ -38,8 +39,8 @@ class CrockoCom(SimpleHoster):
         for _i in xrange(5):
             m = re.search(self.CAPTCHA_PATTERN, self.html)
             if m:
-                url, wait_time = 'http://crocko.com' + m.group(1), int(m.group(2))
-                self.wait(wait_time)
+                url = urlparse.urljoin("http://crocko.com", m.group(1))
+                self.wait(m.group(2))
                 self.html = self.load(url)
             else:
                 break

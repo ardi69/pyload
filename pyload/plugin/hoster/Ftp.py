@@ -6,6 +6,7 @@ import urllib
 import urlparse
 
 from pyload.plugin.Hoster import Hoster
+from pyload.utils import decode
 
 
 class Ftp(Hoster):
@@ -25,13 +26,15 @@ class Ftp(Hoster):
     def setup(self):
         self.chunkLimit = -1
         self.resumeDownload = True
+
+
     def process(self, pyfile):
         parsed_url = urlparse.urlparse(pyfile.url)
         netloc = parsed_url.netloc
 
         pyfile.name = parsed_url.path.rpartition('/')[2]
         try:
-            pyfile.name = urllib.unquote(str(pyfile.name)).decode('utf8')
+            pyfile.name = decode(urllib.unquote(pyfile.name))
         except Exception:
             pass
 

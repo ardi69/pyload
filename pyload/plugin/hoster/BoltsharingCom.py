@@ -9,7 +9,7 @@ class BoltsharingCom(DeadHoster):
     __version = "0.02"
 
     __pattern = r'http://(?:www\.)?boltsharing\.com/\w{12}'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Boltsharing.com hoster plugin"""
     __license     = "GPLv3"

@@ -2,6 +2,7 @@
 
 import random
 import re
+import urlparse
 
 from pyload.plugin.internal.SimpleHoster import SimpleHoster
 
@@ -47,7 +48,7 @@ class NarodRu(SimpleHoster):
 
             m = re.search(self.LINK_FREE_PATTERN, self.html)
             if m:
-                self.link = 'http://narod.ru' + m.group(1)
+                self.link = urlparse.urljoin("http://narod.ru", m.group(1))
                 self.correctCaptcha()
                 break
 

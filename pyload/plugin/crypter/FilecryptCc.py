@@ -11,6 +11,7 @@ import Crypto
 
 from pyload.plugin.Crypter import Crypter
 from pyload.plugin.captcha.ReCaptcha import ReCaptcha
+from pyload.utils import decode
 
 
 class FilecryptCc(Crypter):
@@ -67,7 +68,7 @@ class FilecryptCc(Crypter):
         self.logInfo(_("Found %d mirrors") % len(mirror))
 
         for i in mirror[1:]:
-            self.siteWithLinks = self.siteWithLinks + self.load(i).decode("utf-8", "replace")
+            self.siteWithLinks = self.siteWithLinks + decode(self.load(i))
 
 
     def handlePasswordProtection(self):

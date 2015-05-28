@@ -9,7 +9,7 @@ class IfileIt(DeadHoster):
     __version = "0.29"
 
     __pattern = r'^unmatchable$'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Ifile.it"""
     __license     = "GPLv3"

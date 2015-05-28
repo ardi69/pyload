@@ -9,7 +9,7 @@ class KickloadCom(DeadHoster):
     __version = "0.21"
 
     __pattern = r'http://(?:www\.)?kickload\.com/get/.+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Kickload.com hoster plugin"""
     __license     = "GPLv3"

@@ -9,6 +9,7 @@ class UnrestrictLi(DeadHoster):
     __version = "0.23"
 
     __pattern = r'https?://(?:www\.)?(unrestrict|unr)\.li/dl/[\w^_]+'
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Unrestrict.li multi-hoster plugin"""
     __license     = "GPLv3"

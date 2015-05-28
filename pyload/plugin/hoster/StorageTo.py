@@ -9,7 +9,7 @@ class StorageTo(DeadHoster):
     __version = "0.01"
 
     __pattern = r'http://(?:www\.)?storage\.to/get/.+'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Storage.to hoster plugin"""
     __license     = "GPLv3"

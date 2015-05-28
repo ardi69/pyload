@@ -9,7 +9,7 @@ class WuploadCom(DeadHoster):
     __version = "0.23"
 
     __pattern = r'http://(?:www\.)?wupload\..+?/file/((\w+/)?\d+)(/.*)?'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Wupload.com hoster plugin"""
     __license     = "GPLv3"

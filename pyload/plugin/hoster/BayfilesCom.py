@@ -9,7 +9,7 @@ class BayfilesCom(DeadHoster):
     __version = "0.09"
 
     __pattern = r'https?://(?:www\.)?bayfiles\.(com|net)/file/(?P<ID>\w+/\w+/[^/]+)'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Bayfiles.com hoster plugin"""
     __license     = "GPLv3"

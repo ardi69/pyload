@@ -9,7 +9,7 @@ class DuploadOrg(DeadHoster):
     __version = "0.02"
 
     __pattern = r'http://(?:www\.)?dupload\.org/\w{12}'
-    __config  = []
+    __config  = []  #@TODO: Remove in 0.4.10
 
     __description = """Dupload.grg hoster plugin"""
     __license     = "GPLv3"
